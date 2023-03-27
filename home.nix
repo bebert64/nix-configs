@@ -55,6 +55,10 @@ in
     git = import ./programs/git.nix;
   };
 
+  services = {
+    picom.enable = true;
+  };
+
   # X Config
   xsession = {
     enable = true;
