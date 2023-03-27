@@ -1,0 +1,6 @@
+To sync gnome-terminal settings
+
+    dump somewhere
+        dconf dump /org/gnome/terminal/legacy/profiles:/ > gnome-terminal-profiles.dconf
+    load
+        dconf load /org/gnome/terminal/legacy/profiles:/ < gnome-terminal-profiles.dconf
