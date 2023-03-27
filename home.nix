@@ -39,6 +39,7 @@ in
     rofi
     slack
     sshfs
+    tilix
     unrar
     vlc
     yt-dlp
@@ -53,6 +54,9 @@ in
       enableZshIntegration = true;
     };
     git = import ./programs/git.nix;
+    # gnome-terminal = {
+    #   profile.transparencyPercent = 8;
+    # };
   };
 
   services = {
