@@ -17,6 +17,7 @@ in
     feh
     gnome.gnome-keyring
     gnome.gnome-terminal
+    grsync # check if rsync needed in addition
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
       pname = "insomnia-stockly";
@@ -27,6 +28,10 @@ in
       };
     }))
     jetbrains.datagrip
+    microcodeIntel # for increased microprocessor performance
+    nodejs
+    nodePackages.npm
+    pavucontrol
     # polkit is the utility used by vscode to save as sudo
     polkit
     polkit_gnome
@@ -34,6 +39,7 @@ in
     rofi
     slack
     sshfs
+    unrar
     vlc
     yt-dlp
   ];
