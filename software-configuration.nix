@@ -64,6 +64,7 @@
   
   fonts = {
     fonts = with pkgs; [
+      fira-code
       noto-fonts
       noto-fonts-emoji
       dejavu_fonts
