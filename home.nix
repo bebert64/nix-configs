@@ -25,7 +25,7 @@ in
   # Programs known by Home-Manager
   programs = {
     git = import ./programs/git.nix;
-  }
+  };
 
   # X Config
   xsession = {
