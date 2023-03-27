@@ -8,22 +8,44 @@ in
   
   # Packages Home-Manager doesn't have specific handling for
   home.packages = with pkgs; [
-    gnome.gnome-terminal
-    dconf
-    btop
-    sshfs
-    ranger
+    anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
-    vlc
-    rofi
+    avidemux
+    btop
+    caffeine-ng # to prevent going to sleep when watching videos
+    dconf # used for gnome settings
     feh
+    gnome.gnome-keyring
+    gnome.gnome-terminal
+    inkscape
+    (insomnia.overrideAttrs (oldAttrs: rec {
+      pname = "insomnia-stockly";
+      version = "2022.7.0";
+      src = fetchurl {
+        url = "https://stockly-public-assets.s3.eu-west-1.amazonaws.com/Insomnia.Core-2022.7.0-patched.deb";
+        sha256 = "sha256-6abpLq1ykAfn7ag5hY2Y6e53kx7svkSb+7OdWSDRLbE=";
+      };
+    }))
+    jetbrains.datagrip
+    # polkit is the utility used by vscode to save as sudo
     polkit
     polkit_gnome
+    ranger
+    rofi
+    slack
+    sshfs
+    vlc
+    yt-dlp
   ];
 
 
   # Programs known by Home-Manager
   programs = {
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+      enableZshIntegration = true;
+    };
     git = import ./programs/git.nix;
   };
 
@@ -42,23 +64,7 @@ in
     };
   };
 
-  # systemd = {
-  #   user.services.polkit-gnome-authentication-agent-1 = {
-  #     # description = "polkit-gnome-authentication-agent-1";
-  #     # wantedBy = [ "graphical-session.target" ];
-  #     # wants = [ "graphical-session.target" ];
-  #     # after = [ "graphical-session.target" ];  
-  #     enable = true;
-  #     serviceConfig = {
-  #         Type = "simple";
-  #         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-  #         Restart = "on-failure";
-  #         RestartSec = 1;
-  #         TimeoutStopSec = 10;
-  #       };
-  #   };
-  # };
-
+  # General settings
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true; # Necessary for vscode
   home.stateVersion = "22.05";
