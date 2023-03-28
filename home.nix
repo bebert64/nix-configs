@@ -65,7 +65,7 @@ in
   };
 
   # Copy custom files
-  home.file."`~/.vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
+  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
 
   # X Config
   xsession = {
