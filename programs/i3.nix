@@ -7,6 +7,10 @@
     menu = "\"rofi -show combi\"";
     terminal = "--no-startup-id tilix"; # gnome-terminal is not notification-aware so we need the no-startup-id
 
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+r" = "workspace 7; exec tilix -p Ranger -e ranger";
+    };
+
     startup = [
       { command = "mount -a"; }
       { command = "feh --bg-max --random ~/Wallpapers"; }

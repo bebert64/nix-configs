@@ -57,9 +57,9 @@ in
     zsh = {
       enable = true;
       shellAliases = {
-        "update" = "cd ~/nixos-configs && git pull && sudo nixos-rebuild switch --flake .#";
-        "update-dirty" = "cd ~/nixos-configs && sudo nixos-rebuild switch --flake .#";
-        "upgrade" = "cd ~/nixos-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
+        "update" = "cd ~/configs/nixos && git pull && sudo nixos-rebuild switch --flake .#";
+        "update-dirty" = "cd ~/configs/nixos && sudo nixos-rebuild switch --flake .#";
+        "upgrade" = "cd ~/configs/nixos && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
       };
@@ -84,7 +84,7 @@ in
       plugins = [
         {
           name = "stockly";
-          src = ./ZshTheme;
+          src = ./plugins/ZshTheme;
           file = "stockly.zsh-theme";
         }
       ];
@@ -97,7 +97,7 @@ in
   };
 
   # Copy custom files
-  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
+  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./plugins/MonokaiStockly;
 
   # X Config
   xsession = {
@@ -109,8 +109,8 @@ in
   gtk = {
     enable = true;
     theme = {
-      package = pkgs.gnome.gnome-themes-extra;
-      name = "Breeze-dark";
+      name = "palenight";
+      package = pkgs.palenight-theme;
     };
   };
 
