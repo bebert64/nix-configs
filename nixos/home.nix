@@ -107,11 +107,6 @@ in
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
 
-  # Execute script after a rebuild
-  system.userActivationScripts = {
-    strawberry-add-radios.text = ''../plugins/strawberry script/strawberry-add-playlist'';
-  };
-
   # X Config
   xsession = {
     enable = true;
