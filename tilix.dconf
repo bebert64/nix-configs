@@ -1,0 +1,26 @@
+[/]
+enable-wide-handle=true
+quake-specific-monitor=0
+sidebar-on-right=false
+terminal-title-show-when-single=false
+terminal-title-style='none'
+theme-variant='dark'
+use-tabs=true
+window-style='disable-csd-hide-toolbar'
+
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#171714142121'
+background-transparency-percent=16
+badge-color='#AC7EA8'
+badge-color-set=false
+bold-color-set=false
+cursor-colors-set=false
+cursor-shape='underline'
+dim-transparency-percent=0
+font='Fira Mono for Powerline 10'
+foreground-color='#F8F8F2'
+highlight-colors-set=false
+palette=['#272822', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F8F8F2', '#75715E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F9F8F5']
+use-system-font=false
+use-theme-colors=false
+visible-name='Default'

@@ -39,7 +39,7 @@ in
     rofi
     slack
     sshfs
-    tilix
+    tilix # save config in nixos-configs and symlink to it...
     unrar
     vlc
     yt-dlp
