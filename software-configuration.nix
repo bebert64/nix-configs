@@ -94,7 +94,21 @@
   # Enable CUPS to print documents.
   # services.printing.enable = true;
 
-  programs.zsh.enable = true;
+  programs = {
+    zsh = {
+      enable = true;
+      histSize = 200000;
+      ohMyZsh = {
+        enable = true;
+        plugins = [ "git" ];
+        theme = "stockly";
+      };
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
+    };
+    dconf.enable = true; # Necessary for some GTK settings to get properly saved
+    light.enable = true;
+  };
 
   # Enable sound.
   sound.enable = true;
