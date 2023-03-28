@@ -54,6 +54,34 @@ in
       enableZshIntegration = true;
     };
     git = import ./programs/git.nix;
+    zsh = {
+      enable = true;
+      shellAliases = {
+        "update" = "cd ~/nix-configs && git pull && sudo nixos-rebuild switch --flake .#";
+        "update-dirty" = "cd ~/nix-configs && sudo nixos-rebuild switch --flake .#";
+        "upgrade" = "cd ~/nix-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
+        "c" = "code .";
+        "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
+      };
+      history = {
+        size = 200000;
+        save = 200000;
+        extended = true; # save timestamps
+      };
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" ];
+        theme = "stockly";
+      };
+      enableAutosuggestions = true;
+      enableSyntaxHighlighting = true;
+      initExtra = ''
+        cdr() {
+          cd "$HOME/stockly/Main/$@"
+        }
+        compdef '_files -W "$HOME/stockly/Main" -/' cdr
+      '';
+    };
   };
 
   # Services
