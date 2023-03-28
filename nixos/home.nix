@@ -84,7 +84,7 @@ in
       plugins = [
         {
           name = "stockly";
-          src = ./plugins/ZshTheme;
+          src = ../plugins/ZshTheme;
           file = "stockly.zsh-theme";
         }
       ];
@@ -97,7 +97,7 @@ in
   };
 
   # Copy custom files
-  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./plugins/MonokaiStockly;
+  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
 
   # X Config
   xsession = {
