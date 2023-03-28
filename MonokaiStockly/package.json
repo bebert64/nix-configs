@@ -1,0 +1,21 @@
+{
+	"name": "monokai-stockly",
+	"displayName": "Monokai Stockly",
+	"description": "A derivative of the Monokai Pro theme with better support for Rust",
+	"version": "1.0.0",
+	"engines": {
+		"vscode": "^1.52.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Monokai Stockly",
+				"uiTheme": "vs-dark",
+				"path": "./themes/Monokai Stockly-color-theme.json"
+			}
+		]
+	}
+}

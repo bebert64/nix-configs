@@ -55,9 +55,13 @@ in
     git = import ./programs/git.nix;
   };
 
+  # Services
   services = {
     picom.enable = true;
   };
+
+  # Copy custom files
+  home.file."`~/.vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
 
   # X Config
   xsession = {
