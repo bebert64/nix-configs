@@ -14,6 +14,7 @@ in
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     dconf # used for gnome settings
+    evince # pdf reader
     feh
     gnome.gnome-keyring
     gnome.gnome-terminal
@@ -28,21 +29,27 @@ in
       };
     }))
     jetbrains.datagrip
+    killall # for some reason, not included by default
     microcodeIntel # for increased microprocessor performance
     nodejs
     nodePackages.npm
-    pavucontrol
+    pavucontrol # pulse audio volume controle
     # polkit is the utility used by vscode to save as sudo
     polkit
     polkit_gnome
     ranger
     rofi
     slack
+    strawberry
     sshfs
     tilix # save config in nixos-configs and symlink to it...
     unrar
     vlc
     yt-dlp
+
+    # Chose definitive color palette and copy qt5ct conf file in dotfile
+    qt5ct
+    libsForQt5.qtstyleplugins
   ];
 
 
@@ -96,8 +103,9 @@ in
     picom.enable = true;
   };
 
-  # Copy custom files
+  # Copy custom files / dotfiles
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
+  home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
 
   # X Config
   xsession = {
@@ -112,6 +120,11 @@ in
       name = "palenight";
       package = pkgs.palenight-theme;
     };
+  };
+
+  # Session variable
+  home.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "qt5ct";
   };
 
   # General settings
