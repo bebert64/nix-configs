@@ -1,0 +1,25 @@
+{
+    "db": "/home/romain/.local/share/strawberry/strawberry/strawberry.db",
+    "radios": [
+        {
+            "name": "FIP",
+            "url": "http://direct.fipradio.fr/live/fip-midfi.mp3"
+        },
+        {
+            "name": "Jazz Radio",
+            "url": "http://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3"
+        },
+        {
+            "name": "Radio Nova",
+            "url": "http://jazzradio.ice.infomaniak.ch/jazzradio-high.mp3"
+        },
+        {
+            "name": "Oui FM",
+            "url": "http://ouifm.ice.infomaniak.ch/ouifm-high.mp3"
+        },
+        {
+            "name": "Classic FM",
+            "url": "http://media-ice.musicradio.com/ClassicFMMP3"
+        }
+    ]
+}
