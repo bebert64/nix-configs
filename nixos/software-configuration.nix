@@ -110,10 +110,10 @@
     light.enable = true;
   };
 
-  # Execute script after a rebuild
-  system.userActivationScripts = {
-    strawberry-add-radios.text = ''../plugins/strawberry script/strawberry-add-playlist'';
-  };
+  # # Execute script after a rebuild
+  # system.userActivationScripts = {
+  #   strawberry-add-radios.text = ''../plugins/strawberry script/strawberry-add-playlist'';
+  # };
 
   # Enable sound.
   sound.enable = true;
