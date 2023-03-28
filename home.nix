@@ -62,6 +62,7 @@ in
   # Services
   services = {
     picom.enable = true;
+    gnome3.gnome-keyring.enable = true;
   };
 
   # Copy custom files
