@@ -16,7 +16,7 @@ list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '1bb0d5ca-f485-487d-b1d2-c11464956
 allow-bold=true
 automatic-switch=@as []
 background-color='#272822'
-background-transparency-percent=15
+background-transparency-percent=20
 backspace-binding='ascii-delete'
 badge-color='#AC7EA8'
 badge-color-set=false
@@ -52,7 +52,7 @@ highlight-foreground-color='#ffffff'
 login-shell=false
 notify-silence-enabled=false
 notify-silence-threshold=0
-palette=['#272822', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F8F8F2', '#75715E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F9F8F5']
+palette=['#000000', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F8F8F2', '#75715E', '#F92672', '#A6E22E', '#F4BF75', '#66D9EF', '#AE81FF', '#A1EFE4', '#F9F8F5']
 rewrap-on-resize=true
 scroll-on-keystroke=true
 scroll-on-output=false
@@ -72,7 +72,7 @@ visible-name='Ranger'
 
 [profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
 background-color='#000000000000'
-background-transparency-percent=15
+background-transparency-percent=20
 badge-color='#AC7EA8'
 badge-color-set=false
 bold-color-set=false
