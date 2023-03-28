@@ -71,7 +71,7 @@
       liberation_ttf
       powerline-fonts
       font-awesome_4
-      font-awesome_5
+      font-awesome_
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
@@ -124,6 +124,8 @@
   # };
 
   # List services that you want to enable:
+  services.gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
+  security.pam.services.lightdm.enableGnomeKeyring = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

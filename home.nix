@@ -54,15 +54,11 @@ in
       enableZshIntegration = true;
     };
     git = import ./programs/git.nix;
-    # gnome-terminal = {
-    #   profile.transparencyPercent = 8;
-    # };
   };
 
   # Services
   services = {
     picom.enable = true;
-    gnome-keyring.enable = true;
   };
 
   # Copy custom files
