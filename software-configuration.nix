@@ -71,7 +71,7 @@
       liberation_ttf
       powerline-fonts
       font-awesome_4
-      font-awesome_
+      font-awesome_5
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
