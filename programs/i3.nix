@@ -10,6 +10,7 @@
     startup = [
       { command = "mount -a"; }
       { command = "feh --bg-max --random ~/Wallpapers"; }
+      { command = "dconf load /com/gexperts/Tilix/ < tilix.dconf"; } # load terminal theme
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; } # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
     ];
   };

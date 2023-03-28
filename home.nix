@@ -57,9 +57,9 @@ in
     zsh = {
       enable = true;
       shellAliases = {
-        "update" = "cd ~/nix-configs && git pull && sudo nixos-rebuild switch --flake .#";
-        "update-dirty" = "cd ~/nix-configs && sudo nixos-rebuild switch --flake .#";
-        "upgrade" = "cd ~/nix-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
+        "update" = "cd ~/nixos-configs && git pull && sudo nixos-rebuild switch --flake .#";
+        "update-dirty" = "cd ~/nixos-configs && sudo nixos-rebuild switch --flake .#";
+        "upgrade" = "cd ~/nixos-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
       };
@@ -81,6 +81,13 @@ in
         }
         compdef '_files -W "$HOME/stockly/Main" -/' cdr
       '';
+      plugins = [
+        {
+          name = "stockly";
+          src = ./ZshTheme;
+          file = "stockly.zsh-theme";
+        }
+      ];
     };
   };
 
@@ -103,7 +110,7 @@ in
     enable = true;
     theme = {
       package = pkgs.gnome.gnome-themes-extra;
-      name = "Adwaita-dark";
+      name = "Breeze-dark";
     };
   };
 
