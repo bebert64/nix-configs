@@ -106,6 +106,7 @@ in
   # Copy custom files / dotfiles
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
+  home.file."scripts/strawberry".source = ../plugins/strawberry_script;
 
   # X Config
   xsession = {
