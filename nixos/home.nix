@@ -40,6 +40,7 @@ in
     ranger
     rofi
     slack
+    steam-run # needed to run custom binaries
     strawberry
     sshfs
     tilix # save config in nixos-configs and symlink to it...

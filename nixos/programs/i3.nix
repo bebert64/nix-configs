@@ -15,7 +15,11 @@
       { command = "mount -a"; }
       { command = "feh --bg-max --random ~/Wallpapers"; }
       { command = "dconf load /com/gexperts/Tilix/ < tilix.dconf"; } # load terminal theme
-      { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; } # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
+      # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
+      { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; } 
+       # Loads radios in straberry. Would have been better as a "rebuild only" script, but coulnd't make it work
+       # and it's fast enough, so it doesn't really slow down i3's starting
+      { command = "steam-run /home/romain/scripts/strawberry/strawberry-add-playlist /home/romain/scripts/strawberry/radios.json"; }
     ];
   };
 }

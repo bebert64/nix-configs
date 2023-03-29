@@ -43,7 +43,7 @@
   ];
   extraConfig = {
     pull.rebase = "true";
-    #core.commentchar = "%";
+    core.commentchar = "%";
     color.ui = "true";
     push.default = "current";
     gc.autoDetach = "false";
