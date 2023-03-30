@@ -55,8 +55,8 @@ in
 
     # Rust
     rustup
+    pkg-config
     gcc
-    # cmake
   ];
 
 
