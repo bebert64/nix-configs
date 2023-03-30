@@ -83,6 +83,7 @@ in
   home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file."scripts/strawberry".source = ../plugins/strawberry_script;
+  home.file.".envrc".source = ../dotfiles/.envrc;
 
   # X Config
   xsession = {
