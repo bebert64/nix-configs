@@ -28,7 +28,7 @@
     plugins = [
     {
         name = "stockly";
-        src = ../plugins/ZshTheme;
+        src = ../../plugins/ZshTheme;
         file = "stockly.zsh-theme";
     }
     ];
