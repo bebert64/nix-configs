@@ -30,6 +30,7 @@ in
     }))
     jetbrains.datagrip
     killall # for some reason, not included by default
+    lsqlite3
     microcodeIntel # for increased microprocessor performance
     nodejs
     nodePackages.npm
