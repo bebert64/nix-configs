@@ -18,7 +18,6 @@ in
     feh
     firefox
     gnome.gnome-keyring
-    # gnome.gnome-terminal
     grsync # check if rsync needed in addition
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
@@ -43,6 +42,7 @@ in
     libsForQt5.qtstyleplugins
     ranger
     rofi
+    rustup
     slack
     steam-run # needed to run custom binaries
     strawberry
@@ -63,6 +63,13 @@ in
       enableZshIntegration = true;
     };
     git = import ./programs/git.nix;
+    vim = {
+      extraConfig = ''
+        set autoindent
+        set number
+        syntax on
+      '';
+    };
     zsh = import ./programs/zsh.nix;
   };
 
