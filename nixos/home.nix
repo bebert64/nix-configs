@@ -54,7 +54,6 @@ in
 
     # Rust
     rustup
-    clippy
     cmake
   ];
 
