@@ -16,8 +16,9 @@ in
     dconf # used for gnome settings
     evince # pdf reader
     feh
+    firefox
     gnome.gnome-keyring
-    gnome.gnome-terminal
+    # gnome.gnome-terminal
     grsync # check if rsync needed in addition
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
@@ -37,20 +38,20 @@ in
     # polkit is the utility used by vscode to save as sudo
     polkit
     polkit_gnome
+    # Theme for QT applications (vlc, strawberry...)
+    qt5ct
+    libsForQt5.qtstyleplugins
     ranger
     rofi
     slack
     steam-run # needed to run custom binaries
     strawberry
     sshfs
-    tilix # save config in nixos-configs and symlink to it...
+    tilix # terminal
     unrar
     vlc
+    vscode
     yt-dlp
-
-    # Chose definitive color palette and copy qt5ct conf file in dotfile
-    qt5ct
-    libsForQt5.qtstyleplugins
   ];
 
 
@@ -72,7 +73,7 @@ in
 
   # Copy custom files / dotfiles
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-  home.file.".ssh/config".source = ../dotfiles/ssh/config;
+  home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file."scripts/strawberry".source = ../plugins/strawberry_script;
 

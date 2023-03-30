@@ -23,7 +23,6 @@
     isNormalUser = true;
     description = "romain";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    packages = [ pkgs.firefox pkgs.vscode pkgs.ranger ];
   };
   home-manager.users.romain = import ./home.nix host-specific;
   
