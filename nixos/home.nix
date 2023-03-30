@@ -42,7 +42,6 @@ in
     libsForQt5.qtstyleplugins
     ranger
     rofi
-    rustup
     slack
     steam-run # needed to run custom binaries
     strawberry
@@ -52,6 +51,11 @@ in
     vlc
     vscode
     yt-dlp
+
+    # Rust
+    rustup
+    clippy
+    cmake
   ];
 
 
