@@ -55,7 +55,7 @@ in
     # Rust
     rustup
     gcc
-    cmake
+    # cmake
   ];
 
 
