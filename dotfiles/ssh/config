@@ -1,0 +1,17 @@
+Host charybdis
+	# HostName 192.168.1.10	
+	HostName charybdis.stockly.tech
+	Port 23
+	User romain
+
+Host raspy
+	# HostName 192.168.0.52
+	HostName capucina.house
+	Port 2223
+	User DonBeberto
+
+Host fixe-bureau
+	# HostName 192.168.0.47
+	HostName capucina.house
+	Port 2224
+	User romain
