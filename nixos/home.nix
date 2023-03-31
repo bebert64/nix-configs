@@ -104,7 +104,7 @@ in
     enable = true;
     scriptPath = ".hm-xsession";
     windowManager.i3 = import ./programs/i3-rounded-unstable.nix (args// { host-specific = host-specific.i3 args; });
-    windowManager.i3 = import ./programs/i3-gaps.nix (args// { host-specific = host-specific.i3 args; });
+    # windowManager.i3 = import ./programs/i3-gaps.nix (args// { host-specific = host-specific.i3 args; });
     # windowManager.i3 = import ./programs/i3.nix (args// { host-specific = host-specific.i3 args; });
     numlock.enable = true;
   };
