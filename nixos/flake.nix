@@ -19,6 +19,16 @@
           flake-inputs = inputs;
         };
       };
+      fixe-salon = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./fixe-salon/configuration.nix
+        ];
+        specialArgs = {
+          flake-inputs = inputs;
+        };
+      };
     };
   };
 }
