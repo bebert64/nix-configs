@@ -11,6 +11,8 @@
       "${modifier}+Control+r" = "workspace 7; exec tilix -p Ranger -e ranger";
     };
 
+    bars = {};
+
     startup = [
       { command = "mount -a"; }
       { command = "feh --bg-max --random ~/Wallpapers"; }

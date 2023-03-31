@@ -16,7 +16,7 @@ in
     dconf # used for gnome settings
     evince # pdf reader
     feh
-    firefox
+    firefox-bin-unwrapped
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
     inkscape
@@ -34,13 +34,7 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
-    # polkit is the utility used by vscode to save as sudo
-    polkit
-    polkit_gnome
     polybar
-    # Theme for QT applications (vlc, strawberry...)
-    qt5ct
-    libsForQt5.qtstyleplugins
     ranger
     rofi
     slack
@@ -48,11 +42,20 @@ in
     steam-run # needed to run custom binaries
     strawberry
     sshfs
+    thunderbird-bin-unwrapped
     tilix # terminal
     unrar
     vlc
     vscode
     yt-dlp
+
+    # polkit is the utility used by vscode to save as sudo
+    polkit
+    polkit_gnome
+
+    # Theme for QT applications (vlc, strawberry...)
+    qt5ct
+    libsForQt5.qtstyleplugins
 
     # Rust
     rustup
