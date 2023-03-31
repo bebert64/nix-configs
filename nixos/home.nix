@@ -19,6 +19,7 @@ in
     firefox-bin-unwrapped
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
+    i3lock-color
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
       pname = "insomnia-stockly";
@@ -35,6 +36,7 @@ in
     nodePackages.npm
     pavucontrol # pulse audio volume controle
     polybar
+    qbittorrent
     ranger
     rofi
     slack
@@ -44,9 +46,11 @@ in
     sshfs
     thunderbird-bin-unwrapped
     tilix # terminal
+    udiskie # automount usb keys and drives
     unrar
     vlc
     vscode
+    xss-lock
     yt-dlp
 
     # polkit is the utility used by vscode to save as sudo
@@ -99,7 +103,9 @@ in
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ./programs/i3.nix (args// { host-specific = host-specific.i3 args; });
+    windowManager.i3 = import ./programs/i3-rounded-unstable.nix (args// { host-specific = host-specific.i3 args; });
+    windowManager.i3 = import ./programs/i3-gaps.nix (args// { host-specific = host-specific.i3 args; });
+    # windowManager.i3 = import ./programs/i3.nix (args// { host-specific = host-specific.i3 args; });
     numlock.enable = true;
   };
   gtk = {

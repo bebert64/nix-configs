@@ -4,7 +4,8 @@
 - Import database sources for DataGrip
 - Create and sync firefox profiles
 - Copy profile from existing Thunderbird  
-
+  <br />
+  <br />
 # To sync Tilix settings
 
 dump somewhere  
