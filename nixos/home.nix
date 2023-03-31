@@ -37,7 +37,6 @@ in
     pavucontrol # pulse audio volume controle
     polybar
     qbittorrent
-    ranger
     rofi
     slack
     sqlite
@@ -60,6 +59,12 @@ in
     # Theme for QT applications (vlc, strawberry...)
     qt5ct
     libsForQt5.qtstyleplugins
+
+    # Ranger
+    ranger
+    ffmpegthumbnailer # thumbnail for videos preview
+    fontforge # thumbnail for fonts preview
+    poppler_utils # thumbnail for pdf preview
 
     # Rust
     rustup
