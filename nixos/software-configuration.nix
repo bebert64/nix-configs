@@ -71,6 +71,8 @@
       powerline-fonts
       font-awesome_4
       font-awesome_5
+      font-awesome
+      nerdfonts
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {

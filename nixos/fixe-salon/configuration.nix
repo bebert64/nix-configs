@@ -12,13 +12,13 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # boot.loader.grub.enable = true;
-  # boot.loader.grub.version = 2;
-  # boot.loader.grub.device = "nodev";
-  # boot.loader.grub.efiSupport = true;
-  # boot.loader.grub.useOSProber = true;
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.useOSProber = true;
 
   networking.hostName = "fixe-salon"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -26,6 +26,8 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
+  
+  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -37,5 +39,5 @@
   
   nixpkgs.config.allowUnfree = true;
   services.xserver.videoDrivers = ["nvidia"];
-hardware.opengl.enable = true;
+  hardware.opengl.enable = true;
 }

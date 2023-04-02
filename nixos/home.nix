@@ -35,7 +35,7 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
-    polybar
+    # polybar
     qbittorrent
     rofi
     slack
@@ -70,6 +70,11 @@ in
     rustup
     pkg-config
     gcc
+
+    # Specifix fixe-salon
+    networkmanager
+    # network-manager-applet
+    networkmanagerapplet
   ];
 
 
@@ -93,7 +98,26 @@ in
 
   # Services
   services = {
-    picom.enable = true;
+    picom = {
+      enable = true;
+      settings = {
+        corner-radius = 10;
+        rounded-corners-exclude = [
+           "window_type = 'dock'"
+        ];
+      };
+    };
+    polybar = {
+      enable = true;
+      package = pkgs.polybar.override {
+        i3Support = true;
+        pulseSupport = true;
+        # iwSupport = true;
+      };
+      script = ''
+        polybar mainbar &
+      '';
+    };
   };
 
   # Copy custom files / dotfiles
@@ -103,14 +127,13 @@ in
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file."scripts/strawberry".source = ../plugins/strawberry_script;
   home.file.".envrc".source = ../dotfiles/.envrc;
+  home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
 
   # X Config
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ./programs/i3-rounded-unstable.nix (args// { host-specific = host-specific.i3 args; });
-    # windowManager.i3 = import ./programs/i3-gaps.nix (args// { host-specific = host-specific.i3 args; });
-    # windowManager.i3 = import ./programs/i3.nix (args// { host-specific = host-specific.i3 args; });
+    windowManager.i3 = import ./programs/i3.nix (args// { host-specific = host-specific.i3 args; });
     numlock.enable = true;
   };
   gtk = {

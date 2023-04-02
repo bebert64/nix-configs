@@ -23,6 +23,20 @@
       fsType = "vfat";
     };
 
+  fileSystems."/mnt/NAS" = {
+    device = "192.168.0.63:volume1/NAS";
+    fsType = "nfs";
+    options = ["user" "users" "noexec"];
+  };
+
+  # Necessary to allow non-root user to mount NAS
+  security.wrappers."mount.nfs" = {
+    setuid = true;
+    owner = "root";
+    group = "root";
+    source = "${pkgs.nfs-utils.out}/bin/mount.nfs";
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

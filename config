@@ -1,0 +1,68 @@
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# font pango:monospace 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:DejaVu Sans Mono 8
+
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec --no-startup-id /usr/bin/gnome-terminal
+
+# start dmenu (a program launcher)
+# bindsym $mod+d exec --no-startup-id dmenu_run
+# A more modern dmenu replacement is rofi:
+bindsym $mod+d exec zsh -c "rofi -modi drun#window#run -show drun -show-icons -theme /home/romain/.config/rofi/config/launcher.rasi"
+
+
+# set $ws10 "0: "
+
+
+# Display empty workspaces / show background
+# set $ws9 "9"
+# set $ws10 "10"
+bindsym $mod+i workspace $wse1; workspace $wse2
+workspace $wse1 output eDP-1
+workspace $wse2 output HDMI-1
+
+
+
+mode "exit: [s]leep, [r]eboot, [p]ower off, [l]ogout" {
+  bindsym s exec systemctl suspend, mode "default"
+  bindsym r exec systemctl reboot
+  bindsym p exec shutdown now
+  bindsym l exec i3-msg exit
+
+  bindsym Escape mode "default"
+  bindsym Return mode "default"
+}
+
+bindsym $mod+Shift+e mode "exit: [s]leep, [r]eboot, [p]ower off, [l]ogout"
+
+workspace $ws10 gaps inner 80
+
+#bindsym $mod+Shift+u exec "sh cmatrix"
+#bindsym $mod+Shift+u exec "i3-msg 'workspace 9; append_layout ~/.i3/workspace-10.json'"
+bindsym $mod+o exec zsh -c $HOME/scripts/lock-turn-off-screen
+
+exec --no-startup-id $HOME/scripts/change_wallpaper.sh
+# exec --no-startup-id "dbu-update-activation-environment --all"
+# exec --no-startup-id "gnome-keyring-daemon --start --components=secrets"
+exec --no-startup-id xautolock -time 5 -locker "systemctl suspend" -detectsleep
+exec --no-startup-id $HOME/scripts/launch_xss-lock.sh
+# exec --no-startup-id "sleep 5 && xss-lock -- lock.sh"
+exec --no-startup-id xset s 180 180 
+exec_always --no-startup-id autorandr --change --force
