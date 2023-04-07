@@ -17,6 +17,7 @@
         ];
         specialArgs = {
           flake-inputs = inputs;
+          host-specific = import ./fixe-bureau/host-specifics.nix;
         };
       };
       fixe-salon = nixpkgs.lib.nixosSystem {
@@ -27,6 +28,18 @@
         ];
         specialArgs = {
           flake-inputs = inputs;
+          host-specific = import ./fixe-salon/host-specifics.nix;
+        };
+      };
+      stockly-romainc = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager
+          ./stockly-romainc/configuration.nix
+        ];
+        specialArgs = {
+          flake-inputs = inputs;
+          host-specific = import ./stockly-romainc/host-specifics.nix;
         };
       };
     };

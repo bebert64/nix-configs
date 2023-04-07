@@ -12,15 +12,30 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.grub = {
+    enable = true;
+    version = 2;
+    device = "nodev";
+    efiSupport = true;
+    enableCryptodisk = true;
+  };
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.initrd.luks.devices = {
+      root = {
+        device = "/dev/disk/by-uuid/XCqeem-jA0D-Eh0U-Q86w-venJ-0t88-j57HSP";
+        preLVM = true;
+      };
+  };
 
-  networking.hostName = "fixe-bureau"; # Define your hostname.
+  networking.hostName = "stockly-romainc"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
+  
+  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -29,5 +44,6 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.11"; # Did you read the comment?
-
+  
+  nixpkgs.config.allowUnfree = true;
 }

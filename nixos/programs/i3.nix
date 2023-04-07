@@ -5,9 +5,10 @@
 
   config = let 
       modifier = "Mod4";
-      exit_mode = "exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
+      exit_mode = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
+      music_mode = "Music";
   in {
-    inherit modifier;
+    inherit modifier; # Check if possible to remove this line entirely (not sure if it's really necessary)
 
     menu = "\"rofi -show combi\"";
 
@@ -44,8 +45,8 @@
       "${modifier}+Shift+9" = "move container to workspace number $ws9";
       "${modifier}+Shift+0" = "move container to workspace number $ws10";
 
-      # Specific mono screen
-      "${modifier}+i" = "workspace $wse1";
+      # Used to sisplay empty workspaces, allowing to see the wallpapers
+      "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
       # Starting apps
       "${modifier}+Control+f" = "workspace $ws2; exec firefox";
@@ -59,6 +60,7 @@
 
       # Modes
       "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
+      "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
     };
 
     bars = [];
@@ -69,15 +71,12 @@
       { command = "dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf"; } # load terminal theme
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; } 
-       # Loads radios in straberry. Would have been better as a "rebuild only" script, but coulnd't make it work
-       # and it's fast enough, so it doesn't really slow down i3's starting
-      { command = "steam-run /home/romain/scripts/strawberry/strawberry-add-playlist /home/romain/scripts/strawberry/radios.json"; }
       { command = "systemctl --user restart polybar.service"; } # allows polybar to detect i3 module
 
       { command = "--no-startup-id nm-applet"; }
-      { command = "--no-startup-id caffeine &"; }
+      { command = "--no-startup-id blueman-applet"; }
+      { command = "--no-startup-id caffeine"; }
       { command = "--no-startup-id udiskie --tray"; }
-      
     ];
 
     window = {
@@ -93,6 +92,20 @@
         "l" = "exec i3-msg exit";
         "Escape" = "mode default";
         "Return" = "mode default";
+      };
+      ${music_mode} = {
+        "space" = "exec playerctl -p strawberry play-pause";
+        "s" = "exec playerctl -p strawberry stop";
+        "${modifier}+Left" = " exec playerctl -p strawberry previous";
+        "${modifier}+Right" = "exec playerctl -p strawberry next";
+        "Left" = "exec playerctl -p strawberry position 10-";
+        "Right" = "exec playerctl -p strawberry position 10+";
+        "Up" = "exec playerctl -p strawberry volume 0.1+";
+        "Down" = "exec playerctl -p strawberry volume 0.1-";
+        "l" = "workspace $ws10, exec strawberry";
+        "r" = "exec /home/romain/.config/polybar/radios.sh, mode default";
+        "${modifier}+m" = "mode default";
+        "Escape" = "mode default";
       };
     };
 
@@ -115,9 +128,8 @@
     set $ws9 "9:"
     set $ws10 "10:"
     set $wse1 " "
-    # Specific Dual screen
+    workspace $wse1 output ${host-specifics.screens.screen1}
     set $wse2 "  "
-
-    set $exit_mode "exit: [s]leep, [r]eboot, [p]ower off, [l]ogout" 
+    workspace $wse2 output  ${host-specifics.screens.screen2}
   '';
 }

@@ -11,8 +11,7 @@
       ../software-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
-  # boot.loader.systemd-boot.enable = true;
+  # Use the grub EFI boot loader.
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;

@@ -12,8 +12,8 @@ in
     arandr # GUI to configure screens positions (need to kill autorandr)
     avidemux
     btop
-    caffeine-ng # to prevent going to sleep when watching videos
-    dconf # used for gnome settings
+    caffeine # to prevent going to sleep when watching videos
+    dconf # used for setting/loading gnome applications' settings (eg : tilix)
     evince # pdf reader
     feh
     firefox-bin-unwrapped
@@ -70,12 +70,13 @@ in
     rustup
     pkg-config
     gcc
-
-    # Specifix fixe-salon
-    networkmanager
-    # network-manager-applet
-    networkmanagerapplet
-  ];
+  ] ++ (
+    if host-specific.wireless then 
+      [
+        networkmanager
+        networkmanagerapplet
+        blueman
+      ] else []);
 
 
   # Programs known by Home-Manager
@@ -112,17 +113,13 @@ in
       package = pkgs.polybar.override {
         i3Support = true;
         pulseSupport = true;
-        # iwSupport = true;
       };
-      script = ''
-        polybar mainbar &
-      '';
     };
   };
 
   # Copy custom files / dotfiles
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-  home.file.".config/polybar".source = ../dotfiles/polybar;
+  home.file.".config/polybar".source = host-specifics.polybar_config_file;
   home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file."scripts/strawberry".source = ../plugins/strawberry_script;
