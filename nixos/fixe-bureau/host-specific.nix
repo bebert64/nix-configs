@@ -1,5 +1,6 @@
 {
-    # wireless = true;
+    wifi = false;
+    bluetooth = false;
     # battery = false;
     lock-before-sleep = false;
     minutes-before-sleep = 10;
@@ -7,5 +8,8 @@
         screen1 = "HDMI-1";
         screen2 = "HDMI-2";
     };
-    polybar_conig_file = ./polybar_config.ini;
+    polybar = {
+        config_file = ./polybar_config.ini;
+        launch_script = "";
+    };
 }

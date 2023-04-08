@@ -12,7 +12,7 @@ in
     arandr # GUI to configure screens positions (need to kill autorandr)
     avidemux
     btop
-    caffeine # to prevent going to sleep when watching videos
+    caffeine-ng # to prevent going to sleep when watching videos
     dconf # used for setting/loading gnome applications' settings (eg : tilix)
     evince # pdf reader
     feh
@@ -72,10 +72,14 @@ in
     strawberry
     playerctl # to send data and retrieve metadata for polybarF
   ] ++ (
-    if host-specific.wireless then 
+    # TODO replace with mmore elegant else if
+    if host-specific.wifi then 
       [
         networkmanager
         networkmanagerapplet
+      ] else []) ++ (
+    if host-specific.bluetooth then 
+      [
         blueman
       ] else []);
 
@@ -115,23 +119,24 @@ in
         i3Support = true;
         pulseSupport = true;
       };
+      script = host-specific.polybar.launch_script;
     };
   };
 
   # Copy custom files / dotfiles
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-  home.file.".config/polybar".source = host-specific.polybar_config_file;
+  home.file.".config/polybar".source = host-specific.polybar.config_file;
   home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../plugins/MonokaiStockly;
   home.file."scripts/strawberry".source = ../plugins/strawberry_script;
-  home.file.".envrc".source = ../dotfiles/.envrc;
+  # home.file.".envrc".source = ../dotfiles/.envrc;
   home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
 
   # X Config
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ./programs/i3.nix (args// { host-specific = host-specific.i3 args; });
+    windowManager.i3 = import ./programs/i3.nix (args // { host-specific = host-specific; });
     numlock.enable = true;
   };
   gtk = {
