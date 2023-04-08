@@ -35,13 +35,11 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
-    # polybar
     qbittorrent
     rofi
     slack
     sqlite
     steam-run # needed to run custom binaries
-    strawberry
     sshfs
     thunderbird-bin-unwrapped
     tilix # terminal
@@ -70,6 +68,9 @@ in
     rustup
     pkg-config
     gcc
+    # Strawberry
+    strawberry
+    playerctl # to send data and retrieve metadata for polybarF
   ] ++ (
     if host-specific.wireless then 
       [

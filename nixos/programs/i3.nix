@@ -112,7 +112,7 @@
     defaultWorkspace = "$ws1";
     
     gaps = {
-      inner = 2;
+      inner = 4;
     };
   };
 

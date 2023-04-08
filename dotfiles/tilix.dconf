@@ -15,7 +15,7 @@ list=['2b7c4080-0ddd-46c5-8f23-563fd3ba789d', '1bb0d5ca-f485-487d-b1d2-c11464956
 [profiles/1bb0d5ca-f485-487d-b1d2-c11464956d7a]
 allow-bold=true
 automatic-switch=@as []
-background-color='#272822'
+background-color='#000000000000'
 background-transparency-percent=20
 backspace-binding='ascii-delete'
 badge-color='#AC7EA8'
@@ -83,7 +83,7 @@ dim-transparency-percent=30
 font='Fira Mono for Powerline 10'
 foreground-color='#E5E5E5E5E5E5'
 highlight-colors-set=false
-palette=['#000000', '#FFFF00000000', '#0000FFFF0000', '#FFFFFFFF0000', '#5C5C5C5CFFFF', '#FFFF0000FFFF', '#0000FFFFFFFF', '#E5E5E5E5E5E5', '#7F7F7F7F', '#CDCD00000000', '#0000CDCD0000', '#CDCDCDCD0000', '#00000000EEEE', '#CDCD0000CDCD', '#0000CDCDCDCD', '#FFFFFFFFFFFF']
+palette=['#000000000000', '#FFFF00000000', '#0000FFFF0000', '#FFFFFFFF0000', '#5C5C5C5CFFFF', '#FFFF0000FFFF', '#0000FFFFFFFF', '#E5E5E5E5E5E5', '#777776767B7B', '#CDCD00000000', '#0000CDCD0000', '#CDCDCDCD0000', '#00000000EEEE', '#CDCD0000CDCD', '#0000CDCDCDCD', '#FFFFFFFFFFFF']
 use-system-font=false
 use-theme-colors=false
 visible-name='Default'
