@@ -56,11 +56,10 @@
       "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
       "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
-      "${modifier}+Control+m" = "workspace $ws10; exec strawberry";
 
       # Modes
       "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
-      "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
+      "${modifier}+m" = "mode \"${music_mode}\"";
     };
 
     bars = [];
@@ -128,8 +127,8 @@
     set $ws9 "9:"
     set $ws10 "10:"
     set $wse1 " "
-    workspace $wse1 output ${host-specifics.screens.screen1}
+    workspace $wse1 output ${host-specific.screens.screen1}
     set $wse2 "  "
-    workspace $wse2 output  ${host-specifics.screens.screen2}
+    workspace $wse2 output  ${host-specific.screens.screen2}
   '';
 }
