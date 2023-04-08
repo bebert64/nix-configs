@@ -7,4 +7,8 @@
         screen1 = "HDMI-1";
         screen2 = "";
     };
+    polybar = {
+        config_file = ./polybar_config.ini;
+        launch_script = import ./launch_polybar.sh;
+    };
 }
