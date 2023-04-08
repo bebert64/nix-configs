@@ -1,6 +1,6 @@
 {
-    wireless = true;
-    battery = false;
+    # wireless = true;
+    # battery = false;
     lock-before-sleep = false;
     minutes-before-sleep = 10;
     screens = {
