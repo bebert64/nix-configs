@@ -72,13 +72,11 @@ in
     strawberry
     playerctl # to send data and retrieve metadata for polybarF
   ] ++ (
-    # TODO replace with mmore elegant else if
     if host-specific.wifi then 
       [
         networkmanager
         networkmanagerapplet
-      ] else []) ++ (
-    if host-specific.bluetooth then 
+      ] else if host-specific.bluetooth then 
       [
         blueman
       ] else []);
