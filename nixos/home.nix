@@ -123,7 +123,7 @@ in
 
   # Copy custom files / dotfiles
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-  home.file.".config/polybar".source = host-specific.polybar.config_file;
+  home.file.".config/polybar".source = ../dotfiles/polybar;
   home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
   home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;

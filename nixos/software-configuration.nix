@@ -25,6 +25,7 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
   home-manager.users.romain = import ./home.nix host-specific;
+  users.mutableUsers = true;
   
   nixpkgs.config.allowUnfree = true;
 
@@ -114,10 +115,6 @@
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-  users.mutableUsers = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
