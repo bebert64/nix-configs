@@ -18,14 +18,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
   networking.hostName = "stockly-romainc"; # Define your hostname.
-<<<<<<< HEAD
-
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
-
-  #services.xserver.videoDrivers = [ "displaylink" "modesetting" ]; # Support for dell's docking station
-
-=======
+  
   # Pick only one of the below networking options.
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
@@ -33,10 +26,8 @@
   time.timeZone = "Europe/Paris";
   
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.synaptics.enable = true;
   services.xserver.libinput.enable = true;
->>>>>>> 3e84f01 (amend previous)
+  
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
