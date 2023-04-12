@@ -97,12 +97,15 @@
         "s" = "exec playerctl -p strawberry stop";
         "${modifier}+Left" = " exec playerctl -p strawberry previous";
         "${modifier}+Right" = "exec playerctl -p strawberry next";
+
         "Left" = "exec playerctl -p strawberry position 10-";
         "Right" = "exec playerctl -p strawberry position 10+";
         "Up" = "exec playerctl -p strawberry volume 0.1+";
         "Down" = "exec playerctl -p strawberry volume 0.1-";
+
         "l" = "workspace $ws10, exec strawberry";
         "r" = "exec /home/romain/.config/polybar/radios.sh, mode default";
+
         "${modifier}+m" = "mode default";
         "Escape" = "mode default";
       };

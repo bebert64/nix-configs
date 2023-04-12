@@ -6,36 +6,28 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../software-configuration.nix
     ];
 
-  # Use the systemd-boot EFI boot loader.
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub = {
-    enable = true;
-    version = 2;
-    device = "nodev";
-    efiSupport = true;
-    enableCryptodisk = true;
-  };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.initrd.luks.devices = {
-      root = {
-        device = "/dev/disk/by-uuid/XCqeem-jA0D-Eh0U-Q86w-venJ-0t88-j57HSP";
-        preLVM = true;
-      };
+
+  # Setup keyfile
+  boot.initrd.secrets = {
+    "/crypto_keyfile.bin" = null;
   };
 
   networking.hostName = "stockly-romainc"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Paris";
-  
-  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+
+  #services.xserver.videoDrivers = [ "displaylink" "modesetting" ]; # Support for dell's docking station
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -43,7 +35,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
-  
-  nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "22.05"; # Did you read the comment?
+
 }
