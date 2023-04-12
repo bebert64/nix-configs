@@ -17,11 +17,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
   networking.hostName = "stockly-romainc"; # Define your hostname.
 
   # Set your time zone.
