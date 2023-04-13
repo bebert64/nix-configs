@@ -14,14 +14,14 @@
     };
     oh-my-zsh = {
         enable = true;
-        # plugins = [ "git" ];
-        plugins = [
-            {
-                name = "git";
-                src = ../../dotfiles/OhMyZsh;
-                file = "git.zsh";
-            }
-        ];
+        plugins = [ "git" ];
+        # plugins = [
+        #     {
+        #         name = "git";
+        #         src = ../../dotfiles/OhMyZsh;
+        #         file = "git.zsh";
+        #     }
+        # ];
         theme = "stockly";
     };
     enableAutosuggestions = true;

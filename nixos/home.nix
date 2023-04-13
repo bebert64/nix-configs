@@ -76,10 +76,11 @@ in
       [
         networkmanager
         networkmanagerapplet
-      ] else if host-specific.bluetooth then 
+      ] else []) ++ (if host-specific.bluetooth then 
       [
         blueman
-      ] else []);
+      ] else []
+    );
 
 
   # Programs known by Home-Manager

@@ -66,17 +66,20 @@
 
     startup = [
       { command = "mount -a"; }
-      { command = "feh --bg-max --random ~/Wallpapers/Single\ Screen"; }
+      { command = "feh --bg-max --random ~/Wallpapers/Single\\ screen"; }
       { command = "dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf"; } # load terminal theme
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; } 
       { command = "systemctl --user restart polybar.service"; } # allows polybar to detect i3 module
 
-      { command = "--no-startup-id nm-applet"; }
-      { command = "--no-startup-id blueman-applet"; }
       { command = "--no-startup-id caffeine"; }
       { command = "--no-startup-id udiskie --tray"; }
-    ];
+    ] ++ (
+    if host-specific.wifi then 
+      [ { command = "--no-startup-id nm-applet"; } ] else []) ++ (
+    if host-specific.bluetooth then 
+      [ { command = "--no-startup-id blueman-applet"; } ] else []
+    );
 
     window = {
       titlebar = false;
