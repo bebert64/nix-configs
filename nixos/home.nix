@@ -10,6 +10,7 @@ in
   home.packages = with pkgs; [
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
+    # autorandr
     avidemux
     btop
     caffeine-ng # to prevent going to sleep when watching videos
@@ -85,6 +86,10 @@ in
 
   # Programs known by Home-Manager
   programs = {
+    autorandr = {
+      enable = true;
+      
+    };
     direnv = {
       enable = true;
       nix-direnv.enable = true;

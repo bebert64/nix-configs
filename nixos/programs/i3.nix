@@ -74,6 +74,7 @@
 
       { command = "--no-startup-id caffeine"; }
       { command = "--no-startup-id udiskie --tray"; }
+      { command = "autorandr --change --force"; }
     ] ++ (
     if host-specific.wifi then 
       [ { command = "--no-startup-id nm-applet"; } ] else []) ++ (
