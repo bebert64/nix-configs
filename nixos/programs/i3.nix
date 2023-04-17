@@ -45,6 +45,10 @@
       "${modifier}+Shift+9" = "move container to workspace number $ws9";
       "${modifier}+Shift+0" = "move container to workspace number $ws10";
 
+      # Move workspace to different output
+      "${modifier}+Mod1+Left" = "move workspace to output left";
+      "${modifier}+Mod1+Right" = "move workspace to output right";
+
       # Used to sisplay empty workspaces, allowing to see the wallpapers
       "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
@@ -70,8 +74,7 @@
       { command = "dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf"; } # load terminal theme
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; } 
-      { command = "systemctl --user restart polybar.service"; } # allows polybar to detect i3 module
-
+      
       { command = "--no-startup-id caffeine"; }
       { command = "--no-startup-id udiskie --tray"; }
       { command = "autorandr --change --force"; }
