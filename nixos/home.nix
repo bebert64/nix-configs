@@ -236,7 +236,9 @@ in
   };
 
   # Copy custom files / dotfiles
-  home.file.".config/polybar".source = ../dotfiles/polybar;
+  home.file.".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
+  home.file.".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
+  home.file.".config/polybar/config.ini".source = host-specific.polybar_config;
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
   home.file.".config/oh-my-zsh-scripts/git.zsh".source = ../dotfiles/OhMyZsh/git.zsh;
   home.file.".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
