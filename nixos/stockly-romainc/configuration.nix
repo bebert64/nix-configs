@@ -27,8 +27,12 @@
   
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.synaptics.enable = true;
-  # services.xserver.libinput.enable = true;
+  # services.xserver.synaptics.enable = true;
+  services.xserver.libinput.touchpad.naturalScrolling = true;
+  services.xserver.libinput.touchpad.middleEmulation = true;
+  services.xserver.libinput.touchpad.tapping = true;
+  # services.xserver.libinput.touchpad.enable = true;
+  services.xserver.libinput.enable = true;
   
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
