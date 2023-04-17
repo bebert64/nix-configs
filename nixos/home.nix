@@ -77,9 +77,34 @@ in
     rustup
     pkg-config
     gcc
+
     # Strawberry
     strawberry
     playerctl # to send data and retrieve metadata for polybarF
+
+    # Scripts
+    (pkgs.writeScriptBin "run" ''
+      #!/usr/bin/env bash
+      set -euxo pipefail
+      nix-shell -p "$1" --command "''${1##*.} ''${*:2}"
+    '')
+
+    (pkgs.writeScriptBin "mount-Ipad" ''
+      #!/usr/bin/env bash
+      mkdir -p /mnt/Ipad/SideBooks
+      ifuse --documents jp.tatsumi-sys.sidebooks /mnt/Ipad/SideBooks
+      mkdir -p /mnt/Ipad/Chunky
+      ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader /mnt/Ipad/Chunky
+      mkdir -p /mnt/Ipad/MangaStorm
+      ifuse --documents com.wayudaorerk.mangastormall /mnt/Ipad/MangaStorm
+    '')
+
+    (pkgs.writeScriptBin "umount-Ipad" ''
+      #!/usr/bin/env bash
+      fusermount -u /mnt/Ipad/SideBooks
+      fusermount -u /mnt/Ipad/Chunky
+      fusermount -u /mnt/Ipad/MangaStorm
+    '')
   ] ++ (
     if host-specific.wifi then 
       [
