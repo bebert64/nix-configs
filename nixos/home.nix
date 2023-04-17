@@ -43,10 +43,6 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
-    # (polybar.overrideAttrs (oldAttrs: rec {
-    #   i3Support = true;
-    #   pulseSupport = true;
-    # }))
     polybar
     qbittorrent
     rofi
@@ -89,9 +85,6 @@ in
       [
         networkmanager
         networkmanagerapplet
-      ] else []) ++ (if host-specific.bluetooth then 
-      [
-        # blueman
       ] else []
     );
 
