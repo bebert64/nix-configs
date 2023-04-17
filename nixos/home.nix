@@ -79,17 +79,14 @@ in
         networkmanagerapplet
       ] else []) ++ (if host-specific.bluetooth then 
       [
-        blueman
+        # blueman
       ] else []
     );
 
 
   # Programs known by Home-Manager
   programs = {
-    autorandr = {
-      enable = true;
-      
-    };
+    autorandr = host-specific.autorandr;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -124,6 +121,9 @@ in
         pulseSupport = true;
       };
       script = host-specific.polybar.launch_script;
+    };
+    blueman-applet = {
+      enable = true;
     };
   };
 
