@@ -14,6 +14,8 @@ ssh-keygen -t ed25519
 ```
 - Copy on github account / charybdis
 - Might need to add this computer to general ssh config and add other keys
+  <br />
+  <br />
 
 # To sync Tilix settings
 
@@ -25,3 +27,12 @@ dconf dump /com/gexperts/Tilix/ > tilix.dconf
 ```
 dconf load /com/gexperts/Tilix/ < tilix.dconf
 ```
+  <br />
+  <br />
+
+# Autorandr
+- save a profile
+```
+autorandr --save profile-name
+```
+After that, copy the fingerprint from setup and the config inside host-specifics + update the launch script
