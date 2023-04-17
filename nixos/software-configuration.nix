@@ -143,6 +143,6 @@
   services.openssh.enable = true;
 
   # Enable the bluetooth daemon.
-  services.blueman.enable = true;
-  hardware.bluetooth.enable = true;
+  services.blueman.enable = host-specific.bluetooth;
+  hardware.bluetooth.enable = host-specific.bluetooth;
 }
