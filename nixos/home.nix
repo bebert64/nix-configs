@@ -133,6 +133,7 @@ in
   home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
   home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
+  home.file.".config/oh-my-zsh-scripts/git.zsh".source = ../dotfiles/OhMyZsh/git.zsh;
 
   # X Config
   xsession = {

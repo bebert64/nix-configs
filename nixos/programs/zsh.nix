@@ -15,14 +15,8 @@
     oh-my-zsh = {
         enable = true;
         plugins = [ "git" ];
-        # plugins = [
-        #     {
-        #         name = "git";
-        #         src = ../../dotfiles/OhMyZsh;
-        #         file = "git.zsh";
-        #     }
-        # ];
         theme = "stockly";
+        custom = "~/.config/oh-my-zsh-scripts";
     };
     enableAutosuggestions = true;
     enableSyntaxHighlighting = true;
