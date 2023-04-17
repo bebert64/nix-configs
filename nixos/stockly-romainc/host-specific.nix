@@ -6,16 +6,7 @@
   screens = {
     screen1 = "eDP-1";
     screen2 = "HDMI-1";
-  };
-  polybar = {
-    config_file = ./polybar_config.ini;
-    launch_script = ''
-      killall -q polybar
-      while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
-      polybar eDP1-tray-off 2>&1 | tee -a /tmp/polybar.log & disown
-      polybar HDMI-1-tray-on 2>&1 | tee -a /tmp/polybar.log & disown
-      '';
-  };
+  };Z
   autorandr = {
     enable  = true;
     profiles = {
