@@ -7,7 +7,14 @@ in
 {
 
   # Packages Home-Manager doesn't have specific handling for
-  home.packages = with pkgs; [
+  home.packages = with pkgs; 
+  let
+    polybar = pkgs.polybar.override {
+      i3Support = true;
+      pulseSupport = true;
+    };
+  in
+  [
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
     # autorandr
@@ -36,6 +43,11 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
+    # (polybar.overrideAttrs (oldAttrs: rec {
+    #   i3Support = true;
+    #   pulseSupport = true;
+    # }))
+    polybar
     qbittorrent
     rofi
     slack
@@ -93,13 +105,6 @@ in
       enableZshIntegration = true;
     };
     git = import ./programs/git.nix;
-    polybar = {
-      enable = true;
-      package = pkgs.polybar.override {
-        i3Support = true;
-        pulseSupport = true;
-      };
-    };
     vim = {
       extraConfig = ''
         set autoindent
@@ -120,14 +125,6 @@ in
            "window_type = 'dock'"
         ];
       };
-    };
-    polybar = {
-      enable = true;
-      package = pkgs.polybar.override {
-        i3Support = true;
-        pulseSupport = true;
-      };
-      script = host-specific.polybar.launch_script;
     };
   };
 
