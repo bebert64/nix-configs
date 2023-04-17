@@ -25,7 +25,7 @@
           };
         };
         hooks.postswitch = ''
-          killall -q polybar
+          pkill -q polybar
           while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
           polybar eDP1-tray-on -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown
           feh --bg-max --random "$HOME/Wallpapers/Single screen/"
@@ -54,7 +54,7 @@
           };
         };
         hooks.postswitch = ''
-          killall -q polybar
+          pkill -q polybar
           while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
           polybar HDMI1-tray-on -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown
           polybar eDP1-tray-off -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown
