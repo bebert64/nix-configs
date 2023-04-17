@@ -92,6 +92,7 @@ in
 
     (pkgs.writeScriptBin "mount-Ipad" ''
       #!/usr/bin/env bash
+      
       mkdir -p /mnt/Ipad/SideBooks
       ifuse --documents jp.tatsumi-sys.sidebooks /mnt/Ipad/SideBooks
       mkdir -p /mnt/Ipad/Chunky
@@ -102,10 +103,66 @@ in
 
     (pkgs.writeScriptBin "umount-Ipad" ''
       #!/usr/bin/env bash
+
       fusermount -u /mnt/Ipad/SideBooks
       fusermount -u /mnt/Ipad/Chunky
       fusermount -u /mnt/Ipad/MangaStorm
     '')
+
+    (pkgs.writeScriptBin "available-size-Ipad" ''
+      #!/usr/bin/env bash
+      df /mnt/Ipad-SideBooks | grep ifuse | tr -s ' ' | cut -d ' ' -f4m
+    '')
+
+    (pkgs.writeScriptBin "open-code" ''
+      #!/usr/bin/env bash
+      relative_path=$(pwd | cut -d'/' -f4-)
+      code --folder-uri=vscode-remote://ssh-remote+charybdis/home/romain/$relative_path
+    '')
+
+    (pkgs.writeScriptBin "playerctl_polybar" ''
+      #!/usr/bin/env bash
+      
+      playerctlstatus=$(playerctl -p strawberry status 2> /dev/null)
+      title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null)
+      artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null)
+      radio_title=`cat /home/romain/.config/polybar/.radio_title`
+      note=
+      previous=
+      next=
+      play=
+      pause=
+      stop=
+
+      button_previous="%{A1:strawberry --restart-or-previous:}  $previous  %{A}"
+      button_next="%{A1:playerctl -p strawberry next:}  $next  %{A}"
+      button_play="%{A1:playerctl -p strawberry play:}  $play  %{A}"
+      button_pause="%{A1:playerctl -p strawberry pause:}  $pause  %{A}"
+      button_stop="%{A1:playerctl -p strawberry stop:}  $stop  %{A}"
+
+      if [[ $title = http* ]]; then
+          if [ -z "$radio_title" ]; then
+              title_display="Radio youtube"
+          else
+              title_display=$radio_title
+          fi
+      elif [[ $artist = "" ]]; then
+          title_display=$title
+      else
+          title_display="$artist - $title"
+      fi
+
+      if [[ $playerctlstatus == "Playing" ]]; then
+          button_status=$button_pause
+      else
+          button_status=$button_play
+      fi
+
+      command_bar="$button_previous$button_stop$button_status$button_next"
+
+      echo "$note   $title_display   $command_bar"
+    '')
+
   ] ++ (
     if host-specific.wifi then 
       [

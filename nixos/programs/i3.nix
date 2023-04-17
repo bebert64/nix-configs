@@ -102,7 +102,7 @@
       ${music_mode} = {
         "space" = "exec playerctl -p strawberry play-pause";
         "s" = "exec playerctl -p strawberry stop";
-        "${modifier}+Left" = " exec playerctl -p strawberry previous";
+        "${modifier}+Left" = " exec strawberry --restart-or-previous";
         "${modifier}+Right" = "exec playerctl -p strawberry next";
 
         "Left" = "exec playerctl -p strawberry position 10-";
