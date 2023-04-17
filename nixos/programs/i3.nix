@@ -75,14 +75,14 @@
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; }
 
-      { command = "--no-startup-id caffeine"; }
-      { command = "--no-startup-id udiskie --tray"; }
-      { command = "autorandr --change --force"; }
+      { command = "caffeine"; notification = false; }
+      { command = "udiskie --tray"; notification = false; }
+      { command = "autorandr --change --force"; always = true; }
     ] ++ (
     if host-specific.wifi then 
-      [ { command = "--no-startup-id nm-applet"; } ] else []) ++ (
+      [ { command = "nm-applet"; notification = false; } ] else []) ++ (
     if host-specific.bluetooth then 
-      [ { command = "--no-startup-id blueman-applet"; } ] else []
+      [ { command = "blueman-applet"; notification = false; } ] else []
     );
 
     window = {
