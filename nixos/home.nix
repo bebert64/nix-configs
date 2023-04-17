@@ -122,11 +122,13 @@ in
 
     (pkgs.writeScriptBin "playerctl_polybar" ''
       #!/usr/bin/env bash
+
+      touch /home/romain/.config/.radio_title
       
       playerctlstatus=$(playerctl -p strawberry status 2> /dev/null)
       title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null)
       artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null)
-      radio_title=`cat /home/romain/.config/polybar/.radio_title`
+      radio_title=`cat /home/romain/.config/.radio_title`
       note=
       previous=
       next=
@@ -161,6 +163,35 @@ in
       command_bar="$button_previous$button_stop$button_status$button_next"
 
       echo "$note   $title_display   $command_bar"
+    '')
+
+    (pkgs.writeScriptBin "launch_radios" ''
+      #!/usr/bin/env bash
+      
+      play_youtube() {
+        url_stream=$(yt-dlp -g $url_youtube)
+        strawberry --play-playlist Youtube  # Loads the playlist so that the current one doesn't get erased by the following 'load' command
+        strawberry --load $url_stream
+        sleep 1
+        strawberry --play-playlist Youtube
+      }
+
+      play_radio() {
+        strawberry --play-playlist Radios
+        strawberry --play-track $track
+      }
+      # track=0 && play_radio
+      MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
+        -theme $HOME/.config/rofi/theme/styles.rasi)"
+          case "$MENU" in
+            FIP) track=0 && play_radio ;;
+            "Jazz Radio") track=1 && play_radio ;;
+            "Radio Nova") track=2 && play_radio ;;
+            "Oui Fm") track=3 && play_radio ;;
+            "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > /home/romain/.config/.radio_title ;;
+            "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > /home/romain/.config/.radio_title;;
+          esac
+
     '')
 
   ] ++ (
@@ -205,15 +236,16 @@ in
   };
 
   # Copy custom files / dotfiles
-  home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
   home.file.".config/polybar".source = ../dotfiles/polybar;
-  home.file.".ssh/config".source = ../dotfiles/ssh_config;
-  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
-  home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
+  home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
   home.file.".config/oh-my-zsh-scripts/git.zsh".source = ../dotfiles/OhMyZsh/git.zsh;
   home.file.".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
   home.file.".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
+  home.file.".config/rofi/theme".source = ../dotfiles/rofi/theme;
   home.file.".local/share/ranger/bookmarks".source = ../dotfiles/ranger/bookmarks;
+  home.file.".ssh/config".source = ../dotfiles/ssh_config;
+  home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
+  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
 
   # X Config
   xsession = {

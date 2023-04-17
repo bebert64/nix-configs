@@ -111,7 +111,7 @@
         "Down" = "exec playerctl -p strawberry volume 0.1-";
 
         "l" = "workspace $ws10, exec strawberry";
-        "r" = "exec /home/romain/.config/polybar/radios.sh, mode default";
+        "r" = "exec launch_radios, mode default";
 
         "${modifier}+m" = "mode default";
         "Escape" = "mode default";
