@@ -141,4 +141,8 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  # Enable the bluetooth daemon.
+  services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
 }
