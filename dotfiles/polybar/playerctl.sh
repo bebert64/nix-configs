@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 playerctlstatus=$(playerctl -p strawberry status 2> /dev/null)
 title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null)
 artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null)
