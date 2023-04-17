@@ -93,6 +93,13 @@ in
       enableZshIntegration = true;
     };
     git = import ./programs/git.nix;
+    polybar = {
+      enable = true;
+      package = pkgs.polybar.override {
+        i3Support = true;
+        pulseSupport = true;
+      };
+    };
     vim = {
       extraConfig = ''
         set autoindent
@@ -121,9 +128,6 @@ in
         pulseSupport = true;
       };
       script = host-specific.polybar.launch_script;
-    };
-    blueman-applet = {
-      enable = true;
     };
   };
 
