@@ -28,6 +28,7 @@ in
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
     i3lock-color
+    ifuse # mount apple's file system (Ipad)
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
       pname = "insomnia-stockly";
