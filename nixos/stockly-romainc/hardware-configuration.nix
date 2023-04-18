@@ -4,9 +4,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+  imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules = [ "nvme" "vmd" "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
@@ -26,11 +24,17 @@
     fsType = "vfat";
   };
 
-  fileSystems."/mnt/NAS" = {
+  fileSystems."$HOME/mnt/NAS" = {
     device = "192.168.0.63:volume1/NAS";
     fsType = "nfs";
     options = ["user" "users" "noexec" "noauto"];
   };
+
+  # fileSystems."$HOME/mnt/arch" = {
+  #   device = "/dev/disk/by-uuid/e5174e92-033c-4857-bbf2-7da1887ecf26";
+  #   fsType = "ext4";
+  #   options = ["user" "users" "noexec"];
+  # };
 
   # Necessary to allow non-root user to mount NAS
   security.wrappers."mount.nfs" = {
