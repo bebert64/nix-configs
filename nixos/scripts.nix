@@ -1,3 +1,5 @@
+{ pkgs, ...}:
+
 [
     (pkgs.writeScriptBin "run" ''
       #!/usr/bin/env bash

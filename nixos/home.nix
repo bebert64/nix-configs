@@ -86,7 +86,7 @@ in
     # Strawberry
     strawberry
     playerctl # to send data and retrieve metadata for polybarF
-  ] ++ import ./scripts.nix ++ (
+  ] ++ import ./scripts.nix (pkgs) ++ (
     if host-specific.wifi then 
       [
         networkmanager
