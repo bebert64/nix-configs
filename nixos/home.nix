@@ -22,6 +22,7 @@ in
     avidemux
     btop
     caffeine-ng # to prevent going to sleep when watching videos
+    conky
     dconf # used for setting/loading gnome applications' settings (eg : tilix)
     evince # pdf reader
     feh
@@ -40,6 +41,7 @@ in
       };
     }))
     jetbrains.datagrip
+    jq # cli json processor, for some scripts (to get workspace id from i3)
     killall # for some reason, not included by default
     microcodeIntel # for increased microprocessor performance
     nodejs
@@ -56,6 +58,7 @@ in
     tilix # terminal
     udiskie # automount usb keys and drives
     unrar
+    unzip
     vlc
     vscode
     xss-lock
@@ -192,6 +195,20 @@ in
             "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > /home/romain/.config/.radio_title ;;
             "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > /home/romain/.config/.radio_title;;
           esac
+
+    '')
+
+    (pkgs.writeScriptBin "lock-conky" ''
+      #!/usr/bin/env bash
+      
+      wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
+      echo $wk1
+      echo "$wk1"
+      i3-msg "workspace \" \"; workspace \"  \""
+      conky -d
+      alock -bg none
+      pkill conky
+      i3-msg workspace "$wk1"
 
     '')
 

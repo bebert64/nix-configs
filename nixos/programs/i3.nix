@@ -53,7 +53,7 @@
       "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
       # Lock the screen
-      "${modifier}+o" = "workspace $wse1; workspace $wse2; exec alock -bg none";
+      "--release ${modifier}+o" = "exec lock-conky";
 
       # Starting apps
       "${modifier}+Control+f" = "workspace $ws2; exec firefox";
