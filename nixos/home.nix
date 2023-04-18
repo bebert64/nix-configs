@@ -134,6 +134,7 @@ in
   home.file.".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
   home.file.".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
   home.file.".config/rofi/theme".source = ../dotfiles/rofi/theme;
+  home.file.".conkyrc".source = ../dotfiles/.conkyrc;
   home.file.".local/share/ranger/bookmarks".source = ../dotfiles/ranger/bookmarks;
   home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;

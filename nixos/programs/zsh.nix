@@ -6,6 +6,7 @@
         "upgrade" = "cd ~/configs/nixos && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
+        "datagrip-tunnel" = "ssh -L 5432:localhost:5432 charybdis";
     };
     history = {
         size = 200000;
