@@ -52,6 +52,9 @@
       # Used to sisplay empty workspaces, allowing to see the wallpapers
       "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
+      # Lock the screen
+      "${modifier}+o" = "workspace $wse1; workspace $wse2; exec alock -bg none";
+
       # Starting apps
       "${modifier}+Control+f" = "workspace $ws2; exec firefox";
       "${modifier}+Control+v" = "workspace $ws3; exec code";

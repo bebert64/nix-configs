@@ -15,6 +15,7 @@ in
     };
   in
   [
+    alock # locker allowing transparent background
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
     # autorandr
@@ -27,7 +28,7 @@ in
     firefox-bin-unwrapped
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
-    i3lock-color
+    # i3lock-color
     ifuse # mount apple's file system (Ipad)
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
