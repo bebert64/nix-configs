@@ -35,7 +35,6 @@
     pmp = "!git pl && git mom && git ps";
     wip = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip'";
     wipp = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip' && git push -u";
-
   };
   ignores = [
     "*.swp"
