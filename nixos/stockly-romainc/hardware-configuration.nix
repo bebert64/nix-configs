@@ -24,7 +24,7 @@
     fsType = "vfat";
   };
 
-  fileSystems."$HOME/mnt/NAS" = {
+  fileSystems."/mnt/NAS" = {
     device = "192.168.0.63:volume1/NAS";
     fsType = "nfs";
     options = ["user" "users" "noexec" "noauto"];
