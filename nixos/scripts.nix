@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+host-specific: { pkgs, ...}:
 
 [
     (pkgs.writeScriptBin "run" ''
@@ -97,6 +97,7 @@
         strawberry --play-playlist Radios
         strawberry --play-track $track
       }
+
       # track=0 && play_radio
       MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
         -theme $HOME/.config/rofi/theme/styles.rasi)"
@@ -108,20 +109,21 @@
             "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > /home/romain/.config/.radio_title ;;
             "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > /home/romain/.config/.radio_title;;
           esac
-
     '')
 
     (pkgs.writeScriptBin "lock-conky" ''
       #!/usr/bin/env bash
-      
+
+      pkill xidlehook
+      xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
       echo $wk1
       echo "$wk1"
       i3-msg "workspace \" \"; workspace \"  \""
       conky -d
       alock -bg none
-      pkill conky
       i3-msg workspace "$wk1"
-
+      pkill conky
+      xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
     '')
 ]

@@ -18,7 +18,6 @@ in
     alock # locker allowing transparent background
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
-    # autorandr
     avidemux
     btop
     caffeine-ng # to prevent going to sleep when watching videos
@@ -29,7 +28,6 @@ in
     firefox-bin-unwrapped
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
-    # i3lock-color
     ifuse # mount apple's file system (Ipad)
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
@@ -42,7 +40,6 @@ in
     }))
     jetbrains.datagrip
     jq # cli json processor, for some scripts (to get workspace id from i3)
-    killall # for some reason, not included by default
     microcodeIntel # for increased microprocessor performance
     nodejs
     nodePackages.npm
@@ -61,7 +58,7 @@ in
     unzip
     vlc
     vscode
-    xss-lock
+    xidlehook
     yt-dlp
 
     # polkit is the utility used by vscode to save as sudo
@@ -85,8 +82,9 @@ in
 
     # Strawberry
     strawberry
-    playerctl # to send data and retrieve metadata for polybarF
-  ] ++ import ./scripts.nix (pkgs) ++ (
+    playerctl # to send data and retrieve metadata for polybar
+
+  ] ++ import ./scripts.nix host-specific pkgs ++ (
     if host-specific.wifi then 
       [
         networkmanager
