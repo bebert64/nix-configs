@@ -81,6 +81,7 @@
       { command = "caffeine"; notification = false; }
       { command = "udiskie --tray"; notification = false; }
       { command = "autorandr --change --force"; always = true; }
+      { command = "xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &"; notification = false; }
     ] ++ (
     if host-specific.wifi then 
       [ { command = "nm-applet"; notification = false; } ] else []) ++ (

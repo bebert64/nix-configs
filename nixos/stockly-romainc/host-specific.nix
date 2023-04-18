@@ -2,7 +2,8 @@
   wifi = true;
   bluetooth = true;
   lock-before-sleep = true;
-  minutes-before-sleep = 3;
+  minutes-before-lock = 3;
+  minutes-from-lock-to-sleep = 7;
   screens = {
     screen1 = "eDP-1";
     screen2 = "HDMI-1";
