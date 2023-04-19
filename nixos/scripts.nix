@@ -124,7 +124,7 @@ host-specific: { pkgs, ...}:
       conky -d -q -c $HOME/.conky/conky-grapes/conky_gen.conkyrc
       alock -bg none
       i3-msg workspace "$wk1"
-      feh --bg-max $bg
+      feh --bg-max "$bg"
       pkill conky
       pkill xidlehook
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
@@ -143,7 +143,7 @@ host-specific: { pkgs, ...}:
       systemctl suspend
       alock -bg none
       i3-msg workspace "$wk1"
-      feh --bg-max $bg
+      feh --bg-max "$bg"
       pkill conky
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
     '')
