@@ -8,16 +8,16 @@ conky.config = {
     gap_x=60,
     gap_y=60,
     use_xft=true,
-    xftalpha=0.1,
+    xftalpha=0.3,
     update_interval=1,
     uppercase=true,
     double_buffer=true,
     own_window_argb_visual=true,
-    own_window_argb_value=100,
+    own_window_argb_value=00,
     draw_shades=true,
     default_color="ffffff",
     color1="2d2d2d",
-    font="FiraCo:size=24"
+    font="OpenDyslexicAlta Nerd Font:size=24"
 }
 
 conky.text = [[
