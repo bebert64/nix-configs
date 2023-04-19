@@ -138,7 +138,6 @@ in
   home.file.".config/rofi/theme".source = ../dotfiles/rofi/theme;
   home.file.".conkyrc".source = ../dotfiles/.conkyrc;
   home.file.".local/share/ranger/bookmarks".source = ../dotfiles/ranger/bookmarks;
-  home.file.".ssh/config".source = ../dotfiles/ssh_config;
   home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
 

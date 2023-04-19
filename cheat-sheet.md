@@ -14,12 +14,16 @@ cd ... && cp ...
 ```
 <br />
 
-## SSH Key
-- Generate with 
+## SSH
+- Generate key with 
 ```
 ssh-keygen -t ed25519
 ```
 - Copy on github account / charybdis
+- Copy original ssh by hand (so that it remains editable)
+```
+cp $HOME/configs/dotfiles/ssh_config $HOME/.ssh/config
+```
 - Might need to add this computer to general ssh config and add other keys
 <br />
 
