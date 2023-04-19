@@ -68,7 +68,7 @@
       noto-fonts
       noto-fonts-emoji
       dejavu_fonts
-      liberation_ttf
+      liberation_ttf_v1
       powerline-fonts
       font-awesome_4
       font-awesome_5
