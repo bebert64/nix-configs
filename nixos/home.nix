@@ -126,6 +126,7 @@ in
   };
 
   # Copy custom files / dotfiles
+  home.file.".anydesk/user.conf".source = ../dotfiles/anydesk-user.conf;
   home.file.".config/btop/btop.conf".source = ../dotfiles/btop.conf;
   home.file.".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
   home.file.".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;

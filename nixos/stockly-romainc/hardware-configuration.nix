@@ -30,11 +30,6 @@
     options = ["user" "users" "noexec" "noauto"];
   };
 
-  # fileSystems."$HOME/mnt/arch" = {
-  #   device = "/dev/disk/by-uuid/e5174e92-033c-4857-bbf2-7da1887ecf26";
-  #   fsType = "ext4";
-  #   options = ["user" "users" "noexec"];
-  # };
 
   # Necessary to allow non-root user to mount NAS
   security.wrappers."mount.nfs" = {
