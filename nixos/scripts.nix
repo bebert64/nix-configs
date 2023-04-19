@@ -117,13 +117,27 @@ host-specific: { pkgs, ...}:
       pkill xidlehook
       xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
-      echo $wk1
-      echo "$wk1"
       i3-msg "workspace \" \"; workspace \"  \""
       conky -d
       alock -bg none
       i3-msg workspace "$wk1"
       pkill conky
+      pkill xidlehook
+      xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
+    '')
+
+    (pkgs.writeScriptBin "sleep-conky" ''
+      #!/usr/bin/env bash
+
+      pkill xidlehook
+      xidlehook --timer 1 'systemctl suspend' ' ' &
+      wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
+      i3-msg "workspace \" \"; workspace \"  \""
+      conky -d
+      alock -bg none
+      i3-msg workspace "$wk1"
+      pkill conky
+      pkill xidlehook
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
     '')
 ]

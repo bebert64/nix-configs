@@ -96,7 +96,7 @@
 
     modes = {
       ${exit_mode} =  {
-        "s" = "exec systemctl suspend, mode default";
+        "--release s" = "exec sleep-conky, mode default";
         "r" = "exec systemctl reboot";
         "p" = "exec shutdown now";
         "l" = "exec i3-msg exit";
