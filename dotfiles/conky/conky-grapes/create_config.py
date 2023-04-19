@@ -32,7 +32,7 @@ import pathlib
 
 # Inittiating variables
 home = expanduser("~")
-working_dir = home+'/conky/conky-grapes/'
+working_dir = home+'/.conky/conky-grapes/'
 src_lua = working_dir+'rings-v2_tpl'
 dest_lua = working_dir+'rings-v2_gen.lua'
 src_conky = working_dir+'conky_tpl'
@@ -817,10 +817,9 @@ if __name__ == "__main__":
               "\n- {}\n- {} \n\nIf you add a previous conky-grapes running,"
               " the update should be instantaneous. If conky-grapes is not"
               " running, you can activate it with following command:\n"
-              "conky -q -d -c ~/conky/conky-grapes/conky_gen.conkyrc\n\n"
+              "conky -q -d -c ~/.conky/conky-grapes/conky_gen.conkyrc\n\n"
               "If it runs but text is not aligned or font is horribly wrong"
               " (and you installed required fonts), chances are you are using an"
               " old version of freetype2 (< 2.8). The '--old' option when creating"
               " your conky configuration file should address this.")
     print(msg_ok .format(dest_conky, dest_lua))
-
