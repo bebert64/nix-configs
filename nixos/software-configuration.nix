@@ -7,7 +7,11 @@
 
 { config, pkgs, flake-inputs, host-specific, ... }:
 
-{
+let
+  neuropol = import ./fonts/neuropol.nix {
+    fetchurl = pkgs.fetchurl;
+  };
+in {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.nixPath = [ "nixpkgs=${flake-inputs.nixpkgs.outPath}" ];
 
@@ -74,6 +78,7 @@
       font-awesome_5
       font-awesome
       nerdfonts
+      neuropol
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
