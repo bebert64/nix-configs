@@ -4,20 +4,20 @@ conky.config = {
     own_window_type="override",
     own_window_class="Conky",
     own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
-    alignment="top_right",
-    gap_x=60,
-    gap_y=60,
+    alignment="top_left",
+    gap_x=30,
+    gap_y=20,
     use_xft=true,
     xftalpha=0.3,
     update_interval=1,
     uppercase=true,
     double_buffer=true,
     own_window_argb_visual=true,
-    own_window_argb_value=00,
+    own_window_argb_value=0,
     draw_shades=true,
     default_color="ffffff",
-    color1="2d2d2d",
-    font="OpenDyslexicAlta Nerd Font:size=24"
+    color1="111111",
+    font="OpenDyslexicAlta Nerd Font:size=16"
 }
 
 conky.text = [[

@@ -118,7 +118,8 @@ host-specific: { pkgs, ...}:
       xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
       i3-msg "workspace \" \"; workspace \"  \""
-      conky -d
+      conky -d -q -c $HOME/.conky/qclocktwo
+      conky -d -q -c $HOME/.conky/conky-grapes/conky_gen.conkyrc
       alock -bg none
       i3-msg workspace "$wk1"
       pkill conky

@@ -136,7 +136,8 @@ in
   home.file.".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
   home.file.".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
   home.file.".config/rofi/theme".source = ../dotfiles/rofi/theme;
-  home.file.".conkyrc".source = ../dotfiles/.conkyrc;
+  home.file.".conky/qclocktwo".source = ../dotfiles/conky/qclocktwo;
+  home.file.".conky/conky-grapes".source = ../dotfiles/conky/conky-grapes;
   home.file.".local/share/ranger/bookmarks".source = ../dotfiles/ranger/bookmarks;
   home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
