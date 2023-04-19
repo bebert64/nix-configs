@@ -131,14 +131,14 @@ host-specific: { pkgs, ...}:
       #!/usr/bin/env bash
 
       pkill xidlehook
-      xidlehook --timer 1 'systemctl suspend' ' ' &
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
       i3-msg "workspace \" \"; workspace \"  \""
-      conky -d
+      conky -d -q -c $HOME/.conky/qclocktwo
+      conky -d -q -c $HOME/.conky/conky-grapes/conky_gen.conkyrc
+      systemctl suspend
       alock -bg none
       i3-msg workspace "$wk1"
       pkill conky
-      pkill xidlehook
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
     '')
 ]
