@@ -126,6 +126,7 @@ in
   };
 
   # Copy custom files / dotfiles
+  home.file.".config/btop/btop.conf".source = ../dotfiles/btop.conf;
   home.file.".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
   home.file.".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
   home.file.".config/polybar/config.ini".source = host-specific.polybar_config;
