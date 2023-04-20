@@ -26,6 +26,7 @@ in
     evince # pdf reader
     feh
     firefox-bin-unwrapped
+    gnome.gnome-calculator
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
     ifuse # mount apple's file system (Ipad)
@@ -159,6 +160,7 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
+    XDG_DATA_HOME   = "$HOME/.local/share";
   };
 
   # General settings
