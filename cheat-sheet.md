@@ -53,3 +53,13 @@ dconf dump /com/gexperts/Tilix/ > tilix.dconf
 ```
 dconf load /com/gexperts/Tilix/ < tilix.dconf
 ```
+<br />
+<br />
+
+## Add fonts
+- copy them in fonts folder inside configs
+- rebuild
+- reset font cache
+```
+fc-cache -f -v
+```
