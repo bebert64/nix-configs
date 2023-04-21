@@ -54,7 +54,7 @@ in
     sshfs
     thunderbird-bin-unwrapped
     tilix # terminal
-    udiskie # automount usb keys and drives
+    udiskie
     unrar
     unzip
     vlc
