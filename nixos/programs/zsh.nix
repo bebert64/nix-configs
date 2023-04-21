@@ -7,6 +7,7 @@
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "datagrip-tunnel" = "ssh -L 5432:localhost:5432 charybdis";
+        "wke1" = "i3-msg workspace \"\\\" \\\"\"";
     };
     history = {
         size = 200000;
