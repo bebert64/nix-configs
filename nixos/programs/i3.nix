@@ -144,5 +144,7 @@
     workspace $wse1 output ${host-specific.screens.screen1}
     set $wse2 "  "
     workspace $wse2 output  ${host-specific.screens.screen2}
+
+    workspace $ws10 gaps inner 80
   '';
 }
