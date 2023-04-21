@@ -61,10 +61,12 @@ conky.config = {
     color0 = '#165cc4',
     color1 = '#343434',
 
-	lua_load = '~/conky/conky-grapes/rings-v2_gen.lua',
+	lua_load = '~/.conky/theme1/conky-grapes/rings-v2_gen.lua',
 	lua_draw_hook_pre = 'conky_main',
 
-    diskio_avg_samples = 2
+    diskio_avg_samples = 2,
+
+    xinerama_head = 1
 };
 
 conky.text = [[

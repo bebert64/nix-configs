@@ -17,7 +17,9 @@ conky.config = {
     draw_shades=true,
     default_color="ffffff",
     color1="111111",
-    font="OpenDyslexicAlta Nerd Font:size=16"
+    font="OpenDyslexicAlta Nerd Font:size=16",
+
+    xinerama_head=1
 }
 
 conky.text = [[
