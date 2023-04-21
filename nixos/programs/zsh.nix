@@ -8,6 +8,9 @@
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "datagrip-tunnel" = "ssh -L 5432:localhost:5432 charybdis";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
+        "mount-NAS" = "mount 192.168.0.63:volume1/NAS";
+        "mount-raspy" = "sshfs raspy:/home/DonBeberto $HOME/mnt/raspy";
+        "mount-Stockly" = "sshfs charybdis:/home/romain/Stockly/Main $HOME/mnt/charybdis";
     };
     history = {
         size = 200000;

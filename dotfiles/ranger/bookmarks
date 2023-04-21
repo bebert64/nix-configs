@@ -1,8 +1,10 @@
 ':/home/romain/Downloads
 h:/home/romain
-S:/mnt/Stockly/Stockly/Main
-g:/mnt/NAS/Guitare
-n:/mnt/NAS
-s:/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
+S:/home/romain/mnt/Stockly/Stockly/Main
+g:/home/romain/mnt/NAS/Guitare
+n:/home/romain/mnt/NAS
+s:/home/romain/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
 k:/home/romain
-f:/mnt/fixe-bureau/home/romain
+f:/home/romain/mnt/fixe-bureau/home/romain
+r:/home/romain/mnt/raspy
+u:/home/romain/mnt/usb-keys

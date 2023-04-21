@@ -7,7 +7,7 @@ in
 {
 
   # Packages Home-Manager doesn't have specific handling for
-  home.packages = with pkgs; 
+  home.packages = with pkgs;
   let
     polybar = pkgs.polybar.override {
       i3Support = true;
@@ -86,7 +86,7 @@ in
     playerctl # to send data and retrieve metadata for polybar
 
   ] ++ import ./scripts.nix host-specific pkgs ++ (
-    if host-specific.wifi then 
+    if host-specific.wifi then
       [
         networkmanager
         networkmanagerapplet
@@ -161,6 +161,16 @@ in
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
     XDG_DATA_HOME   = "$HOME/.local/share";
+  };
+
+  # Activation script
+  home.activation = {
+    createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm $HOME/mnt/charybdis $HOME/mnt/raspy
+      ln -sf /mnt/NAS $HOME/mnt/
+      ln -sf /run/media/romain $HOME/mnt/usb-keys
+      ln -sf $HOME/configs/fonts $HOME/.local/share/
+    '';
   };
 
   # General settings

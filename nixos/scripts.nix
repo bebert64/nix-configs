@@ -10,25 +10,22 @@ host-specific: { pkgs, ...}:
     (pkgs.writeScriptBin "mount-Ipad" ''
       #!/usr/bin/env bash
       
-      mkdir -p /mnt/Ipad/SideBooks
-      ifuse --documents jp.tatsumi-sys.sidebooks /mnt/Ipad/SideBooks
-      mkdir -p /mnt/Ipad/Chunky
-      ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader /mnt/Ipad/Chunky
-      mkdir -p /mnt/Ipad/MangaStorm
-      ifuse --documents com.wayudaorerk.mangastormall /mnt/Ipad/MangaStorm
+      ifuse --documents jp.tatsumi-sys.sidebooks $HOME/mnt/Ipad/SideBooks
+      ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader $HOME/mnt/Ipad/Chunky
+      ifuse --documents com.wayudaorerk.mangastormall $HOME/mnt/Ipad/MangaStorm
     '')
 
     (pkgs.writeScriptBin "umount-Ipad" ''
       #!/usr/bin/env bash
 
-      fusermount -u /mnt/Ipad/SideBooks
-      fusermount -u /mnt/Ipad/Chunky
-      fusermount -u /mnt/Ipad/MangaStorm
+      fusermount -u $HOME/mnt/Ipad/SideBooks
+      fusermount -u $HOME/mnt/Ipad/Chunky
+      fusermount -u $HOME/mnt/Ipad/MangaStorm
     '')
 
     (pkgs.writeScriptBin "available-size-Ipad" ''
       #!/usr/bin/env bash
-      df /mnt/Ipad-SideBooks | grep ifuse | tr -s ' ' | cut -d ' ' -f4m
+      df $HOME/mnt/Ipad-SideBooks | grep ifuse | tr -s ' ' | cut -d ' ' -f4m
     '')
 
     (pkgs.writeScriptBin "open-code" ''
