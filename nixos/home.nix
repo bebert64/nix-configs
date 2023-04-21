@@ -166,7 +166,9 @@ in
   # Activation script
   home.activation = {
     createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm $HOME/mnt/charybdis $HOME/mnt/raspy
+      mkdir -p $HOME/mnt/fixe-bureau $HOME/mnt/fixe-salon $HOME/mnt/stockly-romainc $HOME/mnt/raspy
+      mkdir -p $HOME/mnt/charybdis
+      mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf /run/media/romain $HOME/mnt/usb-keys
       ln -sf $HOME/configs/fonts $HOME/.local/share/
