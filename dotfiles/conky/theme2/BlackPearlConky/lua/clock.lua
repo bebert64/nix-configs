@@ -56,9 +56,9 @@ settings_table = {
     bg_alpha=0.1,
     fg_colour=0xd7d7d7,
     fg_alpha=0.6,
-    x=60, y=82,
-    radius=55,
-    thickness=3,
+    x=140, y=140,
+    radius=110,
+    thickness=6,
     start_angle=0,
     end_angle=360
   },
@@ -70,9 +70,9 @@ settings_table = {
     bg_alpha=0.1,
     fg_colour=0xd7d7d7,
     fg_alpha=0.6,
-    x=60, y=82,
-    radius=44,
-    thickness=10,
+    x=140, y=140,
+    radius=88,
+    thickness=20,
     start_angle=0,
     end_angle=360
   },
@@ -84,9 +84,9 @@ settings_table = {
     bg_alpha=0.1,
     fg_colour=0xd7d7d7,
     fg_alpha=0.6,
-    x=60, y=82,
-    radius=34,
-    thickness=3,
+    x=140, y=140,
+    radius=68,
+    thickness=6,
     start_angle=0,
     end_angle=360
   },
@@ -98,9 +98,9 @@ settings_table = {
     bg_alpha=0.1,
     fg_colour=0xd7d7d7,
     fg_alpha=0.6,
-    x=105, y=247,
-    radius=35,
-    thickness=3,
+    x=205, y=437,
+    radius=70,
+    thickness=6,
     start_angle=0,
     end_angle=360
   },
@@ -112,9 +112,9 @@ settings_table = {
     bg_alpha=0.1,
     fg_colour=0xd7d7d7,
     fg_alpha=0.6,
-    x=155, y=348,
-    radius=40,
-    thickness=5,
+    x=304, y=609,
+    radius=80,
+    thickness=10,
     start_angle=0,
     end_angle=360
   },
@@ -132,70 +132,70 @@ settings_table = {
 --    start_angle=0,
 --    end_angle=360
 --  },
-{
-    name='memperc',
-    arg='/',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=105, y=496,
-    radius=58,
-    thickness=3,
-    start_angle=0,
-    end_angle=360
-  },
-{
-    name='fs_used_perc',
-    arg='/',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=105, y=496,
-    radius=50,
-    thickness=5,
-    start_angle=0,
-    end_angle=360
-  },
-{
-    name='fs_used_perc',
-    arg='/var',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=105, y=496,
-    radius=43,
-    thickness=3,
-    start_angle=0,
-    end_angle=360
-  },
-{
-    name='fs_used_perc',
-    arg='/home',
-    max=100,
-    bg_colour=0xffffff,
-    bg_alpha=0.1,
-    fg_colour=0xd7d7d7,
-    fg_alpha=0.6,
-    x=105, y=496,
-    radius=36,
-    thickness=5,
-    start_angle=0,
-    end_angle=360
-  },
+-- -- -- {
+-- -- --     name='memperc',
+-- -- --     arg='/',
+-- -- --     max=100,
+-- -- --     bg_colour=0xffffff,
+-- -- --     bg_alpha=0.1,
+-- -- --     fg_colour=0xd7d7d7,
+-- -- --     fg_alpha=0.6,
+-- -- --     x=105, y=496,
+-- -- --     radius=58,
+-- -- --     thickness=3,
+-- -- --     start_angle=0,
+-- -- --     end_angle=360
+-- -- --   },
+-- -- -- {
+-- -- --     name='fs_used_perc',
+-- -- --     arg='/',
+-- -- --     max=100,
+-- -- --     bg_colour=0xffffff,
+-- -- --     bg_alpha=0.1,
+-- -- --     fg_colour=0xd7d7d7,
+-- -- --     fg_alpha=0.6,
+-- -- --     x=105, y=496,
+-- -- --     radius=50,
+-- -- --     thickness=5,
+-- -- --     start_angle=0,
+-- -- --     end_angle=360
+-- -- --   },
+-- -- -- {
+-- -- --     name='fs_used_perc',
+-- -- --     arg='/var',
+-- -- --     max=100,
+-- -- --     bg_colour=0xffffff,
+-- -- --     bg_alpha=0.1,
+-- -- --     fg_colour=0xd7d7d7,
+-- -- --     fg_alpha=0.6,
+-- -- --     x=105, y=496,
+-- -- --     radius=43,
+-- -- --     thickness=3,
+-- -- --     start_angle=0,
+-- -- --     end_angle=360
+-- -- --   },
+-- -- -- {
+-- -- --     name='fs_used_perc',
+-- -- --     arg='/home',
+-- -- --     max=100,
+-- -- --     bg_colour=0xffffff,
+-- -- --     bg_alpha=0.1,
+-- -- --     fg_colour=0xd7d7d7,
+-- -- --     fg_alpha=0.6,
+-- -- --     x=105, y=496,
+-- -- --     radius=36,
+-- -- --     thickness=5,
+-- -- --     start_angle=0,
+-- -- --     end_angle=360
+-- -- --   },
 }
 
 --Use these settings to define the origin and extent of your clock.
-  clock_r=50
+  clock_r=100
 
 --Coordinates of the centre of the clock, in pixels, from the top left of the Conky window.
-  clock_x=60
-  clock_y=82
+  clock_x=140
+  clock_y=140
 
 --Colour & alpha of the clock hands
   clock_colour=0xffffff
