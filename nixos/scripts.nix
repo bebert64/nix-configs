@@ -116,16 +116,16 @@ host-specific: { pkgs, ...}:
 
       pkill xidlehook
       xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
-      wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
-      bg=$(cat $HOME/.fehbg | grep feh | cut -d "'" -f 2)
-      feh --bg-fill $HOME/.conky/theme1/conky_bg.jpg
+      wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | head -1)
+      wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
+      feh --no-fehbg --bg-fill $HOME/.conky/theme1/conky_bg.jpg
       i3-msg "workspace \" \"; workspace \"  \""
       conky -d -q -c $HOME/.conky/theme1/qclocktwo
       conky -d -q -c $HOME/.conky/theme1/conky-grapes/conky_gen.conkyrc
       alock -bg none
       i3-msg workspace "$wk1"
-      echo $bg
-      feh --bg-max "$bg"
+      i3-msg workspace "$wk2"
+      $HOME/.fehbg
       pkill conky
       pkill xidlehook
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
