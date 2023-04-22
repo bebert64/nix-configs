@@ -15,7 +15,7 @@ conky.config = {
     own_window_argb_visual=true,
     own_window_argb_value=0,
     draw_shades=true,
-    default_color="ffffff",
+    default_color="DBB694",
     color1="333333",
     font="OpenDyslexicAlta Nerd Font:size=18",
 
