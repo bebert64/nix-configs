@@ -118,33 +118,37 @@ host-specific: { pkgs, ...}:
             esac
       done
 
+      THEME="theme3"
+
+      # Prepare screen
       pkill xidlehook
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | head -1)
       wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
       i3-msg "workspace \" \"; workspace \"  \""
-      feh --no-fehbg --bg-fill $HOME/.conky/theme1/conky_bg.jpg
-      conky -d -q -c $HOME/.conky/theme1/qclocktwo
-      conky -d -q -c $HOME/.conky/theme1/conky-grapes/conky_gen.conkyrc
+      $HOME/.conky/$THEME3/launch.sh
       # xrandr --output eDP-1 --brightness 0
 
+      # Sleep or prepare to sleep
       if [ $sleep ]; then
             systemctl suspend
       else
-            echo nothing
             xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
       fi
       
+      # Lock
       alock -bg none
 
+      # Wake up
       if [ ! $sleep ]; then
             pkill xidlehook
       fi
 
+      # Revert to original config
       i3-msg workspace "$wk1"
       i3-msg workspace "$wk2"
       $HOME/.fehbg
       pkill conky
-      # xrandr --output eDP-1 --brightness 1
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
+      # xrandr --output eDP-1 --brightness 1
     '')
 ]
