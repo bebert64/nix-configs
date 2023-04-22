@@ -19,7 +19,7 @@ conky.config = {
     color1="333333",
     font="OpenDyslexicAlta Nerd Font:size=18",
 
-    xinerama_head=0
+    xinerama_head=1
 }
 
 conky.text = [[
