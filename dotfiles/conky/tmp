@@ -1,0 +1,2 @@
+qdbus org.mpris.MediaPlayer2.strawberry /org/mpris/MediaPlayer2 Metadata | grep artUrl | sed -e 's#.*file://\(\)#\1#'
+qdbus can be found inside qt6.qttools (to add to general config)

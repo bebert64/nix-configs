@@ -16,10 +16,6 @@
         {
             "name": "Oui FM",
             "url": "http://ouifm.ice.infomaniak.ch/ouifm-high.mp3"
-        },
-        {
-            "name": "Classic FM",
-            "url": "http://media-ice.musicradio.com/ClassicFMMP3"
         }
     ]
 }

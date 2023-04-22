@@ -109,40 +109,42 @@ host-specific: { pkgs, ...}:
     '')
 
     (pkgs.writeScriptBin "lock-conky" ''
-      #!/usr/bin/env bash
+    #!/usr/bin/env bash
+
+      while getopts "s" opt; do
+            case $opt in
+                  s) sleep=true;;
+                  \?) echo "Invalid option. To sleep, use -s";;
+            esac
+      done
 
       pkill xidlehook
-      xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | head -1)
       wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
-      feh --no-fehbg --bg-fill $HOME/.conky/theme1/conky_bg.jpg
       i3-msg "workspace \" \"; workspace \"  \""
+      feh --no-fehbg --bg-fill $HOME/.conky/theme1/conky_bg.jpg
       conky -d -q -c $HOME/.conky/theme1/qclocktwo
       conky -d -q -c $HOME/.conky/theme1/conky-grapes/conky_gen.conkyrc
+      # xrandr --output eDP-1 --brightness 0
+
+      if [ $sleep ]; then
+            systemctl suspend
+      else
+            echo nothing
+            xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
+      fi
+      
       alock -bg none
+
+      if [ ! $sleep ]; then
+            pkill xidlehook
+      fi
+
       i3-msg workspace "$wk1"
       i3-msg workspace "$wk2"
       $HOME/.fehbg
       pkill conky
-      pkill xidlehook
-      xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
-    '')
-
-    (pkgs.writeScriptBin "sleep-conky" ''
-      #!/usr/bin/env bash
-
-      pkill xidlehook
-      wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name')
-      bg=$(cat $HOME/.fehbg | grep Wallpapers | cut -d "'" -f 2)
-      feh --bg-fill $HOME/.conky/conky_bg.jpg
-      i3-msg "workspace \" \"; workspace \"  \""
-      conky -d -q -c $HOME/.conky/qclocktwo
-      conky -d -q -c $HOME/.conky/conky-grapes/conky_gen.conkyrc
-      systemctl suspend
-      alock -bg none
-      i3-msg workspace "$wk1"
-      feh --bg-max "$bg"
-      pkill conky
+      # xrandr --output eDP-1 --brightness 1
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
     '')
 ]

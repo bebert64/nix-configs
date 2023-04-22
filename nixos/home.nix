@@ -173,6 +173,9 @@ in
       rm -f $HOME/Mnt/Usb-drives
       ln -sf /run/media/romain $HOME/Mnt/Usb-drives
       ln -sf $HOME/configs/fonts $HOME/.local/share/
+
+      # load terminal theme
+      dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
     '';
   };
 
