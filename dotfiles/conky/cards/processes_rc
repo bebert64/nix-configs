@@ -8,7 +8,7 @@ conky.config = {
 	imlib_cache_size = 0,
 	total_run_times = 0,
 	own_window = true,
-	own_window_type = 'dock',
+	own_window_type = 'override',
 --own_window_transparent yes
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 	own_window_argb_visual = true,
@@ -23,8 +23,8 @@ conky.config = {
 	default_color = '#101010',
 	default_shade_color = '#101010',
 	alignment = 'top_left',
-	gap_x = 320,
-	gap_y = 350,
+	gap_x = 50,
+	gap_y = 320,
 	no_buffers = true,
 	cpu_avg_samples = 1,
 	uppercase = false,
@@ -34,6 +34,8 @@ conky.config = {
 	color1 = '#96A0DF',
 	color2 = '#aaa',
 	color3 = '#ddd',
+
+	xinerama_head = 1,
 
 };
 

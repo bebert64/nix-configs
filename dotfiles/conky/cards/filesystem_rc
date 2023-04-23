@@ -3,12 +3,12 @@ conky.config = {
 	font = 'sans:size=10',
 --xftfont sans:size=10
 	use_xft = true,
-	xftalpha = 0.9,
+	xftalpha = 0.3,
 	update_interval = 2,
 	imlib_cache_size = 0,
 	total_run_times = 0,
 	own_window = true,
-	own_window_type = 'dock',
+	own_window_type = 'override',
 --own_window_transparent yes
 	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
 	own_window_argb_visual = true,
@@ -25,7 +25,7 @@ conky.config = {
 	default_outline_color = 'green',
 	alignment = 'top_left',
 	gap_x = 320,--40
-	gap_y = 200,--40
+	gap_y = 320,--40
 	no_buffers = true,
 	cpu_avg_samples = 1,
 	uppercase = false,
@@ -35,6 +35,8 @@ conky.config = {
 	color1 = '#96A0DF',
 	color2 = '#aaa',
 	color3 = '#ddd',
+
+	xinerama_head = 1,
 
 };
 

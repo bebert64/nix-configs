@@ -9,3 +9,5 @@ feh --no-fehbg --bg-fill "$SCRIPT_DIR/wallpapers/$WALLPAPER"
 
 conky -c $SCRIPT_DIR/filesystem_rc -d
 conky -c $SCRIPT_DIR/processes_rc -d
+conky -c $SCRIPT_DIR/music_rc -d
+conky -c $SCRIPT_DIR/qclocktwo -d
