@@ -125,6 +125,7 @@ host-specific: { pkgs, ...}:
       pkill polybar
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | head -1)
       wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
+      i3-msg "workspace \" \"; workspace \"  \""
       $HOME/.conky/$THEME/launch.sh
       # xrandr --output eDP-1 --brightness 0
 

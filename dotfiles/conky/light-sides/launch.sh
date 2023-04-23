@@ -9,5 +9,4 @@ i3-msg "workspace \" \"; workspace \"  \""
 pkill conky  
 feh --no-fehbg --bg-fill "$SCRIPT_DIR/wallpapers/$WALLPAPER"
 
-$HOME/configs/dotfiles/conky/light-sides/create_blur_patches.sh &
-# $SCRIPT_DIR/create_blur_patches.sh &
+$SCRIPT_DIR/create_blur_patches.sh &
