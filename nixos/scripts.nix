@@ -118,15 +118,17 @@ host-specific: { pkgs, ...}:
             esac
       done
 
-      THEME="theme3"
+      THEME=$(ls $HOME/.conky/ | sort -R | tail -1)
 
       # Prepare screen
       pkill xidlehook
+      pkill polybar
       wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | head -1)
       wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
       i3-msg "workspace \" \"; workspace \"  \""
       $HOME/.conky/$THEME/launch.sh
       # xrandr --output eDP-1 --brightness 0
+
 
       # Sleep or prepare to sleep
       if [ $sleep ]; then
@@ -136,7 +138,7 @@ host-specific: { pkgs, ...}:
       fi
       
       # Lock
-      alock -bg none
+      alock -bg none -cursor blank
 
       # Wake up
       if [ ! $sleep ]; then
@@ -148,6 +150,7 @@ host-specific: { pkgs, ...}:
       i3-msg workspace "$wk2"
       $HOME/.fehbg
       pkill conky
+      $HOME/.config/polybar/launch.sh
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
       # xrandr --output eDP-1 --brightness 1
     '')
