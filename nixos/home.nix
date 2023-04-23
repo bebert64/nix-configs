@@ -63,6 +63,11 @@ in
     xidlehook
     yt-dlp
 
+    # imagemagick and scrot are used for image manipulation
+    # to create the blur patches behind the conky widgets
+    imagemagick
+    scrot
+
     # polkit is the utility used by vscode to save as sudo
     polkit
     polkit_gnome
