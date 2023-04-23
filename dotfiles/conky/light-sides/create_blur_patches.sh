@@ -14,7 +14,8 @@
 #scrot position x = conky gap_x - border_outer_margin
 #scrot position y = conky gap_y - border_outer_margin
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+WKDIR=$HOME/.create-blur-patch-tmp/
+mkdir -p $WKDIR
 
 BOM=1
 SRW=300
@@ -26,16 +27,17 @@ SPX=$(( $GAPX - $BOM ))
 SPY=$(( $GAPY - $BOM ))
 AREA=$(echo "$SRW""x""$SRH""+"$SPX"+""$SPY")
 
-scrot $SCRIPT_DIR/temp1.png
-convert $SCRIPT_DIR/temp1.png -region $AREA -blur 0x10 +region $SCRIPT_DIR/temp2.png
-convert -brightness-contrast -5x0 $SCRIPT_DIR/temp2.png $SCRIPT_DIR/temp3.png
-rm $SCRIPT_DIR/blur-patch-1.png
-convert $SCRIPT_DIR/temp3.png -crop $AREA $SCRIPT_DIR/blur-patch-1.png
+rm -rf $WKDIR/scrot.png
+scrot $WKDIR/scrot.png
 
-rm $SCRIPT_DIR/temp1.png
-rm $SCRIPT_DIR/temp2.png
-rm $SCRIPT_DIR/temp3.png
+rm -rf $WKDIR/clock_crop.png
+convert $WKDIR/scrot.png -crop $AREA $WKDIR/clock_crop.png
 
+rm -rf $WKDIR/clock_dark.png
+convert -brightness-contrast -5x0 $WKDIR/clock_crop.png $WKDIR/clock_dark.png
+
+rm -f $WKDIR/clock-final-patch.png
+convert $WKDIR/clock_dark.png -blur 0x10 $WKDIR/clock-final-patch.png
 
 #Metrics
 #scrot region width = conky maximum_size width
@@ -53,13 +55,18 @@ SPX=$(( $GAPX - $BOM ))
 SPY=$(( $GAPY - $BOM ))
 AREA=$(echo "$SRW""x""$SRH""+"$SPX"+""$SPY")
 
-scrot $SCRIPT_DIR/temp1.png
-convert $SCRIPT_DIR/temp1.png -region $AREA -blur 0x10 +region $SCRIPT_DIR/temp2.png
-convert -brightness-contrast -5x0 $SCRIPT_DIR/temp2.png $SCRIPT_DIR/temp3.png
-convert $SCRIPT_DIR/temp3.png -crop $AREA $SCRIPT_DIR/blur-patch-2.png
+rm -rf $WKDIR/info_crop.png
+convert $WKDIR/scrot.png -crop $AREA $WKDIR/info_crop.png
 
-rm $SCRIPT_DIR/temp1.png
-rm $SCRIPT_DIR/temp2.png
-rm $SCRIPT_DIR/temp3.png
+rm -rf $WKDIR/info_dark.png
+convert -brightness-contrast -5x0 $WKDIR/info_crop.png $WKDIR/info_dark.png
+
+rm -f $WKDIR/info-final-patch.png
+convert $WKDIR/info_dark.png -blur 0x10 $WKDIR/info-final-patch.png
+
+# Launch conky scripts
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+conky -c $SCRIPT_DIR/qclocktwo -d
+conky -c $SCRIPT_DIR/Zavijava-v1.6/Zavijava/Zavijava.conf ./ -d
 
 exit
