@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-WALLPAPER_NUM=$(shuf -i 1-4 -n 1)
+WALLPAPER=$(ls $SCRIPT_DIR/wallpapers | sort -R | tail -1)
 
-echo "launching"
+echo  $SCRIPT_DIR/wallpapers/$WALLPAPER
+
 pkill conky  
-feh --no-fehbg --bg-fill $SCRIPT_DIR/conky_bg$WALLPAPER_NUM.jpg
+feh --no-fehbg --bg-fill $SCRIPT_DIR/wallpapers/$WALLPAPER
 conky -c $SCRIPT_DIR/qclocktwo -d
-echo "clock done"
 conky -c $SCRIPT_DIR/Zavijava-v1.6/Zavijava/Zavijava.conf ./ -d
-echo "done"
