@@ -1,5 +1,5 @@
 conky.config = {
-    background=false,
+    background=true,
     own_window=true,
     own_window_type="override",
     own_window_class="Conky",
@@ -13,20 +13,22 @@ conky.config = {
     uppercase=true,
     double_buffer=true,
     own_window_argb_visual=true,
-    own_window_argb_value=200,
+    own_window_argb_value=255,
     draw_shades=true,
-    default_color="DBB694",
+    default_color="D36730",
     color1="333333",
     font="OpenDyslexicAlta Nerd Font:size=18",
     border_outer_margin=0,
-    maximum_width=300,
-    minimum_height=400,
+    minimum_width=280,
+    maximum_width=280,
+    minimum_height=200,
+    maximum_height=200,
 
-    xinerama_head=0
+    xinerama_head=1
 }
 
 conky.text = [[
-${image ~/configs/dotfiles/conky/light-sides/blur-patch.png -p -1,-1}
+${image ~/configs/dotfiles/conky/light-sides/blur-patch-1.png -p -1,-1 } \
 ${alignc}${color}I T ${color1}L ${color}I S ${color1}A S T I M E
 ${alignc}${if_match ${exec date +"%M"} < 35}${if_match ${exec date +"%M"} >= 15}${if_match ${exec date +"%M"} < 20}${color}${endif}${endif}A ${color1}C ${if_match ${exec date +"%M"} >= 15}${if_match ${exec date +"%M"} < 20}${color}${endif}${endif}Q U A R T E R ${color1}D C
 ${alignc}${if_match ${exec date +"%M"} >= 20}${if_match ${exec date +"%M"} < 30}${color}${endif}${endif}T W E N T Y ${if_match ${exec date +"%M"} >= 25}${if_match ${exec date +"%M"} < 30}${color}${endif}${else}${color1}${endif}${if_match ${exec date +"%M"} >= 5}${if_match ${exec date +"%M"} < 10}${color}${endif}${endif}F I V E ${color1}X

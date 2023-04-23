@@ -9,7 +9,7 @@ i3-msg "workspace \" \"; workspace \"  \""
 pkill conky  
 feh --no-fehbg --bg-fill "$SCRIPT_DIR/wallpapers/$WALLPAPER"
 
-$SCRIPT_DIR/blur.sh
+$SCRIPT_DIR/create_blur_patches.sh
 
 conky -c $SCRIPT_DIR/qclocktwo -d
-# conky -c $SCRIPT_DIR/Zavijava-v1.6/Zavijava/Zavijava.conf ./ -d
+conky -c $SCRIPT_DIR/Zavijava-v1.6/Zavijava/Zavijava.conf ./ -d
