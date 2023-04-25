@@ -28,12 +28,12 @@
         };
         hooks.postswitch = ''
           echo "
-pkill polybar \
-while pgrep -u $UID -x polybar > /dev/null \
+pkill polybar; \
+while pgrep -u $UID -x polybar > /dev/null; \
   do sleep 1; \
 done; \
 \
-polybar eDP1-tray-on -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown \
+polybar eDP1-tray-on -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
 \
           " > $HOME/.config/polybar/launch.sh
           chmod +x $HOME/.config/polybar/launch.sh
