@@ -121,13 +121,16 @@ in
 
   # Services
   services = {
-    picom = {
+    picom-jonaburg = {
       enable = true;
       settings = {
         corner-radius = 10;
         rounded-corners-exclude = [
            "window_type = 'dock'"
         ];
+    Mettre un if iGPU, etc...
+        # backend = "glx";
+            
       };
     };
   };
