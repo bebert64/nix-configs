@@ -121,17 +121,17 @@ in
 
   # Services
   services = {
-    picom-jonaburg = {
-      enable = true;
-      settings = {
-        corner-radius = 10;
-        rounded-corners-exclude = [
-           "window_type = 'dock'"
-        ];
-        # backend = "glx";
+    # picom-jonaburg = {
+    #   enable = true;
+    #   settings = {
+    #     corner-radius = 10;
+    #     rounded-corners-exclude = [
+    #        "window_type = 'dock'"
+    #     ];
+    #     # backend = "glx";
             
-      };
-    };
+    #   };
+    # };
   };
 
   # Copy custom files / dotfiles
