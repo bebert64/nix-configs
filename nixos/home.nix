@@ -128,7 +128,6 @@ in
         rounded-corners-exclude = [
            "window_type = 'dock'"
         ];
-    Mettre un if iGPU, etc...
         # backend = "glx";
             
       };
