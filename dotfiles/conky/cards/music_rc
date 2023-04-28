@@ -39,7 +39,7 @@ conky.config = {
 -- Lua --
     lua_load = '~/configs/dotfiles/conky/cards/scripts.lua',
 
-	xinerama_head = 1,
+	xinerama_head = 0,
 
 };
 

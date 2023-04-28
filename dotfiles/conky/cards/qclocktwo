@@ -21,7 +21,7 @@ conky.config = {
     font="OpenDyslexicAlta Nerd Font:size=24",
     border_outer_margin=0,
 
-    xinerama_head=1
+    xinerama_head=0
 }
 
 conky.text = [[

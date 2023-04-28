@@ -35,7 +35,7 @@ conky.config = {
 	color2 = '#aaa',
 	color3 = '#ddd',
 
-	xinerama_head = 1,
+	xinerama_head = 0,
 
 };
 

@@ -54,13 +54,13 @@ polybar eDP1-tray-on -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /t
             crtc = 0;
             mode = "1920x1080";
             position = "0x360";
-            primary = true;
             rate = "120.00";
           };
           "HDMI-1" = {
             enable = true;
             crtc = 1;
             mode = "2560x1440";
+            primary = true;
             position = "1920x0";
             rate = "59.95";
           };
@@ -94,11 +94,11 @@ polybar eDP1-tray-off -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /
             crtc = 0;
             mode = "1920x1080";
             position = "2560x360";
-            primary = true;
             rate = "120.00";
           };
           "HDMI-1" = {
             enable = true;
+            primary = true;
             crtc = 1;
             mode = "2560x1440";
             position = "0x0";
