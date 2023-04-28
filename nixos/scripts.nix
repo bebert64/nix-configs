@@ -119,6 +119,7 @@ host-specific: { pkgs, ...}:
       done
 
       THEME=$(ls $HOME/.conky/ | sort -R | tail -1)
+      SCREEN_OFF=$(xrandr --query | grep connected | grep -v primary | cut -d ' ' -f 1  )
 
       # Prepare screen
       pkill xidlehook
@@ -127,7 +128,7 @@ host-specific: { pkgs, ...}:
       wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
       i3-msg "workspace \" \"; workspace \"  \""
       $HOME/.conky/$THEME/launch.sh
-      # xrandr --output eDP-1 --brightness 0
+      xrandr --output $SCREEN_OFF --brightness 0
 
 
       # Sleep or prepare to sleep
@@ -152,6 +153,6 @@ host-specific: { pkgs, ...}:
       pkill conky
       $HOME/.config/polybar/launch.sh
       xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
-      # xrandr --output eDP-1 --brightness 1
+      xrandr --output $SCREEN_OFF --brightness 1
     '')
 ]
