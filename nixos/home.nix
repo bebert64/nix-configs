@@ -92,7 +92,7 @@ in
     playerctl # to send data and retrieve metadata for polybar
 
     # Test, to remove
-    picom-jonaburg
+    picom-next
 
   ] ++ import ./scripts.nix host-specific pkgs ++ (
     if host-specific.wifi then

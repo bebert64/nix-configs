@@ -78,6 +78,7 @@
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; }
 
       { command = "caffeine"; notification = false; }
+      { command = "picom"; notification = false; }
       { command = "udiskie --tray"; notification = false; }
       { command = "autorandr --change --force"; always = true; }
       { command = "xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &"; notification = false; }
