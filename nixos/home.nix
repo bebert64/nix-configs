@@ -86,6 +86,10 @@ in
     rustup
     pkg-config
     gcc
+    # openssl
+    # openssl.dev
+    # libiconv
+    # pkgconfig
 
     # Strawberry
     strawberry
