@@ -29,7 +29,6 @@ in
     gnome.gnome-calculator
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
-    ifuse # mount apple's file system (Ipad)
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
       pname = "insomnia-stockly";
@@ -67,6 +66,10 @@ in
     # to create the blur patches behind the conky widgets
     imagemagick
     scrot
+
+    # Needed to mount Ipad
+    ifuse
+    libimobiledevice
 
     # polkit is the utility used by vscode to save as sudo
     polkit

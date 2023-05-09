@@ -48,7 +48,10 @@ in {
     # xkbOptions = "caps:swapescape";
   };
 
-  services.udisks2.enable = true; # automount usb keys and drives
+  services = {
+    udisks2.enable = true;  # automount usb keys and drives
+    usbmuxd.enable = true;  # used to mount Ipad
+  };
 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
