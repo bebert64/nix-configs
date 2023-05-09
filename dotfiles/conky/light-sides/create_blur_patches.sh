@@ -43,6 +43,7 @@ convert -brightness-contrast -5x0 $WKDIR/clock_crop.png $WKDIR/clock_dark.png
 
 rm -f $WKDIR/clock-final-patch.png
 convert $WKDIR/clock_dark.png -blur 0x10 $WKDIR/clock-final-patch.png
+conky -c $SCRIPT_DIR/qclocktwo -d
 
 ## Infos + Music
 # Metrics
@@ -69,7 +70,6 @@ convert $WKDIR/info_dark.png -blur 0x10 $WKDIR/info-final-patch.png
 
 # Launch conky scripts
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-conky -c $SCRIPT_DIR/qclocktwo -d
 conky -c $SCRIPT_DIR/Zavijava-v1.6/Zavijava/Zavijava.conf ./ -d
 
 exit

@@ -1,9 +1,19 @@
 function conky_myimg()
-    local handle = io.popen([[qdbus org.mpris.MediaPlayer2.strawberry /org/mpris/MediaPlayer2 Metadata | grep artUrl | sed -e 's#.*file://\(\)#\1#']])
-    local path = handle:read("*a")
+    local handle = io.popen([[is-music-playing]])
+    local is_playing = handle:read("*a")
     handle:close()
-    local s = "${image "..path.." -s 200x200 -p 10,10}";
-    return s;
+    if ""..is_playing.."" == "true" then
+        -- local handle = io.popen([[qdbus org.mpris.MediaPlayer2.strawberry /org/mpris/MediaPlayer2 Metadata | grep artUrl | sed -e 's#.*file://\(\)#\1#']])
+        -- local path = handle:read("*a")
+        -- handle:close()
+        -- local s = "${image "..path.." -s 200x200 -p 10,10}\n${voffset 30}${offset 240}${color1}${font Open Sans:style=SemiBold:size=25}${lua_parse conky_artist}\n${offset 240}${color1}${font Open Sans:style=SemiBold:size=25}${lua_parse conky_title}";
+        local s = "playing";
+        return s;
+    else
+        local s = ""..is_playing.."";
+        return s;
+    end
+    
 end
 
 function conky_artist()

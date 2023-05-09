@@ -24,8 +24,8 @@ conky.config = {
 	default_shade_color = '#101010',
 	default_outline_color = 'green',
 	alignment = 'top_left',
-	gap_x = 320,--40
-	gap_y = 320,--40
+	gap_x = 320,
+	gap_y = 320,
 	no_buffers = true,
 	cpu_avg_samples = 1,
 	uppercase = false,
@@ -36,8 +36,8 @@ conky.config = {
 	color2 = '#aaa',
 	color3 = '#ddd',
 
+--screen
 	xinerama_head = 0,
-
 };
 
 conky.text = [[
@@ -46,4 +46,5 @@ ${font Oswald:bold:size=10}${color1}FILESYSTEM ${color2} ${hr 2}
 ${color3}${font Open Sans:size=9}Root: ${alignr}${fs_used_perc /}%  ${color1}${fs_bar 6, 140 /} 
 ${color3}${font Open Sans:pixelsize=9}${alignc 49}Size: ${fs_used /} / ${fs_size /}
 ${color3}${font Open Sans:size=9}Home: ${alignr}${fs_used_perc /home}%  ${color1}${fs_bar 6, 140 /home} 
-${color3}${font Open Sans:pixelsize=9}${alignc 49}Size: ${fs_used /home} / ${fs_size /home}]];
+${color3}${font Open Sans:pixelsize=9}${alignc 49}Size: ${fs_used /home} / ${fs_size /home}
+]];

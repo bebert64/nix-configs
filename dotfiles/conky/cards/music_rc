@@ -25,7 +25,7 @@ conky.config = {
 	default_shade_color = '#101010',
 	alignment = 'top_left',
 	gap_x = 50,
-	gap_y = 50,
+	gap_y = 60,
 	no_buffers = true,
 	cpu_avg_samples = 1,
 	uppercase = false,
@@ -45,7 +45,4 @@ conky.config = {
 
 conky.text = [[
 ${lua_parse conky_myimg}
-
-${voffset 30}${offset 240}${color1}${font Open Sans:style=SemiBold:size=25}${lua_parse conky_artist}\
-${offset 240}${color1}${font Open Sans:style=SemiBold:size=25}${lua_parse conky_title}
 ]];
