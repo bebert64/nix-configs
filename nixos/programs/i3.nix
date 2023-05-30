@@ -56,10 +56,10 @@
       "--release ${modifier}+o" = "exec lock-conky";
 
       # Starting apps
-      "${modifier}+Control+f" = "workspace $ws2; exec firefox";
+      "${modifier}+Control+f" = "workspace $ws2; exec firefox -P Regular";
       "${modifier}+Control+v" = "workspace $ws3; exec code";
       "${modifier}+Control+l" = "workspace $ws4; exec slack";
-      "${modifier}+Control+t" = "workspace $ws5; exec thunderbird";
+      "${modifier}+Control+t" = "workspace $ws5; exec thunderbird -P Regular";
       "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
       "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
