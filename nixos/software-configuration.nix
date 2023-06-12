@@ -23,6 +23,7 @@
     isNormalUser = true;
     description = "romain";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    password = "";
   };
   home-manager.users.romain = import ./home.nix host-specific;
   users.mutableUsers = true;
