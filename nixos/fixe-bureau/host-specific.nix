@@ -6,6 +6,7 @@
   minutes-from-lock-to-sleep = 30;
   screens = {
     screen1 = "HDMI-1";
+    screen2 = "eDP1";
   };
   polybar_config = ./polybar_config.ini;
   autorandr = {
