@@ -7,9 +7,7 @@
 
 { config, pkgs, flake-inputs, host-specific, ... }:
 
-let
-  neuropol = pkgs.callPackage ./fonts/neuropol.nix { };
-in {
+{
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.nixPath = [ "nixpkgs=${flake-inputs.nixpkgs.outPath}" ];
 
