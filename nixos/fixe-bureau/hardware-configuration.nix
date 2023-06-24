@@ -13,20 +13,21 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9b56cfc3-18fd-407e-9a81-bf3d5dfdd32f";
-    fsType = "ext4";
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/9ffc745c-4af3-4518-8abd-f7a478b543b3";
+      fsType = "ext4";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/B510-827F";
-    fsType = "vfat";
-  };
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/07B1-E7F2";
+      fsType = "vfat";
+    };
+
 
   fileSystems."/mnt/NAS" = {
     device = "192.168.0.63:volume1/NAS";
     fsType = "nfs";
-    options = ["user" "users" "noexec"];
+    options = ["user" "users" "noexec" "noauto"];
   };
 
   # Necessary to allow non-root user to mount NAS
@@ -37,11 +38,7 @@
     source = "${pkgs.nfs-utils.out}/bin/mount.nfs";
   };
 
-  swapDevices = [ 
-    { 
-      device = "/dev/disk/by-uuid/b044e0eb-9802-4ba7-8edb-099a69d31caa"; 
-    }
-  ];
+  swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -53,5 +50,5 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display
-  # hardware.video.hidpi.enable = lib.mkDefault true;
+#  hardware.video.hidpi.enable = lib.mkDefault true;
 }
