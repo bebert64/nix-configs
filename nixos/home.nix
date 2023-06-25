@@ -93,7 +93,7 @@ in
     pkg-config
     gcc
     openssl
-    libpqxxx
+    libpqxx
     # openssl.dev
     # libiconv
     # pkgconfig
