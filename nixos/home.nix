@@ -88,8 +88,8 @@ in
 
     # Rust
     cargo
-    rustc
-    rustup
+    # rustc
+    # rustup
     pkg-config
     gcc
     openssl
