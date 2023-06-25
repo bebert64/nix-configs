@@ -45,6 +45,7 @@ in
     nodePackages.npm
     pavucontrol # pulse audio volume controle
     polybar
+    postgresql
     qbittorrent
     qt6.qttools # needed to extract artUrl from strawberry and display it with conky
     rofi
@@ -86,10 +87,13 @@ in
     poppler_utils # thumbnail for pdf preview
 
     # Rust
+    cargo
+    rustc
     rustup
     pkg-config
     gcc
-    # openssl
+    openssl
+    libpqxxx
     # openssl.dev
     # libiconv
     # pkgconfig
