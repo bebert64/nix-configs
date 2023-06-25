@@ -33,6 +33,7 @@
             cd "$HOME/stockly/Main/$@"
         }
         compdef '_files -W "$HOME/stockly/Main" -/' cdr
+        path+="$HOME/.cargo/bin"
     '';
     plugins = [
         {

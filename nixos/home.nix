@@ -87,9 +87,7 @@ in
     poppler_utils # thumbnail for pdf preview
 
     # Rust
-    cargo
-    # rustc
-    # rustup
+    rustup
     pkg-config
     gcc
     openssl
