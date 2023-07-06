@@ -27,7 +27,7 @@
         custom = "~/.config/oh-my-zsh-scripts";
     };
     enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     initExtra = ''
         cdr() {
             cd "$HOME/stockly/Main/$@"
