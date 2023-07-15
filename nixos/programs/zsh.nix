@@ -34,6 +34,7 @@
         }
         compdef '_files -W "$HOME/stockly/Main" -/' cdr
         path+="$HOME/.cargo/bin"
+        eval "$(direnv hook zsh)"
     '';
     plugins = [
         {
