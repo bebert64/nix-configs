@@ -23,6 +23,7 @@ in
     caffeine-ng # to prevent going to sleep when watching videos
     conky
     dconf # used for setting/loading gnome applications' settings (eg : tilix)
+    direnv
     evince # pdf reader
     feh
     firefox-bin-unwrapped
@@ -129,21 +130,6 @@ in
       '';
     };
     zsh = import ./programs/zsh.nix;
-  };
-
-  # Services
-  services = {
-    # picom-jonaburg = {
-    #   enable = true;
-    #   settings = {
-    #     corner-radius = 10;
-    #     rounded-corners-exclude = [
-    #        "window_type = 'dock'"
-    #     ];
-    #     # backend = "glx";
-            
-    #   };
-    # };
   };
 
   # Copy custom files / dotfiles
