@@ -42,6 +42,7 @@ in
     jetbrains.datagrip
     jq # cli json processor, for some scripts (to get workspace id from i3)
     microcodeIntel # for increased microprocessor performance
+    mcomix
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
