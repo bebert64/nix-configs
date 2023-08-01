@@ -69,7 +69,7 @@
   };
   
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       fira-code
       noto-fonts
       noto-fonts-emoji
