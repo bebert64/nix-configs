@@ -93,10 +93,6 @@ in
     pkg-config
     gcc
     openssl
-    libpqxx
-    # openssl.dev
-    # libiconv
-    # pkgconfig
 
     # Strawberry
     strawberry
