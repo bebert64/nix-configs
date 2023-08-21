@@ -49,7 +49,10 @@
 
   services = {
     udisks2.enable = true;  # automount usb keys and drives
-    usbmuxd.enable = true;  # used to mount Ipad
+    usbmuxd = {  # used to mount Ipad
+      enable = true;
+      package = pkgs.usbmuxd2;
+    };
   };
 
   systemd = {

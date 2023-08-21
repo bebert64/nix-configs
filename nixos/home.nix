@@ -18,6 +18,7 @@ in
     alock # locker allowing transparent background
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
+    zip
     avidemux
     btop
     caffeine-ng # to prevent going to sleep when watching videos
@@ -174,7 +175,7 @@ in
       mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/Mnt/
       rm -f $HOME/Mnt/Usb-drives
-      ln -sf /run/media/romain $HOME/Mnt/Usb-drives
+      ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
       ln -sf $HOME/configs/fonts $HOME/.local/share/
 
       # load terminal theme
