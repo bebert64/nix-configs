@@ -1,9 +1,10 @@
-h:/home/romain
-D:/home/romain/Downloads
-S:/home/romain/Mnt/charybdis
-n:/home/romain/Mnt/NAS
-g:/home/romain/Mnt/NAS/Guitare
-s:/home/romain/Mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
-f:/home/romain/Mnt/Cluster/fixe-bureau/home/romain
-r:/home/romain/Mnt/Cluster/raspy
-u:/home/romain/Mnt/usb-keys
+h:/home/$USER
+D:/home/$USER/Downloads
+d:/home/$USER/Code
+S:/home/$USER/Mnt/charybdis
+n:/home/$USER/Mnt/NAS
+g:/home/$USER/Mnt/NAS/Guitare
+s:/home/$USER/Mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
+f:/home/$USER/Mnt/Cluster/fixe-bureau/home/romain
+r:/home/$USER/Mnt/Cluster/raspy
+u:/home/$USER/Mnt/usb-keys
