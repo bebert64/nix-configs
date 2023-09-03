@@ -25,19 +25,22 @@
           };
 
           modules = [
-            (import ./home_raspy.nix ( { config_name = raspy; inherit pkgs; }))
+            (import ./home_raspy.nix ( { config-name = raspy; inherit pkgs; }))
           ];
         };
 
-        ${fixe-bureau} = home-manager.lib.homeManagerConfiguration {
+        ${fixe-bureau} = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
             system = "x86_64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
             inherit config;
           };
 
-          modules = [
-            (import ./home.nix ( { config_name = fixe-bureau; inherit pkgs; }))
-          ];
+          modules = 
+            let
+              host-specifics = import ./fixe-bureau-specifics.nix;
+            in [
+              (import ./home.nix ( { config-name = fixe-bureau; inherit pkgs config host-specifics; lib=nixpkgs.lib; }))
+            ];
         };
       };
   };

@@ -1,4 +1,4 @@
-{ pkgs, lib, monoFont, host-specific, ... }:
+{ pkgs, lib, monoFont, ... }:
 
 {
   enable = true;
@@ -73,20 +73,16 @@
 
     startup = [
       { command = "mount -a"; }
+      { command = "feh --bg-max --random ~/Wallpapers/Single\\ screen"; }
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; }
-      { command = "~/bin/wallpapers-mgr cron --wallpapers-dir /home/romain/Wallpapers --minutes 60 --mode fifty-fifty"; notification = false; always = true; }
+
       { command = "caffeine"; notification = false; }
       { command = "picom"; notification = false; }
       { command = "udiskie --tray"; notification = false; }
       { command = "autorandr --change --force"; always = true; }
-      { command = "xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &"; notification = false; }
-    ] ++ (
-    if host-specific.wifi then 
-      [ { command = "nm-applet"; notification = false; } ] else []) ++ (
-    if host-specific.bluetooth then 
-      [ { command = "blueman-applet"; notification = false; } ] else []
-    );
+      { command = "xidlehook --timer ${toString (10 * 60)} 'lock-conky' ' ' &"; notification = false; }
+    ];
 
     window = {
       titlebar = false;
@@ -139,9 +135,7 @@
     set $ws9 "9:"
     set $ws10 "10:"
     set $wse1 " "
-    workspace $wse1 output ${host-specific.screens.screen1}
     set $wse2 "  "
-    workspace $wse2 output  ${host-specific.screens.screen2}
 
     workspace $ws10 gaps inner 80
   '';

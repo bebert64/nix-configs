@@ -1,4 +1,4 @@
-{ config_name, pkgs } :
+{ config-name, pkgs } :
 
 {
   home = {
@@ -33,7 +33,7 @@
   };
 
   programs = {
-    zsh = import ./programs/zsh.nix ( { config_name = "raspy"; });
+    zsh = import ./programs/zsh.nix ( { config-name = "raspy"; });
     git = import ./programs/git.nix;
     home-manager.enable = true;
   };

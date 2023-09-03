@@ -1,4 +1,4 @@
-{ config, pkgs, lib, config-name, ... }@inputs:
+{ config, pkgs, lib, config-name, host-specifics, ... }@inputs:
 
 let
   monoFont = "DejaVu Sans Mono";
@@ -115,6 +115,7 @@ in
 
   # Programs known by Home-Manager
   programs = {
+    autorandr = host-specifics.autorandr;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -128,7 +129,7 @@ in
         syntax on
       '';
     };
-    zsh = import ./programs/zsh.nix ( { inherit config_name; });
+    zsh = import ./programs/zsh.nix ( { inherit config-name; });
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -175,20 +176,25 @@ in
     };
   };
 
-  # Activation script
-  home.activation = {
-    createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
-      mkdir -p $HOME/Mnt/Charybdis
-      mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
-      ln -sf /mnt/NAS $HOME/Mnt/
-      rm -f $HOME/Mnt/Usb-drives
-      ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
-      ln -sf $HOME/.config/home-manager/fonts $HOME/.local/share/
+  # # Activation script
+  # home.activation = {
+  #   createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
+  #     mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
+  #     mkdir -p $HOME/Mnt/Charybdis
+  #     mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
+  #     ln -sf /mnt/NAS $HOME/Mnt/
+  #     rm -f $HOME/Mnt/Usb-drives
+  #     ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
+  #     ln -sf $HOME/.config/home-manager/fonts $HOME/.local/share/
 
-      # load terminal theme
-      # dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
-    '';
+  #     # load terminal theme
+  #     # dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
+  #   '';
+  # };
+  
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
   };
 
   # Let Home Manager install and manage itself.
