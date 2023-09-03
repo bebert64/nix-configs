@@ -11,9 +11,9 @@
 
   outputs = { self, nixpkgs, home-manager }: {
     homeConfigurations = {
-      raspy = home-manager.lib.homeManagerConfiguration {
+      raspyDB = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
-          system = "x86_64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
+          system = "aarch64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
           config = {
             allowUnfree = true;
           };

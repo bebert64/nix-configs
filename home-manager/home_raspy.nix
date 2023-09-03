@@ -1,8 +1,3 @@
-{ homeDirectory
-, pkgs
-, stateVersion
-, system
-, username }:
 
 {
   home = {
@@ -21,7 +16,7 @@
   };
 
   programs = {
-    # zsh = import ./programs/zsh.nix;
+    zsh = import ./programs/zsh.nix;
     home-manager.enable = true;
   };
 }
