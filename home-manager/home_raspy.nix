@@ -1,3 +1,4 @@
+{ config_name } :
 
 {
   home = {
@@ -16,7 +17,7 @@
   };
 
   programs = {
-    zsh = import ./programs/zsh.nix;
+    zsh = import ./programs/zsh.nix ( { config_name = "raspy"; });
     home-manager.enable = true;
   };
 }
