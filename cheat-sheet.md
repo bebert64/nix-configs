@@ -57,5 +57,5 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 - rebuild
 - reset font cache
 ```
-fc-cache -f -v
+z
 ```

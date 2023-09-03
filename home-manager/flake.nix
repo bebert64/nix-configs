@@ -12,6 +12,7 @@
   outputs = { self, nixpkgs, home-manager }: 
     let 
       raspy = "raspy";
+      fixe-bureau = "fixe-bureau";
       config = {
         allowUnfree = true;
       };
@@ -28,16 +29,14 @@
           ];
         };
 
-        "raspy2" = home-manager.lib.homeManagerConfiguration {
+        ${fixe-bureau} = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "x86_64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
-            config = {
-              allowUnfree = true;
-            };
+            inherit config;
           };
 
           modules = [
-            (import ./home_raspy.nix ( { config_name = "raspy2"; }))
+            (import ./home.nix ( { config_name = fixe-bureau; inherit pkgs; }))
           ];
         };
       };
