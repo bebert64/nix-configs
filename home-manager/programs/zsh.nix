@@ -3,9 +3,9 @@
 {
     enable = true;
     shellAliases = {
-        "update" = "cd ~/configs/nixos && git pull && sudo nixos-rebuild switch --flake .#";
-        "update-dirty" = "cd ~/nixos-configs/home-manager && home-manager switch --flake .#${config_name} --extra-experimental-features nix-command --extra-experimental-features flakes";
-        "upgrade" = "cd ~/configs/nixos && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
+        "update" = "cd ~/nix-configs/home-manager && git pull && home-manager switch --flake .#${config_name} --extra-experimental-features nix-command --extra-experimental-features flakes";
+        "update-dirty" = "cd ~/nix-configs/home-manager && home-manager switch --flake .#${config_name} --extra-experimental-features nix-command --extra-experimental-features flakes";
+        "upgrade" = "cd ~/nix-configs/home-manager && git pull && home-manager flake update --commit-lock-file && home-manager switch --flake .#${config_name} --extra-experimental-features nix-command --extra-experimental-features flakes && git push";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "datagrip-tunnel" = "ssh -L 5432:localhost:5432 charybdis";
