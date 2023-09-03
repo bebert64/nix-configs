@@ -22,7 +22,12 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs;
-  [
+  let
+    polybar = pkgs.polybar.override {
+      i3Support = true;
+      pulseSupport = true;
+    };
+  in [
     alock # locker allowing transparent background
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
@@ -139,6 +144,7 @@ in
     ".config/btop/btop.conf".source = ../dotfiles/btop.conf;
     ".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
     ".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
+    ".config/polybar/config.ini".source = host-specifics.polybar_config;
     ".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
     ".config/oh-my-zsh-scripts/git.zsh".source = ../dotfiles/OhMyZsh/git.zsh;
     ".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
@@ -176,21 +182,21 @@ in
     };
   };
 
-  # # Activation script
-  # home.activation = {
-  #   createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
-  #     mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
-  #     mkdir -p $HOME/Mnt/Charybdis
-  #     mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
-  #     ln -sf /mnt/NAS $HOME/Mnt/
-  #     rm -f $HOME/Mnt/Usb-drives
-  #     ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
-  #     ln -sf $HOME/.config/home-manager/fonts $HOME/.local/share/
+  # Activation script
+  home.activation = {
+    createDirs = ''
+      mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
+      mkdir -p $HOME/Mnt/Charybdis
+      mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
+      ln -sf /mnt/NAS $HOME/Mnt/
+      rm -f $HOME/Mnt/Usb-drives
+      ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
+      ln -sf $HOME/.config/home-manager/fonts $HOME/.local/share/
 
-  #     # load terminal theme
-  #     # dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
-  #   '';
-  # };
+      # load terminal theme
+      # dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
+    '';
+  };
   
   nix = {
     package = pkgs.nix;
