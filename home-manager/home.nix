@@ -115,7 +115,13 @@ in
 
     # Test, to remove
     picom-next
-  ];
+  ]++ import ./scripts.nix host-specific pkgs ++ (
+    if host-specific.wifi then
+      [
+        networkmanager
+        networkmanagerapplet
+      ] else []
+    );
 
 
   # Programs known by Home-Manager
@@ -191,7 +197,7 @@ in
       ln -sf /mnt/NAS $HOME/Mnt/
       rm -f $HOME/Mnt/Usb-drives
       ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
-      ln -sf $HOME/.config/home-manager/fonts $HOME/.local/share/
+      ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
       # dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
