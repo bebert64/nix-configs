@@ -20,5 +20,6 @@
 
   programs = {
     zsh = import ./programs/zsh.nix;
+    home-manager.enable = true;
   };
 }
