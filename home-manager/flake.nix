@@ -17,14 +17,14 @@
       };
     in {
       homeConfigurations = {
-        ${raspy} = home-manager.lib.homeManagerConfiguration {
+        ${raspy} = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
             system = "aarch64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
             inherit config;
           };
 
           modules = [
-            (import ./home_raspy.nix ( { config_name = raspy; }))
+            (import ./home_raspy.nix ( { config_name = raspy; inherit pkgs; }))
           ];
         };
 

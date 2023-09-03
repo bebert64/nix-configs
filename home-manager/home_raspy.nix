@@ -1,4 +1,4 @@
-{ config_name } :
+{ config_name, pkgs } :
 
 {
   home = {
@@ -20,4 +20,10 @@
     zsh = import ./programs/zsh.nix ( { config_name = "raspy"; });
     home-manager.enable = true;
   };
+  
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+
 }
