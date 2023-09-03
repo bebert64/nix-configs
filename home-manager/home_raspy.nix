@@ -18,6 +18,7 @@
 
   programs = {
     zsh = import ./programs/zsh.nix ( { config_name = "raspy"; });
+    git = import ./programs/git.nix;
     home-manager.enable = true;
   };
   
