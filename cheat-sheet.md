@@ -8,7 +8,7 @@
 ```
 cd ... && cp ...
 ```
-- Copy profile from existing Thunderbird
+- Copy profile from existing Thunderbird (into correct account a.k.a. Regular)
 ```
 cd ... && cp ...
 ```
@@ -20,10 +20,6 @@ cd ... && cp ...
 ssh-keygen -t ed25519
 ```
 - Copy on github account / charybdis
-- Copy original ssh by hand (so that it remains editable)
-```
-cp $HOME/configs/dotfiles/ssh_config $HOME/.ssh/config
-```
 - Might need to add this computer to general ssh config and add other keys
 <br />
 
@@ -35,7 +31,7 @@ autorandr --save profile-name
 After that, copy the fingerprint from setup and the config inside host-specifics + update the launch script
 <br />
 
-## Setup Stockly's repo
+## Setup Stockly's repo (need ssh setup with git to be done)
 ```
 cd && mkdir -p Stockly && cd Stockly && git clone git@github.com:Stockly/Main.git && cd Main && git config --local core.hooksPath ./dev_tools/git_hooks/
 ```
