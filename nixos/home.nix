@@ -13,6 +13,7 @@ in
       i3Support = true;
       pulseSupport = true;
     };
+    jetbrains = (import ./programs/jetbrains.nix inputs);
   in
   [
     alock # locker allowing transparent background
