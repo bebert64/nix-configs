@@ -1,4 +1,4 @@
-host-specific: { pkgs, ...}:
+host-specifics: { pkgs, ...}:
 
 [
     (pkgs.writeScriptBin "run" ''
@@ -145,11 +145,11 @@ host-specific: { pkgs, ...}:
       if [ $sleep ]; then
             systemctl suspend
       else
-            xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
+            xidlehook --timer ${toString (host-specifics.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
       fi
       
       # Lock
-      alock -bg none -cursor blank
+      alock -auth passwd -bg none -cursor blank
 
       # Wake up
       if [ ! $sleep ]; then
@@ -162,7 +162,7 @@ host-specific: { pkgs, ...}:
       $HOME/.fehbg
       pkill conky
       $HOME/.config/polybar/launch.sh
-      xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
+      xidlehook --timer ${toString (host-specifics.minutes-before-lock * 60)} 'lock-conky' ' ' &
       xrandr --output $SCREEN_OFF --brightness 1
     '')
 ]

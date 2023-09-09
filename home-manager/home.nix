@@ -115,8 +115,8 @@ in
 
     # Test, to remove
     picom-next
-  ]++ import ./scripts.nix host-specific pkgs ++ (
-    if host-specific.wifi then
+  ]++ import ./scripts.nix host-specifics pkgs ++ (
+    if host-specifics.wifi then
       [
         networkmanager
         networkmanagerapplet
