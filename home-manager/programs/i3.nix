@@ -74,6 +74,7 @@
     startup = [
       { command = "mount -a"; }
       { command = "feh --bg-max --random ~/Wallpapers/Single\\ screen"; }
+      { command = "setxkbmap fr"; }
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; }
 
