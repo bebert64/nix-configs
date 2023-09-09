@@ -33,6 +33,10 @@
         path+="$HOME/.cargo/bin"
         eval "$(direnv hook zsh)"
 	    source "$HOME/.profile"
+
+        if [[ "$(tty)" == '/dev/tty1' ]]; then
+            exec startx
+        fi
     '';
     plugins = [
         {
