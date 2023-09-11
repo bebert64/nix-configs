@@ -10,7 +10,7 @@ cd yay
 makepkg -si
 
 # install additional packages1
-yay nfs-utils polkit sudo xorg-server xf86-video-vesa
+yay nfs-utils polkit sudo xorg-server xf86-video-vesa alock
 
 # to check
 yay i3-wm xdg-utils nix
