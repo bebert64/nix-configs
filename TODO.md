@@ -2,10 +2,10 @@
 add stash configs and param to Home-Manager raspy config (including all scrappers)
 
 # Backup raspy
-backup certificate
+backup certificate (or add howto to cheat sheet)
 backup apache config
 backup postgresql general config
-automate regular save of postgres content to NAS
+automate regular save of postgres content to NAS + stash_db (+ stash mini images? depends on size)
 
 # Fix ipv6 access from outside
 "A Record" with freebox ipv4 88.160.246.99
