@@ -74,7 +74,7 @@
     startup = [
       # Those two commands are run in succession to have the correct screens resolution when chosing wallpapers
       { command = "autorandr --change --force && wallpapers-mgr cron --minutes 60 --mode fifty-fifty"; always = true; }
-      { command = "mount -a"; }
+      { command = "mount-NAS"; }
       { command = "setxkbmap fr"; }
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; }
