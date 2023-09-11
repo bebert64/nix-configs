@@ -39,7 +39,12 @@
             let
               host-specifics = import ./fixe-bureau/host_specifics.nix;
             in [
-              (import ./home.nix ( { config-name = fixe-bureau; inherit pkgs config host-specifics; lib=nixpkgs.lib; }))
+              (import ./home.nix ( { 
+                config-name = fixe-bureau; 
+                inherit pkgs config host-specifics; 
+                lib=nixpkgs.lib; 
+                hm-lib=home-manager.lib;
+              }))
             ];
         };
       };
