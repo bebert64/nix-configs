@@ -72,7 +72,8 @@
     bars = [];
 
     startup = [
-      { command = "autorandr --change --force"; always = true; }
+      # Those two commands are run in succession to have the correct screens resolution when chosing wallpapers
+      { command = "autorandr --change --force && wallpapers-mgr cron --minutes 60 --mode fifty-fifty"; always = true; }
       { command = "mount -a"; }
       { command = "setxkbmap fr"; }
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
@@ -81,7 +82,6 @@
       { command = "picom"; notification = false; }
       { command = "udiskie --tray"; notification = false; }
       { command = "xidlehook --timer ${toString (10 * 60)} 'lock-conky' ' ' &"; notification = false; }
-      { command = "wallpapers-mgr cron --minutes 60 --mode fifty-fifty"; notification = false; }
     ];
 
     window = {
