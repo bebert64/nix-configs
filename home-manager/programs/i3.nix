@@ -10,7 +10,7 @@
   in {
     inherit modifier; # Check if possible to remove this line entirely (not sure if it's really necessary)
 
-    menu = "\"rofi -modi drun#window#run -show drun -show-icons -theme $HOME/.config/rofi/theme/launcher.rasi\"";
+    menu = "launch-rofi";
 
     terminal = "--no-startup-id tilix"; # tilix is not notification-aware so we need the no-startup-id
 
