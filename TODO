@@ -4,6 +4,8 @@ backup raspy certificate
 backup raspy apache config
 backup raspy postgresql deb
 
+add stash configs and param to Home-Manager raspy config (including all scrappers)
+
 check if installing alock from yay instead of home-manager solves unlocking
 check is installing dconf from yay instead of home-manager solves activation script
 check if zip needed in addition to unzip and unrar
