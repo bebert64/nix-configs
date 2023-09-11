@@ -76,7 +76,7 @@
       { command = "setxkbmap fr"; }
       # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
       { command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY"; notification = false; }
-
+      { command = "wallpapers-mgr cron --minutes 60 --mode fifty-fifty"; notification = false; }
       { command = "caffeine"; notification = false; }
       { command = "picom"; notification = false; }
       { command = "udiskie --tray"; notification = false; }
