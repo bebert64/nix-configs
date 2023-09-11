@@ -200,7 +200,7 @@ in
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
     '';
   };
 
