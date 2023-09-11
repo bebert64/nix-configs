@@ -21,9 +21,10 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # install nix if arch install not working
 curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix-install.sh
 ./nix-install.sh --daemon
+
+# Setup niw
 sudo systemctl enable nix-daemon.service
 sudo systemctl start nix-daemon.service
-# Check command
 sudo usermod -aG nix-users $USER
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager

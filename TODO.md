@@ -1,13 +1,16 @@
-# Backup and finish config raspy
+# Finish config raspy
 add stash configs and param to Home-Manager raspy config (including all scrappers)
-backup raspy certificate
-backup raspy apache config
-backup raspy postgresql general config
+
+# Backup raspy
+backup certificate
+backup apache config
+backup postgresql general config
+automate regular save of postgres content to NAS
 
 # Fix ipv6 access from outside
-A Record with freebox ipv4 88.160.246.99
-Redirect all subdomain to there
-Redirect port as needed (probably 5 redirection needed, i.e. all of A record + url redirect, except freebox itself)
+"A Record" with freebox ipv4 88.160.246.99
+"URL Redirect" all subdomain to there
+Port redirect as needed (probably 5 redirection needed, i.e. all of A record + url redirect, except freebox itself)
 Html page at domain root, with links to different apps
 
 # Various (easy) improvements
@@ -31,7 +34,6 @@ finish ranger config with displaying previews for various files
 finish conky configs
 check if polkit from home-manager can work
 check if polkit_gnome is needed
-automate regular save of raspy postgres content to NAS
 add ENV variable for firefox_db (host-specifics ?)
 
 # i3 commands do execute at startup
