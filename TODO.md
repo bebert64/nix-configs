@@ -22,14 +22,13 @@ i3 config : open apps in specific workspace, except for firefox
 rename dirs in home, with lowercase names (mnt / wallpapers / code / etc...)
 do not mkdir for cluster (better to ssh and ranger directly)
 remove mount point for charybdis and add how-to to cheat sheet instead
-remove qbittorrent from "main" home-manager config
 create symlink in activation rather than home.file for most cases
 add ssh config to files being symlinked
 check size and see if datagrip profile can be added to git repo
 add .xinitrc to config (with one line "exec i3")
 
 # Various (harder) improvements
-fix rofi
+fix mount-NAS (make it depend from host-specific)
 mod + i in i3 only shows one empty desktop
 add qbittorrent to raspberry with launch at startup
 finish ranger config with displaying previews for various files

@@ -34,3 +34,13 @@ nix-shell '<home-manager>' -A install
 git clone https://github.com/bebert64/nix-configs
 
 # Add line to fstab for nas
+# NAS
+nas.capucina.house:/volume1/NAS			/mnt/NAS	nfs		user,users,noexec,noauto	0 0
+
+# Add lines to /etc/profile
+if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ];
+then
+     source $HOME/.nix-profile/etc/profile.d/nix.sh
+fi
+
+export XDG_DATA_DIRS=$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share:$XDG_DATA_DIRS
