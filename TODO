@@ -1,5 +1,4 @@
 transform yay apps into real script
-check how to input data into var that I can use in the script
 backup raspy certificate
 backup raspy apache config
 backup raspy postgresql deb
@@ -13,9 +12,8 @@ check if installing firefox and thinderbird through yay solves default profile
     if ok, remove -P ... from i3 commands and from doc in cheat sheet
 
 add loading btop config to activation script
-is feh still needed ? is steam-run still needed ?
 
-check if keyring functionning => check if installing through yay is better
+check if keyring functionning => if not, check if installing through yay is better
 
 add i3 command + keybinding for calculator
 
@@ -36,7 +34,7 @@ finish ranger config with displaying previews for various files
 
 rename dirs in home, with lowercase names (mnt / wallpapers / code / etc...)
 don't mkdir for cluster (better to ssh and ranger directly)
-check if rm and then recreate /mnt/usb is needed (and rename it usb)
+check if "rm and then recreate /mnt/usb" is needed (and rename it usb)
 
 check size and if possible save database config
 create symlink in activation rather than home.file for most cases
