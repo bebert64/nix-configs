@@ -10,15 +10,6 @@ in
   home.username = "romain";
   home.homeDirectory = "/home/romain";
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.05"; # Please read the comment before changing.
-
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs;
@@ -40,6 +31,13 @@ in
     evince # pdf reader
     feh
     firefox-bin-unwrapped
+    fontconfig
+    # zlib
+      noto-fonts
+      noto-fonts-emoji
+      dejavu_fonts
+      liberation_ttf_v1
+      helvetica-neue-lt-std
     gnome.gnome-calculator
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
@@ -68,6 +66,7 @@ in
     sqlite
     steam-run # needed to run custom binaries
     openssh
+    openssl
     sshfs
     thunderbird-bin-unwrapped
     tilix # terminal
@@ -89,10 +88,6 @@ in
     ifuse
     libimobiledevice
 
-    # polkit is the utility used by vscode to save as sudo
-    # polkit
-    # polkit_gnome
-
     # Theme for QT applications (vlc, strawberry...)
     qt5ct
     libsForQt5.qtstyleplugins
@@ -102,12 +97,6 @@ in
     ffmpegthumbnailer # thumbnail for videos preview
     fontforge # thumbnail for fonts preview
     poppler_utils # thumbnail for pdf preview
-
-    # Rust
-    # rustup
-    # pkg-config
-    # gcc
-    openssl
 
     # Strawberry
     strawberry
@@ -144,14 +133,6 @@ in
     };
     zsh = import ./programs/zsh.nix ( { inherit config-name; });
   };
-    dconf = {
-      enable = true;
-      settings = {
-"org/gnome/shell/extensions/user-theme" = {
-        name = "palenight";
-      };
-      };
-    };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -170,17 +151,43 @@ in
     ".local/share/ranger/bookmarks".source = ../dotfiles/ranger/bookmarks;
     ".tilix.dconf".source = ../dotfiles/tilix.dconf;
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
+    ".themes".source = "${pkgs.palenight-theme}/share/themes";
   };
 
   # launch i3
   xsession.windowManager.i3 = import ./programs/i3.nix (args);
-  # gtk = {
-  #   enable = true;
-  #   theme = {
-  #     name = "palenight";
-  #     package = pkgs.palenight-theme;
-  #   };
-  # };
+  gtk = {
+    enable = true;
+    theme = {
+      name = "palenight";
+      package = pkgs.palenight-theme;
+    };
+  };
+  
+  fonts = {
+    # packages = with pkgs; [
+    #   noto-fonts
+    #   noto-fonts-emoji
+    #   dejavu_fonts
+    #   liberation_ttf_v1
+    # ];
+    fontconfig.enable = true;
+    # fontconfig.defaultFonts = {
+    #   monospace = [
+    #     "DejaVu Sans Mono"
+    #     "Noto mono"
+    #   ];
+    #   sansSerif = [
+    #     "DejaVu Sans"
+    #     "Noto Sans"
+    #   ];
+    #   serif = [
+    #     "Liberation Serif"
+    #     "DejaVu Serif"
+    #     "Noto Serif"
+    #   ];
+    # };
+  };
 
   # Session variable
   home.sessionVariables = {
@@ -223,4 +230,13 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   nixpkgs.config.allowUnfree = true; # Necessary for vscode and anydesk
+
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "23.05"; # Please read the comment before changing.
 }
