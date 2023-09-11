@@ -2,7 +2,6 @@
 Fix caffeine icon + hicolor theme
 Fix udiskie
 
-
 # Backup and finish config raspy
 add stash configs and param to Home-Manager raspy config (including all scrappers)
 backup raspy certificate
@@ -18,7 +17,6 @@ Html page at domain root, with links to different apps
 # Various (easy) improvements
 add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
-check if keyring functionning => if not, check if installing through yay is better
 add i3 command + keybinding for calculator
 i3 config : open apps in specific workspace, except for firefox
 rename dirs in home, with lowercase names (mnt / wallpapers / code / etc...)
@@ -31,8 +29,8 @@ check size and see if datagrip profile can be added to git repo
 add .xinitrc to config (with one line "exec i3")
 
 # Various (harder) improvements
-fix qt theme (paleknight)
 fix rofi
+mod + i in i3 only shows one empty desktop
 add qbittorrent to raspberry with launch at startup
 finish ranger config with displaying previews for various files
 finish conky configs
