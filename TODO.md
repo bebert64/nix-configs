@@ -1,7 +1,3 @@
-# i3 commands do execute at startup
-Fix caffeine icon + hicolor theme
-Fix udiskie
-
 # Backup and finish config raspy
 add stash configs and param to Home-Manager raspy config (including all scrappers)
 backup raspy certificate
@@ -34,11 +30,13 @@ add qbittorrent to raspberry with launch at startup
 finish ranger config with displaying previews for various files
 finish conky configs
 check if polkit from home-manager can work
-    if not, remove polkit from home-manager config
 check if polkit_gnome is needed
-check how to "link" signup mechanism between vscode and firefox
 automate regular save of raspy postgres content to NAS
 add ENV variable for firefox_db (host-specifics ?)
+
+# i3 commands do execute at startup
+Fix caffeine icon + hicolor theme
+Fix udiskie
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
