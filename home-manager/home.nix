@@ -26,21 +26,12 @@ in
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     conky
-    # dconf # used for setting/loading gnome applications' settings (eg : tilix)
     direnv
     evince # pdf reader
     feh
     firefox-bin-unwrapped
-    fontconfig
-    # zlib
-      noto-fonts
-      noto-fonts-emoji
-      dejavu_fonts
-      liberation_ttf_v1
-      helvetica-neue-lt-std
     gnome.gnome-calculator
     gnome.gnome-keyring
-    grsync # check if rsync needed in addition
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
       pname = "insomnia-stockly";
@@ -57,14 +48,14 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
+    picom-next
     polybar
     postgresql
-    qbittorrent
     qt6.qttools # needed to extract artUrl from strawberry and display it with conky
     rofi
+    rsync grsync # (= graphical rsync)
     slack
     sqlite
-    steam-run # needed to run custom binaries
     openssh
     openssl
     sshfs
@@ -102,10 +93,15 @@ in
     strawberry
     playerctl # to send data and retrieve metadata for polybar
 
-    # Test, to remove
-    picom-next
+    # fonts
+    noto-fonts
+    noto-fonts-emoji
+    dejavu_fonts
+    liberation_ttf_v1
+    helvetica-neue-lt-std
 
     palenight-theme
+
   ]++ import ./scripts.nix host-specifics pkgs ++ (
     if host-specifics.wifi then
       [
@@ -164,30 +160,7 @@ in
     };
   };
   
-  fonts = {
-    # packages = with pkgs; [
-    #   noto-fonts
-    #   noto-fonts-emoji
-    #   dejavu_fonts
-    #   liberation_ttf_v1
-    # ];
-    fontconfig.enable = true;
-    # fontconfig.defaultFonts = {
-    #   monospace = [
-    #     "DejaVu Sans Mono"
-    #     "Noto mono"
-    #   ];
-    #   sansSerif = [
-    #     "DejaVu Sans"
-    #     "Noto Sans"
-    #   ];
-    #   serif = [
-    #     "Liberation Serif"
-    #     "DejaVu Serif"
-    #     "Noto Serif"
-    #   ];
-    # };
-  };
+  fonts.fontconfig.enable = true;
 
   # Session variable
   home.sessionVariables = {
