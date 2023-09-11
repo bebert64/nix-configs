@@ -27,6 +27,7 @@ in
       i3Support = true;
       pulseSupport = true;
     };
+    jetbrains = (import ./programs/jetbrains.nix inputs);
   in [
     alock # locker allowing transparent background
     anydesk
@@ -35,7 +36,7 @@ in
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     conky
-    dconf # used for setting/loading gnome applications' settings (eg : tilix)
+    # dconf # used for setting/loading gnome applications' settings (eg : tilix)
     direnv
     evince # pdf reader
     feh
@@ -115,6 +116,8 @@ in
 
     # Test, to remove
     picom-next
+
+    palenight-theme
   ]++ import ./scripts.nix host-specifics pkgs ++ (
     if host-specifics.wifi then
       [
@@ -142,6 +145,14 @@ in
     };
     zsh = import ./programs/zsh.nix ( { inherit config-name; });
   };
+    dconf = {
+      enable = true;
+      settings = {
+"org/gnome/shell/extensions/user-theme" = {
+        name = "palenight";
+      };
+      };
+    };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -164,18 +175,19 @@ in
 
   # launch i3
   xsession.windowManager.i3 = import ./programs/i3.nix (args);
-  gtk = {
-    enable = true;
-    theme = {
-      name = "palenight";
-      package = pkgs.palenight-theme;
-    };
-  };
+  # gtk = {
+  #   enable = true;
+  #   theme = {
+  #     name = "palenight";
+  #     package = pkgs.palenight-theme;
+  #   };
+  # };
 
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    XDG_DATA_HOME   = "$HOME/.local/share";
+    XDG_DATA_HOME = "$HOME/.local/share";
+    WALLPAPERS_DIR = "$HOME/Wallpapers";
   };
 
   xdg.mimeApps = {
