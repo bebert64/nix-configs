@@ -1,4 +1,4 @@
-{ config, pkgs, lib, config-name, host-specifics, ... }@inputs:
+{ config, pkgs, lib, hm-lib, config-name, host-specifics, ... }@inputs:
 
 let
   monoFont = "DejaVu Sans Mono";
@@ -190,7 +190,7 @@ in
 
   # Activation script
   home.activation = {
-    createDirs = lib.hm.dag.entryAfter ["installPackages"] ''
+    createDirs = hm-lib.hm.dag.entryAfter ["installPackages"] ''
       mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
       mkdir -p $HOME/Mnt/Charybdis
       mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
@@ -203,7 +203,7 @@ in
       dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
     '';
   };
-  
+
   nix = {
     package = pkgs.nix;
     settings.experimental-features = [ "nix-command" "flakes" ];
