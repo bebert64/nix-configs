@@ -100,8 +100,6 @@ in
     liberation_ttf_v1
     helvetica-neue-lt-std
 
-    palenight-theme
-
   ]++ import ./scripts.nix host-specifics pkgs ++ (
     if host-specifics.wifi then
       [
