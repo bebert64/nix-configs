@@ -19,7 +19,7 @@
   
   # Activation script
   home.activation = {
-    stashCongif = ''
+    stashConfig = ''
       ln -s $HOME/nix-configs/Raspberry/scrapers $HOME/.stash/
     '';
 
