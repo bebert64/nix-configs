@@ -191,6 +191,11 @@ in
       # load terminal theme
       ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
     '';
+
+    rangerBookmarks = ''
+      sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/nix-configs/ranger_bookmarks
+      ln -sf $HOME/nix-configs/ranger_bookmarks $HOME/.local/share/ranger/bookmarks
+    '';
   };
 
   nix = {
