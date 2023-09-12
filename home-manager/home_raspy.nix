@@ -9,7 +9,7 @@
 
   home.packages = with pkgs;
   [
-    certbot-with-plugins  # CLI to get certificates from Let's Encrypt
+    certbot-full  # CLI to get certificates from Let's Encrypt
     ranger
   ];
 
