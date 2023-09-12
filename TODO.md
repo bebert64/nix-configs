@@ -14,6 +14,7 @@ Port redirect as needed (probably 5 redirection needed, i.e. all of A record + u
 Html page at domain root, with links to different apps
 
 # Various (easy) improvements
+finish ranger actionvation script for bookmarks (sed... command available in arch fixe-bureau zsh history)
 add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
 add i3 command + keybinding for calculator
