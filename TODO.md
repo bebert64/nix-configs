@@ -1,16 +1,12 @@
-# Finish config raspy
-add stash configs and param to Home-Manager raspy config (including all scrappers)
-
 # Backup raspy
 backup certificate and whole letsencrypt config to NAS
-    /etc/letsencrypt
+    /etc/letsencrypt + $HOME/.stash/stash.cert (and .key)
     add line on cheatsheet on where it needs to be cp
-backup apache config
+backup apache config to dotfiles
     /etc/apache2
-    add line on cheatsheet on where it needs to be cp
-backup postgresql general config
-    add line on cheatsheet on how to restore
+    add line on cheatsheet on where it needs to be cp (not possible through activation scripts)
 automate regular save of postgres content to NAS + stash_db + stash
+    https://www.tecmint.com/backup-and-restore-postgresql-database/
     add line to cheatsheet on how to restore
 Add howto to cheat sheet on certbot
 
