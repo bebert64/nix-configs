@@ -1,0 +1,34 @@
+name: "Arch Angel Video"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - archangelvideo.com/tour/trailers
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $videoContent: //div[@class="midwrap clear"]
+    scene:
+      Title: $videoContent//div[@class='title clear']/h2
+      Details: //div[@class='description']/p
+      Date:
+        selector: $videoContent//div[@class='info']/p/text()[contains(.,"Added:")]
+        postProcess:
+          - replace:
+              - regex: "Added: "
+                with: ""
+          - parseDate: January 2, 2006
+      Tags:
+        Name: //ul[@class='tags']/li/a
+      Studio:
+        Name:
+          fixed: ArchAngel
+      Image:
+        selector: $videoContent//img/@src
+        postProcess:
+          - replace:
+              - regex: ^
+                with: "https://archangelvideo.com"
+      Performers:
+        Name: $videoContent//div[@class='info']/p[1]/a
+# Last Updated March 07, 2022

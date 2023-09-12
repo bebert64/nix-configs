@@ -1,0 +1,35 @@
+name: JavHD
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - javhd.com/en/id/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $script: //script[@type="application/ld+json"]/text()
+    scene:
+      Details: //h2[@class="content__desc"]
+      Performers:
+        Name: //div[@class="content-info"]/a
+      Image:
+        selector: $script
+        postProcess:
+          - replace:
+              - regex: .+thumbnail":"([^"]+)",.+
+                with: $1
+      Date: # not to be trusted, they update the dates
+        selector: $script
+        postProcess:
+          - replace:
+              - regex: .+datePublished":"([^"]+)",.+
+                with: $1
+      Title:
+        selector: //h1[@class="content__title"]
+      Tags:
+        Name: //div[@class="content-desc"]//a
+      Studio:
+        Name:
+          fixed: JavHD
+      URL: //link[@rel="canonical"]/@href
+# Last Updated October 28, 2022

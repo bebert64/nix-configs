@@ -1,0 +1,147 @@
+name: "HelixStudios"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - helixstudios.com/video/
+    scraper: sceneScraper
+
+sceneByName:
+  action: scrapeXPath
+  queryURL: https://www.helixstudios.com/videos?q={}
+  scraper: sceneSearch
+
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - helixstudios.com/model/
+    scraper: performerScraper
+
+performerByName:
+  action: scrapeXPath
+  queryURL: https://www.helixstudios.com/models/?q={}
+  scraper: performerSearch
+
+xPathScrapers:
+  sceneSearch:
+    common:
+      $searchItem: //div[contains(@class, "browse-results-grid thumbnail-grid pure-g")]
+      $searchThumb: //div[contains(@class, "browse-results-grid thumbnail-grid pure-g")]//div[contains(@class, "grid-item-wrapper")]/a
+
+    scene:
+      Title: $searchThumb//h4/text()
+      URL:
+        selector: $searchItem//div[contains(@class, "grid-item-wrapper")]/a/@href
+        postProcess:
+          - replace:
+              - regex: ^
+                with: "https://helixstudios.com"
+      Image:
+        selector: $searchItem//div[contains(@class, "image-wrapper img-poster")]//img/@data-src
+
+  sceneScraper:
+    common:
+      $info: //div[@class="text"]
+    scene:
+      Title:
+        selector: //title/text()
+        postProcess:
+          - replace:
+              - regex: \s*- Helix Studios.*$
+                with:
+      Date:
+        selector: //div[@class="info-items"]/span[@class="info-item date"]/text()
+        postProcess:
+          - parseDate: January 2, 2006
+      Details:
+        selector: //div[contains(@class, "description-content")]/p/text()
+        concat: "#LINEBREAK#"
+        postProcess:
+          - replace:
+              - regex: "___.*"
+                with:
+              - regex: "#LINEBREAK#"
+                with: "\n\n"
+      Tags:
+        Name: //div[@class="video-tags-wrapper"]/a/text()
+      Performers:
+        Name:
+          selector: //div[@class="video-cast"]//a/@title
+      URL: //link[@rel="canonical"][1]/@href
+      Image:
+        selector: //video/@poster
+        postProcess:
+          - replace:
+              - regex: 960w
+                with: 1500w
+      Director:
+        selector: //span[contains(@class, "info-item director")]/text()
+      Code:
+        selector: //*[@id="titleImage"]/@src
+        postProcess:
+          - replace:
+              - regex: ^.*\/\s*
+                with:
+          - replace:
+              - regex: \_1600.*$
+                with:
+      Studio:
+        Name:
+          fixed: Helix
+
+  performerSearch:
+    common:
+      $result: //div[@class="grid-item-wrapper"]/a[@class="thumbnail-link"]
+    performer:
+      Name: $result/div[@class="thumbnail model-thumbnail"]/div[@class="thumbnail-meta"]/h4/text()
+      URL:
+        selector: $result/@href
+        postProcess:
+          - replace:
+              - regex: ^
+                with: "https://helixstudios.com"
+
+  performerScraper:
+    performer:
+      Name: //div[contains(@class, "top")]/h1/text()
+      Gender:
+        fixed: Male
+      Height:
+        selector: //span[text()="Height"]/following-sibling::text()
+        postProcess:
+          - feetToCm: true
+      Measurements:
+        selector: //span[text()="Cock"]/following-sibling::text()
+        postProcess:
+          - replace:
+              - regex: ^
+                with: "0'"
+          - replace:
+              - regex: inch*
+                with: "''"
+          - feetToCm: true
+      Weight:
+        selector: //span[text()="Weight"]/following-sibling::text()
+        postProcess:
+          - replace:
+              - regex: lbs
+                with: ""
+          - lbToKg: true
+      HairColor:
+        selector: //span[text()="Hair"]/following-sibling::text()
+      EyeColor:
+        selector: //span[text()="Eyes"]/following-sibling::text()
+      URL: //link[@rel="canonical"][1]/@href
+      Image: //div[@class="model-headshot-image-wrapper"]/img/@src
+      Details:
+        selector: //div[@class="description"]//p[*]
+        concat: "\n\n"
+        postProcess:
+          - replace:
+              - regex: $
+                with: " "
+# Last Updated February 20, 2023

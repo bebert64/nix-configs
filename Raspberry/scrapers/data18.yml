@@ -1,0 +1,97 @@
+name: data18
+driver:
+  cookies:
+  - CookieURL: "https://data18.com"
+    Cookies:
+      - Name: "data_user_captcha"
+        Domain: ".data18.com"
+        Value: "1"
+        Path: "/"
+  headers:
+    - Key: User-Agent
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0)
+movieByURL:
+  - action: scrapeXPath
+    url:
+      - data18.com/movies
+    scraper: movieScraper
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - data18.com/scenes
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $performer: //div[h3[text()='Pornstars / Cast']]//a[@class='bold gen']
+      $studio: //div[@id="body2div_b"]//a[contains(@href,"/studios/")]
+      $movie: //b[text()="Movie:"]/following-sibling::a[1]
+    scene:
+      Title: //span/following-sibling::h1/a/text()
+      Date:
+        selector: //span[b[text()="Release date"]]
+        postProcess:
+          - replace:
+              - regex: '^Release date: ([a-zA-Z]+)(\s*\d\d)?,\s*(\d{4}).+'
+                with: "$1$2, $3"
+          - parseDate: January 02, 2006
+          - parseDate: January, 2006
+      Details:
+        selector: //div[b[text()="Story"]] | //b[contains(text(),"Movie Description")]/../text()
+        concat: " "
+        postProcess:
+          - replace:
+              - regex: "Story - "
+                with:
+      Tags:
+        Name: //b[text()='Categories:']/following-sibling::a
+      Performers:
+        Name: $performer
+        URL: $performer/@href
+      Studio:
+        Name: $studio
+        URL: $studio/@href
+      Movies:
+        Name: $movie/text()
+        URL: $movie/@href
+      Image: //img[@id="playpriimage"]/@src
+  movieScraper:
+    common:
+      $movieInfo: //div[@id="body2div_b"]
+      $studio: //b[text()='Studio']/following-sibling::b/a
+    movie:
+      Name:
+        selector: //title
+        postProcess:
+          - replace:
+              - regex: (.+?)(?:\s\(\d{4}\)\sPorn\sMovie\s\|\sDATA18)
+                with: $1
+      Duration:
+        selector: $movieInfo//b[contains(text(),"Length")]/following-sibling::span|$movieInfo//b[contains(text(),"Length")]/following-sibling::text()
+        postProcess:
+          - replace:
+              - regex: ^\[(.+)\]$ # handle movies with proper [xx:xx:xx] duration
+                with: $1
+              - regex: ^[^\d]*(\d+)\s*min.* # handle movies with only xx mins duration
+                with: "$1:00"
+      Date:
+        selector: $movieInfo//span[contains(text(), "Release date")]/text()
+        postProcess:
+          - replace:
+              - regex: 'Release date:\s*'
+                with:
+          - parseDate: January, 2006
+      Studio:
+        Name: $studio/text()
+        URL: $studio/@href
+      Director: //p[b[contains(text(),'Director')]]//a[@class='bold']
+      Synopsis:
+        selector: //b[text()="Description"]/..
+        concat: " "
+        postProcess:
+          - replace:
+              - regex: '^Description\s*-\s*'
+                with:
+      FrontImage: //a[@id='enlargecover']/@data-featherlight
+      BackImage: //a[text()='+Back']/@href
+# Last Updated July 18, 2023

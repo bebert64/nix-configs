@@ -1,0 +1,46 @@
+name: mypervmom.com
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - boyfriendsharing.com
+      - brattyfamily.com
+      - gostuckyourself.net
+      - hugecockbreak.com
+      - littlefromasia.com
+      - mommysboy.net
+      - momxxx.org
+      - mybadmilfs.com
+      - mydaughterswap.com
+      - mypervmom.com
+      - mysislovesme.com
+      - youngerloverofmine.com
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //h2
+      Date:
+        selector: //div[@id="title-single"]/span
+        postProcess:
+          - replace:
+              - regex: (\w+\s)(\d+)\w+,(\s\d\d\d\d)
+                with: $1$2$3
+          - parseDate: January 2 2006
+      Details:
+        selector: //p[@class="more"]|//span[@class="more"]/text()
+        postProcess:
+          - replace:
+              - regex: ^Description\:(.+)
+                with: $1
+      Performers:
+        Name: //div[@id="title-single"]//a
+      Image:
+        selector: //div[@class="entry"]//video/@poster
+      Studio:
+        Name:
+          selector: //a[@title="Home"]/img/@alt
+          postProcess:
+            - map:
+                BrattySis: Bratty Sis
+                PervMom: Perv Mom
+# Last Updated November 05, 2022

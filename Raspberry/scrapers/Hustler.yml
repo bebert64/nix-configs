@@ -1,0 +1,71 @@
+name: "Hustler"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - analhookers.com/model/
+      - asian18.com/model/
+      - asianfever.com/model/
+      - assmeat.com/model/
+      - barelylegal.com/model/
+      - battlebang.com/model/
+      - beaverhunt.com/model/
+      - bootyclapxxx.com/model/
+      - bootysisters.com/model/
+      - bossymilfs.com/model/
+      - bustybeauties.com/model/
+      - daddygetslucky.com/model/
+      - fuckfiesta.com/model/
+      - fuckinghardcore.com/model/
+      - hometowngirls.com/model/
+      - hometownhoneys.com/model/
+      - hottiemoms.com/model/
+      - hustlaz.com/model/
+      - hustler.com/model/
+      - hustlerhd.com/model/
+      - hustlerparodies.com/model/
+      - hustlerslesbians.com/model/
+      - hustlerstaboo.com/model/
+      - lesbianass.com/model/
+      - muchaslatinas.com/model/
+      - pornstarhardcore.com/model/
+      - scarybigdicks.com/model/
+      - seemysextapes.com/model/
+      - sexsee.com/model/
+      - sororitysluts.com/model/
+      - titworld.com/model/
+      - toomanytrannies.com/model/
+      - vcaxxx.com/model/
+      - watchreal.com/model/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $content: //div[@class="panel-content"]
+    scene:
+      Title: //h3/a/text()|$content//h3[contains(@class, "headline")]/a/text()
+      URL: //link[@rel='canonical']/@href
+      Performers:
+        Name: 
+          selector: //span[@class="attr-key" and contains(text(),"Cast")]/following-sibling::span[@class="attr-value"]/a[not(text()="Hustler Models") and not(text()="Barely Legal Models")]/text()|$content//span[contains(text(), "Cast")]//following-sibling::span/a/text()
+      Date:
+        selector: //span[@class="attr-key" and contains(text(),"Released")]/following-sibling::span[@class="attr-value"]/text()|$content//span[contains(text(), "Released")]//following-sibling::span/text()
+        postProcess:
+          - parseDate: Jan 02, 2006
+      Details: //p[following-sibling::a[@class="clickable"]]|//meta[@property="og:description"]/@content|//div[@class="description"]/p
+      Image:
+        selector: //div[@class="img-container"]/img/@src|//div[contains(@class, "jw-preview")]/@style|$content/img/@src
+        postProcess:
+          - replace:
+              - regex: (?:background-image:\s*url\(")(.+)(?:"\).*);?
+                with: $1
+      Tags:
+        Name: //div[@class="tag-list"]/a/text()
+      Studio:
+        Name: //a[@class="logo active"]/img/@alt
+driver:
+  useCDP: true
+  sleep: 5
+  clicks:
+    - xpath: //a[@class="clickable"]
+      sleep: 2
+# Last Updated June 30, 2023

@@ -1,0 +1,66 @@
+name: AmateurAllure
+galleryByURL:
+  - action: scrapeXPath
+    url: &urls
+      - amateurallure.com/tour/scenes/
+      - swallowsalon.com/scenes/
+    scraper: galleryScraper
+sceneByURL:
+  - action: scrapeXPath
+    url: *urls
+    scraper: sceneScraper
+xPathScrapers:
+  galleryScraper:
+    common: &commonAttr
+      $sceneinfo: //div[@class="scene-info"]
+      $title: //span[@class='title_bar_hilite']
+      $logo: //div[@id="logo"]//a/@href
+    gallery:
+      Title: &titleSel $title
+      Date: &dateAttr
+        selector: //div[@class="backgroundcolor_info"]//div[@class='cell update_date']
+        postProcess:
+          - parseDate: 01/02/2006
+      Details: &detailsSel //span[@class='update_description']
+      Tags: &tagsAttr
+        Name: //span[@class='update_tags']//a/text()
+      Performers: &performersAttr
+        Name: //div[@class='backgroundcolor_info']//span[@class='update_models']//a
+      Studio: &studioAttr
+        Name:
+          selector: $logo
+          postProcess:
+            - replace:
+                - regex: '[^.]+\.([^.]+)\.com/.*'
+                  with: $1
+            - map:
+                amateurallure: Amateur Allure
+                swallowsalon: Swallow Salon
+  sceneScraper:
+    common: *commonAttr
+    scene:
+      Title: *titleSel
+      Date: *dateAttr
+      Details: *detailsSel
+      Tags: *tagsAttr
+      Performers: *performersAttr
+      Image:
+        selector: $logo|$title
+        concat: "|"
+        postProcess:
+          - replace:
+              - regex: \s
+                with: "+"
+              - regex: ^([^|]+)\|(.+)
+                with: "${1}/search.php?st=advanced&qall=&qany=&qex=$2"
+          - subScraper:
+              selector: //div[@id="logo"]//a/@href|//img/@srcset
+              concat: "|"
+              postProcess:
+                - replace:
+                    - regex: ^([^|]+amateurallure[^|]+)\|.+(/content/contentthumbs/\d+/\d+/[^/]+\.jpg) 1920w
+                      with: $1$2
+                    - regex: ^([^|]+swallowsalon[^|]+)\|.+360w,\s((?:/tour)?/content/contentthumbs/\d+/\d+/[^/]+\.jpg).*
+                      with: $1$2
+      Studio: *studioAttr
+# Last Updated December 13, 2021

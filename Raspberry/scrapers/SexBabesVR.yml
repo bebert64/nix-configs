@@ -1,0 +1,33 @@
+name: "SexBabesVR"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - sexbabesvr.com
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $detail: //div[@class="video-detail"]
+    scene:
+      Title: $detail//h1/text()
+      Date:
+        selector: $detail//div[@class="video-detail__description--container"]/div[contains(@style, "padding-top")]/text()
+        postProcess:
+          - parseDate: Jan 02
+      Details:
+        selector: $detail/div[@class="container"]/p/text()
+        concat: " "
+      Tags:
+        Name: $detail//div[@class="tags"]//a/text()
+      Performers:
+        Name:
+          selector: $detail//div[@class="video-detail__description--author"]//a/text()
+          postProcess:
+            - replace:
+                - regex: ^\s*(.+)\s*$
+                  with: $1
+      Image: //dl8-video/@poster
+      Studio:
+        Name:
+          fixed: "SexBabesVR"
+# Last Updated July 21, 2023

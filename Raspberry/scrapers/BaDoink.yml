@@ -1,0 +1,157 @@
+# yaml-language-server: $schema=../validator/scraper.schema.json
+
+name: "BaDoink"
+
+sceneByURL:
+  - action: scrapeXPath
+    url: &urls
+      - 18vr.com
+      - babevr.com
+      - badoinkvr.com
+      - kinkvr.com
+      - realvr.com
+      - vrcosplayx.com
+    scraper: sceneScraper
+    queryURL: "{url}"
+    queryURLReplace:
+      url:
+        # remove the members part of the url since the scrapper would not attempt to login
+        - regex: "/members/"
+          with: "/"
+
+sceneByFragment:
+  action: scrapeXPath
+  # url format: https://{studio}.com/vrpornvideo/{title}-{code}
+  # The url without the code is what we will use for scrapping
+  # since it will forward to the correct one:
+  #   url format: https://{studio}.com/vrpornvideo/{title}
+  # both studio and title are part of the official file name
+  queryURL: "{filename}"
+  queryURLReplace:
+    # filename format:
+    #   {studio}_{title}_{res}_{vrtype}.{ext}
+    #     res: oculus|\d+k
+    #     vrtype: stuff we do not care about but could contain '_'
+    filename:
+      - regex: (?i)^(18vr|babevr|badoinkvr|kinkvr|realvr|vrcosplayx)_(.+)_(?:oculus|\dk)_.+$
+        with: https://$1.com/vrpornvideo/$2
+  scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url: *urls
+    scraper: performerScraper
+movieByURL:
+  - action: scrapeXPath
+    url: *urls
+    scraper: movieScraper
+# Uncomment this section to enable Performer Search on this scraper
+# performerByName:
+#   action: scrapeXPath
+#   queryURL: https://kinkvr.com/bdsm-performers/search/{}?all=1
+#   scraper: performerSearch
+xPathScrapers:
+  sceneScraper:
+    common:
+      $details: &detailsAttr //div[@class="video-rating-and-details"]
+    scene:
+      Title: //h1[contains(@class, "video-title")]/text()
+      Date: &dateSel
+        selector: $details//p[@class="video-upload-date"]/text()
+        postProcess:
+          - replace:
+              - regex: Uploaded:\s
+                with:
+          - parseDate: January 02, 2006
+      Details: &detailsSel $details//p[@class="video-description"]/text()
+      Tags:
+        Name: $details//p[@class="video-tags"]//a/text()
+      Performers:
+        Name: $details//p[@class="video-actors"]/a/text()
+      Studio:
+        Name: &studioName //meta[@name="dl8-customization-brand-name"]/@content
+      Image: &imageSel
+        selector: //img[@class="video-image"]/@src
+        postProcess:
+          - replace:
+              - regex: \?.+
+                with: ""
+      URL: &sceneUrl //link[@rel="canonical"]/@href
+      Code:
+        selector: *sceneUrl
+        postProcess:
+          - replace:
+              - regex: '^(.+)-(\d+)/?$'
+                with: $2
+              - regex: '^.*[^\d].*$' # if no code is found in the url
+                with: # return an empty string
+  # Uncomment this section to user Performer Search on this scraper
+  # performerSearch:
+  #   common:
+  #     $girlA: //div[@class="girl-card-info"]/a
+  #   performer:
+  #     Name: $girlA/span
+  #     URL:
+  #       selector: $girlA/@href
+  #       postProcess:
+  #         - replace:
+  #             - regex: .*badoinkvr\.com/girl/redirect/([^\?]+).+
+  #               with: https://badoinkvr.com/vr-pornstar/$1
+  #             - regex: .*vrcosplayx\.com/girl/redirect/([^\?]+).+
+  #               with: https://vrcosplayx.com/cosplaygirl/$1
+  #             - regex: .*18vr\.com/girl/redirect/([^\?]+).+
+  #               with: https://18vr.com/vrgirl/$1
+  #             - regex: .*babesvr\.com/girl/redirect/([^\?]+).+
+  #               with: https://babevr.com/vrbabe/$1
+  #             - regex: .*realvr\.com/girl/redirect/([^\?]+).+
+  #               with: https://realvr.com/pornstar/$1
+  #             - regex: ^/
+  #               with: https://kinkvr.com/
+  performerScraper:
+    common:
+      $stats: //ul[@id='girlOptionDetails']
+    performer:
+      Name: //div[@class='girl-details-info']/h1/text()
+      Gender:
+        fixed: female
+      URL: //link[@rel='canonical']/@href
+      Twitter: //a[contains(@class,'social-media') and contains (@href,'twitter')]/@href
+      Instagram: //a[contains(@class,'social-media') and contains (@href,'instagram')]/@href
+      Ethnicity:
+        selector: $stats/li[span[contains(.,'Ethnicity')]]/span[contains(@class,'value')]/text()
+        postProcess:
+          - map:
+              Caucasian: white
+              Asian: asian
+              Black: black
+              Latin: hispanic
+      Country: $stats/li[span[contains(.,'Country')]]/span[contains(@class,'value')]/text()
+      EyeColor: $stats/li[span[contains(.,'Eyes')]]/span[contains(@class,'value')]/text()
+      Height:
+        selector: $stats/li[span[contains(.,'Height')]]/span[contains(@class,'value')]/text()
+        postProcess:
+          - feetToCm: true
+      Measurements: $stats/li[span[contains(.,'Measure')]]/span[contains(@class,'value')]/text()
+      Aliases: $stats/li[span[contains(.,'Aka')]]/span[contains(@class,'value')]/text()
+      Image: //img[@id='girlImage']/@src
+  movieScraper:
+    common:
+      $details: *detailsAttr
+    movie:
+      Name:
+        selector: //meta[@name="dl8-customization-brand-name"]/@content|$details/h1/text()
+        concat: " - "
+      Duration:
+        selector: $details//p[@class="video-duration"]/text()
+        postProcess:
+          - replace:
+              - regex: Duration:\s
+                with: ""
+              - regex: \smin
+                with: ":00"
+      Date: *dateSel
+      Synopsis: *detailsSel
+      Studio:
+        Name: *studioName
+      FrontImage: *imageSel
+# Last Updated November 25, 2022

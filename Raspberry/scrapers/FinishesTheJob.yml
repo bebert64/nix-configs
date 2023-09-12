@@ -1,0 +1,36 @@
+name: "FinishesTheJob"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - finishesthejob.com/scene/
+      - mrpov.com/scene/
+      - manojob.com/scene/
+      - thedicksuckers.com/scene/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $content: //main//div[contains(@class,"col")]
+    scene:
+      Title: $content/h1/text()
+      Details: $content/p[2]/text()
+      Performers:
+        Name: $content/h3/a/text()
+      Tags:
+        Name: $content/p/a/text()
+      Image:
+        selector: //video/@poster
+        postProcess:
+          - replace:
+            - regex: (.+scenes\/)([a-z]+)(.+)
+              with: https://www.$2.com$1$2$3
+      Studio:
+        Name: 
+          selector: $content/h2/text()
+          postProcess:
+            - replace:
+              - regex: "Presented By: "
+                with: ""
+      URL: //link[@rel='canonical']/@href
+
+# Last Updated June 10, 2021

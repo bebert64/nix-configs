@@ -1,0 +1,96 @@
+name: "PaperStreetMedia"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - analmom.com/movies/
+      - badmilfs.com/movies/
+      - bbcparadise.com/movies/
+      - bffs.com/movies/
+      - blackvalleygirls.com/movies/
+      - dadcrush.com/movies/
+      - daughterswap.com/movies/
+      - dyked.com/movies/
+      - exxxtrasmall.com/movies/
+      - familystrokes.com/movies/
+      - fostertapes.com/movies/
+      - freeusefantasy.com/movies/
+      - freeusemilf.com/movies/
+      - hijabhookup.com/movies/
+      - hijabmylfs.com/movies/
+      - innocenthigh.com/movies/
+      - littleasians.com/movies/
+      - momswap.com/movies/
+      - mybabysittersclub.com/movies/
+      - mylfdom.com/movies/
+      - notmygrandpa.com/movies/
+      - pervdoctor.com/movies/
+      - pervmom.com/movies/
+      - pervnana.com/movies/
+      - pervtherapy.com/movies/
+      - shoplyfter.com/movies/
+      - shoplyftermylf.com/movies/
+      - sislovesme.com/movies/
+      - sisswap.com/movies/
+      - stayhomepov.com/movies/
+      - stepsiblings.com/movies/
+      - teencurves.com/movies/
+      - teenpies.com/movies/
+      - teensloveanal.com/movies/
+      - teensloveblackcocks.com/movies/
+      - thickumz.com/movies/
+      - tinysis.com/movies/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //p[@class="video-title"]/text()
+      Details: //div[contains(@class, 'video-description')]/descendant-or-self::*/text()
+      Performers:
+        Name: //p[@class="model-name"]/a
+      Image: //div[@class="video-area"]//stream/@poster
+      Studio:
+        Name:
+          selector: //link[@rel="canonical"]/@href
+          postProcess:
+            - replace:
+                - regex: (.+www\.)(\w+)(.+)
+                  with: $2
+            - map:
+                analmom: Anal Mom
+                badmilfs: Bad MILFs
+                bbcparadise: BBC Paradise
+                bffs: BFFs
+                blackvalleygirls: Black Valley Girls
+                dadcrush: DadCrush
+                daughterswap: Daughter Swap
+                dyked: Dyked
+                exxxtrasmall: Exxxtra Small
+                familystrokes: Family Strokes
+                fostertapes: Foster Tapes
+                freeusefantasy: Freeuse Fantasy
+                freeusemilf: Freeuse Milf
+                hijabhookup: Hijab Hookup
+                hijabmylfs: Hijab Mylfs
+                innocenthigh: Innocent High
+                littleasians: Little Asians
+                momswap: Mom Swap
+                mybabysittersclub: My Babysitters Club
+                mylfdom: Mylfdom
+                notmygrandpa: Not My Grandpa
+                pervdoctor: Perv Doctor
+                pervmom: Perv Mom
+                pervnana: Perv Nana
+                pervtherapy: Perv Therapy
+                shoplyfter: Shoplyfter
+                shoplyftermylf: Shoplyfter MYLF
+                sislovesme: Sis Loves Me
+                sisswap: Sis Swap
+                stayhomepov: StayHomePOV
+                stepsiblings: Step Siblings
+                teencurves: Teen Curves
+                teenpies: Teen Pies
+                teensloveanal: Teens Love Anal
+                teensloveblackcocks: Teens Love Black Cocks
+                thickumz: Thickumz
+                tinysis: Tiny Sis
+# Last Updated August 24, 2023

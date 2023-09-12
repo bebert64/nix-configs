@@ -1,0 +1,55 @@
+name: "NewSensationsMain"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - newsensations.com/tour_ns/updates
+    scraper: sceneScraper
+movieByURL:
+  - action: scrapeXPath
+    url:
+      - newsensations.com/tour_ns/dvds
+    scraper: movieScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //div[@class='indScene']/h1
+      Date:
+        selector: //div[@class='sceneDateP']/span[1]
+        postProcess:
+          - replace:
+              - regex: ^(\d{2}/\d{2}/\d{4}).+
+                with: $1
+          - parseDate: 01/02/2006
+      Details: //div[@class='description']/h2
+      Performers:
+        Name: //div[@class="sceneTextLink"]/p/span[@class="tour_update_models"]/a
+      Image: //span[@id='trailer_thumb']//img[not(@alt)]/@src
+      Studio:
+        Name:
+          fixed: NewSensations
+      URL: //link[@rel='canonical']/@href
+  movieScraper:
+    movie:
+      Name:
+        selector: //div[@class='indSceneDVD']/h2
+        postProcess:
+          - replace:
+              - regex: DVDS\s\/\s(.+)
+                with: $1
+      Date:
+        selector: //div[@class='datePhotos']/span/text()
+        postProcess:
+          - replace:
+              - regex: Released:\s
+                with:
+              - regex: (\d{2})\/(\d{2})\/(\d{2})
+                with: 20$3-$1-$2
+          - parseDate: 2006-01-02
+      Studio:
+        Name:
+          fixed: NewSensations
+      Synopsis:
+        selector: //div[@class='description']/p[contains(span,"Description:")]/text()
+      URL: //link[@rel='canonical']/@href
+      FrontImage: //span[@id='trailer_thumb']//img/@src
+# Last Updated July 03, 2021

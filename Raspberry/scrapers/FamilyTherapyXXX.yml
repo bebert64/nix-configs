@@ -1,0 +1,49 @@
+name: "FamilyTherapyXXX"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - analtherapyxxx.com
+      - familytherapyxxx.com
+      - momcomesfirst.com
+      - perfectgirlfriend.com
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+    scene:
+      Title: //h1/text()
+      Date:
+        selector: //meta[@itemprop="uploadDate"]/@content
+        postProcess:
+          - replace:
+              - regex: (?i)(T\d+.+)
+                with: ""
+          - parseDate: 2006-01-02
+      Details:
+        selector: //div[@class="entry-content"]/p/text()
+        concat: "\n"
+      Tags:
+        Name: //p[@class="post-meta"]//a/text()
+      Performers:
+        Name:
+          selector: //div[@class="entry-content"]/p[contains(text(),'***')]
+          postProcess:
+            - replace:
+                - regex: \*+|Starring\s+
+                  with:
+          split: " & "
+      Studio:
+        Name:
+          selector: //img[@id="logo"]/@alt
+          postProcess:
+            - map:
+                Family Therapy: Family Therapy XXX
+      Image:
+        selector: //meta[@itemprop="contentUrl"]/@content
+        postProcess:
+          - replace:
+              - regex: (https://[^/]+)/wp-content/uploads/\d{4}/\d{2}/(\w+)\.\w+
+                with: $1/?s=$2
+          - subScraper:
+              selector: //div[@id="left-area"]/article[1]//img/@src
+# Last Updated December 19, 2022

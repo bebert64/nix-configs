@@ -1,0 +1,31 @@
+name: Aziani
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - aziani.com
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $scene: //div[contains(@class, "heading")][1]
+    scene:
+      Studio:
+        Name:
+          fixed: Aziani
+      Performers:
+        Name: $scene//a[contains(@href, "/models/")]/text()
+      Title: //meta[@property="og:title"]/@content
+      Details: //meta[@property="og:description"]/@content
+      Tags:
+        Name: $scene//a[contains(@href, "/tags/")]/text()
+      Image: //meta[@property="og:image"]/@content
+
+driver:
+  cookies:
+    - CookieURL: "https://aziani.com"
+      Cookies:
+        - Name: nats
+          Value: anythinggoeshere
+          Domain: .aziani.com
+          Path: /
+# Last Updated November 10, 2022

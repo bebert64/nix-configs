@@ -1,0 +1,26 @@
+name: FetishPros
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - fetishpros.com
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: //h1
+      Date:
+        selector: //ul[@class="contentInfo"]/li[3]
+        postProcess:
+          - parseDate: Jan 2, 2006
+      Performers:
+        Name: //div[@class="models"]//a/text()
+      Details: //div[contains(@class, "videoDescription")]/p
+      Tags:
+        Name: //div[@class="tags"]//a
+      Image:
+        selector: //div[@class="videoPreview"]//img/@src
+      Studio:
+        Name:
+          fixed: FetishPros
+# Last Updated July 01, 2023

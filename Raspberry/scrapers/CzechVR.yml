@@ -1,0 +1,87 @@
+name: "CzechVR"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - czechvr.com
+      - czechvrcasting.com
+      - czechvrfetish.com
+      - czechvrnetwork.com
+      - vrintimacy.com
+    scraper: sceneScraper
+movieByURL:
+  - action: scrapeXPath
+    url:
+      - czechvr.com
+      - czechvrcasting.com
+      - czechvrfetish.com
+      - czechvrnetwork.com
+      - vrintimacy.com
+    scraper: movieScraper
+
+xPathScrapers:
+  sceneScraper:
+    common:
+      $info: &infoSel //div[@class="post"]
+      $url: &urlSel //meta[@name="dl8-customization-brand-url"]/@content
+    scene:
+      Title: &title
+        # Czech VR Network uses h1, the substudios use h2
+        selector: &titleSel $info//h1|$info//h2
+        postProcess:
+          - replace:
+              - regex: ".+ - "
+                with:
+      Date: &date
+        selector: $info//div[@class="datum"]/text()
+        postProcess:
+          - parseDate: Jan 2, 2006
+      Details: &detailsSel //div[@class="textDetail"]/text()
+      Tags:
+        Name: //div[@id="MoreTags"]/div[@class="tagsipka"]//a/text()
+      Performers:
+        Name: $info//div[@class="featuring"]//a/text()
+      Studio: &studio
+        Name:
+          selector: *titleSel
+          postProcess:
+            - replace:
+              - regex: "\\d* - .+"
+                with:
+      Image: &image
+        selector: $url|//dl8-video/@poster
+        concat: " "
+        postProcess:
+          - replace:
+              - regex: \s\./category
+                with: /category
+          - replace:
+              - regex: \/\/
+                with: "/"
+          - replace:
+              - regex: :\/
+                with: "://"
+  movieScraper:
+    common:
+      $info: *infoSel
+      $url: *urlSel
+    movie:
+      Name: *title
+      Duration: $info//div[@class="casDetail"]/span[@class="desktop"]/text()
+      Date: *date
+      Studio: *studio
+      Synopsis: *detailsSel
+      FrontImage: *image
+
+driver:
+  cookies:
+    - CookieURL: "https://www.czechvr.com"
+      Cookies:
+        - Name: "iagree"
+          Domain: ".czechvr.com"
+          Value: "ano"
+          Path: "/"
+  headers:
+    - Key: User-Agent
+      Value: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101 Firefox/79.0)
+
+# Last Updated July 25, 2023

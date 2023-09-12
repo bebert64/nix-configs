@@ -1,0 +1,56 @@
+name: czechav
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - creativeporn.com/
+      - czechamateurs.com/
+      - czechbangbus.com/
+      - czechbitch.com/
+      - czechcouples.com/
+      - czechdungeon.com/
+      - czechestrogenolit.com/
+      - czechfantasy.com/
+      - czechfirstvideo.com/
+      - czechgame.com/
+      - czechgangbang.com/
+      - czechgardenparty.com/
+      - czechgayamateurs.com/
+      - czechgaycasting.com/
+      - czechgaycouples.com/
+      - czechgayfantasy.com/
+      - czechgaymassage.com/
+      - czechgaysolarium.com/
+      - czechgaytoilets.com/
+      - czechharem.com/
+      - czechhomeorgy.com/
+      - czechlesbians.com/
+      - czechmassage.com/
+      - czechmegaswingers.com/
+      - czechorgasm.com/
+      - czechparties.com/
+      - czechsolarium.com/
+      - czechspy.com/
+      - czechstreets.com/
+      - czechsupermodels.com/
+      - czechtaxi.com/
+      - czechwifeswap.com/
+      - gayhorrorporn.com/
+      - horrorporn.com/
+      - movieporn.com/
+      - perversefamily.com/
+      - unrealporn.com/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    common:
+      $studio: //h1/img/@alt
+    scene:
+      Title: //div/h2[@class='nice-title']
+      Details: //div[@class='desc-text']/p
+      Tags:
+        Name: //a[@class='tag']/text()
+      Studio:
+        Name: $studio
+      Image:
+        selector: //video/@poster
+# Last Updated January 08, 2022

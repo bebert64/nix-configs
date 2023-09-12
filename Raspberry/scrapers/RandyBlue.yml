@@ -1,0 +1,33 @@
+name: "RandyBlue"
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - randyblue.com/scenes/
+    scraper: sceneScraper
+
+xPathScrapers:
+  sceneScraper:
+    common:
+      $titleArea: //div[@class="title-zone"]
+    scene:
+      Title: $titleArea/h1
+      Date:
+        selector: $titleArea/div[@class="calendar"]
+        postProcess:
+          - parseDate: 01/02/2006
+      Details:
+        selector: //div[@id="collapseTwo"]
+        postProcess:
+          - replace:
+            - regex: \x{0020}|\x{00A0} # unicode SP, NBSP
+              with: " "
+      Tags:
+        Name: $titleArea/ul[@class="scene-tags"]/li/a
+      Performers:
+        Name: $titleArea/ul[@class="scene-models-list"]/li/a
+      Image: //meta[@itemprop="thumbnailUrl"]/@content
+      URL: //link[@rel="canonical"]/@href
+      Studio:
+        Name:
+          fixed: Randy Blue
+# Last Updated July 08, 2023
