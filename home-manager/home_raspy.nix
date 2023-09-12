@@ -20,8 +20,8 @@
   # Activation script
   home.activation = {
     stashConfig = ''
-      ln -s $HOME/nix-configs/Raspberry/scrapers $HOME/.stash/
-      ln -s $HOME/nix-configs/Raspberry/config_stash.yml $HOME/.stash/config.yml
+      ln -sf $HOME/nix-configs/Raspberry/scrapers $HOME/.stash/
+      ln -sf $HOME/nix-configs/Raspberry/config_stash.yml $HOME/.stash/config.yml
     '';
 
     rangerBookmarks = ''
