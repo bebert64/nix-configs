@@ -2,10 +2,17 @@
 add stash configs and param to Home-Manager raspy config (including all scrappers)
 
 # Backup raspy
-backup certificate (or add howto to cheat sheet)
+backup certificate and whole letsencrypt config to NAS
+    /etc/letsencrypt
+    add line on cheatsheet on where it needs to be cp
 backup apache config
+    /etc/apache2
+    add line on cheatsheet on where it needs to be cp
 backup postgresql general config
-automate regular save of postgres content to NAS + stash_db (+ stash mini images? depends on size)
+    add line on cheatsheet on how to restore
+automate regular save of postgres content to NAS + stash_db + stash
+    add line to cheatsheet on how to restore
+Add howto to cheat sheet on certbot
 
 # Fix ipv6 access from outside
 "A Record" with freebox ipv4 88.160.246.99
@@ -14,7 +21,7 @@ Port redirect as needed (probably 5 redirection needed, i.e. all of A record + u
 Html page at domain root, with links to different apps
 
 # Various (easy) improvements
-finish ranger actionvation script for bookmarks (sed... command available in arch fixe-bureau zsh history)
+finish ranger activation script for bookmarks (sed... command available in arch fixe-bureau zsh history)
 add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
 add i3 command + keybinding for calculator
