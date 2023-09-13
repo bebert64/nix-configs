@@ -59,3 +59,8 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 ```
 fc-cache -f -v
 ```
+
+
+
+reinstall nixos boot
+sudo loadkeys fr
