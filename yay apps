@@ -1,7 +1,8 @@
+# Check if sudo is installed, it not, ask to install it manually from root profile
+
 ASK
     name of flake config
-    name of user
-    if install video-driver (xf86-video-vesa / something else) ?
+    # try without it first
 
 # install yay
 pacman -S --needed git base-devel
@@ -10,21 +11,16 @@ cd yay
 makepkg -si
 
 # install additional packages1
-yay nfs-utils polkit sudo xorg-server xf86-video-vesa alock
-
-# to check
-yay i3-wm xdg-utils nix
-
-# install rust
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+yay polkit sudo alock
 
 # install nix if arch install not working
-curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix-install.sh
-./nix-install.sh --daemon
+yay nix
+OR
+curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix-install.sh | sh --daemon
 
-# Setup niw
-sudo systemctl enable nix-daemon.service
-sudo systemctl start nix-daemon.service
+# Setup nix
+?? sudo systemctl enable nix-daemon.service
+?? sudo systemctl start nix-daemon.service
 sudo usermod -aG nix-users $USER
 nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
@@ -32,16 +28,32 @@ nix-channel --update
 nix-shell '<home-manager>' -A install
 
 # command to run first flake with --experimental-features
+cd ~
 git clone https://github.com/bebert64/nix-configs
+cd ~/nix-configs/home-manager && home-manager switch --flake .#${config-name}
+
+# to check
+yay i3-wm xdg-utils nfs-utils xf86-video-vesa
+
+
+## Validated already, add in v0.2
+
+# install additional packages1
+yay polkit alock
+# install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Add line to fstab for nas
 # NAS
-nas.capucina.house:/volume1/NAS			/mnt/NAS	nfs		user,users,noexec,noauto	0 0
+sudo echo "nas.capucina.house:/volume1/NAS			/mnt/NAS	nfs		user,users,noexec,noauto	0 0" >> /etc/fstab
 
+# Needed for rofi to find apps
 # Add lines to /etc/profile
+sudo cat >> /etc/profile << EOL
 if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ];
 then
      source $HOME/.nix-profile/etc/profile.d/nix.sh
 fi
 
 export XDG_DATA_DIRS=$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share:$XDG_DATA_DIRS
+EOL

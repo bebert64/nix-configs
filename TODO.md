@@ -1,12 +1,13 @@
 ## Arch + Home-Manager
 
-# Various (easy) improvements
-add ssh config to files being symlinked
-check size and see if datagrip profile can be added to git repo
+# Check if possible from home-manager
+    nfs-utils
+    i3-wm
+    xdg-utils
 
-# Various (harder) improvements
-check if polkit from home-manager can work
+
 check if polkit_gnome is needed
+check if xf86-video-vesa is needed
 add parts about Thunderbird profile to CheatSheet
 check if possible starting i3 from home-manager configuration (enable=true + script)
 
@@ -57,6 +58,8 @@ Html page at domain root, with links to different apps
 backup freebox config
 
 # Various (easy) improvements
+add ssh config to files being symlinked
+check size and see if datagrip profile can be added to git repo
 add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
 add i3 command + keybinding for calculator
@@ -65,6 +68,7 @@ rename dirs in home, with lowercase names (mnt / wallpapers / code / etc...)
 do not mkdir for cluster (better to ssh and ranger directly)
 remove mount point for charybdis and add how-to to cheat sheet instead
 create symlink in activation rather than home.file for most cases
+script to rsync wallpapers in both directions
 
 # Various (harder) improvements
 Fix caffeine icon + hicolor theme
