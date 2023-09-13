@@ -3,7 +3,6 @@
 # Various (easy) improvements
 add ssh config to files being symlinked
 check size and see if datagrip profile can be added to git repo
-add .xinitrc to config (with one line "exec i3")
 
 # Various (harder) improvements
 check if polkit from home-manager can work
