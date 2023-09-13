@@ -12,7 +12,7 @@ fi
 read -p 'flake-config name: ' FLAKE_CONFIG_NAME
 
 # install yay
-pacman -S --needed git base-devel
+# pacman -S --needed git base-devel
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
@@ -20,21 +20,21 @@ makepkg -si
 yay xorg-server
 
 # install nix if arch install not working
-yay nix
 # for v0.2 if yay nix not working
-# curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix-install.sh | sh --daemon
+curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix-install.sh
+chmod +x ./nix-install.sh
+./nix_install.sh --daemon
+
+echo "You can reboot now"
 
 # Setup nix
-sudo systemctl enable nix-daemon.service
-sudo usermod -aG nix-users $USER
-nix-channel --add https://nixos.org/channels/nixpkgs-unstable
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
 # command to run first flake with --experimental-features
 cd ~
-cd ~/nix-configs/home-manager && home-manager switch --flake .#$FLAKE_CONFIG_NAME
+cd ~/nix-configs/home-manager && home-manager switch --flake .#$FLAKE_CONFIG_NAME --extra-experimental-features nix-command --extra-experimental-features flakes
 
 echo "All good, you can reboot and pray now"
 
