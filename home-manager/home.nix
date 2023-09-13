@@ -163,17 +163,36 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    XDG_DATA_HOME = "$HOME/.local/share";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
   };
 
-  xdg.mimeApps = {
+  xdg = { 
     enable = true;
-    associations.added = {
-      "default-web-browser" = ["firefox.desktop"];
+    mimeApps = {
+      enable = true;
+      associations.added = {
+        "text/html" = [ "firefox.desktop" ];
+        "text/xml" = [ "firefox.desktop" ];
+        "x-scheme-handler/http" = [ "firefox.desktop" ];
+        "x-scheme-handler/https" = [ "firefox.desktop" ];
+      };
+      defaultApplications = {
+        "text/html" = [ "firefox.desktop" ];
+        "text/xml" = [ "firefox.desktop" ];
+        "x-scheme-handler/http" = [ "firefox.desktop" ];
+        "x-scheme-handler/https" = [ "firefox.desktop" ];
+      };
     };
-    defaultApplications = {
-      "default-web-browser" = ["firefox.desktop"];
+
+    desktopEntries = {
+      firefox = {
+        name = "Firefox";
+        genericName = "Web Browser";
+        exec = "firefox -P Regular %U";
+        terminal = false;
+        categories = [ "Application" "Network" "WebBrowser" ];
+        mimeType = [ "text/html" "text/xml" ];
+      };
     };
   };
 
