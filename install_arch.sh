@@ -6,7 +6,7 @@
 # mount /def/sda3 /mnt/boot --mkdir
 # swapon /dev/sda2
 # reflector
-# pacstrap -K /mnt base linux linux-firmware vim git sudo grub efibootmgr networkmanager base-devel
+# pacstrap -K /mnt base linux linux-firmware vim git sudo grub efibootmgr networkmanager base-devel dconf
 # genfstab -U /mnt >> /mnt/etc/fstab
 # arch-chroot /mnt
 # passwd

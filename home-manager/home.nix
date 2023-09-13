@@ -26,7 +26,6 @@ in
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     conky
-    dconf
     direnv
     evince # pdf reader
     feh
@@ -113,7 +112,6 @@ in
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specifics.autorandr;
-    dconf.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
