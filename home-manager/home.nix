@@ -26,6 +26,7 @@ in
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     conky
+    dconf
     direnv
     evince # pdf reader
     feh
