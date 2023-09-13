@@ -1,11 +1,12 @@
 # loadkeys fr
 # timedatectl
 # mkfs.ext4 /dev/sda4
+# mkfs.fat -F 32 /dev/sda3
 # mount /dev/sd4 /mnt
 # mount /def/sda3 /mnt/boot --mkdir
 # swapon /dev/sda2
 # reflector
-# pacstrap -K /mnt base linux linux-firmware vim git sudo grub efibootmgr
+# pacstrap -K /mnt base linux linux-firmware vim git sudo grub efibootmgr networkmanager
 # genfstab -U /mnt >> /mnt/etc/fstab
 # arch-chroot /mnt
 # passwd
@@ -17,7 +18,7 @@
 # cd
 # git clone https://github.com/bebert64/nix-configs
 # cd nix-configs
-# sudo ./install_user_config.sh
+# sudo ./install_user_arch.sh
 
 
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
@@ -28,5 +29,7 @@ locale-gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "KEYMAP=fr" > /etc/vconsole.conf
 echo "fixe-bureau" > /etc/hostname
+# grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchLinux
+# grub-mkconfig -o /boot/grub/grub.cfg
 
 echo "you can now reboot"
