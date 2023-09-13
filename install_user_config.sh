@@ -17,7 +17,7 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
 
-yay xorg-server
+yay xorg-server xorg-xinit
 
 # install nix if arch install not working
 # for v0.2 if yay nix not working

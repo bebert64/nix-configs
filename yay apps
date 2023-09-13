@@ -33,7 +33,7 @@ git clone https://github.com/bebert64/nix-configs
 cd ~/nix-configs/home-manager && home-manager switch --flake .#${config-name}
 
 # to check
-yay i3-wm xdg-utils nfs-utils xf86-video-vesa
+yay xdg-utils nfs-utils xf86-video-vesa
 
 
 ## Validated already, add in v0.2

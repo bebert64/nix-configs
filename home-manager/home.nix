@@ -143,7 +143,6 @@ in
     ".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
     ".config/rofi/theme".source = ../dotfiles/rofi/theme;
     ".conky".source = ../dotfiles/conky;
-    ".local/share/ranger/bookmarks".source = ../dotfiles/ranger/bookmarks;
     ".tilix.dconf".source = ../dotfiles/tilix.dconf;
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
@@ -204,7 +203,7 @@ in
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
+      # ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
     '';
 
     rangerBookmarks = ''
