@@ -113,6 +113,7 @@ in
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specifics.autorandr;
+    dconf.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
