@@ -171,6 +171,7 @@ in
     QT_QPA_PLATFORMTHEME = "qt5ct";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
     FONTCONFIG_PATH = "$HOME/.config/fontconfig/conf.d";
+    FONTCONFIG_FILE = "${pkgs.fontconfig.out}/etc/fonts/fonts.conf";
   };
 
   xdg = { 
