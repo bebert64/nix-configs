@@ -94,6 +94,7 @@ in
     playerctl # to send data and retrieve metadata for polybar
 
     # fonts
+    fontconfig
     noto-fonts
     noto-fonts-emoji
     dejavu_fonts
