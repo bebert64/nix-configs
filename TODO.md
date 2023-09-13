@@ -8,8 +8,6 @@ add .xinitrc to config (with one line "exec i3")
 # Various (harder) improvements
 check if polkit from home-manager can work
 check if polkit_gnome is needed
-check if installing firefox through yay solves default profile
-    if ok, remove -P ... from i3 commands and from doc in cheat sheet
 add parts about Thunderbird profile to CheatSheet
 
 # i3 commands do execute at startup

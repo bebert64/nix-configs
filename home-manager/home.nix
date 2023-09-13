@@ -117,6 +117,7 @@ in
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
+    firefox = import ./programs/firefox.nix (pkgs);
     git = import ./programs/git.nix;
     vim = {
       extraConfig = ''
@@ -149,7 +150,10 @@ in
   };
 
   # launch i3
-  xsession.windowManager.i3 = import ./programs/i3.nix (args);
+  xsession = {
+    windowManager.i3 = import ./programs/i3.nix (args);
+    numlock.enable = true;
+  };
   gtk = {
     enable = true;
     theme = {
@@ -181,17 +185,6 @@ in
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
-      };
-    };
-
-    desktopEntries = {
-      firefox = {
-        name = "Firefox";
-        genericName = "Web Browser";
-        exec = "firefox -P Regular %U";
-        terminal = false;
-        categories = [ "Application" "Network" "WebBrowser" ];
-        mimeType = [ "text/html" "text/xml" ];
       };
     };
   };
