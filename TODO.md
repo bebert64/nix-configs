@@ -9,6 +9,7 @@ add .xinitrc to config (with one line "exec i3")
 check if polkit from home-manager can work
 check if polkit_gnome is needed
 add parts about Thunderbird profile to CheatSheet
+check if possible starting i3 from home-manager configuration (enable=true + script)
 
 # i3 commands do execute at startup
 Fix udiskie
