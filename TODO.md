@@ -1,4 +1,4 @@
-## Before re-clean install Arch
+## Arch + Home-Manager
 
 # Various (easy) improvements
 add ssh config to files being symlinked
@@ -17,12 +17,11 @@ Fix udiskie
 
 # Install script
 transform yay apps into real script
-clean install for everything !!
+
+# Clean install !!
 
 
-
-
-## Before re-clean install Raspy
+## Raspy
 
 # Backup raspy
 Add howto to cheat sheet on certbot
@@ -46,12 +45,10 @@ Check how to launch apps at startup
     qbittorrent
     add howto to CheatSheet
 
+# Clean install !!
 
 
-
-
-
-## Other
+## General
 get all data from laptop to NAS
 
 # Fix ipv6 access from outside
