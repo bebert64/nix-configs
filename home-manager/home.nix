@@ -147,7 +147,7 @@ in
     ".tilix.dconf".source = ../dotfiles/tilix.dconf;
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
-    ".xinitrc".source = "..dotfiles/.xinitrc";
+    ".xinitrc".source = ../dotfiles/.xinitrc;
   };
 
   # launch i3
