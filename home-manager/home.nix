@@ -170,6 +170,7 @@ in
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
+    FONTCONFIG_PATH = "$HOME/.config/fontconfig/conf.d";
   };
 
   xdg = { 
@@ -193,7 +194,7 @@ in
 
   # Activation script
   home.activation = {
-    createDirs = hm-lib.hm.dag.entryAfter ["installPackages" "writeBoundary" ] ''
+    createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
       mkdir -p $HOME/Mnt/Charybdis
       mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
@@ -203,7 +204,7 @@ in
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      # ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
+      dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
     '';
 
     rangerBookmarks = ''
