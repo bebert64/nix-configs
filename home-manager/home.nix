@@ -202,8 +202,8 @@ in
   # Activation script
   home.activation = {
     createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
-      ln -sf /mnt/NAS $HOME/Mnt/
+      mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
+      ln -sf /mnt/NAS $HOME/mnt/
       # ln -sf /run/media/romain/ $HOME/mnt/Usb-drives
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
