@@ -176,12 +176,14 @@ in
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "defaut-web-browser" = [ "firefox.desktop" ];
       };
       defaultApplications = {
         "text/html" = [ "firefox.desktop" ];
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "defaut-web-browser" = [ "firefox.desktop" ];
       };
     };
   };
