@@ -32,7 +32,8 @@
         compdef '_files -W "$HOME/stockly/Main" -/' cdr
         path+="$HOME/.cargo/bin"
         eval "$(direnv hook zsh)"
-	    source "$HOME/.profile"
+	    # source "$HOME/.profile"
+	    # source "/etc/profile"
 
         if [[ "$(tty)" == '/dev/tty1' ]]; then
             exec startx
