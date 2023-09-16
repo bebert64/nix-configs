@@ -32,6 +32,7 @@ in
     firefox-bin-unwrapped
     gnome.gnome-calculator
     gnome.gnome-keyring
+    hicolor-icon-theme
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
       pname = "insomnia-stockly";
@@ -94,7 +95,6 @@ in
     playerctl # to send data and retrieve metadata for polybar
 
     # fonts
-    fontconfig
     noto-fonts
     noto-fonts-emoji
     dejavu_fonts
@@ -144,7 +144,6 @@ in
     ".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
     ".config/rofi/theme".source = ../dotfiles/rofi/theme;
     ".conky".source = ../dotfiles/conky;
-    ".tilix.dconf".source = ../dotfiles/tilix.dconf;
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
     ".xinitrc".source = ../dotfiles/.xinitrc;
@@ -162,25 +161,18 @@ in
       name = "palenight";
       package = pkgs.palenight-theme;
     };
-  };
-  
-  fonts = {
-    fonts = with pkgs; [
-      dejavu_fonts
-      source-code-pro
-      source-sans-pro
-      source-serif-pro
-    ];
-    fontconfig = {
-      defaultFonts = {
-        monospace = [ "Source Code Pro" ];
-        sansSerif = [ "Source Sans Pro" ];
-        serif     = [ "Source Serif Pro" ];
-      };
-      ultimate = {
-        enable = false;
-      };
+    #iconTheme = {
+    #  name = "Papirus";
+    #  package = pkgs.papirus-icon-theme;
+    #};
+    iconTheme = {
+      name = "Hicolor";
+      package = pkgs.hicolor-icon-theme;
     };
+    #cursorTheme = {
+    #  name = "Nordzy-white-cursors";
+    #  package = pkgs.nordzy-cursor-theme;
+    #};
   };
   
   fonts.fontconfig.enable = true;
@@ -189,8 +181,8 @@ in
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
-    FONTCONFIG_PATH = "$HOME/.config/fontconfig/conf.d";
-    FONTCONFIG_FILE = "${pkgs.fontconfig.out}/etc/fonts/fonts.conf";
+    #FONTCONFIG_PATH = "$HOME/.config/fontconfig/conf.d";
+    #FONTCONFIG_FILE = "${pkgs.fontconfig.out}/etc/fonts/fonts.conf";
   };
 
   xdg = { 
@@ -202,12 +194,14 @@ in
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "defaut-web-browser" = [ "firefox.desktop" ];
       };
       defaultApplications = {
         "text/html" = [ "firefox.desktop" ];
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
+        "defaut-web-browser" = [ "firefox.desktop" ];
       };
     };
   };
@@ -215,21 +209,16 @@ in
   # Activation script
   home.activation = {
     createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p $HOME/Mnt/Cluster/fixe-bureau $HOME/Mnt/Cluster/fixe-salon $HOME/Mnt/Cluster/stockly-romainc $HOME/Mnt/Cluster/raspy
-      mkdir -p $HOME/Mnt/Charybdis
       mkdir -p $HOME/Mnt/Ipad/SideBooks $HOME/Mnt/Ipad/Chunky $HOME/Mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/Mnt/
-      rm -f $HOME/Mnt/Usb-drives
-      ln -sf /run/media/romain/ $HOME/Mnt/Usb-drives
+      # ln -sf /run/media/romain/ $HOME/mnt/Usb-drives
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      # ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
-    '';
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
 
-    rangerBookmarks = ''
-      sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/nix-configs/ranger_bookmarks
-      ln -sf $HOME/nix-configs/ranger_bookmarks $HOME/.local/share/ranger/bookmarks
+      # Create ranger's bookmarks
+      sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
     '';
   };
 
