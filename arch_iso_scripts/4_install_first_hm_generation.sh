@@ -20,12 +20,12 @@ cd nix-configs/home-manager && home-manager switch --flake .#$FLAKE_CONFIG_NAME 
 
 # Needed for rofi to find apps
 sudo cat >> /etc/profile << EOL
-if [ -f $HOME/.nix-profile/etc/profile.d/nix.sh ];
+if [ -f \$HOME/.nix-profile/etc/profile.d/nix.sh ];
 then
-     source $HOME/.nix-profile/etc/profile.d/nix.sh
+     source \$HOME/.nix-profile/etc/profile.d/nix.sh
 fi
 
-export XDG_DATA_DIRS=$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share:$XDG_DATA_DIRS
+export XDG_DATA_DIRS=\$HOME/.nix-profile/share:/usr/local/share:/usr/share:\$HOME/.local/share:$XDG_DATA_DIRS
 EOL
 
 # Make zsh default shell
