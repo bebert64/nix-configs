@@ -27,7 +27,7 @@
     syntaxHighlighting.enable = true;
     initExtra = ''
         cdr() {
-            cd "$HOME/stockly/Main/$@"
+            cd "$HOME/Stockly/Main/$@"
         }
         compdef '_files -W "$HOME/stockly/Main" -/' cdr
         path+="$HOME/.cargo/bin"
