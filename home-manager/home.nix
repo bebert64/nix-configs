@@ -170,6 +170,8 @@ in
     };
   };
 
+  fonts.fontconfig.enable = true;
+
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
