@@ -17,7 +17,7 @@ systemctl enable NetworkManager
 
 # Install bootloader
 read -p 'Do you want to re-install the bootlader? (y/n) :' INSTALL_BOOTLOADER
-if [[ $FORMAT_BOOT == "y" ]]; then
+if [[ $INSTALL_BOOTLOADER == "y" ]]; then
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchLinux
     grub-mkconfig -o /boot/grub/grub.cfg
 fi

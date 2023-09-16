@@ -9,8 +9,8 @@ mkfs.ext4 /dev/sda4
 if [[ $FORMAT_BOOT == "y" ]]; then
     mkfs.fat -F 32 /dev/sda3
 fi
-mount /dev/sd4 /mnt
-mount /def/sda3 /mnt/boot --mkdir
+mount /dev/sda4 /mnt
+mount /dev/sda3 /mnt/boot --mkdir
 swapon /dev/sda2
 reflector
 pacstrap -K /mnt base linux linux-firmware vim git sudo grub efibootmgr networkmanager base-devel dconf

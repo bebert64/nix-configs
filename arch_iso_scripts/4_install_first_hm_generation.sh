@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Check if running in sudo
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
-  exit
-fi
-
 # Setup nix
 nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 nix-channel --update
@@ -19,21 +13,21 @@ git clone https://github.com/bebert64/nix-configs
 cd nix-configs/home-manager && home-manager switch --flake .#$FLAKE_CONFIG_NAME --extra-experimental-features nix-command --extra-experimental-features flakes
 
 # Needed for rofi to find apps and for all apps to find icons / cursors / etc...
-sudo cat >> /etc/profile << EOL
+sudo bash -c 'cat >> /etc/profile << EOL
 if [ -f \$HOME/.nix-profile/etc/profile.d/nix.sh ];
 then
      source \$HOME/.nix-profile/etc/profile.d/nix.sh
 fi
 
 export XDG_DATA_DIRS=\$HOME/.nix-profile/share:/usr/local/share:/usr/share:\$HOME/.local/share:$XDG_DATA_DIRS
-EOL
+EOL'
 
 # Make zsh default shell
-echo $(which zsh) >> /etc/shells
+sudo bash -c 'echo $(which zsh) >> /etc/shells'
 chsh -s $(which zsh)
 
 # Create dir to mount NAS
-mkdir /mnt/NAS
+sudo mkdir /mnt/NAS
 
 # Update font's cache
 fc-cache -f -v
