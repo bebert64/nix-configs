@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-read -p 'Do you want to re-install the bootlader? (y/n) :' INSTALL_BOOTLOADER
 
 passwd
-# uncomment wheel line
-visudo
+sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /etc/sudoers
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
 sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
@@ -15,10 +13,15 @@ echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "KEYMAP=fr" > /etc/vconsole.conf
 echo "fixe-bureau" > /etc/hostname
 systemctl enable NetworkManager
+
+# Install bootloader
+read -p 'Do you want to re-install the bootlader? (y/n) :' INSTALL_BOOTLOADER
 if [[ $FORMAT_BOOT == "y" ]]; then
     grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchLinux
     grub-mkconfig -o /boot/grub/grub.cfg
 fi
+
+# Add user
 useradd -m -G wheel romain
 passwd romain
 
