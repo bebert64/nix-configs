@@ -1,23 +1,11 @@
 ## Arch + Home-Manager
 
-# Check if possible from home-manager
-    nfs-utils
-    i3-wm
-    xdg-utils
-
-
 check if polkit_gnome is needed
-check if xf86-video-vesa is needed
 add parts about Thunderbird profile to CheatSheet
-check if possible starting i3 from home-manager configuration (enable=true + script)
 
 # i3 commands do execute at startup
 Fix udiskie
-
-# Install script
-transform yay apps into real script
-
-# Clean install !!
+!=
 
 
 ## Raspy

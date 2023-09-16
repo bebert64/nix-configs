@@ -34,12 +34,3 @@
 # grub-mkconfig -o /boot/grub/grub.cfg
 
 # echo "you can now reboot"
-
-
-whoami
-sudo -i -u someuser bash << EOF
-echo "In"
-whoami
-EOF
-echo "Out"
-whoami
