@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Setup Stockly
-cd 
+cd ~
 mkdir -p Stockly
 cd Stockly 
 git clone git@github.com:Stockly/Main.git
