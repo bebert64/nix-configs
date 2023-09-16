@@ -134,6 +134,7 @@ in
   # plain files is through 'home.file'.
   home.file = {
     ".anydesk/user.conf".source = ../dotfiles/anydesk-user.conf;
+    ".cargo/config.toml".source = ../dotfiles/cargo_config.toml;
     ".config/btop/btop.conf".source = ../dotfiles/btop.conf;
     ".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
     ".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
