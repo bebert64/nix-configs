@@ -92,7 +92,7 @@ in
 
     # Strawberry
     strawberry
-    playerctl # to send data and retrieve metadata for polybar
+    playerctl # to send data and retrieve metadata for polybarw
 
     # fonts
     noto-fonts
@@ -168,13 +168,7 @@ in
       name = "palenight";
       package = pkgs.palenight-theme;
     };
-    iconTheme = {
-      name = "Hicolor";
-      package = pkgs.hicolor-icon-theme;
-    };
   };
-  
-  fonts.fontconfig.enable = true;
 
   # Session variable
   home.sessionVariables = {
@@ -217,7 +211,8 @@ in
       ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
 
       # Create ranger's bookmarks
-      sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+      mkdir -p $HOME/.local/share/ranger/
+      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
     '';
   };
 
