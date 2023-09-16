@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-
+# Set root password
 passwd
-sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /etc/sudoers
+
+# Finish system config
 ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
 hwclock --systohc
 sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
@@ -21,7 +22,8 @@ if [[ $FORMAT_BOOT == "y" ]]; then
     grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
-# Add user
+# Add user and give it sudo rights
+sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /etc/sudoers
 useradd -m -G wheel romain
 passwd romain
 
