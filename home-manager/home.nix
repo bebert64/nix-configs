@@ -149,6 +149,13 @@ in
     ".xinitrc".source = ../dotfiles/.xinitrc;
   };
 
+  home.pointerCursor = {
+      x11.enable = true;
+      package = pkgs.gnome3.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 32;
+  };
+
   # launch i3
   xsession = {
     enable = true;
@@ -161,18 +168,10 @@ in
       name = "palenight";
       package = pkgs.palenight-theme;
     };
-    #iconTheme = {
-    #  name = "Papirus";
-    #  package = pkgs.papirus-icon-theme;
-    #};
     iconTheme = {
       name = "Hicolor";
       package = pkgs.hicolor-icon-theme;
     };
-    #cursorTheme = {
-    #  name = "Nordzy-white-cursors";
-    #  package = pkgs.nordzy-cursor-theme;
-    #};
   };
   
   fonts.fontconfig.enable = true;
