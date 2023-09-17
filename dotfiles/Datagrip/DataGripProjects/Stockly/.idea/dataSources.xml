@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="LOCAL:romain-dev" uuid="7a2d74de-4808-4075-a78f-4b39fae69914">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/romain-dev-Stocks</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PROD:Operations" uuid="c4d5b297-8c4c-48ed-8866-880241e3ceae">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-operations-postgres-1588878330974-r.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PROD:EnvService" uuid="b7072a6a-8027-4643-adac-b386e0a280a5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-envservice-postgres-1556120407638.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PROD:Shipments" uuid="fc210f63-fd43-46da-bfe8-1da4b1f22a5c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-shipments-postgres-1552834581372.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PROD:Stocks" uuid="1670b746-37df-4894-ac65-4d63765d52f7">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-stocks-postgres-1600037491284.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="MASTER:PROD:Stocks" uuid="774ac305-f485-4152-a421-b924c4630034">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-stocks-postgres-1600037491284.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PROD[REPLICA]:Stocks" uuid="77d1b19a-bbff-4dfb-af4e-c9f336e58092">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-stocks-postgres-1600037491284-r.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="TEMP_TABLE:Stocks" uuid="cbb125e9-4ee9-4f31-811f-cdd116492c9d">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://stocks-test-temp-table.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PERSO" uuid="1ef68c73-4290-49b9-95c3-c05b6d6836c7">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://192.168.0.52:5432/postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="TEMP:Operations" uuid="a182716a-5d44-49e8-8561-a8544b423157">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://operations-test-migration-return-labels.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="stash-go.sqlite" uuid="dcb53c8d-c11b-4acc-8cce-2238a655a855">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/Mnt/Cluster/raspy/.stash/stash-go.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="places.sqlite" uuid="fafbe58b-3e43-480d-bcf1-a909b7da6cfb">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/.mozilla/firefox/16zzrtzl.Default User/places.sqlite</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="MASTER:PROD:Operations" uuid="ad3fdb48-3d13-4b46-9c98-b72566930b51">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-operations-postgres-1588878330974-r.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
