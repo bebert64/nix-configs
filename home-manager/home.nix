@@ -206,7 +206,7 @@ in
     createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
-      # ln -sf /run/media/romain/ $HOME/mnt/Usb-drives
+      ln -sf /run/media/romain/ $HOME/mnt/usb
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
