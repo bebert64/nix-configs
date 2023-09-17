@@ -177,7 +177,7 @@ in
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
-    XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share:$XDG_DATA_DIRS";
+    XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
   };
 
   xdg = { 
