@@ -50,39 +50,11 @@
       <jdbc-url>jdbc:postgresql://scd-prod-stocks-postgres-1600037491284-r.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="TEMP_TABLE:Stocks" uuid="cbb125e9-4ee9-4f31-811f-cdd116492c9d">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://stocks-test-temp-table.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="PERSO" uuid="1ef68c73-4290-49b9-95c3-c05b6d6836c7">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://192.168.0.52:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="TEMP:Operations" uuid="a182716a-5d44-49e8-8561-a8544b423157">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://operations-test-migration-return-labels.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="stash-go.sqlite" uuid="dcb53c8d-c11b-4acc-8cce-2238a655a855">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$USER_HOME$/Mnt/Cluster/raspy/.stash/stash-go.sqlite</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="places.sqlite" uuid="fafbe58b-3e43-480d-bcf1-a909b7da6cfb">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$USER_HOME$/.mozilla/firefox/16zzrtzl.Default User/places.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="MASTER:PROD:Operations" uuid="ad3fdb48-3d13-4b46-9c98-b72566930b51">

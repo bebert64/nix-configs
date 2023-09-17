@@ -1,9 +1,3 @@
-## Arch + Home-Manager
-add parts about Thunderbird profile to CheatSheet
-move mount-NAS to scripts to allow other programs to use it
-move dotfile/move_to_ipad.sh to scripts
-
-
 ## Raspy
 
 # Backup raspy
@@ -42,6 +36,9 @@ Html page at domain root, with links to different apps
 backup freebox config
 
 # Various (easy) improvements
+yay -Syu when upgrade
+move mount-NAS to scripts to allow other programs to use it
+move dotfile/move_to_ipad.sh to scripts
 add ssh config to files being symlinked
 check size and see if datagrip profile can be added to git repo
 add loading btop config to activation script
@@ -64,3 +61,4 @@ add ENV variable for firefox_db (host-specifics ?)
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
+test which fonts can be downloaded from nix (to reduce repo size)
