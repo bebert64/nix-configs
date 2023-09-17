@@ -1,10 +1,10 @@
 h:/home/$USER
 D:/home/$USER/Downloads
 d:/home/$USER/Code
-S:/home/$USER/Mnt/charybdis
-n:/home/$USER/Mnt/NAS
-g:/home/$USER/Mnt/NAS/Guitare
-s:/home/$USER/Mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
-f:/home/$USER/Mnt/Cluster/fixe-bureau/home/romain
-r:/home/$USER/Mnt/Cluster/raspy
-u:/home/$USER/Mnt/usb-keys
+S:/home/$USER/mnt/charybdis
+n:/home/$USER/mnt/NAS
+g:/home/$USER/mnt/NAS/Guitare
+s:/home/$USER/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
+f:/home/$USER/mnt/Cluster/fixe-bureau/home/romain
+r:/home/$USER/mnt/Cluster/raspy
+u:/home/$USER/mnt/usb-keys
