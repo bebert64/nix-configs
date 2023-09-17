@@ -118,8 +118,9 @@ in
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
-    firefox = import ./programs/firefox.nix (pkgs);
+    firefox = import ./programs/firefox.nix;
     git = import ./programs/git.nix;
+    thunderbird = import ./programs/thunderbird.nix;
     vim = {
       extraConfig = ''
         set autoindent
@@ -215,6 +216,9 @@ in
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
       sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+
+      # Datagrip
+      ln -sf $HOME/nix-configs/dotfiles/Datagrip/DataGripProjects $HOME
     '';
   };
 

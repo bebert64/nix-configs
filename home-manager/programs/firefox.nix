@@ -1,7 +1,5 @@
-{ pkgs, ... }:
 {
     enable = true;
-    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {};
     profiles = {
         default = {
             id = 0;
