@@ -177,8 +177,7 @@ in
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
-    #FONTCONFIG_PATH = "$HOME/.config/fontconfig/conf.d";
-    #FONTCONFIG_FILE = "${pkgs.fontconfig.out}/etc/fonts/fonts.conf";
+    XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share:$XDG_DATA_DIRS";
   };
 
   xdg = { 
@@ -186,18 +185,18 @@ in
     mimeApps = {
       enable = true;
       associations.added = {
+        "defaut-web-browser" = [ "firefox.desktop" ];
         "text/html" = [ "firefox.desktop" ];
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
-        "defaut-web-browser" = [ "firefox.desktop" ];
       };
       defaultApplications = {
+        "defaut-web-browser" = [ "firefox.desktop" ];
         "text/html" = [ "firefox.desktop" ];
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
-        "defaut-web-browser" = [ "firefox.desktop" ];
       };
     };
   };

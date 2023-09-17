@@ -13,13 +13,6 @@ host-specifics: { pkgs, ...}:
       tilix -p Ranger -e "ssh ''${1##*.}"
     '')
 
-    (pkgs.writeScriptBin "launch-rofi" ''
-      #!/usr/bin/env bash
-      
-      source /etc/profile
-      rofi -modi drun#window#run -show drun -show-icons -theme $HOME/.config/rofi/theme/launcher.rasi
-    '')
-
     (pkgs.writeScriptBin "mount-Ipad" ''
       #!/usr/bin/env bash
       
