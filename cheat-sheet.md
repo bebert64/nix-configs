@@ -31,13 +31,6 @@ autorandr --save profile-name
 After that, copy the fingerprint from setup and the config inside host-specifics + update the launch script
 <br />
 
-## Setup Stockly's repo (need ssh setup with git to be done)
-```
-cd && mkdir -p Stockly && cd Stockly && git clone git@github.com:Stockly/Main.git && cd Main && git config --local core.hooksPath ./dev_tools/git_hooks/
-```
-<br />
-<br />
-
 # Annexes
 ## To sync Tilix settings
 

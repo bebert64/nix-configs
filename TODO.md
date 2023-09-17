@@ -1,11 +1,7 @@
 ## Arch + Home-Manager
-
-check if polkit_gnome is needed
 add parts about Thunderbird profile to CheatSheet
-
-# i3 commands do execute at startup
-Fix udiskie
-!=
+move mount-NAS to scripts to allow other programs to use it
+move dotfile/move_to_ipad.sh to scripts
 
 
 ## Raspy
@@ -56,10 +52,10 @@ rename dirs in home, with lowercase names (mnt / wallpapers / code / etc...)
 do not mkdir for cluster (better to ssh and ranger directly)
 remove mount point for charybdis and add how-to to cheat sheet instead
 create symlink in activation rather than home.file for most cases
+reorganize dotfiles in repo
 script to rsync wallpapers in both directions
 
 # Various (harder) improvements
-Fix caffeine icon + hicolor theme
 fix mount-NAS (make it depend from host-specific)
 mod + i in i3 only shows one empty desktop
 finish ranger config with displaying previews for various files
@@ -68,8 +64,3 @@ add ENV variable for firefox_db (host-specifics ?)
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
-fix fonts in polybar
-check if "rm and then recreate /mnt/usb" is needed (and rename it usb)
-
-# Install script
-add wallpapers-mgr to install script (git clone / build-release / move bin to appropriate location / clean-up)
