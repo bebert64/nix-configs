@@ -16,7 +16,7 @@ echo "fixe-bureau" > /etc/hostname
 systemctl enable NetworkManager
 
 # Install bootloader
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchLinux
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # Add user and give it sudo rights

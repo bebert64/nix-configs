@@ -20,7 +20,7 @@ pacstrap -K /mnt base linux linux-firmware vim git sudo grub efibootmgr networkm
 
 echo "Generating fstab"
 genfstab -U /mnt >> /mnt/etc/fstab
-echo "nas.capucina.house:/volume1/NAS			/mnt/NAS	nfs		user,users,noexec,noauto	0 0" >> /etc/fstab
+echo "nas.capucina.house:/volume1/NAS			/mnt/NAS	nfs		user,users,noexec,auto	0 0" >> /mnt/etc/fstab
 
 echo "Copying scripts to new system"
 cp -r /scripts /mnt
