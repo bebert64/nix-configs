@@ -16,11 +16,8 @@ echo "fixe-bureau" > /etc/hostname
 systemctl enable NetworkManager
 
 # Install bootloader
-read -p 'Do you want to re-install the bootlader? (y/n) :' INSTALL_BOOTLOADER
-if [[ $INSTALL_BOOTLOADER == "y" ]]; then
-    grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchLinux
-    grub-mkconfig -o /boot/grub/grub.cfg
-fi
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=ArchLinux
+grub-mkconfig -o /boot/grub/grub.cfg
 
 # Add user and give it sudo rights
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g' /etc/sudoers
