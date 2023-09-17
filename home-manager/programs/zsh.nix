@@ -19,9 +19,8 @@
     };
     oh-my-zsh = {
         enable = true;
-        plugins = [ "git" ];
-        theme = "stockly";
-        custom = "~/.config/oh-my-zsh-scripts";
+        # plugins = [ "git" ];
+        # custom = "~/.config/oh-my-zsh-scripts";
     };
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
@@ -42,6 +41,11 @@
             name = "stockly";
             src = ../../dotfiles/OhMyZsh;
             file = "stockly.zsh-theme";
+        }
+        {
+            name = "git";
+            src = ../../dotfiles/OhMyZsh;
+            file = "git.zsh";
         }
     ];
 }

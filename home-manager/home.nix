@@ -140,7 +140,6 @@ in
     ".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
     ".config/polybar/config.ini".source = host-specifics.polybar_config;
     ".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-    ".config/oh-my-zsh-scripts/git.zsh".source = ../dotfiles/OhMyZsh/git.zsh;
     ".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
     ".config/rofi/theme".source = ../dotfiles/rofi/theme;
@@ -178,6 +177,7 @@ in
     QT_QPA_PLATFORMTHEME = "qt5ct";
     WALLPAPERS_DIR = "$HOME/Wallpapers";
     XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
+    LC_ALL = "en_US.UTF-8";
   };
 
   xdg = { 
@@ -206,7 +206,7 @@ in
     createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
-      ln -sf /run/media/romain/ $HOME/mnt/usb
+      ln -sf -T /run/media/romain ~/mnt/usb 
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme

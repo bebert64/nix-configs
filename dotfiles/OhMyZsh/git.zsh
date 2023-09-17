@@ -14,10 +14,17 @@ function git_tracking() {
 }
 
 function git_better_master() {
-  if [[ -n ${$(command git remote | grep $ZSH_GIT_REMOTE_NAME 2>/dev/null)} ]];then
-    echo $ZSH_GIT_REMOTE_NAME/master
+  local branch
+  if [ `git rev-parse --verify master 2>/dev/null` ]; then
+    branch=master
   else
-    echo master
+    branch=main
+  fi
+
+  if [[ -n ${$(command git remote | grep $ZSH_GIT_REMOTE_NAME 2>/dev/null)} ]]; then
+    echo $ZSH_GIT_REMOTE_NAME/$branch
+  else
+    echo $branch
   fi
 }
 
