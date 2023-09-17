@@ -120,7 +120,6 @@ in
     };
     firefox = import ./programs/firefox.nix;
     git = import ./programs/git.nix;
-    thunderbird = import ./programs/thunderbird.nix;
     vim = {
       extraConfig = ''
         set autoindent
