@@ -58,6 +58,7 @@ mod + i in i3 only shows one empty desktop
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
+test if install vscode from yay solves rust-analyzer not spinning wheel
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
