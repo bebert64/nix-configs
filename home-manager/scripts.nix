@@ -61,6 +61,15 @@ host-specifics: { pkgs, ...}:
     df $HOME/mnt/Ipad-SideBooks | grep ifuse | tr -s ' ' | cut -d ' ' -f4m
   '')
 
+  (pkgs.writeScriptBin "sync-wallpapers" ''
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    mount-NAS
+    rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
+    rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
+  '')
+
   (pkgs.writeScriptBin "open-code" ''
     #!/usr/bin/env bash
     set -euxo pipefail
