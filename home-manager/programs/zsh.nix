@@ -9,7 +9,7 @@
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
-        "mount-Stockly" = "sshfs charybdis:/home/romain/Stockly/Main $HOME/Mnt/Charybdis";
+        "mount-Stockly" = "sshfs charybdis:/home/romain/Stockly/Main $HOME/mnt/Charybdis";
     };
     history = {
         size = 200000;

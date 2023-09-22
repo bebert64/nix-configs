@@ -26,18 +26,18 @@ host-specifics: { pkgs, ...}:
     #!/usr/bin/env bash
     set -euxo pipefail
     
-    ifuse --documents jp.tatsumi-sys.sidebooks $HOME/Mnt/Ipad/SideBooks
-    ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader $HOME/Mnt/Ipad/Chunky
-    ifuse --documents com.wayudaorerk.mangastormall $HOME/Mnt/Ipad/MangaStorm
+    ifuse --documents jp.tatsumi-sys.sidebooks $HOME/mnt/Ipad/SideBooks
+    ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader $HOME/mnt/Ipad/Chunky
+    ifuse --documents com.wayudaorerk.mangastormall $HOME/mnt/Ipad/MangaStorm
   '')
 
   (pkgs.writeScriptBin "umount-Ipad" ''
     #!/usr/bin/env bash
     set -euxo pipefail
 
-    fusermount -u $HOME/Mnt/Ipad/SideBooks
-    fusermount -u $HOME/Mnt/Ipad/Chunky
-    fusermount -u $HOME/Mnt/Ipad/MangaStorm
+    fusermount -u $HOME/mnt/Ipad/SideBooks
+    fusermount -u $HOME/mnt/Ipad/Chunky
+    fusermount -u $HOME/mnt/Ipad/MangaStorm
   '')
 
   (pkgs.writeScriptBin "move-to-Ipad" ''
@@ -48,8 +48,8 @@ host-specifics: { pkgs, ...}:
       echo $1
       mkdir zip
       zip "zip/$1.zip" "$1"/*
-      rsync --progress "zip/$1.zip" /home/romain/Mnt/Ipad/Chunky
-      rsync --progress "$1" /home/romain/Mnt/Ipad/Chunky
+      rsync --progress "zip/$1.zip" /home/romain/mnt/Ipad/Chunky
+      rsync --progress "$1" /home/romain/mnt/Ipad/Chunky
       shift
     done
   '')
