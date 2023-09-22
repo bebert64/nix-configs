@@ -5,7 +5,7 @@
     shellAliases = {
         "update" = "cd ~/nix-configs/home-manager && git pull && home-manager switch --flake .#${config-name}";
         "update-dirty" = "cd ~/nix-configs/home-manager && home-manager switch --flake .#${config-name}";
-        "upgrade" = "cd ~/nix-configs/home-manager && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#${config-name} && git push";
+        "upgrade" = "yay -Syu && cd ~/nix-configs/home-manager && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#${config-name} && git push";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
