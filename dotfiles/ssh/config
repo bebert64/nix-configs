@@ -26,8 +26,9 @@ Host charybdis
 
 Host raspy
 	# HostName 192.168.0.52
-	HostName capucina.house
-	Port 2223
+	# HostName capucina.house
+	# Port 2223
+	HostName 2a01:e0a:83d:98c0:843c:c3a5:94b7:d3f1
 	User DonBeberto
 
 Host fixe-bureau

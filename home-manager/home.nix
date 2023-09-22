@@ -223,6 +223,12 @@ in
 
       # Datagrip
       ln -sf $HOME/nix-configs/dotfiles/Datagrip/DataGripProjects $HOME
+
+      # Symlink some ssh config file
+      # Do NOT symlink the whole dir, to make sure to never git private key
+      mkdir -p $HOME/.ssh
+      ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
+      ln -sf $HOME/nix-configs/dotfiles/ssh/config $HOME/.ssh/
     '';
   };
 
