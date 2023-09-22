@@ -1,3 +1,8 @@
+Copy ssh certificate and .thunderbird to NAS
+Check available parted command on laptop
+Clean up boot and boot sequence
+
+
 ## Raspy
 
 # Backup raspy
@@ -27,7 +32,6 @@ Check how to launch apps at startup
 
 ## General
 get all data from laptop to NAS
-get all data from nixos partition on fixe-bureau
 format and get back space from nixos partition on fixe-bureau
 
 # Fix ipv6 access from outside
@@ -38,25 +42,18 @@ Html page at domain root, with links to different apps
 backup freebox config
 
 # Various (easy) improvements
-yay -Syu when upgrade
-move mount-NAS to scripts to allow other programs to use it
-move dotfile/move_to_ipad.sh to scripts
 add ssh config to files being symlinked
-check size and see if datagrip profile can be added to git repo
 add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
 add i3 command + keybinding for calculator
 i3 config : open apps in specific workspace, except for firefox
-rename dirs in home, with lowercase names (mnt / wallpapers / code / etc...)
-do not mkdir for cluster (better to ssh and ranger directly)
 remove mount point for charybdis and add how-to to cheat sheet instead
 create symlink in activation rather than home.file for most cases
 reorganize dotfiles in repo
-script to rsync wallpapers in both directions
 
 # Various (harder) improvements
 fix mount-NAS (make it depend from host-specific)
-mod + i in i3 only shows one empty desktop
+mod+i in i3 only shows one empty desktop
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
