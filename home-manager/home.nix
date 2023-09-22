@@ -175,7 +175,7 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    WALLPAPERS_DIR = "$HOME/Wallpapers";
+    WALLPAPERS_DIR = "$HOME/wallpapers";
     XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
     LC_ALL = "en_US.UTF-8";
   };

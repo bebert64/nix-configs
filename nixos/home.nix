@@ -164,7 +164,7 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    WALLPAPERS_DIR = "$HOME/Wallpapers";
+    WALLPAPERS_DIR = "$HOME/wallpapers";
   };
 
   xdg = { 

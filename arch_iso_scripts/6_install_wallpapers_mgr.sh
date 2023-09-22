@@ -12,3 +12,4 @@ sudo cp target/release/wallpapers-mgr /usr/local/bin
 
 mount nas.capucina.house:/volume1/NAS
 cp -r ~/mnt/NAS/Wallpapers ~
+mv ~/Wallpapers ~/wallpapers

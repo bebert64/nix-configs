@@ -39,7 +39,7 @@ polybar eDP1-tray-on -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /t
           chmod +x $HOME/.config/polybar/launch.sh
           $HOME/.config/polybar/launch.sh
 
-          feh --bg-max --random "$HOME/Wallpapers/Single screen/"
+          feh --bg-max --random "$HOME/wallpapers/Single screen/"
         '';
         };
 
@@ -79,7 +79,7 @@ polybar eDP1-tray-off -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /
           chmod +x $HOME/.config/polybar/launch.sh
           $HOME/.config/polybar/launch.sh
 
-          feh --bg-max --random "$HOME/Wallpapers/Single screen/"
+          feh --bg-max --random "$HOME/wallpapers/Single screen/"
         '';
         };
 
@@ -119,7 +119,7 @@ polybar eDP1-tray-off -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /
           chmod +x $HOME/.config/polybar/launch.sh
           $HOME/.config/polybar/launch.sh
 
-          feh --bg-max --random "$HOME/Wallpapers/Single screen/"
+          feh --bg-max --random "$HOME/wallpapers/Single screen/"
         '';
         };
     };
