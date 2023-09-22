@@ -67,6 +67,9 @@
       "${modifier}+Control+d" = "exec datagrip";
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
       "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
+      # Maps to the + key on the numpad
+      "${modifier}+Control+KP_Add" = "exec gnome-calculator";
+
     };
 
     assigns = {
