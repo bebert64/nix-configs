@@ -46,14 +46,12 @@ add ssh config to files being symlinked
 add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
 add i3 command + keybinding for calculator
-i3 config : open apps in specific workspace, except for firefox
 remove mount point for charybdis and add how-to to cheat sheet instead
 create symlink in activation rather than home.file for most cases
 reorganize dotfiles in repo
 
 # Various (harder) improvements
 fix mount-NAS (make it depend from host-specific)
-mod+i in i3 only shows one empty desktop
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
