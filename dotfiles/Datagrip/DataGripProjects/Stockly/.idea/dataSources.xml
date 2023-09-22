@@ -50,13 +50,6 @@
       <jdbc-url>jdbc:postgresql://scd-prod-stocks-postgres-1600037491284-r.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="PERSO" uuid="1ef68c73-4290-49b9-95c3-c05b6d6836c7">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://[2a01:e0a:83d:98c0:843c:c3a5:94b7:d3f1]:5432/postgres</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="MASTER:PROD:Operations" uuid="ad3fdb48-3d13-4b46-9c98-b72566930b51">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
