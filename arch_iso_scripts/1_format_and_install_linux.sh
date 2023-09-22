@@ -26,4 +26,4 @@ echo "Copying scripts to new system"
 cp -r /scripts /mnt
 
 echo "Chrooting into new system"
-arch-chroot /mnt bash -c 'echo "You should now run /scripts/2_create_user_and_switch.sh"'
+arch-chroot /mnt
