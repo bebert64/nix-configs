@@ -135,7 +135,6 @@ in
   home.file = {
     ".anydesk/user.conf".source = ../dotfiles/anydesk-user.conf;
     ".cargo/config.toml".source = ../dotfiles/cargo_config.toml;
-    ".config/btop/btop.conf".source = ../dotfiles/btop.conf;
     ".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
     ".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
     ".config/polybar/config.ini".source = host-specifics.polybar_config;
@@ -211,6 +210,9 @@ in
 
       # Symlink fonts
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
+
+      # Symlink btop config folder
+      ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
 
       # load terminal theme
       ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
