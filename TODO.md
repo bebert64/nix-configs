@@ -1,5 +1,3 @@
-Copy ssh certificate and .thunderbird to NAS
-Check available parted command on laptop
 Clean up boot and boot sequence
 
 
@@ -42,11 +40,7 @@ Html page at domain root, with links to different apps
 backup freebox config
 
 # Various (easy) improvements
-add ssh config to files being symlinked
-add loading btop config to activation script
 check if zip needed in addition to unzip and unrar
-add i3 command + keybinding for calculator
-remove mount point for charybdis and add how-to to cheat sheet instead
 create symlink in activation rather than home.file for most cases
 reorganize dotfiles in repo
 
@@ -55,7 +49,7 @@ fix mount-NAS (make it depend from host-specific)
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
-test if install vscode from yay solves rust-analyzer not spinning wheel
+re add radio + rofi menu to launch them so strawberry
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
