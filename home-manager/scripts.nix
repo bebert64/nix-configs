@@ -92,7 +92,7 @@ host-specifics: { pkgs, ...}:
 
   (pkgs.writeScriptBin "playerctl_polybar" ''
     #!/usr/bin/env bash
-    set -euxo pipefail
+    set -euo pipefail
 
     touch /home/romain/.config/.radio_title
     
