@@ -55,18 +55,25 @@
       # Lock the screen
       "--release ${modifier}+o" = "exec lock-conky";
 
-      # Starting apps
-      "${modifier}+Control+f" = "workspace $ws2; exec firefox";
-      "${modifier}+Control+v" = "workspace $ws3; exec code";
-      "${modifier}+Control+l" = "workspace $ws4; exec slack";
-      "${modifier}+Control+t" = "workspace $ws5; exec thunderbird";
-      "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
-      "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-      "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
-
       # Modes
       "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
       "${modifier}+m" = "mode \"${music_mode}\"";
+
+      # Starting apps
+      "${modifier}+Control+f" = "workspace $ws2; exec firefox";
+      "${modifier}+Control+v" = "exec code";
+      "${modifier}+Control+l" = "exec slack";
+      "${modifier}+Control+t" = "exec thunderbird";
+      "${modifier}+Control+d" = "exec datagrip";
+      "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
+      "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
+    };
+
+    assigns = {
+      "$ws3" = [{ class = "Code"; }];
+      "$ws4" = [{ class = "Slack"; }];
+      "$ws5" = [{ class = "thunderbird"; }];
+      "$ws6" = [{ class = "jetbrains-datagrip"; }];
     };
 
     bars = [];
