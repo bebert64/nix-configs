@@ -27,6 +27,8 @@ Check how to launch apps at startup
 
 ## General
 get all data from laptop to NAS
+get all data from nixos partition on fixe-bureau
+format and get back space from nixos partition on fixe-bureau
 
 # Fix ipv6 access from outside
 "A Record" with freebox ipv4 88.160.246.99
