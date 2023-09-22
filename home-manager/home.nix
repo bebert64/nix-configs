@@ -204,9 +204,12 @@ in
   # Activation script
   home.activation = {
     createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      # Create mount dirs
       mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
-      ln -sf -T /run/media/romain ~/mnt/usb 
+      ln -sf -T /run/media/romain ~/mnt/usb
+
+      # Symlink fonts
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # load terminal theme
