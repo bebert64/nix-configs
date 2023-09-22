@@ -7,6 +7,12 @@ host-specifics: { pkgs, ...}:
       nix-shell -p "$1" --command "''${1##*.} ''${*:2}"
     '')
 
+    (pkgs.writeScriptBin "mount-NAS" ''
+      #!/usr/bin/env bash
+      set -euxo pipefail
+      mount nas.capucina.house:/volume1/NAS
+    '')
+
     (pkgs.writeScriptBin "sshr" ''
       #!/usr/bin/env bash
       set -euxo pipefail
