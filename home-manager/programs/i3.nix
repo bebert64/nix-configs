@@ -1,4 +1,4 @@
-{ pkgs, lib, monoFont, ... }:
+{ pkgs, lib, monoFont, host-specifics, ... }:
 
 {
   enable = true;
@@ -49,7 +49,7 @@
       "${modifier}+Mod1+Left" = "move workspace to output left";
       "${modifier}+Mod1+Right" = "move workspace to output right";
 
-      # Used to sisplay empty workspaces, allowing to see the wallpapers
+      # Used to display empty workspaces, allowing to see the wallpapers
       "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
       # Lock the screen
@@ -142,7 +142,9 @@
     set $ws9 "9:"
     set $ws10 "10:"
     set $wse1 " "
+    workspace $wse1 output ${host-specifics.screens.screen1}
     set $wse2 "  "
+    workspace $wse2 output  ${host-specifics.screens.screen2}
 
     workspace $ws10 gaps inner 80
   '';
