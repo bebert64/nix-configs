@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefai
-
-echo "Starting Arch Linux installation"
-loadkeys fr
-timedatectl
+set -euo pipefail
 
 echo "Formating partitions"
 mkfs.ext4 /dev/sda4
