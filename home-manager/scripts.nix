@@ -96,10 +96,9 @@ host-specifics: { pkgs, ...}:
 
     touch /home/romain/.config/.radio_title
     
-    playerctlstatus=$(playerctl -p strawberry status 2> /dev/null) || playerctlstatus=""
-    title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null) || title=""
-    artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null) || artist=""
-    radio_title=`cat /home/romain/.config/.radio_title` || radio_title=""
+    playerctlstatus=$(playerctl -a status 2> /dev/null) || playerctlstatus=""
+    title=$(playerctl -a metadata xesam:title 2> /dev/null) || title=""
+    artist=$(playerctl -a metadata xesam:artist 2> /dev/null) || artist=""
     note=
     previous=
     next=
@@ -108,18 +107,12 @@ host-specifics: { pkgs, ...}:
     stop=
 
     button_previous="%{A1:strawberry --restart-or-previous:}  $previous  %{A}"
-    button_next="%{A1:playerctl -p strawberry next:}  $next  %{A}"
-    button_play="%{A1:playerctl -p strawberry play:}  $play  %{A}"
-    button_pause="%{A1:playerctl -p strawberry pause:}  $pause  %{A}"
-    button_stop="%{A1:playerctl -p strawberry stop:}  $stop  %{A}"
+    button_next="%{A1:playerctl -a next:}  $next  %{A}"
+    button_play="%{A1:playerctl -a play:}  $play  %{A}"
+    button_pause="%{A1:playerctl -a pause:}  $pause  %{A}"
+    button_stop="%{A1:playerctl -a stop:}  $stop  %{A}"
 
-    if [[ $title = http* ]]; then
-        if [ -z "$radio_title" ]; then
-            title_display="Radio youtube"
-        else
-            title_display=$radio_title
-        fi
-    elif [[ $artist = "" ]]; then
+    if [[ $artist = "" ]]; then
         title_display=$title
     else
         title_display="$artist - $title"
@@ -153,7 +146,6 @@ host-specifics: { pkgs, ...}:
       strawberry --play-track $track
     }
 
-    # track=0 && play_radio
     MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
       -theme $HOME/.config/rofi/theme/styles.rasi)"
         case "$MENU" in
@@ -161,8 +153,8 @@ host-specifics: { pkgs, ...}:
           "Jazz Radio") track=1 && play_radio ;;
           "Radio Nova") track=2 && play_radio ;;
           "Oui Fm") track=3 && play_radio ;;
-          "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > /home/romain/.config/.radio_title ;;
-          "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > /home/romain/.config/.radio_title;;
+          "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
+          "Classical Piano Music") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=tSlOlKRuudU" ;;
         esac
   '')
 

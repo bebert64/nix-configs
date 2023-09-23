@@ -111,13 +111,12 @@
       ${music_mode} = {
         "${modifier}+Left" = " exec strawberry --restart-or-previous";
         "${modifier}+Right" = "exec playerctl -p strawberry next";
-        "Left" = "exec playerctl -p strawberry position 10-";
-        "Right" = "exec playerctl -p strawberry position 10+";
-        "Up" = "exec playerctl -p strawberry volume 0.1+";
-        "Down" = "exec playerctl -p strawberry volume 0.1-";
+        "Left" = "exec playerctl -a position 10-";
+        "Right" = "exec playerctl -a position 10+";
+        "Up" = "exec playerctl -a volume 0.1+";
+        "Down" = "exec playerctl -a volume 0.1-";
 
-        "space" = "exec playerctl -p strawberry play-pause, mode default";
-        "s" = "exec playerctl -p strawberry stop, mode default";
+        "space" = "exec playerctl -a play-pause, mode default";
         "l" = "workspace $ws10, exec strawberry, mode default";
         "r" = "exec launch_radios, mode default";
 

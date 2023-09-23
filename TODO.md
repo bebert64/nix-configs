@@ -1,6 +1,5 @@
 Clean up boot and boot sequence
 
-
 ## Raspy
 
 # Backup raspy
@@ -11,9 +10,6 @@ backup apache config to dotfiles
 automate regular save of postgres content to NAS + stash_db + stash
     https://www.tecmint.com/backup-and-restore-postgresql-database/
     add line to cheatsheet on how to restore
-
-# Various (harder) improvements
-add qbittorrent to raspberry with launch at startup
 
 # Install script
 Check which apps need to be installed via apt-get
@@ -30,7 +26,6 @@ Check how to launch apps at startup
 
 ## General
 get all data from laptop to NAS
-format and get back space from nixos partition on fixe-bureau
 
 # Fix ipv6 access from outside
 "A Record" with freebox ipv4 88.160.246.99
@@ -38,11 +33,6 @@ format and get back space from nixos partition on fixe-bureau
 Port redirect as needed (probably 5 redirection needed, i.e. all of A record + url redirect, except freebox itself)
 Html page at domain root, with links to different apps
 backup freebox config
-
-# Various (easy) improvements
-check if zip needed in addition to unzip and unrar
-create symlink in activation rather than home.file for most cases
-reorganize dotfiles in repo
 
 # Various (harder) improvements
 fix mount-NAS (make it depend from host-specific)
