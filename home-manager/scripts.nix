@@ -96,10 +96,10 @@ host-specifics: { pkgs, ...}:
 
     touch /home/romain/.config/.radio_title
     
-    playerctlstatus=$(playerctl -p strawberry status 2> /dev/null)
-    title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null)
-    artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null)
-    radio_title=`cat /home/romain/.config/.radio_title`
+    playerctlstatus=$(playerctl -p strawberry status 2> /dev/null) || playerctlstatus=""
+    title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null) || title=""
+    artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null) || artist=""
+    radio_title=`cat /home/romain/.config/.radio_title` || radio_title=""
     note=
     previous=
     next=
