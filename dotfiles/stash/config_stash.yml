@@ -112,20 +112,22 @@ preview_exclude_end: "0"
 preview_exclude_start: "0"
 preview_segment_duration: 0.75
 preview_segments: 12
+scraper_exclude_tag_patterns:
+- .*
 scrapers_path: /home/DonBeberto/.stash/scrapers
 security_tripwire_accessed_from_public_internet: ""
 session_store_key: d15fcbf5457be122589cd9a5fa15925a93b5cbc67c898a6334efa4cbeb7f3d63
 show_one_time_moved_notification: false
 sound_on_preview: false
 stash:
-- path: /home/DonBeberto/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
+- excludeimage: true
+  excludevideo: false
+  path: /home/DonBeberto/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
     issues/Elseworlds/Videos a couper
+- excludeimage: true
   excludevideo: false
-  excludeimage: true
-- path: /home/DonBeberto/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
+  path: /home/DonBeberto/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
     issues/Elseworlds/Videos cut
-  excludevideo: false
-  excludeimage: true
 stash_boxes:
 - apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhN2ZkYjAxNS0xMjdhLTRkYjQtOThjNy1mMzk4MTVhZjQ2MDQiLCJzdWIiOiJBUElLZXkiLCJpYXQiOjE2NzcyMzkxMzR9.6KZgPp_nS0GzybDsbUsKggvgXYZoFjzwCmDyvtBmQb8
   endpoint: https://stashdb.org/graphql
