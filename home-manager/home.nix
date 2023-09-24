@@ -49,7 +49,6 @@ in
     nodejs
     nodePackages.npm
     pavucontrol # pulse audio volume controle
-    picom-next
     polybar
     postgresql
     qt6.qttools # needed to extract artUrl from strawberry and display it with conky
@@ -120,6 +119,7 @@ in
     };
     firefox = import ./programs/firefox.nix;
     git = import ./programs/git.nix;
+
     vim = {
       extraConfig = ''
         set autoindent
@@ -213,6 +213,9 @@ in
 
       # Symlink btop config folder
       ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
+
+      # Symlink btop config folder
+      ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config
 
       # load terminal theme
       ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf

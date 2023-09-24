@@ -9,7 +9,7 @@ cd ~
 rm -rf yay
 
 # Install user packages
-yay -Syu xorg-server xorg-xinit xdg-utils fontconfig nfs-utils polkit alock udisks2
+yay -Syu xorg-server xorg-xinit xdg-utils fontconfig nfs-utils polkit alock udisks2 picom
 
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
