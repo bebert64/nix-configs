@@ -1,5 +1,3 @@
-Clean up boot and boot sequence
-
 ## Raspy
 
 # Backup raspy
@@ -39,7 +37,6 @@ fix mount-NAS (make it depend from host-specific)
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
-re add radio + rofi menu to launch them so strawberry
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
