@@ -3,3 +3,4 @@ ranger_bookmarks
 Raspberry/scrapers/Algolia.ini
 Raspberry/scrapers/adultime_scene_search.json
 test.sh
+dotfiles/btop/btop.log
