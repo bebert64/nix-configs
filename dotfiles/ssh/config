@@ -25,26 +25,14 @@ Host charybdis
 	LocalForward 4006 localhost:4006
 
 Host raspy
-	# HostName 192.168.0.52
-	# HostName capucina.house
-	# Port 2223
 	HostName 2a01:e0a:83d:98c0:843c:c3a5:94b7:d3f1
 	User DonBeberto
 
-Host fixe-bureau
-	# HostName 192.168.0.6
-	HostName capucina.house
-	Port 2224
-	User romain
+Host raspy-ipv4-local
+	HostName 192.168.1.2
+	User DonBeberto
 
-Host fixe-salon
-	# HostName 192.168.0.32
-	HostName capucina.house
-	Port 2225
-	User romain
-
-Host stockly-romainc
-	# HostName 192.168.0.93
-	HostName capucina.house
-	Port 2226
-	User romain
+Host raspy-ipv4-ext
+	HostName 88.160.246.99
+	User DonBeberto
+	Port 2222
