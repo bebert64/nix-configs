@@ -92,6 +92,7 @@
       { command = "picom"; notification = false; }
       { command = "udiskie --tray"; notification = false; }
       { command = "xidlehook --timer ${toString (10 * 60)} 'lock-conky' ' ' &"; notification = false; }
+      { command = "conky -c /home/romain/nix-configs/dotfiles/conky/qclocktwo -d"; notification = false; }
     ];
 
     window = {
