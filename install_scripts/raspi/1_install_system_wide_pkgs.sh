@@ -11,10 +11,11 @@ cd ~
 git clone https://github.com/bebert64/nix-configs
 
 # Add NAS to fstab
-sudo bash -c 'echo "nas.capucina.house:/volume1/NAS 	/mnt/NAS 	nfs 	user,users,auto,noexec,_netdev 	0 	0" >> /etc/fstab'
+sudo mkdir /mnt/NAS
+sudo bash -c 'echo "nas.capucina.house:/volume1/NAS 	/mnt/NAS 	nfs 	noauto,x-systemd.automount 	0 	0" >> /etc/fstab'
 
 # Get ipv6 generated from MAC address
-sudo sed -i 's/# slaac hwaddr/slaac hwaddr/g' /etc/dhcpcd.conf
+sudo sed -i 's/#slaac hwaddr/slaac hwaddr/g' /etc/dhcpcd.conf
 sudo sed -i 's/slaac private/# slaac private/g' /etc/dhcpcd.conf
 
 # Install rust
@@ -36,7 +37,12 @@ sudo ln -s ~/nix-configs/dotfiles/stash/config.yml /usr/local/etc/stash/
 sudo ln -s ~/nix-configs/dotfiles/stash/scrapers /usr/local/etc/stash/
 
 # Symlink rc.local
+sudo rm /etc/rc.local
 sudo ln -s ~/nix-configs/dotfiles/raspi/rc.local /etc/
+
+# Update postgres config
+sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/13/main/postgresql.conf 
+sudo sed -i "s=127.0.0.1/32=192.168.1.0/24=g" /etc/postgresql/13/main/pg_hba.conf 
 
 # Need to reboot for nix to load correctly
 echo "you should now reboot"
