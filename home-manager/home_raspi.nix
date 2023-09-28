@@ -21,13 +21,9 @@
   
   # Activation script
   home.activation = {
-    stashConfig = ''
-      ln -sf $HOME/nix-configs/Raspberry/scrapers $HOME/.stash/
-      ln -sf $HOME/nix-configs/Raspberry/config_stash.yml $HOME/.stash/config.yml
-    '';
-
     rangerBookmarks = ''
       sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/nix-configs/ranger_bookmarks
+      mkdir -p $HOME/.local/share/ranger/
       ln -sf $HOME/nix-configs/ranger_bookmarks $HOME/.local/share/ranger/bookmarks
     '';
   };
