@@ -10,7 +10,8 @@ nix-shell '<home-manager>' -A install
 read -p 'Name of your flake config :' FLAKE_CONFIG_NAME
 cd ~
 git clone https://github.com/bebert64/nix-configs
-cd nix-configs/home-manager && home-manager switch --flake .#$FLAKE_CONFIG_NAME --extra-experimental-features nix-command --extra-experimental-features flakes
+cd nix-configs/home-manager
+home-manager switch --flake .#$FLAKE_CONFIG_NAME --extra-experimental-features nix-command --extra-experimental-features flakes
 
 # Make zsh default shell
 sudo bash -c 'echo $(which zsh) >> /etc/shells'
