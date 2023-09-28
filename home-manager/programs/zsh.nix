@@ -18,8 +18,6 @@
     };
     oh-my-zsh = {
         enable = true;
-        # plugins = [ "git" ];
-        # custom = "~/.config/oh-my-zsh-scripts";
     };
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
