@@ -11,21 +11,21 @@
 
   outputs = { self, nixpkgs, home-manager }: 
     let 
-      raspy = "raspy";
+      raspi = "raspi";
       fixe-bureau = "fixe-bureau";
       config = {
         allowUnfree = true;
       };
     in {
       homeConfigurations = {
-        ${raspy} = home-manager.lib.homeManagerConfiguration rec {
+        ${raspi} = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
             system = "aarch64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
             inherit config;
           };
 
           modules = [
-            (import ./home_raspy.nix ( { config-name = raspy; inherit pkgs; }))
+            (import ./home_raspi.nix ( { config-name = raspi; inherit pkgs; }))
           ];
         };
 

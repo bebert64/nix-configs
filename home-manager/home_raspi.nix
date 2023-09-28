@@ -40,7 +40,7 @@
   };
 
   programs = {
-    zsh = import ./programs/zsh.nix ( { config-name = "raspy"; });
+    zsh = import ./programs/zsh.nix ( { config-name = "raspi"; });
     git = import ./programs/git.nix;
     home-manager.enable = true;
   };
