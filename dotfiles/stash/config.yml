@@ -1,7 +1,7 @@
 api_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJzaG9ydGN1dHMuZGJAZ21haWwuY29tIiwiaWF0IjoxNjc4NzIzMzY4LCJzdWIiOiJBUElLZXkifQ.hhf_vN_o3uuT3d9rnAmjTJGXaeoQ0ZjM1oKcRZEVOaI
 calculate_md5: false
 dangerous_allow_public_without_auth: "false"
-database: /home/DonBeberto/.stash/stash-go.sqlite
+database: /usr/local/etc/stash/stash-go.sqlite
 defaults:
   auto_tag_task:
     paths: []
@@ -97,7 +97,7 @@ defaults:
     usefilemetadata: false
 exclude:
 - .* - intro.*
-generated: /home/DonBeberto/.stash/generated
+generated: /usr/local/etc/stash/generated
 host: 0.0.0.0
 jwt_secret_key: 0029b60e04c1ab38eceb91799c94b6f664caace568be80ccd8a50c0fa015fdd0
 no_proxy: localhost,127.0.0.1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
@@ -105,7 +105,7 @@ nobrowser: false
 notifications_enabled: true
 parallel_tasks: 1
 password: $2a$04$9kj7G2071akbRba.G9m2F.Rl0FuQ4CY7bqlTWSgtm8n6Or6obi0LO
-plugins_path: /home/DonBeberto/.stash/plugins
+plugins_path: /usr/local/etc/stash/plugins
 port: 9999
 preview_audio: true
 preview_exclude_end: "0"
@@ -114,7 +114,7 @@ preview_segment_duration: 0.75
 preview_segments: 12
 scraper_exclude_tag_patterns:
 - .*
-scrapers_path: /home/DonBeberto/.stash/scrapers
+scrapers_path: /usr/local/etc/stash/scrapers
 security_tripwire_accessed_from_public_internet: ""
 session_store_key: d15fcbf5457be122589cd9a5fa15925a93b5cbc67c898a6334efa4cbeb7f3d63
 show_one_time_moved_notification: false
@@ -122,11 +122,11 @@ sound_on_preview: false
 stash:
 - excludeimage: true
   excludevideo: false
-  path: /home/DonBeberto/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
+  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
     issues/Elseworlds/Videos a couper
 - excludeimage: true
   excludevideo: false
-  path: /home/DonBeberto/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
+  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
     issues/Elseworlds/Videos cut
 stash_boxes:
 - apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhN2ZkYjAxNS0xMjdhLTRkYjQtOThjNy1mMzk4MTVhZjQ2MDQiLCJzdWIiOiJBUElLZXkiLCJpYXQiOjE2NzcyMzkxMzR9.6KZgPp_nS0GzybDsbUsKggvgXYZoFjzwCmDyvtBmQb8
