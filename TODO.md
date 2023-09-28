@@ -1,34 +1,17 @@
-## Raspy
-
-# Backup raspy
-Add howto to cheat sheet on certbot
-backup apache config to dotfiles
-    /etc/apache2
-    add line on cheatsheet on where it needs to be symlinked (not possible through activation scripts)
-automate regular save of postgres content to NAS + stash_db + stash
-    https://www.tecmint.com/backup-and-restore-postgresql-database/
-    add line to cheatsheet on how to restore
-
+## raspi
 # Install script
-Check which apps need to be installed via apt-get
-Symlink apache config
-certbot for new certificates
-Check how to launch apps at startup
-    https://raspberrytips.com/autostart-a-program-on-boot/
-    stash
-    qbittorrent
-    add howto to CheatSheet
-
-# Clean install !!
-
+copy apache config
+restore postgres
+restore (or install new?) certificates
+    capucina
+    raspi.capucina
+# Backup
+automate regular save of postgres + stash_db content to NAS
+    add line to cheatsheet on how to restore
 
 ## General
 get all data from laptop to NAS
-
-# Fix ipv6 access from outside
-"A Record" with freebox ipv4 88.160.246.99
-"URL Redirect" all subdomain to there
-Port redirect as needed (probably 5 redirection needed, i.e. all of A record + url redirect, except freebox itself)
+# Freebox / html
 Html page at domain root, with links to different apps
 backup freebox config
 
