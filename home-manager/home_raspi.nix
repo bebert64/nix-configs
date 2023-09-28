@@ -11,6 +11,7 @@
   [
     btop
     certbot  # CLI to get certificates from Let's Encrypt
+    direnv
     ranger
   ];
 
