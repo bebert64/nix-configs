@@ -31,8 +31,12 @@ rm nix_install.sh
 cd ~
 sudo curl -L https://github.com/stashapp/stash/releases/download/v0.22.1/stash-linux-arm64v8 -o /usr/local/bin/stash-linux-arm64v8
 sudo chmod +x /usr/local/bin/stash-linux-arm64v8
-sudo ln -s ~/nix-configs/dotfiles/stash/config.yml /usr/local/etc/stash
-sudo ln -s ~/nix-configs/dotfiles/stash/scrapers /usr/local/etc/stash
+sudo mkdir /usr/local/etc/stash
+sudo ln -s ~/nix-configs/dotfiles/stash/config.yml /usr/local/etc/stash/
+sudo ln -s ~/nix-configs/dotfiles/stash/scrapers /usr/local/etc/stash/
+
+# Symlink rc.local
+sudo ln -s ~/nix-configs/dotfiles/raspi/rc.local /etc/
 
 # Need to reboot for nix to load correctly
 echo "you should now reboot"
