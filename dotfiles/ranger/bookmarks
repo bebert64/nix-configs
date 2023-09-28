@@ -1,10 +1,7 @@
 h:/home/$USER
-D:/home/$USER/Downloads
-d:/home/$USER/Code
-S:/home/$USER/mnt/charybdis
+d:/home/$USER/Downloads
+c:/home/$USER/Code
 n:/home/$USER/mnt/NAS
 g:/home/$USER/mnt/NAS/Guitare
 s:/home/$USER/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds
-f:/home/$USER/mnt/Cluster/fixe-bureau/home/romain
-r:/home/$USER/mnt/Cluster/raspy
-u:/home/$USER/mnt/usb-keys
+u:/home/$USER/mnt/usb
