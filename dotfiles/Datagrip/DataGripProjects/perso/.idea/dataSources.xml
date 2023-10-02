@@ -22,11 +22,11 @@
       <jdbc-url>jdbc:sqlite:$USER_HOME$/Code/ShortCuts/rust/stash-go.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres@192.168.1.2" uuid="c16ed923-d6e2-489d-8d0c-b85191507ec6">
+    <data-source source="LOCAL" name="comics@192.168.1.2" uuid="c16ed923-d6e2-489d-8d0c-b85191507ec6">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://192.168.1.2:5432/postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://192.168.1.2:5432/comics</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
