@@ -202,7 +202,7 @@ in
 
   # Activation script
   home.activation = {
-    createDirs = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    activationScript = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Create mount dirs
       mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
@@ -214,7 +214,7 @@ in
       # Symlink btop config folder
       ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
 
-      # Symlink btop config folder
+      # Symlink picom config file
       ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config
 
       # load terminal theme
