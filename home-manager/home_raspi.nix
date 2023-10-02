@@ -22,10 +22,26 @@
   
   # Activation script
   home.activation = {
-    rangerBookmarks = ''
-      sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/nix-configs/ranger_bookmarks
+    activationScript = ''
+      # Symlink mount dir for NAS
+      mkdir -p $HOME/mnt/
+      ln -sf /mnt/NAS $HOME/mnt/
+
+      # Symlink fonts
+      ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
+
+      # Symlink btop config folder
+      ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
+
+      # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      ln -sf $HOME/nix-configs/ranger_bookmarks $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+
+      # Symlink some ssh config file
+      # Do NOT symlink the whole dir, to make sure to never git private key
+      mkdir -p $HOME/.ssh
+      ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
+      ln -sf $HOME/nix-configs/dotfiles/ssh/config $HOME/.ssh/
     '';
   };
 
