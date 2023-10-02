@@ -1,5 +1,8 @@
 api_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJzaG9ydGN1dHMuZGJAZ21haWwuY29tIiwiaWF0IjoxNjc4NzIzMzY4LCJzdWIiOiJBUElLZXkifQ.hhf_vN_o3uuT3d9rnAmjTJGXaeoQ0ZjM1oKcRZEVOaI
+blobs_path: /usr/local/etc/stash/data
+blobs_storage: FILESYSTEM
 calculate_md5: false
+create_image_clip_from_videos: false
 dangerous_allow_public_without_auth: "false"
 database: /usr/local/etc/stash/stash-go.sqlite
 defaults:
@@ -88,15 +91,18 @@ defaults:
         stashboxendpoint: null
         stashboxindex: null
   scan_task:
-    scangenerateimagepreviews: false
-    scangeneratephashes: true
-    scangeneratepreviews: true
-    scangeneratesprites: false
-    scangeneratethumbnails: false
-    stripfileextension: false
     usefilemetadata: false
+    stripfileextension: false
+    scangeneratecovers: true
+    scangeneratepreviews: true
+    scangenerateimagepreviews: false
+    scangeneratesprites: false
+    scangeneratephashes: true
+    scangeneratethumbnails: false
+    scangenerateclippreviews: false
 exclude:
 - .* - intro.*
+gallery_cover_regex: (poster|cover|folder|board)\.[^\.]+$
 generated: /usr/local/etc/stash/generated
 host: 0.0.0.0
 jwt_secret_key: 0029b60e04c1ab38eceb91799c94b6f664caace568be80ccd8a50c0fa015fdd0
@@ -116,18 +122,19 @@ scraper_exclude_tag_patterns:
 - .*
 scrapers_path: /usr/local/etc/stash/scrapers
 security_tripwire_accessed_from_public_internet: ""
+sequential_scanning: false
 session_store_key: d15fcbf5457be122589cd9a5fa15925a93b5cbc67c898a6334efa4cbeb7f3d63
 show_one_time_moved_notification: false
 sound_on_preview: false
 stash:
 - excludeimage: true
   excludevideo: false
-  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
-    issues/Elseworlds/Videos a couper
+  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/Videos
+    a couper
 - excludeimage: true
   excludevideo: false
-  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes
-    issues/Elseworlds/Videos cut
+  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/Videos
+    cut
 stash_boxes:
 - apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhN2ZkYjAxNS0xMjdhLTRkYjQtOThjNy1mMzk4MTVhZjQ2MDQiLCJzdWIiOiJBUElLZXkiLCJpYXQiOjE2NzcyMzkxMzR9.6KZgPp_nS0GzybDsbUsKggvgXYZoFjzwCmDyvtBmQb8
   endpoint: https://stashdb.org/graphql
@@ -175,7 +182,7 @@ ui:
         objects: Galleries
     mode: GALLERIES
     sortBy: date
-  last_note_seen: 20220906
+  last_note_seen: 20230301
 username: shortcuts.db@gmail.com
 video_file_naming_algorithm: OSHASH
 write_image_thumbnails: true
