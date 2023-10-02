@@ -14,5 +14,8 @@ home-manager switch --flake .#raspi --extra-experimental-features nix-command --
 sudo bash -c 'echo $(which zsh) >> /etc/shells'
 chsh -s $(which zsh)
 
+# Update font's cache
+fc-cache -f -v
+
 # Done!
 echo "you should now reboot"
