@@ -19,6 +19,11 @@
     ".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
   };
+
+  # Session variable
+  home.sessionVariables = {
+    LC_ALL = "en_US.UTF-8";
+  };
   
   # Activation script
   home.activation = {
