@@ -91,15 +91,15 @@ defaults:
         stashboxendpoint: null
         stashboxindex: null
   scan_task:
-    usefilemetadata: false
-    stripfileextension: false
-    scangeneratecovers: true
-    scangeneratepreviews: true
-    scangenerateimagepreviews: false
-    scangeneratesprites: false
-    scangeneratephashes: true
-    scangeneratethumbnails: false
     scangenerateclippreviews: false
+    scangeneratecovers: true
+    scangenerateimagepreviews: false
+    scangeneratephashes: true
+    scangeneratepreviews: true
+    scangeneratesprites: false
+    scangeneratethumbnails: false
+    stripfileextension: false
+    usefilemetadata: false
 exclude:
 - .* - intro.*
 gallery_cover_regex: (poster|cover|folder|board)\.[^\.]+$
