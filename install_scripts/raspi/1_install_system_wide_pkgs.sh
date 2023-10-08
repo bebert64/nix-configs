@@ -18,6 +18,9 @@ sudo bash -c 'echo "nas.capucina.house:/volume1/NAS 	/mnt/NAS 	nfs 	noauto,x-sys
 sudo sed -i 's/#slaac hwaddr/slaac hwaddr/g' /etc/dhcpcd.conf
 sudo sed -i 's/slaac private/# slaac private/g' /etc/dhcpcd.conf
 
+# Set up locales
+# echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
@@ -36,7 +39,7 @@ sudo mkdir /usr/local/etc/stash
 sudo ln -s ~/nix-configs/dotfiles/stash/config.yml /usr/local/etc/stash/
 sudo ln -s ~/nix-configs/dotfiles/stash/scrapers /usr/local/etc/stash/
 
-# Symlink rc.local
+# Symlink rc.local (to auto start packages at boot)
 sudo rm /etc/rc.local
 sudo ln -s ~/nix-configs/dotfiles/raspi/rc.local /etc/
 
