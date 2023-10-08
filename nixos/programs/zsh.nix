@@ -6,7 +6,6 @@
         "upgrade" = "cd ~/nix-configs/nixos && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
-        "datagrip-tunnel" = "ssh -L 5432:localhost:5432 charybdis";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
         "mount-NAS" = "mount nas.capucina:volume1/NAS";
     };
@@ -17,9 +16,6 @@
     };
     oh-my-zsh = {
         enable = true;
-        plugins = [ "git" ];
-        theme = "stockly";
-        custom = "~/.config/oh-my-zsh-scripts";
     };
     enableAutosuggestions = true;
     syntaxHighlighting.enable = true;
@@ -36,6 +32,11 @@
             name = "stockly";
             src = ../../dotfiles/OhMyZsh;
             file = "stockly.zsh-theme";
+        }
+        {
+            name = "git";
+            src = ../../dotfiles/OhMyZsh;
+            file = "git.zsh";
         }
     ];
 }
