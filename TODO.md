@@ -5,9 +5,12 @@ restore postgres
 restore (or install new?) certificates
     capucina
     raspi.capucina
+Try to get wildcard validation for certificate
 # Backup
 automate regular save of postgres + stash_db content to NAS
     add line to cheatsheet on how to restore
+# Create image
+once everything is validated, install clean and create image
 
 ## General
 get all data from laptop to NAS
@@ -20,6 +23,10 @@ fix mount-NAS (make it depend from host-specific)
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
+locale for raspberry
+fix yay changing keyboard config (add setxkbmap at the end ?)
+lock numpad at boot
+curl http call to launch db backup for stash
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
