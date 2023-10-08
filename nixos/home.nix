@@ -133,7 +133,6 @@ in
 
   # Copy custom files / dotfiles
   home.file.".anydesk/user.conf".source = ../dotfiles/anydesk-user.conf;
-  home.file.".config/btop/btop.conf".source = ../dotfiles/btop.conf;
   home.file.".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
   home.file.".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
   home.file.".config/polybar/config.ini".source = host-specific.polybar_config;
@@ -200,12 +199,15 @@ in
       ln -sf $HOME/configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      dconf load /com/gexperts/Tilix/ < /home/romain/.tilix.dconf
-    '';
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
 
-    rangerBookmarks = ''
-      sed "s/\$USER/"$USER"/"  $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/nix-configs/ranger_bookmarks
-      ln -sf $HOME/nix-configs/ranger_bookmarks $HOME/.local/share/ranger/bookmarks
+      # Symlink btop config folder
+      ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
+      
+      # Create ranger's bookmarks
+      mkdir -p $HOME/.local/share/ranger/
+      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+
     '';
   };
 
