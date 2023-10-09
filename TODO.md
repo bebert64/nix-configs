@@ -27,6 +27,7 @@ locale for raspberry
 fix yay changing keyboard config (add setxkbmap at the end ?)
 lock numpad at boot
 curl http call to launch db backup for stash
+from autorandr --force machin to something in nix config
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
