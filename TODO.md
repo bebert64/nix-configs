@@ -8,6 +8,7 @@ restore (or install new?) certificates
 Try to get wildcard validation for certificate
 # Backup
 automate regular save of postgres + stash_db content to NAS
+    curl http call to launch db backup for stash
     add line to cheatsheet on how to restore
 # Create image
 once everything is validated, install clean and create image
@@ -19,15 +20,14 @@ Html page at domain root, with links to different apps
 backup freebox config
 
 # Various (harder) improvements
+fix yay changing keyboard config (add setxkbmap at the end ?)
+from autorandr --force machin to something in nix config
+lock numpad at boot
 fix mount-NAS (make it depend from host-specific)
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
 locale for raspberry
-fix yay changing keyboard config (add setxkbmap at the end ?)
-lock numpad at boot
-curl http call to launch db backup for stash
-from autorandr --force machin to something in nix config
 
 # Clean-up (not really needed, but sill good)
 clean polybar config

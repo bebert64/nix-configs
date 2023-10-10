@@ -137,12 +137,10 @@ in
   home.file.".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
   home.file.".config/polybar/config.ini".source = host-specific.polybar_config;
   home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-  home.file.".config/oh-my-zsh-scripts/git.zsh".source = ../dotfiles/OhMyZsh/git.zsh;
   home.file.".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
   home.file.".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
   home.file.".config/rofi/theme".source = ../dotfiles/rofi/theme;
   home.file.".conky".source = ../dotfiles/conky;
-  home.file.".tilix.dconf".source = ../dotfiles/tilix.dconf;
   home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
 
   # X Config
@@ -190,8 +188,6 @@ in
   # Activation script
   home.activation = {
     createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p $HOME/mnt/Cluster/fixe-bureau $HOME/mnt/Cluster/fixe-salon $HOME/mnt/Cluster/stockly-romainc $HOME/mnt/Cluster/raspy
-      mkdir -p $HOME/mnt/Charybdis
       mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
       rm -f $HOME/mnt/Usb-drives
@@ -207,7 +203,6 @@ in
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
       sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
-
     '';
   };
 

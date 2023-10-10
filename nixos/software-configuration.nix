@@ -111,8 +111,6 @@
       histSize = 200000;
       ohMyZsh = {
         enable = true;
-        plugins = [ "git" ];
-        theme = "stockly";
       };
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
