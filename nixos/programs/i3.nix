@@ -69,6 +69,13 @@
       "${modifier}+m" = "mode \"${music_mode}\"";
     };
 
+    assigns = {
+      "$ws3" = [{ class = "Code"; }];
+      "$ws4" = [{ class = "Slack"; }];
+      "$ws5" = [{ class = "thunderbird"; }];
+      "$ws6" = [{ class = "jetbrains-datagrip"; }];
+    };
+
     bars = [];
 
     startup = [
@@ -80,6 +87,7 @@
       { command = "udiskie --tray"; notification = false; }
       { command = "autorandr --change --force && $HOME/bin/wallpapers-mgr cron --minutes 60 --mode fifty-fifty"; notification = false; always = true; }
       { command = "xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &"; notification = false; }
+      { command = "conky -c /home/romain/nix-configs/dotfiles/conky/qclocktwo -d"; notification = false; }
     ] ++ (
     if host-specific.wifi then 
       [ { command = "nm-applet"; notification = false; } ] else []) ++ (
