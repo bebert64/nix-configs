@@ -16,18 +16,19 @@ once everything is validated, install clean and create image
 ## General
 get all data from laptop to NAS
 # Freebox / html
+Freebox is not currently accessible from outside LAN
 Html page at domain root, with links to different apps
 backup freebox config
 
 # Various (harder) improvements
-fix yay changing keyboard config (add setxkbmap at the end ?)
 from autorandr --force machin to something in nix config
-lock numpad at boot
 fix mount-NAS (make it depend from host-specific)
 finish ranger config with displaying previews for various files
 finish conky configs
 add ENV variable for firefox_db (host-specifics ?)
 locale for raspberry
+fix yay changing keyboard config (add setxkbmap at the end ?)
+lock numpad at boot
 
 # Clean-up (not really needed, but sill good)
 clean polybar config
