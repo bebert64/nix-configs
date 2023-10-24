@@ -1,6 +1,7 @@
 ## raspi
 # Install script
 copy apache config
+qtorrent config (+ certificate?)
 restore postgres
 restore (or install new?) certificates
     capucina
