@@ -50,7 +50,7 @@ in
     nodePackages.npm
     pavucontrol # pulse audio volume controle
     polybar
-    postgresql
+    # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
     qt6.qttools # needed to extract artUrl from strawberry and display it with conky
     rofi
     rsync grsync # (= graphical rsync)
@@ -179,7 +179,7 @@ in
     LC_ALL = "en_US.UTF-8";
   };
 
-  xdg = { 
+  xdg = {
     enable = true;
     mimeApps = {
       enable = true;
