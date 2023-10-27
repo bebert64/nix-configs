@@ -15,6 +15,11 @@ automate regular save of postgres + stash_db content to NAS
 once everything is validated, install clean and create image
 
 ## General
+migrate back to chrome
+    check if possible launching specific profile from cli
+    check if possible to not "see" other profiles too easily
+    check extensions
+    then move bookmarks
 get all data from laptop to NAS
 # Freebox / html
 Freebox is not currently accessible from outside LAN
@@ -34,3 +39,22 @@ lock numpad at boot
 # Clean-up (not really needed, but sill good)
 clean polybar config
 test which fonts can be downloaded from nix (to reduce repo size)
+
+
+
+## Stash
+Finish inserting missing titles and replace current db
+
+## Coding
+Chrome bookmarks SDK (read only)
+Nas SDK
+    Is NAS mounted
+    Is NAS accessible?
+    Try Mount NAS
+Backup SDK?
+Postgres SDK (diesel_helpers?)
+    Backup / restore
+Move all libs into one repo/workspace
+    keep projects separated
+    cargo toml with path to libs while in dev
+    replace with github link to specific version if archiving (write exact syntax somewhere for reference)
