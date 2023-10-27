@@ -61,6 +61,7 @@
 
       # Starting apps
       "${modifier}+Control+f" = "workspace $ws2; exec firefox";
+      "${modifier}+Control+b" = "workspace $ws2; exec chromium";
       "${modifier}+Control+v" = "exec code";
       "${modifier}+Control+l" = "exec slack";
       "${modifier}+Control+t" = "exec thunderbird";

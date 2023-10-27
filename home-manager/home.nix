@@ -25,6 +25,7 @@ in
     avidemux
     btop
     caffeine-ng # to prevent going to sleep when watching videos
+    chromium
     conky
     direnv
     evince # pdf reader
