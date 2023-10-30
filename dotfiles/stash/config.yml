@@ -30,25 +30,32 @@ defaults:
       fieldoptions:
       - createmissing: false
         field: title
-        strategy: OVERWRITE
+        strategy: IGNORE
       - createmissing: false
         field: code
-        strategy: OVERWRITE
+        strategy: IGNORE
       - createmissing: true
         field: studio
-        strategy: OVERWRITE
+        strategy: IGNORE
       - createmissing: true
         field: performers
-        strategy: MERGE
+        strategy: IGNORE
       - createmissing: false
         field: tags
         strategy: IGNORE
       - createmissing: false
         field: details
-        strategy: MERGE
+        strategy: IGNORE
+      - createmissing: false
+        field: date
+        strategy: IGNORE
       includemaleperformers: true
       setcoverimage: true
       setorganized: true
+      skipmultiplematches: true
+      skipmultiplematchtag: "534"
+      skipsinglenameperformers: true
+      skipsinglenameperformertag: "535"
     paths: []
     sceneids: []
     sources:
@@ -74,6 +81,10 @@ defaults:
         includemaleperformers: null
         setcoverimage: null
         setorganized: null
+        skipmultiplematches: null
+        skipmultiplematchtag: null
+        skipsinglenameperformers: null
+        skipsinglenameperformertag: null
       source:
         scraperid: Pornhub
         stashboxendpoint: null
@@ -86,16 +97,20 @@ defaults:
         includemaleperformers: null
         setcoverimage: null
         setorganized: null
+        skipmultiplematches: null
+        skipmultiplematchtag: null
+        skipsinglenameperformers: null
+        skipsinglenameperformertag: null
       source:
         scraperid: ThePornDB
         stashboxendpoint: null
         stashboxindex: null
   scan_task:
     scangenerateclippreviews: false
-    scangeneratecovers: true
+    scangeneratecovers: false
     scangenerateimagepreviews: false
-    scangeneratephashes: true
-    scangeneratepreviews: true
+    scangeneratephashes: false
+    scangeneratepreviews: false
     scangeneratesprites: false
     scangeneratethumbnails: false
     stripfileextension: false
@@ -106,6 +121,12 @@ gallery_cover_regex: (poster|cover|folder|board)\.[^\.]+$
 generated: /usr/local/etc/stash/generated
 host: 0.0.0.0
 jwt_secret_key: 0029b60e04c1ab38eceb91799c94b6f664caace568be80ccd8a50c0fa015fdd0
+menu_items:
+- scenes
+- movies
+- performers
+- studios
+- tags
 no_proxy: localhost,127.0.0.1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
 nobrowser: false
 notifications_enabled: true
@@ -183,6 +204,8 @@ ui:
     mode: GALLERIES
     sortBy: date
   last_note_seen: 20230301
+  show_child_studio_content: true
+  show_child_tag_content: true
 username: shortcuts.db@gmail.com
 video_file_naming_algorithm: OSHASH
 write_image_thumbnails: true
