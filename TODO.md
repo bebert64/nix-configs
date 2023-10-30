@@ -2,6 +2,7 @@
 # Install script
 copy apache config
 qtorrent config (+ certificate?)
+config phppgadmin (file to copy in /etc/apache2)
 restore postgres
 restore (or install new?) certificates
     capucina
@@ -52,8 +53,7 @@ Nas SDK
     Is NAS accessible?
     Try Mount NAS
 Backup SDK?
-Postgres SDK (diesel_helpers?)
-    Backup / restore
+Stash_app_sdk
 Move all libs into one repo/workspace
     keep projects separated
     cargo toml with path to libs while in dev
