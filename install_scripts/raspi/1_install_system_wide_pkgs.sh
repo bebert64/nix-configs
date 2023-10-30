@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Set up locales
+sed -i 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen
+sed -i 's/# en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/g' /etc/locale.gen
+sed -i 's/# fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/g' /etc/locale.gen
+locale-gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
 # Install apt packages
 sudo apt update
 sudo apt upgrade
@@ -17,9 +24,6 @@ sudo bash -c 'echo "nas.capucina.house:/volume1/NAS 	/mnt/NAS 	nfs 	noauto,x-sys
 # Get ipv6 generated from MAC address
 sudo sed -i 's/#slaac hwaddr/slaac hwaddr/g' /etc/dhcpcd.conf
 sudo sed -i 's/slaac private/# slaac private/g' /etc/dhcpcd.conf
-
-# Set up locales
-# echo "LANG=en_US.UTF-8" > /etc/locale.conf
 
 # Install rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
