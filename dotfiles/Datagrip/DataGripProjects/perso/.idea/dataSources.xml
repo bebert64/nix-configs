@@ -15,13 +15,6 @@
       <jdbc-url>jdbc:sqlite:/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/ShortCuts.dbsc</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="comics@192.168.1.2" uuid="c16ed923-d6e2-489d-8d0c-b85191507ec6">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://192.168.1.2:5432/comics</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="stash-go.sqlite.48.20231027_114045" uuid="234241e3-c1d2-4161-b537-6564b80e92a2">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
@@ -29,11 +22,11 @@
       <jdbc-url>jdbc:sqlite:$USER_HOME$/Downloads/stash-go.sqlite.48.20231027_114045</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="comics_prod@192.168.1.2" uuid="6d279d07-dde2-4187-b718-531d2db33972">
+    <data-source source="LOCAL" name="raspi - master" uuid="6d279d07-dde2-4187-b718-531d2db33972">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://192.168.1.2:5432/comics_prod</jdbc-url>
+      <jdbc-url>jdbc:postgresql://192.168.1.2:5432/postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
