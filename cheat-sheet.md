@@ -57,9 +57,3 @@ fc-cache -f -v
 
 reinstall nixos boot
 sudo loadkeys fr
-
-
-
-# Command to restore dump_all as postgres
-psql -f /mnt/NAS/postgres_dump.sql
-Needs to be modified to be run as romain, using su - -c postgres probably (to be tested)
