@@ -20,7 +20,7 @@ in
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
     zip
-    avidemux
+    # avidemux # temporarily broken
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     conky
