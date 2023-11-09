@@ -64,7 +64,7 @@
       "${modifier}+Control+b" = "workspace $ws2; exec chromium";
       "${modifier}+Control+v" = "exec code";
       "${modifier}+Control+l" = "exec slack";
-      "${modifier}+Control+t" = "exec thunderbird";
+      "${modifier}+Control+t" = "exec thunderbird -P default";
       "${modifier}+Control+d" = "exec datagrip";
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
       "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
