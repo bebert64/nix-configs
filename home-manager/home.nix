@@ -22,7 +22,7 @@ in
   in [
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
-    avidemux
+    # avidemux  # temporarily broken
     btop
     caffeine-ng # to prevent going to sleep when watching videos
     chromium
