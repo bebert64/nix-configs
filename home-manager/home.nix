@@ -49,6 +49,8 @@ in
     mcomix
     nodejs
     nodePackages.npm
+    openssh
+    openssl
     pavucontrol # pulse audio volume controle
     polybar
     # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
@@ -57,8 +59,6 @@ in
     rsync grsync # (= graphical rsync)
     slack
     sqlite
-    openssh
-    openssl
     sshfs
     thunderbird-bin-unwrapped
     tilix # terminal
