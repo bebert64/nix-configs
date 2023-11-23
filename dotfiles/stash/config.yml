@@ -13,8 +13,16 @@ defaults:
     studios: []
     tags: []
   generate_task:
+    clippreviews: false
+    covers: true
+    forcetranscodes: false
+    imagepreviews: false
+    interactiveheatmapsspeeds: false
     markerids: []
+    markerimagepreviews: false
     markers: false
+    markerscreenshots: false
+    overwrite: false
     phashes: true
     previewoptions:
       previewexcludeend: "0"
@@ -25,6 +33,7 @@ defaults:
     previews: true
     sceneids: []
     sprites: false
+    transcodes: false
   identify_task:
     options:
       fieldoptions:
@@ -148,14 +157,14 @@ session_store_key: d15fcbf5457be122589cd9a5fa15925a93b5cbc67c898a6334efa4cbeb7f3
 show_one_time_moved_notification: false
 sound_on_preview: false
 stash:
-- path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/Videos
+- excludeimage: true
+  excludevideo: false
+  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/Videos
     a couper
+- excludeimage: true
   excludevideo: false
-  excludeimage: true
-- path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/Videos
+  path: /mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/Videos
     cut
-  excludevideo: false
-  excludeimage: true
 stash_boxes:
 - apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJhN2ZkYjAxNS0xMjdhLTRkYjQtOThjNy1mMzk4MTVhZjQ2MDQiLCJzdWIiOiJBUElLZXkiLCJpYXQiOjE2NzcyMzkxMzR9.6KZgPp_nS0GzybDsbUsKggvgXYZoFjzwCmDyvtBmQb8
   endpoint: https://stashdb.org/graphql
