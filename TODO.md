@@ -22,6 +22,8 @@ migrate back to chrome
     check extensions
     then move bookmarks
 get all data from laptop to NAS
+Solve datagrip password problem (plugin null)
+Shortcut to open 1password
 # Freebox / html
 Freebox is not currently accessible from outside LAN
 Html page at domain root, with links to different apps
