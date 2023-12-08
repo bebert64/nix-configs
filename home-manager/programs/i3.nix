@@ -78,6 +78,7 @@
       "$ws4" = [{ class = "Slack"; }];
       "$ws5" = [{ class = "thunderbird"; }];
       "$ws6" = [{ class = "jetbrains-datagrip"; }];
+      "$ws8" = [{ class = "avidemux"; }];
     };
 
     bars = [];
