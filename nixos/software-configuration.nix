@@ -134,6 +134,10 @@
   environment.pathsToLink = ["/libexec"];
 
   security.polkit.enable = true;
+  
+#   networking.extraHosts = ''
+#    127.0.0.1 mafreebox.freebox.fr
+#  '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
