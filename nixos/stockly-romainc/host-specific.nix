@@ -100,9 +100,9 @@ polybar eDP1-tray-off -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /
             enable = true;
             primary = true;
             crtc = 1;
-            mode = "1920x1080";
+            mode = "2560x1440";
             position = "0x0";
-            rate = "74.97";
+            rate = "59.95";
           };
         };
         hooks.postswitch = ''
