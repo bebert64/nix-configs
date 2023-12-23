@@ -45,6 +45,7 @@ in
     }))
     jetbrains.datagrip
     jq # cli json processor, for some scripts (to get workspace id from i3)
+    less
     microcodeIntel # for increased microprocessor performance
     mcomix
     nodejs
