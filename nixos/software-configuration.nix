@@ -53,6 +53,9 @@
       enable = true;
       package = pkgs.usbmuxd2;
     };
+    gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
+    # Enable the OpenSSH daemon.
+    openssh.enable = true;
   };
 
   systemd = {
@@ -134,6 +137,7 @@
   environment.pathsToLink = ["/libexec"];
 
   security.polkit.enable = true;
+  security.pam.services.lightdm.enableGnomeKeyring = true;
   
 #   networking.extraHosts = ''
 #    127.0.0.1 mafreebox.freebox.fr
@@ -146,13 +150,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
-  # List services that you want to enable:
-  services.gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
-  security.pam.services.lightdm.enableGnomeKeyring = true;
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
 
   # Enable the bluetooth daemon.
   services.blueman.enable = host-specific.bluetooth;

@@ -28,6 +28,8 @@ in
     direnv
     evince # pdf reader
     feh
+    # fusee-interfacee-tk
+    fusee-launcher
     gnome.gnome-calculator
     gnome.gnome-keyring
     grsync # check if rsync needed in addition
