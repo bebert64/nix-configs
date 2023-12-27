@@ -10,7 +10,7 @@
   home.packages = with pkgs;
   [
     btop
-    certbot  # CLI to get certificates from Let's Encrypt
+    certbot-full  # CLI to get certificates from Let's Encrypt
     direnv
     openssh
     openssl
