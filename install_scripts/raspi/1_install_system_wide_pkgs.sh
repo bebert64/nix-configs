@@ -19,7 +19,8 @@ git clone https://github.com/bebert64/nix-configs
 
 # Add NAS to fstab
 sudo mkdir /mnt/NAS
-sudo bash -c 'echo "nas.capucina.house:/volume1/NAS 	/mnt/NAS 	nfs 	noauto,x-systemd.automount 	0 	0" >> /etc/fstab'
+sudo bash -c 'echo "[2a01:e0a:83d:98c0:211:32ff:fee0:a82d]:/volume1/NAS 	/mnt/NAS 	nfs 	nfsvers=4.0,auto,_netdev,user	0 	0" >> /etc/fstab'
+sudo raspi-config nonint do_boot_wait 0
 
 # Get ipv6 generated from MAC address
 sudo sed -i 's/#slaac hwaddr/slaac hwaddr/g' /etc/dhcpcd.conf
