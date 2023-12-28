@@ -56,4 +56,3 @@ fc-cache -f -v
 
 
 reinstall nixos boot
-sudo loadkeys fr

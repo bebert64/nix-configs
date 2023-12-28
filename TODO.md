@@ -1,6 +1,11 @@
 ## raspi
 # Install script
 copy apache config
+    file to modif / watch (all in /etc/apache2)
+        apache2.conf (once only)
+        sites-available/capucina.conf (maybe not needed)
+        mods-enabled/alias.conf (add new websites)
+    + create dirs in /var/www/capucina.house/ (and chmod 755)
 qtorrent config (+ certificate?)
 config phppgadmin (file to copy in /etc/apache2)
 restore postgres
