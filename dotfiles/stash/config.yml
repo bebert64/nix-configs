@@ -115,20 +115,21 @@ defaults:
         stashboxendpoint: null
         stashboxindex: null
   scan_task:
-    usefilemetadata: false
-    stripfileextension: false
-    scangeneratecovers: true
-    scangeneratepreviews: true
-    scangenerateimagepreviews: false
-    scangeneratesprites: false
-    scangeneratephashes: true
-    scangeneratethumbnails: false
     scangenerateclippreviews: false
+    scangeneratecovers: true
+    scangenerateimagepreviews: false
+    scangeneratephashes: true
+    scangeneratepreviews: true
+    scangeneratesprites: false
+    scangeneratethumbnails: false
+    stripfileextension: false
+    usefilemetadata: false
 exclude:
 - .* - intro.*
+external_host: https://stash.capucina.house
 gallery_cover_regex: (poster|cover|folder|board)\.[^\.]+$
 generated: /usr/local/etc/stash/generated
-host: 0.0.0.0
+host: 127.0.0.1
 jwt_secret_key: 0029b60e04c1ab38eceb91799c94b6f664caace568be80ccd8a50c0fa015fdd0
 menu_items:
 - scenes
