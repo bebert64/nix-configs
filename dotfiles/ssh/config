@@ -36,3 +36,7 @@ Host raspi-ipv4-ext
 	HostName 88.160.246.99
 	User romain
 	Port 2222
+
+Host fixe-bureau
+	HostName 192.168.1.4
+	User romain
