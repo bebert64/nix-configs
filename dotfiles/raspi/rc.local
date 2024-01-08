@@ -11,5 +11,6 @@
 
 stash-linux-arm64v8 --nobrowser --config /usr/local/etc/stash/config.yml &
 qbittorrent-nox &
+set-service &
 
 exit 0
