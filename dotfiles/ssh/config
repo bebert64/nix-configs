@@ -24,6 +24,10 @@ Host charybdis
 	# Invoices
 	LocalForward 4006 localhost:4006
 
+Host cerberus
+	HostName 192.168.1.12
+	ProxyJump charybdis
+
 Host raspi
 	HostName 2a01:e0a:83d:98c0:dea6:32ff:feaf:289e
 	User romain
