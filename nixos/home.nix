@@ -43,6 +43,7 @@ in
       };
     }))
     jetbrains.datagrip
+    jmtpfs # to mount android devices
     jq # cli json processor, for some scripts (to get workspace id from i3)
     microcodeIntel # for increased microprocessor performance
     mcomix
