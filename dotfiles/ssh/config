@@ -22,25 +22,34 @@ Host charybdis
 	# Repackages
 	LocalForward 1832 localhost:1832
 	# Invoices
-	LocalForward 4006 localhost:4006
+	LocalForward 4006 localhost:400
 
 Host cerberus
-	HostName 192.168.1.12
-	ProxyJump charybdis
-
+    Port 24
+    User my_username
+    HostName cerberus.stockly.tech
+    ServerAliveInterval 40
+    ServerAliveCountMax 2
+# Host cerberus_local
+# 	Port 22
+# 	User my_username
+# 	HostName 192.168.1.12
+# 	ServerAliveInterval 40
+# 	ServerAliveCountMax 2
+    
 Host raspi
-	HostName 2a01:e0a:83d:98c0:dea6:32ff:feaf:289e
-	User romain
+HostName 2a01:e0a:83d:98c0:dea6:32ff:feaf:289e
+User romain
 
 Host raspi-ipv4-local
-	HostName 192.168.1.2
-	User romain
+HostName 192.168.1.2
+User romain
 
 Host raspi-ipv4-ext
-	HostName 88.160.246.99
-	User romain
-	Port 2222
+HostName 88.160.246.99
+User romain
+Port 2222
 
 Host fixe-bureau
-	HostName 192.168.1.4
-	User romain
+HostName 192.168.1.4
+User romain
