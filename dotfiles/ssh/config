@@ -26,7 +26,7 @@ Host charybdis
 
 Host cerberus
     Port 24
-    User my_username
+    User romain
     HostName cerberus.stockly.tech
     ServerAliveInterval 40
     ServerAliveCountMax 2
