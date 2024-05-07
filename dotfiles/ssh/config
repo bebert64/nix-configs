@@ -23,6 +23,8 @@ Host charybdis
 	LocalForward 1832 localhost:1832
 	# Invoices
 	LocalForward 4006 localhost:400
+	# Files
+	LocalForward 1834 localhost:1834
 
 Host cerberus
     Port 24
@@ -30,6 +32,29 @@ Host cerberus
     HostName cerberus.stockly.tech
     ServerAliveInterval 40
     ServerAliveCountMax 2
+	# Postgres
+	LocalForward 5432 localhost:5432
+	# Operations
+	LocalForward 1824 localhost:1824
+	# Stocks
+	LocalForward 1825 localhost:1825
+	# Auth
+	LocalForward 1826 localhost:1826
+	LocalForward 1827 localhost:1827
+	# Backoffice Service
+	LocalForward 1828 localhost:1828
+	# Backoffice Service HTTP
+	LocalForward 1829 localhost:1829
+	LocalForward 51016 localhost:51016
+	# Shipments
+	LocalForward 1830 localhost:1830
+	# Repackages
+	LocalForward 1832 localhost:1832
+	# Invoices
+	LocalForward 4006 localhost:4006
+	# Files
+	LocalForward 1234 localhost:1234
+	# Files
 # Host cerberus_local
 # 	Port 22
 # 	User my_username
