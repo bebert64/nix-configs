@@ -17,7 +17,7 @@
     oh-my-zsh = {
         enable = true;
     };
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     initExtra = ''
         cdr() {
