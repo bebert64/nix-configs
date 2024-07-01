@@ -48,7 +48,7 @@ in
     microcodeIntel # for increased microprocessor performance
     mcomix
     nodejs
-    nodePackages = [npm, pnpm]
+    nodePackages.npm
     pavucontrol # pulse audio volume controle
     polybar
     postgresql
