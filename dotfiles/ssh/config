@@ -29,7 +29,8 @@ Host charybdis
 Host cerberus
     Port 24
     User romain
-    HostName cerberus.stockly.tech
+    <!-- HostName cerberus.stockly.tech -->
+    HostName 192.168.1.188
     ServerAliveInterval 40
     ServerAliveCountMax 2
 	# Postgres
