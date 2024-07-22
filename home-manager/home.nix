@@ -49,7 +49,8 @@ in
     microcodeIntel # for increased microprocessor performance
     mcomix
     nodejs
-    nodePackages = [npm, pnpm]
+    nodePackages.npm
+    nodePackages.pnpm
     openssh
     openssl
     pavucontrol # pulse audio volume controle

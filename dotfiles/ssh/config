@@ -56,12 +56,6 @@ Host cerberus
 	# Files
 	LocalForward 1234 localhost:1234
 	# Files
-# Host cerberus_local
-# 	Port 22
-# 	User my_username
-# 	HostName 192.168.1.12
-# 	ServerAliveInterval 40
-# 	ServerAliveCountMax 2
     
 Host raspi
 HostName 2a01:e0a:83d:98c0:dea6:32ff:feaf:289e

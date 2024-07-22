@@ -49,6 +49,7 @@ in
     mcomix
     nodejs
     nodePackages.npm
+    nodePackages.pnpm
     pavucontrol # pulse audio volume controle
     polybar
     postgresql
