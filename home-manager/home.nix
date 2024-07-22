@@ -31,8 +31,8 @@ in
     evince # pdf reader
     feh
     firefox-bin-unwrapped
-    gnome.gnome-calculator
-    gnome.gnome-keyring
+    gnome-calculator
+    gnome-keyring
     hicolor-icon-theme
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
@@ -153,7 +153,7 @@ in
 
   home.pointerCursor = {
       x11.enable = true;
-      package = pkgs.gnome3.adwaita-icon-theme;
+      package = pkgs.adwaita-icon-theme;
       name = "Adwaita";
       size = 32;
   };

@@ -30,8 +30,8 @@ in
     feh
     # fusee-interfacee-tk
     fusee-launcher
-    gnome.gnome-calculator
-    gnome.gnome-keyring
+    gnome-calculator
+    gnome-keyring
     grsync # check if rsync needed in addition
     inkscape
     (insomnia.overrideAttrs (oldAttrs: rec {
