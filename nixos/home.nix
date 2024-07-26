@@ -34,14 +34,7 @@ in
     gnome-keyring
     grsync # check if rsync needed in addition
     inkscape
-    (insomnia.overrideAttrs (oldAttrs: rec {
-      pname = "insomnia-stockly";
-      version = "2022.7.0";
-      src = fetchurl {
-        url = "https://stockly-public-assets.s3.eu-west-1.amazonaws.com/Insomnia.Core-2022.7.0-patched.deb";
-        sha256 = "sha256-6abpLq1ykAfn7ag5hY2Y6e53kx7svkSb+7OdWSDRLbE=";
-      };
-    }))
+   (callPackage ./programs/insomnia.nix { })
     jetbrains.datagrip
     jmtpfs # to mount android devices
     jq # cli json processor, for some scripts (to get workspace id from i3)
