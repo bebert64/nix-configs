@@ -19,9 +19,8 @@
         stockly-romainc =
             ./nixos/stockly-romainc/configuration.nix;
         };
-      };
       nixOsSpecialArgs = {
-            flake-inputs = inputs;
+            flake-inputs = inputs;   
             host-specific = import ./nixos/stockly-romainc/host-specific.nix;
             };
         homeConfigurations = {
@@ -55,4 +54,5 @@
                     ];
             };
         };
+      };
   }
