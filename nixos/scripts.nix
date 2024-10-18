@@ -47,12 +47,12 @@ host-specific: { pkgs, ...}:
     (pkgs.writeScriptBin "playerctl_polybar" ''
       #!/usr/bin/env bash
 
-      touch /home/romain/.config/.radio_title
+      touch $HOME/.config/.radio_title
       
       playerctlstatus=$(playerctl -p strawberry status 2> /dev/null)
       title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null)
       artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null)
-      radio_title=`cat /home/romain/.config/.radio_title`
+      radio_title=`cat $HOME/.config/.radio_title`
       note=
       previous=
       next=
@@ -113,8 +113,8 @@ host-specific: { pkgs, ...}:
             "Jazz Radio") track=1 && play_radio ;;
             "Radio Nova") track=2 && play_radio ;;
             "Oui Fm") track=3 && play_radio ;;
-            "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > /home/romain/.config/.radio_title ;;
-            "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > /home/romain/.config/.radio_title;;
+            "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > $HOME/.config/.radio_title ;;
+            "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > $HOME/.config/.radio_title;;
           esac
     '')
 

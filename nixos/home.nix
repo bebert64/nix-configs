@@ -192,14 +192,14 @@ in
       ln -sf $HOME/configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../dotfiles/tilix.dconf}
 
       # Symlink btop config folder
-      ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
+      ln -sf ${../../dotfiles/btop} $HOME/.config
       
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" ${../../dotfiles/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
     '';
   };
 
