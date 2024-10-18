@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, host-specific, pkgs, ... }:
+{ host-specific, pkgs, ... }:
 
 {
   imports =
@@ -11,7 +11,7 @@
       ../common.nix
     ];
 
-    home-manager.users.user = import ./home.nix host-specific;
+    home-manager.users.user = import ../home.nix host-specific;
   
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 

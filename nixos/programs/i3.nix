@@ -1,4 +1,4 @@
-{ pkgs, lib, monoFont, host-specific, ... }:
+{ lib, host-specific, ... }:
 
 {
   enable = true;

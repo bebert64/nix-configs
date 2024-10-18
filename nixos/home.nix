@@ -7,7 +7,7 @@ in
 {
 
   # Packages Home-Manager doesn't have specific handling for
-  home.packages = with pkgs;
+  home.packages =
   let
     polybar = pkgs.polybar.override {
       i3Support = true;
@@ -15,7 +15,7 @@ in
     };
     jetbrains = (import ./programs/jetbrains.nix inputs);
   in
-  [
+   with pkgs;[
     alock # locker allowing transparent background
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
@@ -116,7 +116,7 @@ in
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
-    firefox = import ./programs/firefox.nix (pkgs);
+    firefox = import ./programs/firefox.nix pkgs;
     git = import ./programs/git.nix;
     vim = {
       extraConfig = ''

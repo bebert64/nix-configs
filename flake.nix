@@ -31,7 +31,7 @@
                 };
 
                 modules = [
-                    (import ./home-manager/home_raspi.nix ( { config-name = raspi; inherit pkgs; }))
+                    (import ./home-manager/home_raspi.nix  { config-name = raspi; inherit pkgs; })
                 ];
             };
 
@@ -45,12 +45,12 @@
                     let
                         host-specifics = import ./home-manager/fixe-bureau/host_specifics.nix;
                     in [
-                        (import ./home-manager/home.nix ( { 
+                        (import ./home-manager/home.nix  { 
                             config-name = fixe-bureau; 
                             inherit pkgs config host-specifics; 
                             lib=nixpkgs.lib; 
                             hm-lib=home-manager.lib;
-                        }))
+                        })
                     ];
             };
         };
