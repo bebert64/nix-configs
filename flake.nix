@@ -15,19 +15,15 @@
         allowUnfree = true;
       };
     in {
-      nixosConfigurations = {
-        stockly-romainc = nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-            home-manager.nixosModules.home-manager
-            ./nixos/stockly-romainc/configuration.nix
-            ];
-            specialArgs = {
+      nixosModules = {
+        stockly-romainc =
+            ./nixos/stockly-romainc/configuration.nix;
+        };
+      };
+      nixOsSpecialArgs = {
             flake-inputs = inputs;
             host-specific = import ./nixos/stockly-romainc/host-specific.nix;
             };
-        };
-      };
         homeConfigurations = {
             ${raspi} = home-manager.lib.homeManagerConfiguration rec {
                 pkgs = import nixpkgs {

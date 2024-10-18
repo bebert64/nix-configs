@@ -8,22 +8,10 @@
   imports =
     [
       # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../software-configuration.nix
+      ../common.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
-  networking.hostName = "stockly-romainc"; # Define your hostname.
-  
-  # Pick only one of the below networking options.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-
-  # Set your time zone.
-  time.timeZone = "Europe/Paris";
+    home-manager.users.user = import ./home.nix host-specific;
   
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
 
@@ -33,14 +21,5 @@
     touchpad.middleEmulation = true;
     touchpad.tapping = true;
   };
-  services.libinput.enable = true;
-  
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
 
 }
