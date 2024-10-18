@@ -27,6 +27,8 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
   home-manager.users.romain = import ./home.nix host-specific;
+
+    services.displayManager.autoLogin = { enable = true; user = "romain"; };
   
   nixpkgs.config.allowUnfree = true;
 

@@ -27,7 +27,6 @@
     gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
     # Enable the OpenSSH daemon.
     openssh.enable = true;
-    displayManager.autoLogin = { enable = true; user = "romain"; };
   };
 
   systemd = {

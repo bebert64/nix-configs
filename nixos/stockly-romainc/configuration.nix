@@ -14,6 +14,7 @@
     home-manager.users.user = import ../home.nix host-specific;
   
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
+  services.displayManager.autoLogin = { enable = true; user = "user"; };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput = { 
