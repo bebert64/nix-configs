@@ -15,7 +15,7 @@ in
     };
     jetbrains = (import ./programs/jetbrains.nix inputs);
   in
-   with pkgs;[
+   with pkgs;with gnome;[
     alock # locker allowing transparent background
     anydesk
     arandr # GUI to configure screens positions (need to kill autorandr)
