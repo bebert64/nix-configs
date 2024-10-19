@@ -1,7 +1,7 @@
 {
     enable = true;
     shellAliases = {
-        "upgrade" = "cd ~/nix-configs/Stockly && nix flake update && apply-nix";
+        "upgrade" = "cd ~/nix-config && nix flake update && apply-nix";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
