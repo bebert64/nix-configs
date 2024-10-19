@@ -1,9 +1,7 @@
 {
     enable = true;
     shellAliases = {
-        "update" = "cd ~/nix-configs/nixos && git pull && sudo nixos-rebuild switch --flake .#";
-        "update-dirty" = "cd ~/nix-configs/nixos && sudo nixos-rebuild switch --flake .#";
-        "upgrade" = "cd ~/nix-configs/nixos && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
+        "upgrade" = "cd ~/nix-configs/Stockly && nix flake update && apply-nix";
         "c" = "code .";
         "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
