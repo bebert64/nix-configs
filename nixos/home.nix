@@ -123,7 +123,7 @@ in
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
-    firefox = import ./programs/firefox.nix pkgs;
+    firefox = import ./programs/firefox.nix;
     git = import ./programs/git.nix;
     vim = {
       extraConfig = ''

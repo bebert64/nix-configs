@@ -11,7 +11,7 @@
   ];
 
   home-manager.users.user = import ../home.nix host-specific;
-  home-manager.backupFileExtension = "backup";
+  home-manager.backupFileExtension = "backup2";
 
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
   services.displayManager.autoLogin = {
