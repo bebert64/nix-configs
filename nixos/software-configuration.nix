@@ -5,12 +5,20 @@
 # This configuration file is not part of the default system, instead it is used to factor
 # configurations on my different computers together
 
-{ config, pkgs, flake-inputs, host-specific, ... }:
+{
+  pkgs,
+  flake-inputs,
+  host-specific,
+  ...
+}:
 
 {
-  imports = [./common.nix];
+  imports = [ ./common.nix ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nix.nixPath = [ "nixpkgs=${flake-inputs.nixpkgs.outPath}" ];
 
   # Select internationalisation properties.
@@ -28,9 +36,11 @@
   };
   home-manager.users.romain = import ./home.nix host-specific;
 
-    services.displayManager.autoLogin = { enable = true; user = "romain"; };
-  
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "romain";
+  };
+
   nixpkgs.config.allowUnfree = true;
 
-  
 }
