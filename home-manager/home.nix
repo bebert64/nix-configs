@@ -1,4 +1,12 @@
-{ config, pkgs, lib, hm-lib, config-name, host-specifics, ... }@inputs:
+{
+  config,
+  pkgs,
+  lib,
+  hm-lib,
+  config-name,
+  host-specifics,
+  ...
+}@inputs:
 
 let
   monoFont = "DejaVu Sans Mono";
@@ -12,98 +20,104 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = with pkgs;
-  let
-    polybar = pkgs.polybar.override {
-      i3Support = true;
-      pulseSupport = true;
-    };
-    jetbrains = (import ./programs/jetbrains.nix inputs);
-  in [
-    anydesk
-    arandr # GUI to configure screens positions (need to kill autorandr)
-    # avidemux  # temporarily broken
-    btop
-    caffeine-ng # to prevent going to sleep when watching videos
-    chromium
-    conky
-    direnv
-    evince # pdf reader
-    feh
-    firefox-bin-unwrapped
-    gnome-calculator
-    gnome-keyring
-    hicolor-icon-theme
-    inkscape
-   (callPackage ./programs/insomnia.nix { })
-    jetbrains.datagrip
-    jq # cli json processor, for some scripts (to get workspace id from i3)
-    less
-    microcodeIntel # for increased microprocessor performance
-    mcomix
-    nodejs
-    nodePackages.npm
-    nodePackages.pnpm
-    openssh
-    openssl
-    pavucontrol # pulse audio volume controle
-    polybar
-    # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
-    qt6.qttools # needed to extract artUrl from strawberry and display it with conky
-    rofi
-    rsync grsync # (= graphical rsync)
-    slack
-    sqlite
-    sshfs
-    thunderbird-bin-unwrapped
-    tilix # terminal
-    udiskie
-    unrar
-    unzip
-    vlc
-    vscode
-    xidlehook
-    yt-dlp
-    zip
+  home.packages =
+    with pkgs;
+    let
+      polybar = pkgs.polybar.override {
+        i3Support = true;
+        pulseSupport = true;
+      };
+      jetbrains = (import ./programs/jetbrains.nix inputs);
+    in
+    [
+      anydesk
+      arandr # GUI to configure screens positions (need to kill autorandr)
+      # avidemux  # temporarily broken
+      btop
+      caffeine-ng # to prevent going to sleep when watching videos
+      chromium
+      conky
+      direnv
+      evince # pdf reader
+      feh
+      firefox-bin-unwrapped
+      gnome-calculator
+      gnome-keyring
+      hicolor-icon-theme
+      inkscape
+      (callPackage ./programs/insomnia.nix { })
+      jetbrains.datagrip
+      jq # cli json processor, for some scripts (to get workspace id from i3)
+      less
+      microcodeIntel # for increased microprocessor performance
+      mcomix
+      nodejs
+      nodePackages.npm
+      nodePackages.pnpm
+      openssh
+      openssl
+      pavucontrol # pulse audio volume controle
+      polybar
+      # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
+      qt6.qttools # needed to extract artUrl from strawberry and display it with conky
+      rofi
+      rsync
+      grsync # (= graphical rsync)
+      slack
+      sqlite
+      sshfs
+      thunderbird-bin-unwrapped
+      tilix # terminal
+      udiskie
+      unrar
+      unzip
+      vlc
+      vscode
+      xidlehook
+      yt-dlp
+      zip
 
-    # imagemagick and scrot are used for image manipulation
-    # to create the blur patches behind the conky widgets
-    imagemagick
-    scrot
+      # imagemagick and scrot are used for image manipulation
+      # to create the blur patches behind the conky widgets
+      imagemagick
+      scrot
 
-    # Needed to mount Ipad
-    ifuse
-    libimobiledevice
+      # Needed to mount Ipad
+      ifuse
+      libimobiledevice
 
-    # Theme for QT applications (vlc, strawberry...)
-    qt5ct
-    libsForQt5.qtstyleplugins
+      # Theme for QT applications (vlc, strawberry...)
+      qt5ct
+      libsForQt5.qtstyleplugins
 
-    # Ranger
-    ranger
-    ffmpegthumbnailer # thumbnail for videos preview
-    fontforge # thumbnail for fonts preview
-    poppler_utils # thumbnail for pdf preview
+      # Ranger
+      ranger
+      ffmpegthumbnailer # thumbnail for videos preview
+      fontforge # thumbnail for fonts preview
+      poppler_utils # thumbnail for pdf preview
 
-    # Strawberry
-    strawberry
-    playerctl # to send data and retrieve metadata for polybarw
+      # Strawberry
+      strawberry
+      playerctl # to send data and retrieve metadata for polybarw
 
-    # fonts
-    noto-fonts
-    noto-fonts-emoji
-    dejavu_fonts
-    liberation_ttf_v1
-    helvetica-neue-lt-std
+      # fonts
+      noto-fonts
+      noto-fonts-emoji
+      dejavu_fonts
+      liberation_ttf_v1
+      helvetica-neue-lt-std
 
-  ]++ import ./scripts.nix host-specifics pkgs ++ (
-    if host-specifics.wifi then
-      [
-        networkmanager
-        networkmanagerapplet
-      ] else []
+    ]
+    ++ import ./scripts.nix host-specifics pkgs
+    ++ (
+      if host-specifics.wifi then
+        [
+          networkmanager
+          networkmanagerapplet
+        ]
+      else
+        [ ]
     );
-
 
   # Programs known by Home-Manager
   programs = {
@@ -123,7 +137,7 @@ in
         syntax on
       '';
     };
-    zsh = import ./programs/zsh.nix ( { inherit config-name; });
+    zsh = import ./programs/zsh.nix ({ inherit config-name; });
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -145,10 +159,10 @@ in
   };
 
   home.pointerCursor = {
-      x11.enable = true;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
-      size = 32;
+    x11.enable = true;
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 32;
   };
 
   # launch i3
@@ -233,7 +247,10 @@ in
 
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   # Let Home Manager install and manage itself.

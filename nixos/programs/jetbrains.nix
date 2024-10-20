@@ -15,16 +15,19 @@ let
   };
 in
 
-builtins.mapAttrs
-  (name: product: product.overrideAttrs (oldAttrs: rec {
-    postFixup = (oldAttrs.postFixup or "") + ''
-      cat <<EOF >> $out/$pname/bin/*64.vmoptions
+builtins.mapAttrs (
+  name: product:
+  product.overrideAttrs (oldAttrs: rec {
+    postFixup =
+      (oldAttrs.postFixup or "")
+      + ''
+        cat <<EOF >> $out/$pname/bin/*64.vmoptions
 
-      --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
-      --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
+        --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
+        --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-      -javaagent:${ja-netfilter}/ja-netfilter.jar=jetbrains
-      EOF
-    '';
-  }))
-  pkgs.jetbrains
+        -javaagent:${ja-netfilter}/ja-netfilter.jar=jetbrains
+        EOF
+      '';
+  })
+) pkgs.jetbrains

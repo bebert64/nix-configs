@@ -5,20 +5,22 @@
 { host-specific, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ../common.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ../common.nix
+  ];
 
-    home-manager.users.user = import ../home.nix host-specific;
-    home-manager.backupFileExtension = "backup";
-  
+  home-manager.users.user = import ../home.nix host-specific;
+  home-manager.backupFileExtension = "backup";
+
   services.xserver.windowManager.i3.package = pkgs.i3-gaps;
-  services.displayManager.autoLogin = { enable = true; user = "user"; };
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "user";
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput = { 
+  services.libinput = {
     touchpad.naturalScrolling = true;
     touchpad.middleEmulation = true;
     touchpad.tapping = true;

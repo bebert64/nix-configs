@@ -1,4 +1,5 @@
-host-specific: { pkgs, lib, ... }@inputs:
+host-specific:
+{ pkgs, lib, ... }@inputs:
 
 let
   monoFont = "DejaVu Sans Mono";
@@ -8,106 +9,111 @@ in
 
   # Packages Home-Manager doesn't have specific handling for
   home.packages =
-  let
-    polybar = pkgs.polybar.override {
-      i3Support = true;
-      pulseSupport = true;
-    };
-    jetbrains = (import ./programs/jetbrains.nix inputs);
-  in
-   with pkgs;with gnome;[
-    alock # locker allowing transparent background
-    anydesk
-    arandr # GUI to configure screens positions (need to kill autorandr)
-    zip
-    # avidemux # temporarily broken
-    btop
-    caffeine-ng # to prevent going to sleep when watching videos
-    conky
-    dconf # used for setting/loading gnome applications' settings (eg : tilix)
-    direnv
-    evince # pdf reader
-    feh
-    # fusee-interfacee-tk
-    fusee-launcher
-    gnome-calculator
-    gnome-keyring
-    grsync # check if rsync needed in addition
-    inkscape
-   (callPackage ./programs/insomnia.nix { })
-    jetbrains.datagrip
-    jmtpfs # to mount android devices
-    jq # cli json processor, for some scripts (to get workspace id from i3)
-    microcodeIntel # for increased microprocessor performance
-    mcomix
-    nodejs
-    nodePackages.npm
-    nodePackages.pnpm
-    pavucontrol # pulse audio volume controle
-    polybar
-    postgresql
-    pulseaudio
-    qbittorrent
-    qt6.qttools # needed to extract artUrl from strawberry and display it with conky
-    rofi
-    slack
-    sqlite
-    steam-run # needed to run custom binaries
-    sshfs
-    thunderbird-bin-unwrapped
-    tilix # terminal
-    udiskie
-    unrar
-    unzip
-    vlc
-    vscode
-    xidlehook
-    yt-dlp
+    let
+      polybar = pkgs.polybar.override {
+        i3Support = true;
+        pulseSupport = true;
+      };
+      jetbrains = (import ./programs/jetbrains.nix inputs);
+    in
+    with pkgs;
+    with gnome;
+    [
+      alock # locker allowing transparent background
+      anydesk
+      arandr # GUI to configure screens positions (need to kill autorandr)
+      zip
+      # avidemux # temporarily broken
+      btop
+      caffeine-ng # to prevent going to sleep when watching videos
+      conky
+      dconf # used for setting/loading gnome applications' settings (eg : tilix)
+      direnv
+      evince # pdf reader
+      feh
+      # fusee-interfacee-tk
+      fusee-launcher
+      gnome-calculator
+      gnome-keyring
+      grsync # check if rsync needed in addition
+      inkscape
+      (callPackage ./programs/insomnia.nix { })
+      jetbrains.datagrip
+      jmtpfs # to mount android devices
+      jq # cli json processor, for some scripts (to get workspace id from i3)
+      microcodeIntel # for increased microprocessor performance
+      mcomix
+      nodejs
+      nodePackages.npm
+      nodePackages.pnpm
+      pavucontrol # pulse audio volume controle
+      polybar
+      postgresql
+      pulseaudio
+      qbittorrent
+      qt6.qttools # needed to extract artUrl from strawberry and display it with conky
+      rofi
+      slack
+      sqlite
+      steam-run # needed to run custom binaries
+      sshfs
+      thunderbird-bin-unwrapped
+      tilix # terminal
+      udiskie
+      unrar
+      unzip
+      vlc
+      vscode
+      xidlehook
+      yt-dlp
 
-    # imagemagick and scrot are used for image manipulation
-    # to create the blur patches behind the conky widgets
-    imagemagick
-    scrot
+      # imagemagick and scrot are used for image manipulation
+      # to create the blur patches behind the conky widgets
+      imagemagick
+      scrot
 
-    # Needed to mount Ipad
-    ifuse
-    libimobiledevice
+      # Needed to mount Ipad
+      ifuse
+      libimobiledevice
 
-    # polkit is the utility used by vscode to save as sudo
-    polkit
-    polkit_gnome
+      # polkit is the utility used by vscode to save as sudo
+      polkit
+      polkit_gnome
 
-    # Theme for QT applications (vlc, strawberry...)
-    qt5ct
-    libsForQt5.qtstyleplugins
+      # Theme for QT applications (vlc, strawberry...)
+      qt5ct
+      libsForQt5.qtstyleplugins
 
-    # Ranger
-    ranger
-    ffmpegthumbnailer # thumbnail for videos preview
-    fontforge # thumbnail for fonts preview
-    poppler_utils # thumbnail for pdf preview
+      # Ranger
+      ranger
+      ffmpegthumbnailer # thumbnail for videos preview
+      fontforge # thumbnail for fonts preview
+      poppler_utils # thumbnail for pdf preview
 
-    # Rust
-    rustup
-    pkg-config
-    gcc
-    openssl
+      # Rust
+      rustup
+      pkg-config
+      gcc
+      openssl
 
-    # Strawberry
-    strawberry
-    playerctl # to send data and retrieve metadata for polybar
+      # Strawberry
+      strawberry
+      playerctl # to send data and retrieve metadata for polybar
 
-    # Test, to remove
-    picom-next
+      # Test, to remove
+      picom-next
 
-  ] ++ import ./scripts.nix host-specific pkgs ++ (
-    if host-specific.wifi then
-      [
-        networkmanager
-        networkmanagerapplet
-      ] else []
+    ]
+    ++ import ./scripts.nix host-specific pkgs
+    ++ (
+      if host-specific.wifi then
+        [
+          networkmanager
+          networkmanagerapplet
+        ]
+      else
+        [ ]
     );
-
 
   # Programs known by Home-Manager
   programs = {
@@ -162,7 +168,7 @@ in
     WALLPAPERS_DIR = "$HOME/wallpapers";
   };
 
-  xdg = { 
+  xdg = {
     enable = true;
     mimeApps = {
       enable = true;
@@ -185,7 +191,7 @@ in
 
   # Activation script
   home.activation = {
-    createDirs = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    createDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
       rm -f $HOME/mnt/Usb-drives
@@ -197,7 +203,7 @@ in
 
       # Symlink btop config folder
       ln -sf ${../dotfiles/btop} $HOME/.config
-      
+
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
       sed "s/\$USER/"$USER"/" ${../dotfiles/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks

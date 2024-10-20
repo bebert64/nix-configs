@@ -1,4 +1,5 @@
-host-specifics: { pkgs, ...}:
+host-specifics:
+{ pkgs, ... }:
 
 [
   (pkgs.writeScriptBin "run" ''
@@ -25,7 +26,7 @@ host-specifics: { pkgs, ...}:
   (pkgs.writeScriptBin "mount-Ipad" ''
     #!/usr/bin/env bash
     set -euxo pipefail
-    
+
     ifuse --documents jp.tatsumi-sys.sidebooks $HOME/mnt/Ipad/SideBooks
     ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader $HOME/mnt/Ipad/Chunky
     ifuse --documents com.wayudaorerk.mangastormall $HOME/mnt/Ipad/MangaStorm
@@ -95,7 +96,7 @@ host-specifics: { pkgs, ...}:
     set -euo pipefail
 
     touch /home/romain/.config/.radio_title
-    
+
     playerctlstatus=$(playerctl -a status 2> /dev/null) || playerctlstatus=""
     title=$(playerctl -a metadata xesam:title 2> /dev/null) || title=""
     artist=$(playerctl -a metadata xesam:artist 2> /dev/null) || artist=""
@@ -132,7 +133,7 @@ host-specifics: { pkgs, ...}:
   (pkgs.writeScriptBin "launch_radios" ''
     #!/usr/bin/env bash
     set -euxo pipefail
-    
+
     play_youtube() {
       url_stream=$(yt-dlp -g $url_youtube)
       strawberry --play-playlist Youtube  # Loads the playlist so that the current one doesn't get erased by the following 'load' command
@@ -181,14 +182,13 @@ host-specifics: { pkgs, ...}:
   #   $HOME/.conky/$THEME/launch.sh
   #   xrandr --output $SCREEN_OFF --brightness 0
 
-
   #   # Sleep or prepare to sleep
   #   if [ $sleep ]; then
   #         systemctl suspend
   #   else
   #         xidlehook --timer ${toString (host-specifics.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
   #   fi
-    
+
   #   # Lock
   #   alock -auth passwd -bg none -cursor blank
 
@@ -230,9 +230,11 @@ host-specifics: { pkgs, ...}:
       systemctl suspend
     else
       pkill xidlehook || echo "xidlehook already killed"
-      xidlehook --timer ${toString (host-specifics.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
+      xidlehook --timer ${
+        toString (host-specifics.minutes-from-lock-to-sleep * 60)
+      } 'systemctl suspend' ' ' &
     fi
-    
+
     # Lock
     alock -auth passwd -bg none -cursor blank
 

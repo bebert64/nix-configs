@@ -1,26 +1,37 @@
-{ pkgs, flake-inputs, host-specific, ... }:
+{
+  pkgs,
+  flake-inputs,
+  host-specific,
+  ...
+}:
 
 {
-    imports = [  flake-inputs.home-manager.nixosModules.home-manager ];
+  imports = [ flake-inputs.home-manager.nixosModules.home-manager ];
 
   # X11 Configuration
-  services.xserver = {  
+  services.xserver = {
     enable = true;
-    desktopManager.session = [{
-      name = "home-manager";
-      start = ''
-        ${pkgs.runtimeShell} $HOME/.hm-xsession &
-        waitPID=$!
-      '';
-    }];
+    desktopManager.session = [
+      {
+        name = "home-manager";
+        start = ''
+          ${pkgs.runtimeShell} $HOME/.hm-xsession &
+          waitPID=$!
+        '';
+      }
+    ];
 
-    xkb = { layout = "fr"; variant = ""; }; 
+    xkb = {
+      layout = "fr";
+      variant = "";
+    };
     # xkbOptions = "caps:swapescape";
   };
 
   services = {
-    udisks2.enable = true;  # automount usb keys and drives
-    usbmuxd = {  # used to mount Ipad
+    udisks2.enable = true; # automount usb keys and drives
+    usbmuxd = {
+      # used to mount Ipad
       enable = true;
       package = pkgs.usbmuxd2;
     };
@@ -36,15 +47,15 @@
       wants = [ "graphical-session.target" ];
       after = [ "graphical-session.target" ];
       serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
-        };
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
     };
   };
-  
+
   fonts = {
     packages = with pkgs; [
       fira-code
@@ -101,14 +112,14 @@
     ntfs3g
     wget
   ];
-  environment.pathsToLink = ["/libexec"];
+  environment.pathsToLink = [ "/libexec" ];
 
   security.polkit.enable = true;
   security.pam.services.lightdm.enableGnomeKeyring = true;
-  
-#   networking.extraHosts = ''
-#    127.0.0.1 mafreebox.freebox.fr
-#  '';
+
+  #   networking.extraHosts = ''
+  #    127.0.0.1 mafreebox.freebox.fr
+  #  '';
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

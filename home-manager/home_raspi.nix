@@ -1,4 +1,4 @@
-{ config-name, pkgs } :
+{ config-name, pkgs }:
 
 {
   home = {
@@ -7,8 +7,7 @@
     stateVersion = "23.05";
   };
 
-  home.packages = with pkgs;
-  [
+  home.packages = with pkgs; [
     btop
     direnv
     openssh
@@ -25,7 +24,7 @@
   home.sessionVariables = {
     LC_ALL = "en_US.UTF-8";
   };
-  
+
   # Activation script
   home.activation = {
     activationScript = ''
@@ -53,20 +52,23 @@
 
   nixpkgs = {
     config = {
-      system = "aarch64-linux";  # x86_64-linux, aarch64-multiplatform, etc.
+      system = "aarch64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
       allowUnfree = true;
     };
   };
 
   programs = {
-    zsh = import ./programs/zsh.nix ( { config-name = "raspi"; });
+    zsh = import ./programs/zsh.nix ({ config-name = "raspi"; });
     git = import ./programs/git.nix;
     home-manager.enable = true;
   };
-  
+
   nix = {
     package = pkgs.nix;
-    settings.experimental-features = [ "nix-command" "flakes" ];
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
 }

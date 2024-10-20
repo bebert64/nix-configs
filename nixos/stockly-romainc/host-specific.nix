@@ -10,7 +10,7 @@
   };
   polybar_config = ./polybar_config.ini;
   autorandr = {
-    enable  = true;
+    enable = true;
     profiles = {
       "solo" = {
         fingerprint = {
@@ -27,21 +27,21 @@
           };
         };
         hooks.postswitch = ''
-          echo "
-pkill polybar; \
-while pgrep -u $UID -x polybar > /dev/null; \
-  do sleep 1; \
-done; \
-\
-polybar eDP1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
-\
-          " > $HOME/.config/polybar/launch.sh
-          chmod +x $HOME/.config/polybar/launch.sh
-          $HOME/.config/polybar/launch.sh
+                    echo "
+          pkill polybar; \
+          while pgrep -u $UID -x polybar > /dev/null; \
+            do sleep 1; \
+          done; \
+          \
+          polybar eDP1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          \
+                    " > $HOME/.config/polybar/launch.sh
+                    chmod +x $HOME/.config/polybar/launch.sh
+                    $HOME/.config/polybar/launch.sh
 
-          feh --bg-max --random "$HOME/wallpapers/Single screen/"
+                    feh --bg-max --random "$HOME/wallpapers/Single screen/"
         '';
-        };
+      };
 
       "bureau-maison" = {
         fingerprint = {
@@ -66,22 +66,22 @@ polybar eDP1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/poly
           };
         };
         hooks.postswitch = ''
-          echo " \
-pkill polybar; \
-while pgrep -u $UID -x polybar > /dev/null; \
-  do sleep 1; \
-done; \
-\
-polybar HDMI1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
-polybar eDP1-tray-off -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
-\
-          " > $HOME/.config/polybar/launch.sh
-          chmod +x $HOME/.config/polybar/launch.sh
-          $HOME/.config/polybar/launch.sh
+                    echo " \
+          pkill polybar; \
+          while pgrep -u $UID -x polybar > /dev/null; \
+            do sleep 1; \
+          done; \
+          \
+          polybar HDMI1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          polybar eDP1-tray-off -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          \
+                    " > $HOME/.config/polybar/launch.sh
+                    chmod +x $HOME/.config/polybar/launch.sh
+                    $HOME/.config/polybar/launch.sh
 
-          feh --bg-max --random "$HOME/wallpapers/Single screen/"
+                    feh --bg-max --random "$HOME/wallpapers/Single screen/"
         '';
-        };
+      };
 
       "bureau-stockly" = {
         fingerprint = {
@@ -106,22 +106,22 @@ polybar eDP1-tray-off -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/pol
           };
         };
         hooks.postswitch = ''
-          echo " \
-pkill polybar; \
-while pgrep -u $UID -x polybar > /dev/null; \
-  do sleep 1; \
-done; \
-\
-polybar HDMI1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
-polybar eDP1-tray-off -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
-\
-          " > $HOME/.config/polybar/launch.sh
-          chmod +x $HOME/.config/polybar/launch.sh
-          $HOME/.config/polybar/launch.sh
+                    echo " \
+          pkill polybar; \
+          while pgrep -u $UID -x polybar > /dev/null; \
+            do sleep 1; \
+          done; \
+          \
+          polybar HDMI1-tray-on -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          polybar eDP1-tray-off -c $HOME/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          \
+                    " > $HOME/.config/polybar/launch.sh
+                    chmod +x $HOME/.config/polybar/launch.sh
+                    $HOME/.config/polybar/launch.sh
 
-          feh --bg-max --random "$HOME/wallpapers/Single screen/"
+                    feh --bg-max --random "$HOME/wallpapers/Single screen/"
         '';
-        };
+      };
     };
   };
 }
