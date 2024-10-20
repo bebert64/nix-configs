@@ -61,7 +61,9 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 <br />
 <br />
 
-## Add fonts
+## Fonts
+
+# Add new fonts
 
 - copy them in fonts folder inside configs
 - rebuild
@@ -71,6 +73,13 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 fc-cache -f -v
 ```
 
-reinstall nixos boot
+# Use special characters
+
+The font used in this setup is "Iosevka Nerd Font". To make VsCode display those characters correctly, add the font's
+name to settings `Editor: Font Family`
+To insert a new character, search for it on https://www.nerdfonts.com/cheat-sheet and copy/paste it as Icon
+
+## Reinstall nixos boot
+
 sudo nix-collect-garbage -d
 sudo nixos-rebuild switch --flake .#

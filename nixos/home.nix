@@ -46,6 +46,7 @@ in
     pavucontrol # pulse audio volume controle
     polybar
     postgresql
+    pulseaudio
     qbittorrent
     qt6.qttools # needed to extract artUrl from strawberry and display it with conky
     rofi
