@@ -14,7 +14,7 @@ in
         i3Support = true;
         pulseSupport = true;
       };
-      jetbrains = (import ./programs/jetbrains.nix inputs);
+      jetbrains = (import ../programs/jetbrains.nix inputs);
     in
     with pkgs;
     with gnome;
@@ -37,7 +37,7 @@ in
       gnome-keyring
       grsync # check if rsync needed in addition
       inkscape
-      (callPackage ./programs/insomnia.nix { })
+      (callPackage ../programs/insomnia.nix { })
       jetbrains.datagrip
       jmtpfs # to mount android devices
       jq # cli json processor, for some scripts (to get workspace id from i3)
@@ -123,8 +123,8 @@ in
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
-    firefox = import ./programs/firefox.nix;
-    git = import ./programs/git.nix;
+    firefox = import ../programs/firefox.nix;
+    git = import ../programs/git.nix;
     vim = {
       extraConfig = ''
         set autoindent
@@ -136,16 +136,16 @@ in
   };
 
   # Copy custom files / dotfiles
-  home.file.".anydesk/user.conf".source = ../dotfiles/anydesk-user.conf;
-  home.file.".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
-  home.file.".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
+  home.file.".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
+  home.file.".config/polybar/colors.ini".source = ../../dotfiles/polybar/colors.ini;
+  home.file.".config/polybar/modules.ini".source = ../../dotfiles/polybar/modules.ini;
   home.file.".config/polybar/config.ini".source = host-specific.polybar_config;
-  home.file.".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-  home.file.".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
-  home.file.".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
-  home.file.".config/rofi/theme".source = ../dotfiles/rofi/theme;
-  home.file.".conky".source = ../dotfiles/conky;
-  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
+  home.file.".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
+  home.file.".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
+  home.file.".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
+  home.file.".config/rofi/theme".source = ../../dotfiles/rofi/theme;
+  home.file.".conky".source = ../../dotfiles/conky;
+  home.file.".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../dotfiles/MonokaiStockly;
 
   # X Config
   xsession = {
@@ -199,14 +199,14 @@ in
       ln -sf $HOME/configs/fonts $HOME/.local/share/
 
       # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../dotfiles/tilix.dconf}
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../dotfiles/tilix.dconf}
 
       # Symlink btop config folder
-      ln -sf ${../dotfiles/btop} $HOME/.config
+      ln -sf ${../../dotfiles/btop} $HOME/.config
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" ${../dotfiles/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" ${../../dotfiles/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
     '';
   };
 

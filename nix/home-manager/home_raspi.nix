@@ -16,8 +16,8 @@
   ];
 
   home.file = {
-    ".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
+    ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
   };
 
   # Session variable

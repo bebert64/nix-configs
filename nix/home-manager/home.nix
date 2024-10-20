@@ -27,7 +27,7 @@ in
         i3Support = true;
         pulseSupport = true;
       };
-      jetbrains = (import ./programs/jetbrains.nix inputs);
+      jetbrains = (import ../programs/jetbrains.nix inputs);
     in
     [
       anydesk
@@ -45,7 +45,7 @@ in
       gnome-keyring
       hicolor-icon-theme
       inkscape
-      (callPackage ./programs/insomnia.nix { })
+      (callPackage ../programs/insomnia.nix { })
       jetbrains.datagrip
       jq # cli json processor, for some scripts (to get workspace id from i3)
       less
@@ -58,6 +58,7 @@ in
       openssl
       pavucontrol # pulse audio volume controle
       polybar
+      pulseaudio
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
       qt6.qttools # needed to extract artUrl from strawberry and display it with conky
       rofi
@@ -127,8 +128,8 @@ in
       nix-direnv.enable = true;
       enableZshIntegration = true;
     };
-    firefox = import ./programs/firefox.nix;
-    git = import ./programs/git.nix;
+    firefox = import ../programs/firefox.nix;
+    git = import ../programs/git.nix;
 
     vim = {
       extraConfig = ''
@@ -137,25 +138,25 @@ in
         syntax on
       '';
     };
-    zsh = import ./programs/zsh.nix ({ inherit config-name; });
+    zsh = import ./programs/zsh.nix { inherit config-name; };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".anydesk/user.conf".source = ../dotfiles/anydesk-user.conf;
-    ".cargo/config.toml".source = ../dotfiles/cargo_config.toml;
-    ".config/polybar/colors.ini".source = ../dotfiles/polybar/colors.ini;
-    ".config/polybar/modules.ini".source = ../dotfiles/polybar/modules.ini;
+    ".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
+    ".cargo/config.toml".source = ../../dotfiles/cargo_config.toml;
+    ".config/polybar/colors.ini".source = ../../dotfiles/polybar/colors.ini;
+    ".config/polybar/modules.ini".source = ../../dotfiles/polybar/modules.ini;
     ".config/polybar/config.ini".source = host-specifics.polybar_config;
-    ".config/qt5ct/qt5ct.conf".source = ../dotfiles/qt5ct.conf;
-    ".config/ranger/rc.conf".source = ../dotfiles/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = ../dotfiles/ranger/scope.sh;
-    ".config/rofi/theme".source = ../dotfiles/rofi/theme;
-    ".conky".source = ../dotfiles/conky;
-    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../dotfiles/MonokaiStockly;
+    ".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
+    ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
+    ".config/rofi/theme".source = ../../dotfiles/rofi/theme;
+    ".conky".source = ../../dotfiles/conky;
+    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../dotfiles/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
-    ".xinitrc".source = ../dotfiles/.xinitrc;
+    ".xinitrc".source = ../../dotfiles/.xinitrc;
   };
 
   home.pointerCursor = {

@@ -18,11 +18,11 @@
     in
     {
       nixosModules = {
-        stockly-romainc = ./nixos/stockly-romainc/configuration.nix;
+        stockly-romainc = ./nix/nixos/stockly-romainc/configuration.nix;
       };
       nixOsSpecialArgs = {
         flake-inputs = inputs;
-        host-specific = import ./nixos/stockly-romainc/host-specific.nix;
+        host-specific = import ./nix/nixos/stockly-romainc/host-specific.nix;
       };
       homeConfigurations = {
         ${raspi} = home-manager.lib.homeManagerConfiguration rec {
@@ -32,7 +32,7 @@
           };
 
           modules = [
-            (import ./home-manager/home_raspi.nix {
+            (import ./nix/home-manager/home_raspi.nix {
               config-name = raspi;
               inherit pkgs;
             })
@@ -50,7 +50,7 @@
               host-specifics = import ./home-manager/fixe-bureau/host_specifics.nix;
             in
             [
-              (import ./home-manager/home.nix {
+              (import ./nix/home-manager/home.nix {
                 config-name = fixe-bureau;
                 inherit pkgs config host-specifics;
                 lib = nixpkgs.lib;
