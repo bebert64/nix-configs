@@ -58,7 +58,7 @@
   };
 
   programs = {
-    zsh = import ./programs/zsh.nix ({ config-name = "raspi"; });
+    zsh = import ./programs/zsh.nix { config-name = "raspi"; };
     git = import ./programs/git.nix;
     home-manager.enable = true;
   };
