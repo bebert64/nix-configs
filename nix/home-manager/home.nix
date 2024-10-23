@@ -162,7 +162,7 @@
   # launch i3
   xsession = {
     enable = true;
-    windowManager.i3 = import ./programs/i3.nix ({ monoFont = "DejaVu Sans Mono"; } // inputs);
+    windowManager.i3 = import ../programs/i3fds.nix inputs;
     numlock.enable = true;
   };
   gtk = {

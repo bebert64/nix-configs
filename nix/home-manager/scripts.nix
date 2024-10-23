@@ -1,4 +1,4 @@
-host-specifics:
+host-specific:
 { pkgs, ... }:
 
 [
@@ -186,7 +186,7 @@ host-specifics:
   #   if [ $sleep ]; then
   #         systemctl suspend
   #   else
-  #         xidlehook --timer ${toString (host-specifics.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
+  #         xidlehook --timer ${toString (host-specific.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
   #   fi
 
   #   # Lock
@@ -203,7 +203,7 @@ host-specifics:
   #   $HOME/.fehbg
   #   pkill conky
   #   $HOME/.config/polybar/launch.sh
-  #   xidlehook --timer ${toString (host-specifics.minutes-before-lock * 60)} 'lock-conky' ' ' &
+  #   xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
   #   xrandr --output $SCREEN_OFF --brightness 1
   # '')
 
@@ -231,7 +231,7 @@ host-specifics:
     else
       pkill xidlehook || echo "xidlehook already killed"
       xidlehook --timer ${
-        toString (host-specifics.minutes-from-lock-to-sleep * 60)
+        toString (host-specific.minutes-from-lock-to-sleep * 60)
       } 'systemctl suspend' ' ' &
     fi
 
@@ -243,6 +243,6 @@ host-specifics:
     i3-msg workspace "$wk2"
     $HOME/.config/polybar/launch.sh
     pkill xidlehook || echo "xidlehook already killed"
-    xidlehook --timer ${toString (host-specifics.minutes-before-lock * 60)} 'lock-conky' ' ' &
+    xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
   '')
 ]

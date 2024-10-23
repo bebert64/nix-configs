@@ -1,7 +1,6 @@
 {
   wifi = true;
   bluetooth = true;
-  lock-before-sleep = true;
   minutes-before-lock = 3;
   minutes-from-lock-to-sleep = 7;
   screens = {
@@ -12,6 +11,7 @@
   zsh-aliases = {
     "upgrade" = "cd ~/nix-config && nix flake update && apply-nix";
   };
+  wallpapers-manager-cmd = "$HOME/bin/wallpapers-manager";
   autorandr = {
     enable = true;
     profiles = {

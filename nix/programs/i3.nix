@@ -12,7 +12,7 @@
     {
       inherit modifier; # Check if possible to remove this line entirely (not sure if it's really necessary)
 
-      menu = "\"rofi -modi drun#window#run -show drun -show-icons -theme $HOME/.config/rofi/theme/launcher.rasi\"";
+      menu = "\"rofi -modi drun#window#run -show drun -show-icons -theme ${../../dotfiles/rofi/theme/launcher.rasi}\"";
 
       terminal = "--no-startup-id tilix"; # tilix is not notification-aware so we need the no-startup-id
 
@@ -51,11 +51,15 @@
         "${modifier}+Mod1+Left" = "move workspace to output left";
         "${modifier}+Mod1+Right" = "move workspace to output right";
 
-        # Used to sisplay empty workspaces, allowing to see the wallpapers
+        # Used to display empty workspaces, allowing to see the wallpapers
         "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
         # Lock the screen
         "--release ${modifier}+o" = "exec lock-conky";
+
+        # Modes
+        "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
+        "${modifier}+m" = "mode \"${music_mode}\"";
 
         # Starting apps
         "${modifier}+Control+f" = "workspace $ws2; exec firefox";
@@ -65,10 +69,8 @@
         "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
         "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
         "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
-
-        # Modes
-        "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
-        "${modifier}+m" = "mode \"${music_mode}\"";
+        # Maps to the + key on the numpad
+        "${modifier}+Control+KP_Add" = "exec gnome-calculator";
       };
 
       assigns = {
@@ -76,13 +78,21 @@
         "$ws4" = [ { class = "Slack"; } ];
         "$ws5" = [ { class = "thunderbird"; } ];
         "$ws6" = [ { class = "jetbrains-datagrip"; } ];
+        "$ws8" = [ { class = "avidemux"; } ];
       };
 
       bars = [ ];
 
       startup =
         [
-          { command = "mount -a"; }
+          # Those two commands are run in succession to have the correct screens resolution when chosing wallpapers
+          {
+            command = "autorandr --change --force && ${host-specific.wallpapers-manager-cmd or "wallpapers-manager"} cron --minutes 60 --mode fifty-fifty";
+            notification = false;
+            always = true;
+          }
+          { command = "mount-NAS"; }
+          { command = "setxkbmap fr"; }
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
           {
             command = "dbus-update-activation-environment DISPLAY XAUTHORITY WAYLAND_DISPLAY";
@@ -101,23 +111,18 @@
             notification = false;
           }
           {
-            command = "autorandr --change --force && $HOME/bin/wallpapers-manager cron --minutes 60 --mode fifty-fifty";
-            notification = false;
-            always = true;
-          }
-          {
             command = "xidlehook --timer ${
-              toString (host-specific.minutes-before-lock * 60)
+              toString (host-specific.minutes-before-lock or 3 * 60)
             } 'lock-conky' ' ' &";
             notification = false;
           }
           {
-            command = "conky -c {.}/nix-configs/dotfiles/conky/qclocktwo -d";
+            command = "conky -c ${../../dotfiles/conky/qclocktwo} -d";
             notification = false;
           }
         ]
         ++ (
-          if host-specific.wifi then
+          if host-specific.wifi or false then
             [
               {
                 command = "nm-applet";
@@ -128,7 +133,7 @@
             [ ]
         )
         ++ (
-          if host-specific.bluetooth then
+          if host-specific.bluetooth or false then
             [
               {
                 command = "blueman-applet";
@@ -186,7 +191,7 @@
     set $ws5 "5:"
     set $ws6 "6:"
     set $ws7 "7:"
-    set $ws8 "8"
+    set $ws8 "8:󰷝"
     set $ws9 "9:"
     set $ws10 "10:"
     set $wse1 " "

@@ -1,8 +1,6 @@
 {
-  config-name = "fixe-bureau";
   wifi = false;
   bluetooth = false;
-  lock-before-sleep = false;
   minutes-before-lock = 30;
   minutes-from-lock-to-sleep = 30;
   screens = {
@@ -11,9 +9,9 @@
   };
   polybar_config = ./polybar_config.ini;
   zsh-aliases = {
-    "update" = "cd ~/nix-configs/home-manager && git pull && home-manager switch --flake .#${config-name}";
-    "update-dirty" = "cd ~/nix-configs/home-manager && git add . && home-manager switch --flake .#${config-name}";
-    "upgrade" = "yay -Syu && cd ~/nix-configs/home-manager && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#${config-name} && git push";
+    "update" = "cd ~/nix-configs/home-manager && git pull && home-manager switch --flake .#fixe-bureau";
+    "update-dirty" = "cd ~/nix-configs/home-manager && git add . && home-manager switch --flake .#fixe-bureau";
+    "upgrade" = "yay -Syu && cd ~/nix-configs/home-manager && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#fixe-bureau && git push";
   };
   autorandr = {
     enable = true;

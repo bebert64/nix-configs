@@ -151,7 +151,7 @@ in
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ./programs/i3.nix (args // { host-specific = host-specific; });
+    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific ; };
     numlock.enable = true;
   };
   gtk = {

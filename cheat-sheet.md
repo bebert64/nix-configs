@@ -39,7 +39,7 @@ ssh-keygen -t ed25519
 autorandr --save profile-name
 ```
 
-After that, copy the fingerprint from setup and the config inside host-specifics + update the launch script
+After that, copy the fingerprint from setup and the config inside host-specific + update the launch script
 <br />
 
 # Annexes
