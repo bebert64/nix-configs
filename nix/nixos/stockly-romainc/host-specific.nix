@@ -9,6 +9,9 @@
     screen2 = "HDMI-1";
   };
   polybar_config = ./polybar_config.ini;
+  zsh-aliases = {
+    "upgrade" = "cd ~/nix-config && nix flake update && apply-nix";
+  };
   autorandr = {
     enable = true;
     profiles = {

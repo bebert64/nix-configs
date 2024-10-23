@@ -10,6 +10,11 @@
     screen2 = "HDMI-2";
   };
   polybar_config = ./polybar_config.ini;
+  zsh-aliases = {
+    "update" = "cd ~/nix-configs/home-manager && git pull && home-manager switch --flake .#${config-name}";
+    "update-dirty" = "cd ~/nix-configs/home-manager && git add . && home-manager switch --flake .#${config-name}";
+    "upgrade" = "yay -Syu && cd ~/nix-configs/home-manager && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#${config-name} && git push";
+  };
   autorandr = {
     enable = true;
     profiles = {

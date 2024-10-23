@@ -132,7 +132,7 @@ in
         syntax on
       '';
     };
-    zsh = import ./programs/zsh.nix;
+    zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
   };
 
   # Copy custom files / dotfiles

@@ -124,7 +124,6 @@
     };
     firefox = import ../programs/firefox.nix;
     git = import ../programs/git.nix;
-
     vim = {
       extraConfig = ''
         set autoindent
@@ -132,7 +131,7 @@
         syntax on
       '';
     };
-    zsh = import ./programs/zsh.nix { config-name = host-specific.config-name; };
+    zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or {}; };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
