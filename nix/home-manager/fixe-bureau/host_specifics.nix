@@ -1,4 +1,5 @@
 {
+  config-name = "fixe-bureau";
   wifi = false;
   bluetooth = false;
   lock-before-sleep = false;

@@ -1,17 +1,11 @@
 {
-  config,
   pkgs,
   lib,
   hm-lib,
-  config-name,
-  host-specifics,
+  host-specific,
   ...
 }@inputs:
 
-let
-  monoFont = "DejaVu Sans Mono";
-  args = ({ inherit monoFont; } // inputs);
-in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -109,9 +103,9 @@ in
       helvetica-neue-lt-std
 
     ]
-    ++ import ./scripts.nix host-specifics pkgs
+    ++ import ./scripts.nix host-specific pkgs
     ++ (
-      if host-specifics.wifi then
+      if host-specific.wifi then
         [
           networkmanager
           networkmanagerapplet
@@ -122,7 +116,7 @@ in
 
   # Programs known by Home-Manager
   programs = {
-    autorandr = host-specifics.autorandr;
+    autorandr = host-specific.autorandr;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -138,7 +132,7 @@ in
         syntax on
       '';
     };
-    zsh = import ./programs/zsh.nix { inherit config-name; };
+    zsh = import ./programs/zsh.nix { config-name = host-specific.config-name; };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -148,7 +142,7 @@ in
     ".cargo/config.toml".source = ../../dotfiles/cargo_config.toml;
     ".config/polybar/colors.ini".source = ../../dotfiles/polybar/colors.ini;
     ".config/polybar/modules.ini".source = ../../dotfiles/polybar/modules.ini;
-    ".config/polybar/config.ini".source = host-specifics.polybar_config;
+    ".config/polybar/config.ini".source = host-specific.polybar_config;
     ".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
     ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
@@ -169,7 +163,7 @@ in
   # launch i3
   xsession = {
     enable = true;
-    windowManager.i3 = import ./programs/i3.nix (args);
+    windowManager.i3 = import ./programs/i3.nix ({ monoFont = "DejaVu Sans Mono"; } // inputs);
     numlock.enable = true;
   };
   gtk = {

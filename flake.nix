@@ -10,54 +10,43 @@
   outputs =
     inputs@{ nixpkgs, home-manager, ... }:
     let
-      raspi = "raspi";
-      fixe-bureau = "fixe-bureau";
-      config = {
-        allowUnfree = true;
+      host-specific = {
+        stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
+        raspi = import ./nix/home-manager/raspi/host-specific.nix;
+        fixe-bureau = import ./nix/home-manager/fixe-bureau/host-specific.nix;
       };
     in
     {
       nixosModules = {
         stockly-romainc = ./nix/nixos/stockly-romainc/configuration.nix;
       };
-      nixosSpecialArgs = {
-        flake-inputs = inputs;
-        host-specific.stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
-      };
       homeConfigurations = {
-        ${raspi} = home-manager.lib.homeManagerConfiguration rec {
+        ${host-specific.raspi.config-name} = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
             system = "aarch64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
-            inherit config;
+          };
+
+          modules = [ (import ./nix/home-manager/home_raspi.nix { inherit pkgs; }) ];
+        };
+
+        ${host-specific.fixe-bureau.config-name} = home-manager.lib.homeManagerConfiguration rec {
+          pkgs = import nixpkgs {
+            system = "x86_64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
           };
 
           modules = [
-            (import ./nix/home-manager/home_raspi.nix {
-              config-name = raspi;
+            (import ./nix/home-manager/home.nix {
               inherit pkgs;
+              host-specific = host-specific.fixe-bureau;
+              lib = nixpkgs.lib;
+              hm-lib = home-manager.lib;
             })
           ];
         };
-
-        ${fixe-bureau} = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
-            inherit config;
-          };
-
-          modules =
-            let
-              host-specifics = import ./home-manager/fixe-bureau/host_specifics.nix;
-            in
-            [
-              (import ./nix/home-manager/home.nix {
-                config-name = fixe-bureau;
-                inherit pkgs config host-specifics;
-                lib = nixpkgs.lib;
-                hm-lib = home-manager.lib;
-              })
-            ];
-        };
+      };
+      stocklySpecialArgs = {
+        flake-inputs = inputs;
+        host-specific = host-specific.stockly-romainc;
       };
     };
 }
