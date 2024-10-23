@@ -5,10 +5,7 @@
 { host-specific, pkgs, ... }:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ../common.nix
-  ];
+  imports = [ ../common.nix ];
 
   home-manager.users.user = import ../home.nix host-specific;
   home-manager.backupFileExtension = "backup2";

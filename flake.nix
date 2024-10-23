@@ -20,9 +20,9 @@
       nixosModules = {
         stockly-romainc = ./nix/nixos/stockly-romainc/configuration.nix;
       };
-      nixOsSpecialArgs = {
+      nixosSpecialArgs = {
         flake-inputs = inputs;
-        host-specific = import ./nix/nixos/stockly-romainc/host-specific.nix;
+        host-specific.stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
       };
       homeConfigurations = {
         ${raspi} = home-manager.lib.homeManagerConfiguration rec {
