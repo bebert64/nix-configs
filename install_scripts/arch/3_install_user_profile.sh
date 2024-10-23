@@ -1,18 +1,18 @@
-# #!/usr/bin/env bash
+#!/usr/bin/env bash
 set -euo pipefail
 
-# # install yay
-# git clone https://aur.archlinux.org/yay.git
-# cd yay
-# makepkg -si
-# cd ~
-# rm -rf yay
+# install yay
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd ~
+rm -rf yay
 
-# # Install user packages
-# yay -Syu xorg-server xorg-xinit xdg-utils fontconfig nfs-utils polkit alock udisks2 picom postgresql-libs
+# Install user packages
+yay -Syu xorg-server xorg-xinit xdg-utils fontconfig nfs-utils polkit alock udisks2 picom postgresql-libs
 
-# # Install rust
-# curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+# Install rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Install video downloader companion app
 cd ~
@@ -25,12 +25,12 @@ rm -r ~/.dwhelper/vdhcoapp-2.0.10
 ~/.dwhelper/vdhcoapp install --user
 rm ~/net.downloadhelper.coapp-2.0.10_amd64.tar.gz
 
-# # install nix
-# cd ~
-# curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix_install.sh
-# chmod +x ./nix_install.sh
-# ./nix_install.sh --daemon
-# rm nix_install.sh
+# install nix
+cd ~
+curl --proto '=https' --tlsv1.2 -sSfL https://nixos.org/nix/install -o nix_install.sh
+chmod +x ./nix_install.sh
+./nix_install.sh --daemon
+rm nix_install.sh
 
-# # Need to reboot for nix to load correctly
-# echo "you should now reboot"
+# Need to reboot for nix to load correctly
+echo "you should now reboot"

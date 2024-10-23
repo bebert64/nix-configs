@@ -7,20 +7,25 @@
 {
   imports = [ ../common.nix ];
 
-  home-manager.users.user = import ../home.nix host-specific;
-  home-manager.backupFileExtension = "backup2";
-
-  services.xserver.windowManager.i3.package = pkgs.i3-gaps;
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "user";
+  home-manager = {
+    users.user = import ../home.nix host-specific;
+    backupFileExtension = "backup2";
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput = {
-    touchpad.naturalScrolling = true;
-    touchpad.middleEmulation = true;
-    touchpad.tapping = true;
+  services = {
+    xserver.windowManager.i3.package = pkgs.i3-gaps;
+
+    displayManager.autoLogin = {
+      enable = true;
+      user = "user";
+    };
+
+    # Enable touchpad support (enabled default in most desktopManager).
+    libinput = {
+      touchpad.naturalScrolling = true;
+      touchpad.middleEmulation = true;
+      touchpad.tapping = true;
+    };
   };
 
 }

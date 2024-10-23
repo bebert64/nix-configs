@@ -131,7 +131,7 @@
         syntax on
       '';
     };
-    zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or {}; };
+    zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
