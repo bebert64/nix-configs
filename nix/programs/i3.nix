@@ -87,7 +87,9 @@
         [
           # Those two commands are run in succession to have the correct screens resolution when chosing wallpapers
           {
-            command = "autorandr --change --force && ${host-specific.wallpapers-manager-cmd or "wallpapers-manager"} cron --minutes 60 --mode fifty-fifty";
+            command = "autorandr --change --force && ${
+              host-specific.wallpapers-manager-cmd or "wallpapers-manager"
+            } cron --minutes 60 --mode fifty-fifty";
             notification = false;
             always = true;
           }

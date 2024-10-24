@@ -23,7 +23,7 @@ in
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
       zip
-      # avidemux # temporarily broken
+      avidemux
       btop
       caffeine-ng # to prevent going to sleep when watching videos
       conky
@@ -151,7 +151,7 @@ in
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific ; };
+    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
     numlock.enable = true;
   };
   gtk = {
