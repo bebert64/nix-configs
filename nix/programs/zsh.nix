@@ -3,7 +3,6 @@
   enable = true;
   shellAliases = {
     "c" = "code .";
-    "r" = "ranger --choosedir=$HOME/.rangerdir; cd \"$(cat $HOME/.rangerdir)\"; rm $HOME/.rangerdir";
     "wke1" = "i3-msg workspace \"\\\" \\\"\"";
   } // additional-aliases;
   history = {

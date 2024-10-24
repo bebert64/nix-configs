@@ -162,10 +162,10 @@
           "Return" = "mode default";
         };
         ${music_mode} = {
-          "${modifier}+Left" = " exec if (($(playerctl position | cut -d . -f 1) < 10)); then playerctl previous; else playerctl position 1; fi";
+          "${modifier}+Left" = " exec player-ctl-restart-or-previous";
           "${modifier}+Right" = "exec playerctl next";
-          "Left" = "exec playerctl position $(expr $(playerctl position | cut -d . -f 1) - 10)";
-          "Right" = "exec playerctl position $(expr $(playerctl position | cut -d . -f 1) + 10)";
+          "Left" = "exec player-ctl-move - 10)";
+          "Right" = "exec player-ctl-move + 10)";
           "Up" = "exec playerctl volume 0.1+";
           "Down" = "exec playerctl volume 0.1-";
           "space" = "exec playerctl play-pause, mode default";

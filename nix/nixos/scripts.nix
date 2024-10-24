@@ -5,39 +5,24 @@ host-specific:
   (pkgs.writeScriptBin "run" ''
     #!/usr/bin/env bash
     set -euxo pipefail
+
     nix-shell -p "$1" --command "''${1##*.} ''${*:2}"
   '')
 
-  (pkgs.writeScriptBin "mount-Ipad" ''
+  (pkgs.writeScriptBin "sync-wallpapers" ''
     #!/usr/bin/env bash
+    set -euxo pipefail
 
-    ifuse --documents jp.tatsumi-sys.sidebooks $HOME/mnt/Ipad/SideBooks
-    ifuse --documents com.mike-ferenduros.Chunky-Comic-Reader $HOME/mnt/Ipad/Chunky
-    ifuse --documents com.wayudaorerk.mangastormall $HOME/mnt/Ipad/MangaStorm
-  '')
-
-  (pkgs.writeScriptBin "umount-Ipad" ''
-    #!/usr/bin/env bash
-
-    fusermount -u $HOME/mnt/Ipad/SideBooks
-    fusermount -u $HOME/mnt/Ipad/Chunky
-    fusermount -u $HOME/mnt/Ipad/MangaStorm
-  '')
-
-  (pkgs.writeScriptBin "available-size-Ipad" ''
-    #!/usr/bin/env bash
-    df $HOME/mnt/Ipad-SideBooks | grep ifuse | tr -s ' ' | cut -d ' ' -f4m
-  '')
-
-  (pkgs.writeScriptBin "open-code" ''
-    #!/usr/bin/env bash
-    relative_path=$(pwd | cut -d'/' -f4-)
-    code --folder-uri=vscode-remote://ssh-remote+charybdis/home/romain/$relative_path
+    mount-NAS
+    rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
+    rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
   '')
 
   (pkgs.writeScriptBin "is-music-playing" ''
     #!/usr/bin/env bash
-    TITLE="$(playerctl -p strawberry metadata title 2>&1)"
+    set -euxo pipefail
+
+    TITLE="$(playerctl metadata title 2>&1)"
     if [[ "$TITLE" == *"No player could handle this command"* || "$TITLE" == *"No players found"* ]];then
             echo false;
     else
@@ -45,15 +30,31 @@ host-specific:
     fi;
   '')
 
+  (pkgs.writeScriptBin "player-ctl-move" ''
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2)
+  '')
+
+  (pkgs.writeScriptBin "player-ctl-restart-or-previous" ''
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    if (($(playerctl position | cut -d . -f 1) < 10)); then
+      playerctl previous;
+    else
+      playerctl position 1;
+    fi
+  '')
+
   (pkgs.writeScriptBin "playerctl_polybar" ''
     #!/usr/bin/env bash
+    set -euo pipefail
 
-    touch $HOME/.config/.radio_title
-
-    playerctlstatus=$(playerctl -p strawberry status 2> /dev/null)
-    title=$(playerctl -p strawberry metadata xesam:title 2> /dev/null)
-    artist=$(playerctl -p strawberry metadata xesam:artist 2> /dev/null)
-    radio_title=`cat $HOME/.config/.radio_title`
+    playerctlstatus=$(playerctl status 2> /dev/null)
+    title=$(playerctl metadata xesam:title 2> /dev/null)
+    artist=$(playerctl metadata xesam:artist 2> /dev/null)
     note=
     previous=
     next=
@@ -61,19 +62,13 @@ host-specific:
     pause=
     stop=
 
-    button_previous="%{A1:strawberry --restart-or-previous:}  $previous  %{A}"
-    button_next="%{A1:playerctl -p strawberry next:}  $next  %{A}"
-    button_play="%{A1:playerctl -p strawberry play:}  $play  %{A}"
-    button_pause="%{A1:playerctl -p strawberry pause:}  $pause  %{A}"
-    button_stop="%{A1:playerctl -p strawberry stop:}  $stop  %{A}"
+    button_previous="%{A1:player-ctl-restart-or-previous:}  $previous  %{A}"
+    button_next="%{A1:playerctl next:}  $next  %{A}"
+    button_play="%{A1:playerctl play:}  $play  %{A}"
+    button_pause="%{A1:playerctl pause:}  $pause  %{A}"
+    button_stop="%{A1:playerctl -a stop:}  $stop  %{A}"
 
-    if [[ $title = http* ]]; then
-        if [ -z "$radio_title" ]; then
-            title_display="Radio youtube"
-        else
-            title_display=$radio_title
-        fi
-    elif [[ $artist = "" ]]; then
+    if [[ $artist = "" ]]; then
         title_display=$title
     else
         title_display="$artist - $title"
@@ -92,30 +87,23 @@ host-specific:
 
   (pkgs.writeScriptBin "launch_radios" ''
     #!/usr/bin/env bash
-
-    play_youtube() {
-      url_stream=$(yt-dlp -g $url_youtube)
-      strawberry --play-playlist Youtube  # Loads the playlist so that the current one doesn't get erased by the following 'load' command
-      strawberry --load $url_stream
-      sleep 1
-      strawberry --play-playlist Youtube
-    }
+    set -euxo pipefail
 
     play_radio() {
       strawberry --play-playlist Radios
       strawberry --play-track $track
     }
 
-    # track=0 && play_radio
-    MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
+    MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Classic FM|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
       -theme $HOME/.config/rofi/theme/styles.rasi)"
         case "$MENU" in
           FIP) track=0 && play_radio ;;
           "Jazz Radio") track=1 && play_radio ;;
           "Radio Nova") track=2 && play_radio ;;
           "Oui Fm") track=3 && play_radio ;;
-          "Chillhop Radio") url_youtube=https://www.youtube.com/watch?v=5yx6BWlEVcY && play_youtube && echo "Chillhop Radio" > $HOME/.config/.radio_title ;;
-          "Classical Piano Music") url_youtube=https://www.youtube.com/watch?v=tSlOlKRuudU && play_youtube && echo "Classical Piano Music" > $HOME/.config/.radio_title;;
+          "Classic FM") track=4 && play_radio ;;
+          "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
+          "Classical Piano Music") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=tSlOlKRuudU" ;;
         esac
   '')
 
