@@ -160,18 +160,17 @@
           "Return" = "mode default";
         };
         ${music_mode} = {
-          "${modifier}+Left" = " exec strawberry --restart-or-previous";
-          "${modifier}+Right" = "exec playerctl -p strawberry next";
-          "Left" = "exec playerctl -p strawberry position 10-";
-          "Right" = "exec playerctl -p strawberry position 10+";
-          "Up" = "exec playerctl -p strawberry volume 0.1+";
-          "Down" = "exec playerctl -p strawberry volume 0.1-";
-
-          "space" = "exec playerctl -p strawberry play-pause, mode default";
-          "s" = "exec playerctl -p strawberry stop, mode default";
+          "${modifier}+Left" = " exec if (($(playerctl position | cut -d . -f 1) < 10)); then playerctl previous; else playerctl position 1; fi";
+          "${modifier}+Right" = "exec playerctl next";
+          "Left" = "exec playerctl position $(expr $(playerctl position | cut -d . -f 1) - 10)";
+          "Right" = "exec playerctl position $(expr $(playerctl position | cut -d . -f 1) + 10)";
+          "Up" = "exec playerctl volume 0.1+";
+          "Down" = "exec playerctl volume 0.1-";
+          "space" = "exec playerctl play-pause, mode default";
+          "s" = "exec playerctl stop, mode default";
+          "${modifier}+s" = "exec playerctl -a stop, mode default";
           "l" = "workspace $ws10, exec strawberry, mode default";
           "r" = "exec launch_radios, mode default";
-
           "${modifier}+m" = "mode default";
           "Escape" = "mode default";
         };
