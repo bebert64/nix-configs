@@ -16,6 +16,7 @@
   # environment.
   home.packages =
     with pkgs;
+    with gnome;
     let
       polybar = pkgs.polybar.override {
         i3Support = true;
@@ -45,6 +46,7 @@
       less
       microcodeIntel # for increased microprocessor performance
       mcomix
+      nixfmt-rfc-style
       nodejs
       nodePackages.npm
       nodePackages.pnpm
@@ -154,7 +156,7 @@
 
   home.pointerCursor = {
     x11.enable = true;
-    package = pkgs.adwaita-icon-theme;
+    package = pkgs.gnome.adwaita-icon-theme;
     name = "Adwaita";
     size = 32;
   };
@@ -162,7 +164,7 @@
   # launch i3
   xsession = {
     enable = true;
-    windowManager.i3 = import ../programs/i3fds.nix inputs;
+    windowManager.i3 = import ../programs/i3.nix inputs;
     numlock.enable = true;
   };
   gtk = {
@@ -249,7 +251,6 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-  nixpkgs.config.allowUnfree = true; # Necessary for vscode and anydesk
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

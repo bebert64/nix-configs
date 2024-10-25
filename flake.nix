@@ -2,9 +2,11 @@
   description = "NixOS and HomeManager configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/release-24.05";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -21,7 +23,7 @@
         stockly-romainc = ./nix/nixos/stockly-romainc/configuration.nix;
       };
       homeConfigurations = {
-        ${host-specific.raspi.config-name} = home-manager.lib.homeManagerConfiguration rec {
+        raspi = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
             system = "aarch64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
           };
@@ -29,9 +31,12 @@
           modules = [ (import ./nix/home-manager/home_raspi.nix { inherit pkgs; }) ];
         };
 
-        ${host-specific.fixe-bureau.config-name} = home-manager.lib.homeManagerConfiguration rec {
+        fixe-bureau = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
             system = "x86_64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
+            config = {
+              allowUnfree = true;
+            };
           };
 
           modules = [
