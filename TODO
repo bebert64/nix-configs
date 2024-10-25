@@ -49,10 +49,6 @@ Programs to migrate
         Check if the default color theme is good, and if so + ranger uses a color scheme => remove tilix.dconf
 
 Host-specific
-    zsh_additional_aliases
-        mount-NAS
-        yt-dlp -f 720p_HD
-        ps aux excluding grep `ps aux | grep mysqld | grep -v grep`
     Evaluate is "screens" can be factored with autorandr
     Check if all keys are used
     Add launch_polybar to scripts.nix
@@ -69,7 +65,6 @@ Various 1
     Check if I really need all this fonts...
     zsh.nix: check if the if [[ "$(tty)" == '/dev/tty1' ]]; block is necessary
     Think about where to use symlink / use store / write new files for dotfiles and comment in config about why
-    Check if Congig.allowUntrue is necessary in two different places
     Create nix flake for rust crate and add them to home-manager
     Move dotfiles/raspi/renew-cert.sh to scripts.nix
     yank from ranger to clipboard
@@ -96,9 +91,7 @@ Autorandr
 
 Various 2
     Fix DataGrip (projects are not copied to proper dir during deployment)
-    Test which fonts can be downloaded from nix (to reduce repo size)
     Finish ranger config with displaying previews for various files
-    Fix ranger: use vim by default
     Finish conky configs
     Investigate sops-nix to store ssh key and track them in git
         https://github.com/Mic92/sops-nix?tab=readme-ov-file
@@ -107,7 +100,6 @@ Various 2
 General fixes 2
     locale for raspberry
     fix yay changing keyboard config (add setxkbmap at the end ?)
-    Solve datagrip password problem on fixe-bureau (plugin null)
     backup freebox config
     automate regular save of postgres + stash_db content to NAS
         dump postgres DB

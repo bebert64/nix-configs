@@ -36,7 +36,7 @@
       evince # pdf reader
       feh
       firefox-bin-unwrapped
-            gnome-calculator
+      gnome-calculator
       gnome-keyring
       hicolor-icon-theme
       inkscape

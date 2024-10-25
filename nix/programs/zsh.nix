@@ -4,6 +4,7 @@
   shellAliases = {
     "c" = "code .";
     "wke1" = "i3-msg workspace \"\\\" \\\"\"";
+    "de" = "yt-dlp -f 720p_HD";
   } // additional-aliases;
   history = {
     size = 200000;
