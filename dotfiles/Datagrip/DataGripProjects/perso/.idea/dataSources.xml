@@ -29,7 +29,7 @@
       <jdbc-url>jdbc:sqlite:$USER_HOME$/.mozilla/firefox/shortcuts/places.sqlite</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="stash-go.sqlite" uuid="528fa8d3-7091-4c41-8b16-d911a4f8bdc2">
+    <data-source source="LOCAL" name="stash_full_usable.sqlite" uuid="528fa8d3-7091-4c41-8b16-d911a4f8bdc2">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>

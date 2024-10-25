@@ -51,6 +51,8 @@ Programs to migrate
 Host-specific
     zsh_additional_aliases
         mount-NAS
+        yt-dlp -f 720p_HD
+        ps aux excluding grep `ps aux | grep mysqld | grep -v grep`
     Evaluate is "screens" can be factored with autorandr
     Check if all keys are used
     Add launch_polybar to scripts.nix
@@ -65,8 +67,6 @@ Various 1
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...
-    Remove sshr from scripts if no solution to exec ranger
-    zsh.nix alias for everyone : ps aux excluding grep `ps aux | grep mysqld | grep -v grep`
     zsh.nix: check if the if [[ "$(tty)" == '/dev/tty1' ]]; block is necessary
     Think about where to use symlink / use store / write new files for dotfiles and comment in config about why
     Check if Congig.allowUntrue is necessary in two different places
@@ -102,6 +102,7 @@ Various 2
     Finish conky configs
     Investigate sops-nix to store ssh key and track them in git
         https://github.com/Mic92/sops-nix?tab=readme-ov-file
+        Move all by_db configs in git as well
 
 General fixes 2
     locale for raspberry

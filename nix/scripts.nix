@@ -13,7 +13,14 @@ host-specific:
     #!/usr/bin/env bash
     set -euxo pipefail
 
-    tilix -p Ranger -e "ssh ''${1##*.}"
+    REMOTE=$1
+
+    case $REMOTE in
+      "cerberus") CMD="nix-shell -p ranger --run ranger";;
+      *) CMD="ranger";;
+    esac
+
+    tilix -p Ranger -e "ssh ''$1 -t ${CMD}"
   '')
 
   (pkgs.writeScriptBin "sync-wallpapers" ''
@@ -103,15 +110,15 @@ host-specific:
 
     MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Classic FM|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
       -theme $HOME/.config/rofi/theme/styles.rasi)"
-        case "$MENU" in
-          FIP) track=0 && play_radio ;;
-          "Jazz Radio") track=1 && play_radio ;;
-          "Radio Nova") track=2 && play_radio ;;
-          "Oui Fm") track=3 && play_radio ;;
-          "Classic FM") track=4 && play_radio ;;
-          "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
-          "Classical Piano Music") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=tSlOlKRuudU" ;;
-        esac
+    case "$MENU" in
+      FIP) track=0 && play_radio ;;
+      "Jazz Radio") track=1 && play_radio ;;
+      "Radio Nova") track=2 && play_radio ;;
+      "Oui Fm") track=3 && play_radio ;;
+      "Classic FM") track=4 && play_radio ;;
+      "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
+      "Classical Piano Music") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=tSlOlKRuudU" ;;
+    esac
   '')
 
   (pkgs.writeScriptBin "lock-conky" ''
