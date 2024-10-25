@@ -62,6 +62,8 @@ Host-specific
     Remove keys which values is false and replace by `or` syntax where appropriate
 
 Various 1
+    Use Stockly's configs where appropriate
+        https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...
     Remove sshr from scripts if no solution to exec ranger
     zsh.nix alias for everyone : ps aux excluding grep `ps aux | grep mysqld | grep -v grep`
