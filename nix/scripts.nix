@@ -67,7 +67,7 @@ host-specific:
     #!/usr/bin/env bash
     set -euxo pipefail
 
-    mount-NAS
+    mnas
     rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
     rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
   '')

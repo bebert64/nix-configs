@@ -42,7 +42,17 @@ autorandr --save profile-name
 After that, copy the fingerprint from setup and the config inside host-specific + update the launch script
 <br />
 
-# Annexes
+# Pacman / Yay
+
+## List all packages installed by user
+
+pacman/yay -Qqe
+
+## Remove a package and all its unused dependencies
+
+pacman/yay -Rns
+
+# Various
 
 ## To sync Tilix settings
 
@@ -63,7 +73,7 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 
 ## Fonts
 
-# Add new fonts
+### Add new fonts
 
 - copy them in fonts folder inside configs
 - rebuild
@@ -73,7 +83,7 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 fc-cache -f -v
 ```
 
-# Use special characters
+### Use special characters
 
 The font used in this setup is "Iosevka Nerd Font". To make VsCode display those characters correctly, add the font's
 name to settings `Editor: Font Family`

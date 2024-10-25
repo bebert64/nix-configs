@@ -27,8 +27,7 @@
     [
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
-      avidemux # temporarily broken
-      btop
+      avidemux
       caffeine-ng # to prevent going to sleep when watching videos
       chromium
       conky
@@ -125,6 +124,7 @@
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specific.autorandr;
+    btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -222,9 +222,6 @@
 
       # Symlink fonts
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
-
-      # Symlink btop config folder
-      ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
 
       # Symlink picom config file
       ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config
