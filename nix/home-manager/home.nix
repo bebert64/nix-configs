@@ -27,7 +27,7 @@
     [
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
-      # avidemux  # temporarily broken
+      avidemux # temporarily broken
       btop
       caffeine-ng # to prevent going to sleep when watching videos
       chromium
@@ -36,7 +36,7 @@
       evince # pdf reader
       feh
       firefox-bin-unwrapped
-      gnome-calculator
+            gnome-calculator
       gnome-keyring
       hicolor-icon-theme
       inkscape
@@ -46,6 +46,7 @@
       less
       microcodeIntel # for increased microprocessor performance
       mcomix
+      nixd
       nixfmt-rfc-style
       nodejs
       nodePackages.npm
@@ -53,6 +54,7 @@
       openssh
       openssl
       pavucontrol # pulse audio volume controle
+      playerctl # to send data and retrieve metadata for polybarw
       polybar
       pulseaudio
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
@@ -63,6 +65,7 @@
       slack
       sqlite
       sshfs
+      strawberry
       thunderbird-bin-unwrapped
       tilix # terminal
       udiskie
@@ -79,10 +82,6 @@
       imagemagick
       scrot
 
-      # Needed to mount Ipad
-      ifuse
-      libimobiledevice
-
       # Theme for QT applications (vlc, strawberry...)
       qt5ct
       libsForQt5.qtstyleplugins
@@ -93,10 +92,6 @@
       fontforge # thumbnail for fonts preview
       poppler_utils # thumbnail for pdf preview
 
-      # Strawberry
-      strawberry
-      playerctl # to send data and retrieve metadata for polybarw
-
       # fonts
       dejavu_fonts
       fira-code
@@ -105,7 +100,12 @@
       font-awesome_5
       helvetica-neue-lt-std
       liberation_ttf_v1
-       (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" ]; })
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "Iosevka"
+        ];
+      })
       noto-fonts
       noto-fonts-emoji
       powerline-fonts
