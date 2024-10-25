@@ -212,5 +212,6 @@ in
 
   # General settings
   programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true; # Necessary for vscode
   home.stateVersion = "22.05";
 }
