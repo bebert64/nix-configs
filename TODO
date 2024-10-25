@@ -1,7 +1,4 @@
-Make new version work for fixe-bureau and raspi...
-
 Refacto
-    Merge scripts.nix
     Merge home.nix
         Create home/mini.nix (for raspi)
         Include that in full.nix (for others)
@@ -65,6 +62,8 @@ Host-specific
     Remove keys which values is false and replace by `or` syntax where appropriate
 
 Various 1
+    Check if I really need all this fonts...
+    Remove sshr from scripts if no solution to exec ranger
     zsh.nix alias for everyone : ps aux excluding grep `ps aux | grep mysqld | grep -v grep`
     zsh.nix: check if the if [[ "$(tty)" == '/dev/tty1' ]]; block is necessary
     Think about where to use symlink / use store / write new files for dotfiles and comment in config about why

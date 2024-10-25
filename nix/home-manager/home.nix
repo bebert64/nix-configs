@@ -98,14 +98,20 @@
       playerctl # to send data and retrieve metadata for polybarw
 
       # fonts
+      dejavu_fonts
+      fira-code
+      font-awesome
+      font-awesome_4
+      font-awesome_5
+      helvetica-neue-lt-std
+      liberation_ttf_v1
+       (nerdfonts.override { fonts = [ "FiraCode" "Iosevka" ]; })
       noto-fonts
       noto-fonts-emoji
-      dejavu_fonts
-      liberation_ttf_v1
-      helvetica-neue-lt-std
+      powerline-fonts
 
     ]
-    ++ import ./scripts.nix host-specific pkgs
+    ++ import ../scripts.nix host-specific pkgs
     ++ (
       if host-specific.wifi then
         [

@@ -9,9 +9,9 @@
   };
   polybar_config = ./polybar_config.ini;
   zsh-aliases = {
-    "update" = "cd ~/nix-configs/home-manager && git pull && home-manager switch --flake .#fixe-bureau";
-    "update-dirty" = "cd ~/nix-configs/home-manager && git add . && home-manager switch --flake .#fixe-bureau";
-    "upgrade" = "yay -Syu && cd ~/nix-configs/home-manager && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#fixe-bureau && git push";
+    "update" = "cd ~/nix-configs && git pull && home-manager switch --flake .#fixe-bureau";
+    "update-dirty" = "cd ~/nix-configs && git add . && home-manager switch --flake .#fixe-bureau";
+    "upgrade" = "yay -Syu && cd ~/nix-configs && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#fixe-bureau && git push";
   };
   autorandr = {
     enable = true;

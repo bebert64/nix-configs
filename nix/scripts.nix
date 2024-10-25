@@ -9,6 +9,13 @@ host-specific:
     nix-shell -p "$1" --command "''${1##*.} ''${*:2}"
   '')
 
+  (pkgs.writeScriptBin "sshr" ''
+    #!/usr/bin/env bash
+    set -euxo pipefail
+
+    tilix -p Ranger -e "ssh ''${1##*.}"
+  '')
+
   (pkgs.writeScriptBin "sync-wallpapers" ''
     #!/usr/bin/env bash
     set -euxo pipefail

@@ -104,7 +104,7 @@ in
       picom-next
 
     ]
-    ++ import ./scripts.nix host-specific pkgs
+    ++ import ../scripts.nix host-specific pkgs
     ++ (
       if host-specific.wifi then
         [
