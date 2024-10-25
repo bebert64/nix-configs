@@ -9,7 +9,7 @@ host-specific:
     IP=192.168.1.3
     NAME=NasLaFouillouse
 
-    mkdir -p /mnt/NAS
+    sudo mkdir -p /mnt/NAS
 
     if [[ $(ls /mnt/NAS) ]]; then
       echo "NAS seems to already be mounted"
@@ -46,17 +46,17 @@ host-specific:
     #!/usr/bin/env bash
     set -euxo pipefail
 
-    nix-shell -p "$1" --command "''${1##*.} ''${*:2}"
+    nix run "nixpkgs#$1" -- "''${@:2}"
   '')
 
   (pkgs.writeScriptBin "sshr" ''
     #!/usr/bin/env bash
-    set -euxo pipefail
+    set -euo pipefail
 
     REMOTE=$1
 
     case $REMOTE in
-      "cerberus") CMD="nix-shell -p ranger --run ranger";;
+      "cerberus") CMD="nix run \"nixpkgs#ranger\"";;
       *) CMD="ranger";;
     esac
 
