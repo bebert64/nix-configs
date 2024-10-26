@@ -1,6 +1,4 @@
-host-specific:
-{ pkgs, ... }:
-
+{ host-specific, pkgs, ... }:
 [
   (pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
@@ -102,7 +100,7 @@ host-specific:
     fi
   '')
 
-  (pkgs.writeScriptBin "playerctl_polybar" ''
+  (pkgs.writeScriptBin "playerctl-polybar" ''
     #!/usr/bin/env bash
     set -euo pipefail
 
