@@ -1,7 +1,4 @@
 colors:
-let
-  playerctl-scripts = import ../../playerctl-scripts.nix;
-in
 {
   "module/i3" = {
     type = "internal/i3";
@@ -66,7 +63,7 @@ in
 
   "module/strawberry" = {
     type = "custom/script";
-    exec = "playerctl-polybar";
+    exec = "$HOME/.nix-profile/bin/playerctl-polybar";
     interval = 0.5;
 
   };

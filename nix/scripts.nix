@@ -101,10 +101,18 @@
   '')
 
   (pkgs.writeScriptBin "playerctl-polybar" ''
-    #!/usr/bin/env bash
-    set -euo pipefail
+    debug=$($HOME/.nix-profile/bin/debug)
+    if [[ $? -eq 0 ]]; then
+    echo "$debug"
+else
+    echo "Error: $debug" > /home/romain/debug_polybar.txt
+fi
+  '')
+  (pkgs.writeScriptBin "debug" ''
+    #!/usr/bin/bash
+    #set -euo pipefail
 
-    playerctlstatus=$(playerctl status 2> /dev/null)
+    status=$(playerctl status 2> /dev/null)
     title=$(playerctl metadata xesam:title 2> /dev/null)
     artist=$(playerctl metadata xesam:artist 2> /dev/null)
     note=
@@ -126,7 +134,7 @@
         title_display="$artist - $title"
     fi
 
-    if [[ $playerctlstatus == "Playing" ]]; then
+    if [[ $status == "Playing" ]]; then
         button_status=$button_pause
     else
         button_status=$button_play
