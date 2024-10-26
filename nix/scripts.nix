@@ -1,4 +1,4 @@
-{ host-specific, pkgs, ... }:
+{ host-specific, pkgs, lib, ... }:
 [
   (pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
@@ -101,16 +101,10 @@
   '')
 
   (pkgs.writeScriptBin "playerctl-polybar" ''
-    debug=$($HOME/.nix-profile/bin/debug)
-    if [[ $? -eq 0 ]]; then
-    echo "$debug"
-else
-    echo "Error: $debug" > /home/romain/debug_polybar.txt
-fi
-  '')
-  (pkgs.writeScriptBin "debug" ''
     #!/usr/bin/bash
-    #set -euo pipefail
+    set -euo pipefail
+
+    PATH=${lib.makeBinPath [ pkgs.playerctl ]}
 
     status=$(playerctl status 2> /dev/null)
     title=$(playerctl metadata xesam:title 2> /dev/null)

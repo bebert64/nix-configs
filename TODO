@@ -1,127 +1,131 @@
 Refacto
-    Merge home.nix
-        Create home/mini.nix (for raspi)
-        Include that in full.nix (for others)
-    Chose what to do with software-configuration.nix
-    Final repo struct
-        |-dotfiles
-        |-fonts
-        |-install_scripts
-        |-nix
-            |-programs
-            |-scripts.nix
-            |-home-manager
-            |   |-mini.nix
-            |   |-full.nix
-            |-nixos-common.nix (renamed common.nix)
-            |-fixe-bureau.nix (includes content from host-specific.nix)
-            |-raspi.nix (includes content from host-specific.nix)
-            |-nixos-configuration.nix (renamed configuration.nix + made generic by injecting user name from host-specific)
+Merge home.nix
+Create home/mini.nix (for raspi)
+Include that in full.nix (for others)
+Chose what to do with software-configuration.nix
+Final repo struct
+|-dotfiles
+|-fonts
+|-install_scripts
+|-nix
+|-programs
+|-scripts.nix
+|-home-manager
+| |-mini.nix
+| |-full.nix
+|-nixos-common.nix (renamed common.nix)
+|-fixe-bureau.nix (includes content from host-specific.nix)
+|-raspi.nix (includes content from host-specific.nix)
+|-nixos-configuration.nix (renamed configuration.nix + made generic by injecting user name from host-specific)
 
 Programs to migrate
-    polybar
-        Use .nix config
-        Fix font size in polybar
-        Add all possible bars
-        Add polybar section to host-specific
-        Fix tray error + warning
-    ranger
-        mappings and rifle (for 7z instead of zip, or for vim instead of nano)
-        Use 7zip instead of zip and modify ranger command
-        https://nix-community.github.io/home-manager/options.xhtml
-        https://github.com/ranger/ranger/blob/master/ranger/config/rifle.conf
-        https://unix.stackexchange.com/questions/367452/how-to-change-the-default-text-editor-in-ranger
-        keep bookmarks
-    rofi
-        https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
-    ssh to ssh.nix
-        Check if can include comments
-        Check how to factorize the localFoward part
-        https://unix.stackexchange.com/questions/61655/multiple-similar-entries-in-ssh-config
-    picom
-        https://nix-community.github.io/home-manager/options.xhtml#opt-services.picom.enable
-    qbittorrent
-        Check config file on raspberry
-        https://github.com/hercules-ci/nixflk/blob/template/modules/services/torrent/qbittorrent.nix
-    tilix
-        Check if the default color theme is good, and if so + ranger uses a color scheme => remove tilix.dconf
+polybar
+Fix font size in polybar
+Add all possible bars
+Add polybar section to host-specific
+Fix tray error + warning
+Add a ramp is possible for wireless signal force
+Add up / down speed for internet connection
+Investigate if possible to use weight in pulseaudio/volume ramp to use the middle one for longer
+Investigate if possible using the screens from
+for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
+ranger
+mappings and rifle (for 7z instead of zip, or for vim instead of nano)
+Use 7zip instead of zip and modify ranger command
+https://nix-community.github.io/home-manager/options.xhtml
+https://github.com/ranger/ranger/blob/master/ranger/config/rifle.conf
+https://unix.stackexchange.com/questions/367452/how-to-change-the-default-text-editor-in-ranger
+keep bookmarks
+rofi
+https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
+ssh to ssh.nix
+Check if can include comments
+Check how to factorize the localFoward part
+https://unix.stackexchange.com/questions/61655/multiple-similar-entries-in-ssh-config
+picom
+https://nix-community.github.io/home-manager/options.xhtml#opt-services.picom.enable
+qbittorrent
+Check config file on raspberry
+https://github.com/hercules-ci/nixflk/blob/template/modules/services/torrent/qbittorrent.nix
+tilix
+Check if the default color theme is good, and if so + ranger uses a color scheme => remove tilix.dconf
 
 Host-specific
-    Evaluate is "screens" can be factored with autorandr
-    Check if all keys are used
-    Add launch_polybar to scripts.nix
-        loop over the name of the bars to launch, read from other file
-        modify the lock script to use this one instead
-    Simplify autorandr.hooks.postswitch
-        write list of bars to external file
-        exec script launch_polybar
-    Remove keys which values is false and replace by `or` syntax where appropriate
+Evaluate is "screens" can be factored with autorandr
+Check if all keys are used
+Add launch_polybar to scripts.nix
+loop over the name of the bars to launch, read from other file
+modify the lock script to use this one instead
+Simplify autorandr.hooks.postswitch
+write list of bars to external file
+exec script launch_polybar
+Remove keys which values is false and replace by `or` syntax where appropriate
 
 Various 1
-    Fix nixfmt vs nixfmt-pckgs
-    Use Stockly's configs where appropriate
-        https://github.com/Stockly/Computers/tree/master/programs
-    Check if I really need all this fonts...
-    zsh.nix: check if the if [[ "$(tty)" == '/dev/tty1' ]]; block is necessary
-    Think about where to use symlink / use store / write new files for dotfiles and comment in config about why
-    Create nix flake for rust crate and add them to home-manager
-    Move dotfiles/raspi/renew-cert.sh to scripts.nix
-    yank from ranger to clipboard
-        Probably needs xclip
-        https://www.reddit.com/r/linux4noobs/comments/abktr5/yank_command_in_ranger_doesnt_copy_anything_to
-    add plugins to ranger (icons, theme, ...)
-    Better script for yt-dlp
-        extract name of res including 720p
-        if only one => dl with it
-        if > 1 => ask which to use
-        if 0 => list all and ask which to use
+Fix nixfmt vs nixfmt-pckgs
+Use Stockly's configs where appropriate
+https://github.com/Stockly/Computers/tree/master/programs
+Check if I really need all this fonts...
+zsh.nix: check if the if [["$(tty)" == '/dev/tty1']]; block is necessary
+Think about where to use symlink / use store / write new files for dotfiles and comment in config about why
+Create nix flake for rust crate and add them to home-manager
+Move dotfiles/raspi/renew-cert.sh to scripts.nix
+yank from ranger to clipboard
+Probably needs xclip
+https://www.reddit.com/r/linux4noobs/comments/abktr5/yank_command_in_ranger_doesnt_copy_anything_to
+add plugins to ranger (icons, theme, ...)
+Better script for yt-dlp
+extract name of res including 720p
+if only one => dl with it
+if > 1 => ask which to use
+if 0 => list all and ask which to use
 
 General fixes 1
-    Shortcut to open 1password
-    Firefox shortcuts
-        nix search
-        crates.io search
-        rust doc search
+Shortcut to open 1password
+Firefox shortcuts
+nix search
+crates.io search
+rust doc search
 
 Autorandr
-    Automatize new arandr configs
-        Ask user config name
-        Save new config
-        Parse files
-        Ask user list of polybar bars to launch
-        Edit correct host-specific file (maybe pass the name of the config as an argument of the script)
-        Remove config grom .config/autorandr
-        Ask user if wants to save/commit and switch to new nix profile
+Automatize new arandr configs
+Ask user config name
+Save new config
+Parse files
+Ask user list of polybar bars to launch
+Edit correct host-specific file (maybe pass the name of the config as an argument of the script)
+Remove config grom .config/autorandr
+Ask user if wants to save/commit and switch to new nix profile
 
 Various 2
-    Fix DataGrip (projects are not copied to proper dir during deployment)
-    Finish ranger config with displaying previews for various files
-    Finish conky configs
-    Investigate sops-nix to store ssh key and track them in git
-        https://github.com/Mic92/sops-nix?tab=readme-ov-file
-        Move all by_db configs in git as well
+Fix DataGrip (projects are not copied to proper dir during deployment)
+Finish ranger config with displaying previews for various files
+Finish conky configs
+Investigate sops-nix to store ssh key and track them in git
+https://github.com/Mic92/sops-nix?tab=readme-ov-file
+Move all by_db configs in git as well
 
 General fixes 2
-    locale for raspberry
-    fix yay changing keyboard config (add setxkbmap at the end ?)
-    backup freebox config
-    automate regular save of postgres + stash_db content to NAS
-        dump postgres DB
-        save stash
-    Write script in install_scripts/raspi to download/compile all html stuff (when setting up new raspi)
+locale for raspberry
+fix yay changing keyboard config (add setxkbmap at the end ?)
+backup freebox config
+automate regular save of postgres + stash_db content to NAS
+dump postgres DB
+save stash
+Write script in install_scripts/raspi to download/compile all html stuff (when setting up new raspi)
 
 Move raspi to full nixos ?
-    https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi.html
-    rc.local can be replaced
-        https://www.reddit.com/r/NixOS/comments/cg102t/how_to_run_a_shell_command_upon_startup/
-    move Apache to nginx
-    move postgresql to nix
-        https://nixos.wiki/wiki/PostgreSQL
-        https://discourse.nixos.org/t/how-to-use-postgres-with-nixos/5968
-        https://stackoverflow.com/questions/74742410/how-to-use-postgresql-in-nixos
-    setup cron for backup to NAS
-        https://nixos.wiki/wiki/Systemd/Timers
+https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi.html
+rc.local can be replaced
+https://www.reddit.com/r/NixOS/comments/cg102t/how_to_run_a_shell_command_upon_startup/
+move Apache to nginx
+move postgresql to nix
+https://nixos.wiki/wiki/PostgreSQL
+https://discourse.nixos.org/t/how-to-use-postgres-with-nixos/5968
+https://stackoverflow.com/questions/74742410/how-to-use-postgresql-in-nixos
+setup cron for backup to NAS
+https://nixos.wiki/wiki/Systemd/Timers
 
 Explore Hyprland (to replace i3)
-    https://www.youtube.com/watch?v=IKDqtGVrIsY
-    https://www.youtube.com/watch?v=2CP_9-jCV6A
+https://www.youtube.com/watch?v=IKDqtGVrIsY
+https://www.youtube.com/watch?v=2CP_9-jCV6A

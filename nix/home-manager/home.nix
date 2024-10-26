@@ -2,6 +2,7 @@
   pkgs,
   hm-lib,
   host-specific,
+  lib,
   ...
 }@inputs:
 
@@ -104,7 +105,7 @@
       powerline-fonts
 
     ]
-    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ import ../scripts.nix { inherit host-specific pkgs lib; }
     ++ (
       if host-specific.wifi then
         [
@@ -118,6 +119,7 @@
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specific.autorandr;
+    bash = { enable = true;};
     btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
@@ -134,11 +136,12 @@
       '';
     };
     zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
-  };
-
-  services = {
     polybar = import ../programs/polybar/default.nix { inherit pkgs; };
   };
+
+  # services = {
+  #   polybar = import ../programs/polybar/default.nix { inherit pkgs; };
+  # };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
