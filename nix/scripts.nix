@@ -82,37 +82,6 @@
     fi;
   '')
 
-  (pkgs.writeScriptBin "player-ctl-move" ''
-    #!/usr/bin/env bash
-    set -euxo pipefail
-
-    CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
-
-    case $CURRENT_PLAYER in
-      "strawberry") playerctl position $2$1;;
-      *) playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2);;
-    esac
-
-  '')
-
-  (pkgs.writeScriptBin "player-ctl-restart-or-previous" ''
-    #!/usr/bin/env bash
-    set -euxo pipefail
-
-    CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
-
-    case $CURRENT_PLAYER in
-      "strawberry")
-        strawberry --restart-or-previous;;
-      *)
-        if (($(playerctl position | cut -d . -f 1) < 10)); then
-          playerctl previous;
-        else
-          playerctl position 1;
-        fi;;
-    esac
-  '')
-
   (pkgs.writeScriptBin "launch_radios" ''
     #!/usr/bin/env bash
     set -euxo pipefail

@@ -1,4 +1,4 @@
-colors:
+ {colors, playerctl-script}:
 {
   "module/i3" = {
     type = "internal/i3";
@@ -63,7 +63,7 @@ colors:
 
   "module/strawberry" = {
     type = "custom/script";
-    exec = "$HOME/.config/polybar/playerctl-polybar.sh";
+    exec = "${playerctl-script}/bin/playerctl-polybar";
     interval = 0.5;
 
   };

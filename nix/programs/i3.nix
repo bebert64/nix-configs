@@ -161,10 +161,10 @@
           "Return" = "mode default";
         };
         ${music_mode} = {
-          "${modifier}+Left" = " exec player-ctl-restart-or-previous";
+          "${modifier}+Left" = " exec playerctl-restart-or-previous";
           "${modifier}+Right" = "exec playerctl next";
-          "Left" = "exec player-ctl-move - 10";
-          "Right" = "exec player-ctl-move + 10";
+          "Left" = "exec playerctl-move - 10";
+          "Right" = "exec playerctl-move + 10";
           "Up" = "exec playerctl volume 0.1+";
           "Down" = "exec playerctl volume 0.1-";
           "space" = "exec playerctl play-pause, mode default";

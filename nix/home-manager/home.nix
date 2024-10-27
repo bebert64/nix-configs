@@ -1,10 +1,14 @@
 {
   pkgs,
+  lib,
   hm-lib,
   host-specific,
-  lib,
   ...
 }@inputs:
+
+let 
+      scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+      in
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -105,7 +109,8 @@
       powerline-fonts
 
     ]
-    ++ import ../scripts.nix { inherit host-specific pkgs lib; }
+    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi then
         [
@@ -139,7 +144,7 @@
   };
 
   services = {
-    polybar = import ../programs/polybar/default.nix { inherit pkgs; };
+    polybar = import ../programs/polybar/default.nix { inherit pkgs; playerctl-script = scripts-playerctl.polybar; };
     playerctld = { enable = true; };
   };
 
@@ -156,10 +161,6 @@
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../dotfiles/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
     ".xinitrc".source = ../../dotfiles/.xinitrc;
-    ".config/polybar/playerctl-polybar.sh" = {
-      source = pkgs.callPackage ./test-poly.nix {} ;
-      executable = true;
-    };
   };
 
   home.pointerCursor = {
