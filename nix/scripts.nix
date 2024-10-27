@@ -86,7 +86,13 @@
     #!/usr/bin/env bash
     set -euxo pipefail
 
-    playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2)
+    CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
+
+    case $CURRENT_PLAYER in
+      "strawberry") playerctl position $2$1;;
+      *) playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2);;
+    esac
+
   '')
 
   (pkgs.writeScriptBin "player-ctl-restart-or-previous" ''
@@ -94,8 +100,6 @@
     set -euxo pipefail
 
     CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
-
-    echo $CURRENT_PLAYER > /home/romain/plctl_log
 
     case $CURRENT_PLAYER in
       "strawberry")
