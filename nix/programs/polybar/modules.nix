@@ -11,7 +11,7 @@
 
     label = {
       mode = {
-        background = " ${colors.shade6}";
+        background = "${colors.shade6}";
         padding = 2;
       };
 
