@@ -38,10 +38,6 @@ Programs to migrate
         keep bookmarks
     rofi
         https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
-    ssh to ssh.nix
-        Check if can include comments
-        Check how to factorize the localFoward part
-        https://unix.stackexchange.com/questions/61655/multiple-similar-entries-in-ssh-config
     picom
         https://nix-community.github.io/home-manager/options.xhtml#opt-services.picom.enable
     qbittorrent
@@ -63,6 +59,7 @@ Host-specific
 
 Various 1
     Fix nixfmt vs nixfmt-pckgs
+    Add fixe-bureau-ipv6 and fixe-bureau to ssh config
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...
