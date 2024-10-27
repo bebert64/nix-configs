@@ -6,6 +6,10 @@
   ...
 }@inputs:
 
+let
+  scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+in
+
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -18,10 +22,6 @@
     with pkgs;
     with gnome;
     let
-      polybar = pkgs.polybar.override {
-        i3Support = true;
-        pulseSupport = true;
-      };
       jetbrains = (import ../programs/jetbrains.nix inputs);
     in
     [
@@ -54,7 +54,6 @@
       openssl
       pavucontrol # pulse audio volume controle
       playerctl # to send data and retrieve metadata for polybarw
-      polybar
       pulseaudio
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
       qt6.qttools # needed to extract artUrl from strawberry and display it with conky
@@ -110,7 +109,8 @@
       powerline-fonts
 
     ]
-    ++ import ../scripts.nix host-specific pkgs
+    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi then
         [
@@ -142,14 +142,21 @@
     zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
   };
 
+  services = {
+    polybar = import ../programs/polybar/default.nix {
+      inherit pkgs;
+      script-playerctl = scripts-playerctl.polybar;
+    };
+    playerctld = {
+      enable = true;
+    };
+  };
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
     ".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
     ".cargo/config.toml".source = ../../dotfiles/cargo_config.toml;
-    ".config/polybar/colors.ini".source = ../../dotfiles/polybar/colors.ini;
-    ".config/polybar/modules.ini".source = ../../dotfiles/polybar/modules.ini;
-    ".config/polybar/config.ini".source = host-specific.polybar_config;
     ".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
     ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;

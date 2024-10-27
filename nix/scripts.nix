@@ -1,6 +1,4 @@
-host-specific:
-{ pkgs, ... }:
-
+{ host-specific, pkgs, ... }:
 [
   (pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
@@ -39,7 +37,7 @@ host-specific:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    ps aux | grep $1 | grep -v grep
+    ps aux | grep $1 | grep -v psg | grep -v grep
   '')
 
   (pkgs.writeScriptBin "run" ''
@@ -82,61 +80,6 @@ host-specific:
     else
           echo true;
     fi;
-  '')
-
-  (pkgs.writeScriptBin "player-ctl-move" ''
-    #!/usr/bin/env bash
-    set -euxo pipefail
-
-    playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2)
-  '')
-
-  (pkgs.writeScriptBin "player-ctl-restart-or-previous" ''
-    #!/usr/bin/env bash
-    set -euxo pipefail
-
-    if (($(playerctl position | cut -d . -f 1) < 10)); then
-      playerctl previous;
-    else
-      playerctl position 1;
-    fi
-  '')
-
-  (pkgs.writeScriptBin "playerctl_polybar" ''
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    playerctlstatus=$(playerctl status 2> /dev/null)
-    title=$(playerctl metadata xesam:title 2> /dev/null)
-    artist=$(playerctl metadata xesam:artist 2> /dev/null)
-    note=
-    previous=
-    next=
-    play=
-    pause=
-    stop=
-
-    button_previous="%{A1:player-ctl-restart-or-previous:}  $previous  %{A}"
-    button_next="%{A1:playerctl next:}  $next  %{A}"
-    button_play="%{A1:playerctl play:}  $play  %{A}"
-    button_pause="%{A1:playerctl pause:}  $pause  %{A}"
-    button_stop="%{A1:playerctl -a stop:}  $stop  %{A}"
-
-    if [[ $artist = "" ]]; then
-        title_display=$title
-    else
-        title_display="$artist - $title"
-    fi
-
-    if [[ $playerctlstatus == "Playing" ]]; then
-        button_status=$button_pause
-    else
-        button_status=$button_play
-    fi
-
-    command_bar="$button_previous$button_stop$button_status$button_next"
-
-    echo "$note   $title_display   $command_bar"
   '')
 
   (pkgs.writeScriptBin "launch_radios" ''
