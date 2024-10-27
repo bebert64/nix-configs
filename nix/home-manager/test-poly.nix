@@ -1,15 +1,11 @@
-{ lib, playerctl,  writeShellScript }:
+{ playerctl,  writeShellScript }:
 
 writeShellScript "playerctl-polybar.sh" ''
-    # set -euo pipefail
+    playerctl=${playerctl}/bin/playerctl
 
-    exec 2>> /home/romain/plctl_log
-
-    PATH=$PATH:${lib.makeBinPath [ playerctl]}
-
-    status=$(playerctl status 2> /dev/null)
-    title=$(playerctl metadata xesam:title 2> /dev/null)
-    artist=$(playerctl metadata xesam:artist 2> /dev/null) 
+    status=$($playerctl status 2> /dev/null)
+    title=$($playerctl metadata xesam:title 2> /dev/null)
+    artist=$($playerctl metadata xesam:artist 2> /dev/null) 
     note=
     previous=
     next=
@@ -18,10 +14,10 @@ writeShellScript "playerctl-polybar.sh" ''
     stop=
 
     button_previous="%{A1:player-ctl-restart-or-previous:}  $previous  %{A}"
-    button_next="%{A1:playerctl next:}  $next  %{A}"
-    button_play="%{A1:playerctl play:}  $play  %{A}"
-    button_pause="%{A1:playerctl pause:}  $pause  %{A}"
-    button_stop="%{A1:playerctl -a stop:}  $stop  %{A}"
+    button_next="%{A1:$playerctl next:}  $next  %{A}"
+    button_play="%{A1:$playerctl play:}  $play  %{A}"
+    button_pause="%{A1:$playerctl pause:}  $pause  %{A}"
+    button_stop="%{A1:$playerctl -a stop:}  $stop  %{A}"
 
     if [[ $artist = "" ]]; then
         title_display=$title
