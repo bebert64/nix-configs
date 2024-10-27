@@ -37,7 +37,7 @@
     #!/usr/bin/env bash
     set -euo pipefail
 
-    ps aux | grep $1 | grep -v grep
+    ps aux | grep $1 | grep -v psg | grep -v grep
   '')
 
   (pkgs.writeScriptBin "run" ''
@@ -93,51 +93,61 @@
     #!/usr/bin/env bash
     set -euxo pipefail
 
-    if (($(playerctl position | cut -d . -f 1) < 10)); then
-      playerctl previous;
-    else
-      playerctl position 1;
-    fi
+    CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
+
+    echo $CURRENT_PLAYER > /home/romain/plctl_log
+
+    case $CURRENT_PLAYER in
+      "strawberry")
+        strawberry --restart-or-previous;;
+      *)
+        if (($(playerctl position | cut -d . -f 1) < 10)); then
+          playerctl previous;
+        else
+          playerctl position 1;
+        fi;;
+    esac
   '')
 
-  (pkgs.writeScriptBin "playerctl-polybar" ''
-    #!/usr/bin/bash
-    set -euo pipefail
 
-    PATH=${lib.makeBinPath [ pkgs.playerctl ]}
+  # (pkgs.writeScriptBin "playerctl-polybar" ''
+  #   #!/usr/bin/bash
+  #   set -euo pipefail
 
-    status=$(playerctl status 2> /dev/null)
-    title=$(playerctl metadata xesam:title 2> /dev/null)
-    artist=$(playerctl metadata xesam:artist 2> /dev/null)
-    note=
-    previous=
-    next=
-    play=
-    pause=
-    stop=
+  #   PATH=${lib.makeBinPath [ pkgs.playerctl ]}
 
-    button_previous="%{A1:player-ctl-restart-or-previous:}  $previous  %{A}"
-    button_next="%{A1:playerctl next:}  $next  %{A}"
-    button_play="%{A1:playerctl play:}  $play  %{A}"
-    button_pause="%{A1:playerctl pause:}  $pause  %{A}"
-    button_stop="%{A1:playerctl -a stop:}  $stop  %{A}"
+  #   status=$(playerctl status 2> /dev/null)
+  #   title=$(playerctl metadata xesam:title 2> /dev/null)
+  #   artist=$(playerctl metadata xesam:artist 2> /dev/null)
+  #   note=
+  #   previous=
+  #   next=
+  #   play=
+  #   pause=
+  #   stop=
 
-    if [[ $artist = "" ]]; then
-        title_display=$title
-    else
-        title_display="$artist - $title"
-    fi
+  #   button_previous="%{A1:player-ctl-restart-or-previous:}  $previous  %{A}"
+  #   button_next="%{A1:playerctl next:}  $next  %{A}"
+  #   button_play="%{A1:playerctl play:}  $play  %{A}"
+  #   button_pause="%{A1:playerctl pause:}  $pause  %{A}"
+  #   button_stop="%{A1:playerctl -a stop:}  $stop  %{A}"
 
-    if [[ $status == "Playing" ]]; then
-        button_status=$button_pause
-    else
-        button_status=$button_play
-    fi
+  #   if [[ $artist = "" ]]; then
+  #       title_display=$title
+  #   else
+  #       title_display="$artist - $title"
+  #   fi
 
-    command_bar="$button_previous$button_stop$button_status$button_next"
+  #   if [[ $status == "Playing" ]]; then
+  #       button_status=$button_pause
+  #   else
+  #       button_status=$button_play
+  #   fi
 
-    echo "$note   $title_display   $command_bar"
-  '')
+  #   command_bar="$button_previous$button_stop$button_status$button_next"
+
+  #   echo "$note   $title_display   $command_bar"
+  # '')
 
   (pkgs.writeScriptBin "launch_radios" ''
     #!/usr/bin/env bash

@@ -94,7 +94,6 @@
             always = true;
           }
           { command = "mount-NAS"; }
-          { command = "playerctld daemon"; }
           { command = "setxkbmap fr"; }
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
           {

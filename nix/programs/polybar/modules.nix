@@ -63,7 +63,7 @@ colors:
 
   "module/strawberry" = {
     type = "custom/script";
-    exec = "$HOME/.nix-profile/bin/playerctl-polybar";
+    exec = "$HOME/.config/polybar/playerctl-polybar.sh";
     interval = 0.5;
 
   };

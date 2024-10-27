@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  # enable = true;
+  enable = true;
 
   package = pkgs.polybar.override {
     i3Support = true;
@@ -21,4 +21,6 @@
   #      polybar $BAR 2>/home/romain/polybar_log &
   #    done
   #   done < $HOME/.config/polybar/bars '';
+
+  script = "";
 }

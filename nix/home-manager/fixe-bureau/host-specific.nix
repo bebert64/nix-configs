@@ -40,8 +40,20 @@
           };
         };
         hooks.postswitch = ''
-          echo "HDMI-1 HDMI-2" > $HOME/.config/polybar/bars
-          systemctl --user restart polybar
+                    echo " \
+          pkill polybar; \
+          while pgrep -u $UID -x polybar > /dev/null; \
+            do sleep 1; \
+          done; \
+          \
+          polybar HDMI-1 -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          polybar HDMI-2 -c /home/romain/.config/polybar/config.ini 2>&1 | tee -a /tmp/polybar.log & disown; \
+          \
+                    " > $HOME/.config/polybar/launch.sh
+                    chmod +x $HOME/.config/polybar/launch.sh
+                    $HOME/.config/polybar/launch.sh
+          # echo "HDMI-1 HDMI-2" > $HOME/.config/polybar/bars
+          # systemctl --user restart polybar
         '';
       };
     };

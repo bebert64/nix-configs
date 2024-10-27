@@ -136,12 +136,12 @@
       '';
     };
     zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
-    polybar = import ../programs/polybar/default.nix { inherit pkgs; };
   };
 
-  # services = {
-  #   polybar = import ../programs/polybar/default.nix { inherit pkgs; };
-  # };
+  services = {
+    polybar = import ../programs/polybar/default.nix { inherit pkgs; };
+    playerctld = { enable = true; };
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -156,6 +156,10 @@
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../dotfiles/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
     ".xinitrc".source = ../../dotfiles/.xinitrc;
+    ".config/polybar/playerctl-polybar.sh" = {
+      source = pkgs.callPackage ./test-poly.nix {} ;
+      executable = true;
+    };
   };
 
   home.pointerCursor = {
