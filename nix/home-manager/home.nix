@@ -124,9 +124,6 @@ in
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specific.autorandr;
-    bash = {
-      enable = true;
-    };
     btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
@@ -148,7 +145,7 @@ in
   services = {
     polybar = import ../programs/polybar/default.nix {
       inherit pkgs;
-      playerctl-script = scripts-playerctl.polybar;
+      script-playerctl = scripts-playerctl.polybar;
     };
     playerctld = {
       enable = true;

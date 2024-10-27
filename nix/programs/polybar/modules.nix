@@ -1,4 +1,4 @@
-{ colors, playerctl-script }:
+{ colors, script-playerctl }:
 {
   "module/i3" = {
     type = "internal/i3";
@@ -63,7 +63,7 @@
 
   "module/strawberry" = {
     type = "custom/script";
-    exec = "${playerctl-script}/bin/playerctl-polybar";
+    exec = "${script-playerctl}/bin/playerctl-polybar";
     interval = 0.5;
 
   };

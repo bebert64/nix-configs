@@ -1,6 +1,5 @@
 { lib, pkgs, ... }:
 rec {
-
   move = (
     pkgs.writeScriptBin "playerctl-move" ''
       CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
