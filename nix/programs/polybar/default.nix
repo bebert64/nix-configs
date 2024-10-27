@@ -11,7 +11,9 @@
     let
       colors = import ./colors.nix;
     in
-    import ./bars.nix colors // import ./glyphs.nix colors // import ./modules.nix {inherit colors playerctl-script;};
+    import ./bars.nix colors
+    // import ./glyphs.nix colors
+    // import ./modules.nix { inherit colors playerctl-script; };
 
   script = ''
     while IFS= read -r line;

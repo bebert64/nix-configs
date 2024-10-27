@@ -6,9 +6,9 @@
   ...
 }@inputs:
 
-let 
-      scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
-      in
+let
+  scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+in
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -124,7 +124,9 @@ let
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specific.autorandr;
-    bash = { enable = true;};
+    bash = {
+      enable = true;
+    };
     btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
@@ -144,8 +146,13 @@ let
   };
 
   services = {
-    polybar = import ../programs/polybar/default.nix { inherit pkgs; playerctl-script = scripts-playerctl.polybar; };
-    playerctld = { enable = true; };
+    polybar = import ../programs/polybar/default.nix {
+      inherit pkgs;
+      playerctl-script = scripts-playerctl.polybar;
+    };
+    playerctld = {
+      enable = true;
+    };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

@@ -1,4 +1,4 @@
- {colors, playerctl-script}:
+{ colors, playerctl-script }:
 {
   "module/i3" = {
     type = "internal/i3";
