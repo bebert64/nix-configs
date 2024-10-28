@@ -61,15 +61,8 @@
   "module/name" = {
     type = "custom/text";
     format = {
-      text = "   Don Beberto's";
+      text = "Don Beberto's";
     };
-
-  };
-
-  "module/strawberry" = {
-    type = "custom/script";
-    exec = "${script-playerctl}/bin/playerctl-polybar";
-    interval = 0.5;
 
   };
 
@@ -78,6 +71,13 @@
     format = {
       text = "      •      ";
     };
+  };
+
+  "module/strawberry" = {
+    type = "custom/script";
+    exec = "${script-playerctl}/bin/playerctl-polybar";
+    interval = 0.5;
+
   };
 
   # ; #######################

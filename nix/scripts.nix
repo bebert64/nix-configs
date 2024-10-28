@@ -138,7 +138,7 @@
     # Revert to original config
     i3-msg workspace "$wk1"
     i3-msg workspace "$wk2"
-    $HOME/.config/polybar/launch.sh
+    systemctl --user restart polybar
     pkill xidlehook || echo "xidlehook already killed"
     xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
   '')
