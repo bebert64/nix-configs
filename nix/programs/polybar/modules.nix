@@ -9,7 +9,7 @@
 
     format = {
       text = "<label-state><label-mode>";
-      offset = -15;
+      offset = -10;
     };
 
     label = {
@@ -193,7 +193,10 @@
     ramp = {
       volume = {
         "0" = " ";
-        "1" = { text =" "; weight = 10;};
+        "1" = {
+          text = " ";
+          weight = 10;
+        };
         "2" = " ";
         font = 2;
       };
@@ -218,32 +221,45 @@
   "module/cpu" = {
     type = "internal/cpu";
     interval = 2;
-    format-padding = 1;
-    format-background = "${colors.shade4}";
-
-    format-prefix = "  ";
-    format-prefix-font = 2;
+    format = {
+      padding = 1;
+      background = "${colors.shade4}";
+      prefix = {
+        text = "  ";
+        font = 2;
+      };
+    };
     label = "%percentage:2%%";
   };
 
-  "module/wlan" = {
+  "internet" = {
     type = "internal/network";
-    interval = 5;
+    interval = 1;
+    speed-unit = "o/s";
+    format = {
+      connected = {
+        background = "${colors.shade3}";
+        padding = 1;
+      };
+      disconnected = {
+        background = "${colors.shade3}";
+        padding = 1;
+      };
+    };
+
+  };
+
+  "module/wireless" = {
+    "inherit" = "internet";
     interface-type = "wireless";
 
     label = {
-      connected = "%essid%";
-      disconnected = {
-        text = "󱖣";
-        font = 2;
-      };
+      connected = "%essid%  %downspeed%  %upspeed%";
     };
 
     format = {
       connected = {
-        text = "<label-connected>";
-        background = "${colors.shade3}";
-        padding = 1;
+        text = "<ramp-signal> <label-connected>";
         prefix = {
           text = "  ";
           font = 2;
@@ -251,9 +267,38 @@
       };
 
       disconnected = {
-        text = "<label-disconnected>";
-        background = "${colors.shade3}";
-        padding = 1;
+        text = "󱖣";
+        font = 2;
+      };
+    };
+
+    ramp = {
+      signal = {
+        "0" = "󰤯";
+        "1" = "󰤟";
+        "2" = "󰤢";
+        "3" = "󰤥";
+        "4" = "󰤨";
+      };
+      font = 2;
+    };
+  };
+
+  "module/wired" = {
+    "inherit" = "internet";
+    interface-type = "wired";
+
+    label = {
+      connected = " %downspeed%  %upspeed%";
+    };
+
+    format = {
+      connected = {
+        text = "<label-connected>";
+        prefix = {
+          text = "  ";
+          font = 2;
+        };
       };
     };
   };

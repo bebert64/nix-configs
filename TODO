@@ -5,13 +5,6 @@ Refacto
     Chose what to do with software-configuration.nix
 
 Programs to migrate
-    polybar
-        Add all possible bars
-        Add polybar section to host-specific
-        Add a ramp is possible for wireless signal force
-        Add up / down speed for internet connection
-        Investigate if possible using the screens from
-            for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
     ranger
         mappings and rifle (for 7z instead of zip, or for vim instead of nano)
         Use 7zip instead of zip and modify ranger command
