@@ -3,32 +3,8 @@ Refacto
         Create home/mini.nix (for raspi)
         Include that in full.nix (for others)
     Chose what to do with software-configuration.nix
-    Final repo struct
-        |-dotfiles
-        |-fonts
-        |-install_scripts
-        |-nix
-            |-programs
-            |-scripts.nix
-            |-home-manager
-            |   |-mini.nix
-            |   |-full.nix
-            |-nixos-common.nix (renamed common.nix)
-            |-fixe-bureau.nix (includes content from host-specific.nix)
-            |-raspi.nix (includes content from host-specific.nix)
-            |-nixos-configuration.nix (renamed configuration.nix + made generic by injecting user name from host-specific)
 
 Programs to migrate
-    polybar
-        Fix font size in polybar
-        Add all possible bars
-        Add polybar section to host-specific
-        Fix tray error + warning
-        Add a ramp is possible for wireless signal force
-        Add up / down speed for internet connection
-        Investigate if possible to use weight in pulseaudio/volume ramp to use the middle one for longer
-        Investigate if possible using the screens from
-            for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
     ranger
         mappings and rifle (for 7z instead of zip, or for vim instead of nano)
         Use 7zip instead of zip and modify ranger command

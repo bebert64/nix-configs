@@ -7,7 +7,10 @@
     pin-workspaces = true;
     enable-scroll = false;
 
-    format = "<label-state><label-mode>";
+    format = {
+      text = "<label-state><label-mode>";
+      offset = -10;
+    };
 
     label = {
       mode = {
@@ -43,9 +46,10 @@
   };
   "module/sep_i3" = {
     type = "custom/text";
-    content = " ";
-    content-font = 1;
-    content-background = "${colors.shade6}";
+    format = {
+      text = " ";
+      background = "${colors.shade6}";
+    };
   };
 
   # ; #######################
@@ -56,8 +60,9 @@
 
   "module/name" = {
     type = "custom/text";
-    content = "   Don Beberto's";
-    margin-right = 20;
+    format = {
+      text = "   Don Beberto's";
+    };
 
   };
 
@@ -70,8 +75,9 @@
 
   "module/sep_central" = {
     type = "custom/text";
-    content = "      •      ";
-    content-font = 1;
+    format = {
+      text = "      •      ";
+    };
   };
 
   # ; #######################
@@ -187,7 +193,10 @@
     ramp = {
       volume = {
         "0" = " ";
-        "1" = " ";
+        "1" = {
+          text = " ";
+          weight = 10;
+        };
         "2" = " ";
         font = 2;
       };
@@ -212,42 +221,84 @@
   "module/cpu" = {
     type = "internal/cpu";
     interval = 2;
-    format-padding = 1;
-    format-background = "${colors.shade4}";
-
-    format-prefix = "  ";
-    format-prefix-font = 2;
+    format = {
+      padding = 1;
+      background = "${colors.shade4}";
+      prefix = {
+        text = "  ";
+        font = 2;
+      };
+    };
     label = "%percentage:2%%";
   };
 
-  "module/wlan" = {
+  "internet" = {
     type = "internal/network";
-    interval = 5;
+    interval = 1;
+    speed-unit = "o/s";
+    format = {
+      connected = {
+        background = "${colors.shade3}";
+        padding = 1;
+      };
+      disconnected = {
+        background = "${colors.shade3}";
+        padding = 1;
+      };
+    };
+
+  };
+
+  "module/wireless" = {
+    "inherit" = "internet";
     interface-type = "wireless";
 
     label = {
-      connected = "%essid%";
+      connected = "%essid%  %downspeed%  %upspeed%";
+    };
+
+    format = {
+      connected = {
+        text = "<ramp-signal> <label-connected>";
+        prefix = {
+          text = "  ";
+          font = 2;
+        };
+      };
+
       disconnected = {
         text = "󱖣";
-        font = 0;
+        font = 2;
       };
+    };
+
+    ramp = {
+      signal = {
+        "0" = "󰤯";
+        "1" = "󰤟";
+        "2" = "󰤢";
+        "3" = "󰤥";
+        "4" = "󰤨";
+      };
+      font = 2;
+    };
+  };
+
+  "module/wired" = {
+    "inherit" = "internet";
+    interface-type = "wired";
+
+    label = {
+      connected = " %downspeed%  %upspeed%";
     };
 
     format = {
       connected = {
         text = "<label-connected>";
-        background = "${colors.shade3}";
-        padding = 1;
         prefix = {
-          text = "  ";
-          font = 0;
+          text = "  ";
+          font = 2;
         };
-      };
-
-      disconnected = {
-        text = "<label-disconnected>";
-        background = "${colors.shade3}";
-        padding = 1;
       };
     };
   };
@@ -265,5 +316,20 @@
       alt = "%e %b %Y";
     };
     label = "%date%";
+  };
+
+  "module/tray" = {
+    type = "internal/tray";
+    tray = {
+      spacing = 8;
+      size = 20;
+      background = "${colors.shade1}";
+    };
+    format = {
+      offset = -10;
+      padding = 2;
+      background = "${colors.shade1}";
+    };
+
   };
 }

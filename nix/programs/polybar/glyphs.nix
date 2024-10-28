@@ -1,89 +1,107 @@
-colors:
-let
-  glyph = {
-    left = "";
-    right = "";
-  };
-in
-{
-  "module/left1" = {
+colors: {
+  "glyphs" = {
     type = "custom/text";
-    content = {
-      padding-right = 2;
-      background = "${colors.shade6}";
-      foreground = "${colors.shade1}";
-      text = "${glyph.left}";
+    format = {
       font = 3;
+    };
+  };
+  "glyphs-left" = {
+    "inherit" = "glyphs";
+    format = {
+      text = "";
+    };
+  };
+  "glyphs-right" = {
+    "inherit" = "glyphs";
+    format = {
+      text = "";
+    };
+  };
+  "module/left1" = {
+    "inherit" = "glyphs-left";
+    format = {
+      foreground = "${colors.shade1}";
+      background = "${colors.shade6}";
     };
   };
 
   "module/left2" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.background}";
+    "inherit" = "glyphs-left";
+    format = {
       foreground = "${colors.shade6}";
-      text = "${glyph.left}";
-      font = 3;
+      background = "${colors.background}";
     };
   };
 
   "module/right1" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.shade2}";
+    "inherit" = "glyphs-right";
+    format = {
       foreground = "${colors.shade1}";
-      text = "${glyph.right}";
-      font = 3;
+      background = "${colors.shade2}";
     };
   };
 
   "module/right2" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.shade4}";
+    "inherit" = "glyphs-right";
+    format = {
       foreground = "${colors.shade2}";
-      text = "${glyph.right}";
-      font = 3;
+      background = "${colors.shade3}";
+    };
+  };
+
+  "module/right3" = {
+    "inherit" = "glyphs-right";
+    format = {
+      foreground = "${colors.shade3}";
+      background = "${colors.shade4}";
     };
   };
 
   "module/right4" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.shade5}";
+    "inherit" = "glyphs-right";
+    format = {
       foreground = "${colors.shade4}";
-      text = "${glyph.right}";
-      font = 3;
+      background = "${colors.shade5}";
     };
   };
 
   "module/right5" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.shade6}";
+    "inherit" = "glyphs-right";
+    format = {
       foreground = "${colors.shade5}";
-      text = "${glyph.right}";
-      font = 3;
+      background = "${colors.shade6}";
     };
   };
 
   "module/right6" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.shade7}";
+    "inherit" = "glyphs-right";
+    format = {
       foreground = "${colors.shade6}";
-      text = "${glyph.right}";
-      font = 3;
+      background = "${colors.shade7}";
     };
   };
 
   "module/right7" = {
-    type = "custom/text";
-    content = {
-      background = "${colors.background}";
+    "inherit" = "glyphs-right";
+    format = {
       foreground = "${colors.shade7}";
-      text = "${glyph.right}";
-      font = 3;
+      background = "${colors.shade8}";
+    };
+  };
+
+  "module/right7-background" = {
+    "inherit" = "glyphs-right";
+    format = {
+      foreground = "${colors.shade7}";
+      background = "${colors.background}";
+    };
+  };
+
+  "module/right8" = {
+    "inherit" = "glyphs-right";
+    format = {
+      foreground = "${colors.shade8}";
+      background = "${colors.background}";
     };
   };
 }
