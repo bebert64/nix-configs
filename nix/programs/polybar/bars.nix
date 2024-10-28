@@ -29,7 +29,7 @@ colors: {
     };
 
     modules = {
-      left = "left1 sep_i3 i3 sep_i3 left2";
+      left = "left1 i3 sep_i3 left2";
       center = "name sep_central strawberry";
       right = "right7 filesystem right6 pulseaudio right5 memory right4 cpu right2 date right1";
     };

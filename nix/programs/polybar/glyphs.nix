@@ -1,89 +1,84 @@
 colors:
-let
-  glyph = {
-    left = "";
-    right = "";
-  };
-in
 {
-  "module/left1" = {
+  "glyphs" = {
     type = "custom/text";
-    content = {
-      padding-right = 2;
+    format = {
+      font = 3;
+    };
+  };
+  "glyphs-left" = {
+    "inherit" = "glyphs";
+    format = {
+      text = "";
+    };
+  };
+  "glyphs-right" = {
+    "inherit" = "glyphs";
+    format = {
+      text = "";
+    };
+  };
+  "module/left1" = {
+    "inherit" = "glyphs-left";
+    format = {
       background = "${colors.shade6}";
       foreground = "${colors.shade1}";
-      text = "${glyph.left}";
-      font = 3;
     };
   };
 
   "module/left2" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-left";
+    format = {
       background = "${colors.background}";
       foreground = "${colors.shade6}";
-      text = "${glyph.left}";
-      font = 3;
     };
   };
 
   "module/right1" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-right";
+    format = {
       background = "${colors.shade2}";
       foreground = "${colors.shade1}";
-      text = "${glyph.right}";
-      font = 3;
     };
   };
 
   "module/right2" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-right";
+    format = {
       background = "${colors.shade4}";
       foreground = "${colors.shade2}";
-      text = "${glyph.right}";
-      font = 3;
     };
   };
 
   "module/right4" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-right";
+    format = {
       background = "${colors.shade5}";
       foreground = "${colors.shade4}";
-      text = "${glyph.right}";
-      font = 3;
     };
   };
 
   "module/right5" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-right";
+    format = {
       background = "${colors.shade6}";
       foreground = "${colors.shade5}";
-      text = "${glyph.right}";
-      font = 3;
     };
   };
 
   "module/right6" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-right";
+    format = {
       background = "${colors.shade7}";
       foreground = "${colors.shade6}";
-      text = "${glyph.right}";
-      font = 3;
     };
   };
 
   "module/right7" = {
-    type = "custom/text";
-    content = {
+    "inherit" = "glyphs-right";
+    format = {
       background = "${colors.background}";
       foreground = "${colors.shade7}";
-      text = "${glyph.right}";
-      font = 3;
     };
   };
 }

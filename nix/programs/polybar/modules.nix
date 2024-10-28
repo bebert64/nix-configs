@@ -7,7 +7,10 @@
     pin-workspaces = true;
     enable-scroll = false;
 
-    format = "<label-state><label-mode>";
+    format = {
+      text = "<label-state><label-mode>";
+      offset = -15;
+    };
 
     label = {
       mode = {
@@ -43,9 +46,11 @@
   };
   "module/sep_i3" = {
     type = "custom/text";
-    content = " ";
-    content-font = 1;
-    content-background = "${colors.shade6}";
+    format = {
+      text = " ";
+      font = 1;
+      background = "${colors.shade6}";
+    };
   };
 
   # ; #######################
@@ -56,8 +61,10 @@
 
   "module/name" = {
     type = "custom/text";
-    content = "   Don Beberto's";
-    margin-right = 20;
+    format = {
+      text = "   Don Beberto's";
+      font = 1;
+    };
 
   };
 
@@ -70,8 +77,10 @@
 
   "module/sep_central" = {
     type = "custom/text";
-    content = "      •      ";
-    content-font = 1;
+    format = {
+      text = "      •      ";
+      font = 1;
+    };
   };
 
   # ; #######################
