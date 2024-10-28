@@ -23,10 +23,8 @@ Programs to migrate
         Fix font size in polybar
         Add all possible bars
         Add polybar section to host-specific
-        Fix tray error + warning
         Add a ramp is possible for wireless signal force
         Add up / down speed for internet connection
-        Investigate if possible to use weight in pulseaudio/volume ramp to use the middle one for longer
         Investigate if possible using the screens from
             for m in $(polybar --list-monitors | ${pkgs.coreutils}/bin/cut -d":" -f1); do
     ranger
