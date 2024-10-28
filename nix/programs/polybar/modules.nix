@@ -266,4 +266,19 @@
     };
     label = "%date%";
   };
+
+  "module/tray" = {
+    type = "internal/tray";
+    tray = {
+      spacing = 8;
+      size = 20;
+      background = "${colors.shade1}";
+    };
+    format = {
+      offset = -10;
+      padding = 2;
+      background = "${colors.shade1}";
+    };
+
+  };
 }

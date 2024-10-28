@@ -47,12 +47,22 @@ colors: {
   "bar/HDMI-1" = {
     "inherit" = "bar/mainbar";
     monitor = "HDMI-1";
-    tray-position = "right";
-    tray-background = "${colors.shade1}";
+
+    modules = {
+      left = "left1 sep_i3 i3 sep_i3 left2";
+      center = "name sep_central strawberry";
+      right = "right7 filesystem right6 pulseaudio right5 memory right4 cpu right2 date right1 tray";
+    };
   };
 
   "bar/HDMI-2" = {
     "inherit" = "bar/mainbar";
     monitor = "HDMI-2";
+
+    modules = {
+      left = "left1 sep_i3 i3 sep_i3 left2";
+      center = "name sep_central strawberry";
+      right = "right7 filesystem right6 pulseaudio right5 memory right4 cpu right2 date right1";
+    };
   };
 }
