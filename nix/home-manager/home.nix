@@ -132,6 +132,7 @@ in
     };
     firefox = import ../programs/firefox.nix;
     git = import ../programs/git.nix;
+    ssh = import ../programs/ssh/default.nix;
     vim = {
       extraConfig = ''
         set autoindent
@@ -247,7 +248,6 @@ in
       # Do NOT symlink the whole dir, to make sure to never git private key
       mkdir -p $HOME/.ssh
       ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
-      ln -sf $HOME/nix-configs/dotfiles/ssh/config $HOME/.ssh/
     '';
   };
 

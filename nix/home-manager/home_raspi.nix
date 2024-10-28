@@ -1,4 +1,4 @@
-{ config-name, pkgs }:
+{ pkgs }:
 
 {
   home = {
