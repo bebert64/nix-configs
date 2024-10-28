@@ -68,9 +68,6 @@ Various 1
     Think about where to use symlink / use store / write new files for dotfiles and comment in config about why
     Create nix flake for rust crate and add them to home-manager
     Move dotfiles/raspi/renew-cert.sh to scripts.nix
-    yank from ranger to clipboard
-        Probably needs xclip
-        https://www.reddit.com/r/linux4noobs/comments/abktr5/yank_command_in_ranger_doesnt_copy_anything_to
     add plugins to ranger (icons, theme, ...)
     Better script for yt-dlp
         extract name of res including 720p

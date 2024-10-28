@@ -71,6 +71,7 @@ in
       unzip
       vlc
       vscode
+      xclip # used by ranger to paste into global clipboard
       xidlehook
       yt-dlp
       zip
