@@ -1,13 +1,10 @@
 {
-  wifi = false;
-  bluetooth = false;
   minutes-before-lock = 30;
   minutes-from-lock-to-sleep = 30;
   screens = {
     screen1 = "HDMI-1";
     screen2 = "HDMI-2";
   };
-  polybar_config = ./polybar_config.ini;
   zsh-aliases = {
     "update" = "cd ~/nix-configs && git pull && home-manager switch --flake .#fixe-bureau";
     "update-dirty" = "cd ~/nix-configs && git add . && home-manager switch --flake .#fixe-bureau";
