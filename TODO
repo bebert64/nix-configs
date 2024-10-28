@@ -3,24 +3,9 @@ Refacto
         Create home/mini.nix (for raspi)
         Include that in full.nix (for others)
     Chose what to do with software-configuration.nix
-    Final repo struct
-        |-dotfiles
-        |-fonts
-        |-install_scripts
-        |-nix
-            |-programs
-            |-scripts.nix
-            |-home-manager
-            |   |-mini.nix
-            |   |-full.nix
-            |-nixos-common.nix (renamed common.nix)
-            |-fixe-bureau.nix (includes content from host-specific.nix)
-            |-raspi.nix (includes content from host-specific.nix)
-            |-nixos-configuration.nix (renamed configuration.nix + made generic by injecting user name from host-specific)
 
 Programs to migrate
     polybar
-        Fix font size in polybar
         Add all possible bars
         Add polybar section to host-specific
         Add a ramp is possible for wireless signal force

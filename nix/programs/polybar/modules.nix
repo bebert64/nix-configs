@@ -48,7 +48,6 @@
     type = "custom/text";
     format = {
       text = " ";
-      font = 1;
       background = "${colors.shade6}";
     };
   };
@@ -63,7 +62,6 @@
     type = "custom/text";
     format = {
       text = "   Don Beberto's";
-      font = 1;
     };
 
   };
@@ -79,7 +77,6 @@
     type = "custom/text";
     format = {
       text = "      •      ";
-      font = 1;
     };
   };
 
@@ -238,7 +235,7 @@
       connected = "%essid%";
       disconnected = {
         text = "󱖣";
-        font = 0;
+        font = 2;
       };
     };
 
@@ -249,7 +246,7 @@
         padding = 1;
         prefix = {
           text = "  ";
-          font = 0;
+          font = 2;
         };
       };
 

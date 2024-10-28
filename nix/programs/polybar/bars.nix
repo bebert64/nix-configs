@@ -21,11 +21,8 @@ colors: {
 
     font = {
       "0" = "Iosevka Nerd Font:pixelsize=10;3";
-      "1" = "Iosevka Nerd Font:style=Medium:size=22;5";
+      "1" = "Iosevka Nerd Font:style=Medium:size=15;5";
       "2" = "Iosevka Nerd Font:style=Medium:size=40;25";
-      "3" = "Font Awesome 6 Brands:size=12;2";
-      "4" = "icomoon-feather:size=10;2";
-      "5" = "IcoMoon-Free:size=10;2";
     };
 
     modules = {
