@@ -144,10 +144,7 @@ in
   };
 
   services = {
-    polybar = import ../programs/polybar/default.nix {
-      inherit pkgs;
-      script-playerctl = scripts-playerctl.polybar;
-    };
+    polybar = import ../programs/polybar/default.nix { inherit pkgs scripts-playerctl; };
     playerctld = {
       enable = true;
     };

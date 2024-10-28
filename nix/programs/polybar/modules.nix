@@ -1,4 +1,4 @@
-{ colors, script-playerctl }:
+{ colors, scripts-playerctl }:
 {
   "module/i3" = {
     type = "internal/i3";
@@ -58,26 +58,21 @@
   # ;
   # ; #######################
 
-  "module/name" = {
-    type = "custom/text";
-    format = {
-      text = "Don Beberto's";
-    };
-
-  };
-
-  "module/sep_central" = {
-    type = "custom/text";
-    format = {
-      text = "      •      ";
-    };
-  };
-
-  "module/strawberry" = {
+  "player-ctl" = {
     type = "custom/script";
-    exec = "${script-playerctl}/bin/playerctl-polybar";
     interval = 0.5;
+  };
 
+  "module/playerctl-full" = {
+    "inherit" = "player-ctl";
+    exec = "${scripts-playerctl.cmd-bar-and-display-title}/bin/playerctl-cmd-bar-and-display-title";
+    label = "Don Beberto's      •      %output%";
+  };
+
+  "module/playerctl-mini" = {
+    "inherit" = "player-ctl";
+    exec = "${scripts-playerctl.display-title-or-no-music}/bin/playerctl-display-title-or-no-music";
+    label = "%output:0:100%";
   };
 
   # ; #######################
@@ -231,6 +226,9 @@
     type = "internal/network";
     interval = 1;
     speed-unit = "o/s";
+    label = {
+      connected = " %downspeed:9%  %upspeed:9%";
+    };
     format = {
       connected = {
         background = "${colors.shade3}";
@@ -247,10 +245,6 @@
   "module/wireless" = {
     "inherit" = "internet";
     interface-type = "wireless";
-
-    label = {
-      connected = "%essid%  %downspeed%  %upspeed%";
-    };
 
     format = {
       connected = {
@@ -277,10 +271,6 @@
   "module/wired" = {
     "inherit" = "internet";
     interface-type = "wired";
-
-    label = {
-      connected = " %downspeed%  %upspeed%";
-    };
 
     format = {
       connected = {

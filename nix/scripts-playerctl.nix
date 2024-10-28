@@ -37,30 +37,17 @@ rec {
     ''
   );
 
-  polybar = (
-    pkgs.writeScriptBin "playerctl-polybar" ''
-        playerctl=${pkgs.playerctl}/bin/playerctl
+  display-title = (
+    pkgs.writeScriptBin "playerctl-display-title" ''
+      PATH=${lib.makeBinPath [ pkgs.playerctl ]}
 
-        status=$($playerctl status 2> /dev/null)
-        title=$($playerctl metadata xesam:title 2> /dev/null)
-        artist=$($playerctl metadata xesam:artist 2> /dev/null) 
-        note=
-        previous=
-        next=
-        play=
-        pause=
-        stop=
+        title=$(playerctl metadata xesam:title 2> /dev/null)
+        artist=$(playerctl metadata xesam:artist 2> /dev/null)
 
-        button_previous="%{A1:${restart-or-previous}/bin/playerctl-restart-or-previous:}  $previous  %{A}"
-        button_next="%{A1:$playerctl next:}  $next  %{A}"
-        button_play="%{A1:$playerctl play:}  $play  %{A}"
-        button_pause="%{A1:$playerctl pause:}  $pause  %{A}"
-        button_stop="%{A1:$playerctl -a stop:}  $stop  %{A}"
-
-        if [[ $artist = "" ]]; then
-            title_display=$title
-        else
+        if [[ $artist ]]; then
             title_display="$artist - $title"
+        else
+            title_display=$title
         fi
 
         if [[ $status == "Playing" ]]; then
@@ -69,9 +56,48 @@ rec {
             button_status=$button_play
         fi
 
+        echo "$title_display"
+    ''
+  );
+
+  cmd-bar-and-display-title = (
+    pkgs.writeScriptBin "playerctl-cmd-bar-and-display-title" ''
+      PATH=${
+        lib.makeBinPath [
+          pkgs.playerctl
+          display-title
+          restart-or-previous
+        ]
+      }
+
+        status=$($playerctl status 2> /dev/null)
+        previous=
+        next=
+        play=
+        pause=
+        stop=
+
+        button_previous="%{A1:playerctl-restart-or-previous:}$previous  %{A}"
+        button_play="%{A1:$playerctl play:}  $play  %{A}"
+        button_pause="%{A1:$playerctl pause:}  $pause  %{A}"
+        button_stop="%{A1:$playerctl -a stop:}  $stop  %{A}"
+        button_next="%{A1:$playerctl next:}  $next%{A}"
+
         command_bar="$button_previous$button_stop$button_status$button_next"
 
-        echo "$note   $title_display   $command_bar"
-      # ''
+        echo "$command_bar     $(playerctl-display-title)"
+    ''
+  );
+
+  display-title-or-no-music = (
+    pkgs.writeScriptBin "playerctl-display-title-or-no-music" ''
+      PATH=${lib.makeBinPath [ display-title ]}
+      display_title_opt=$(playerctl-display-title)
+        if [[ $display_title_opt ]]; then
+            echo $display_title_opt
+        else
+            echo "%{T2}󰝛 %{T-}"
+        fi
+    ''
   );
 }

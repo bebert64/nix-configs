@@ -1,4 +1,4 @@
-{ pkgs, script-playerctl, ... }:
+{ pkgs, scripts-playerctl, ... }:
 {
   enable = true;
 
@@ -13,7 +13,7 @@
     in
     import ./bars.nix colors
     // import ./glyphs.nix colors
-    // import ./modules.nix { inherit colors script-playerctl; };
+    // import ./modules.nix { inherit colors scripts-playerctl; };
 
   script = ''
     for BAR in $(${pkgs.coreutils}/bin/cat $HOME/.config/polybar/bars);

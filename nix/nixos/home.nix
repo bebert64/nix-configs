@@ -98,6 +98,24 @@ in
       # Test, to remove
       picom-next
 
+      # fonts
+      dejavu_fonts
+      fira-code
+      font-awesome
+      font-awesome_4
+      font-awesome_5
+      helvetica-neue-lt-std
+      liberation_ttf_v1
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "Iosevka"
+        ];
+      })
+      noto-fonts
+      noto-fonts-emoji
+      powerline-fonts
+
     ]
     ++ import ../scripts.nix { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
@@ -134,10 +152,7 @@ in
   };
 
   services = {
-    polybar = import ../programs/polybar/default.nix {
-      inherit pkgs;
-      script-playerctl = scripts-playerctl.polybar;
-    };
+    polybar = import ../programs/polybar/default.nix { inherit pkgs scripts-playerctl; };
     playerctld = {
       enable = true;
     };
