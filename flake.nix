@@ -14,8 +14,8 @@
     let
       host-specific = {
         stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
-        raspi = import ./nix/home-manager/raspi/host-specific.nix;
-        fixe-bureau = import ./nix/home-manager/fixe-bureau/host-specific.nix;
+        raspi = import ./nix/host-specific/raspi.nix;
+        fixe-bureau = import ./nix/host-specific/fixe-bureau.nix;
       };
     in
     {
