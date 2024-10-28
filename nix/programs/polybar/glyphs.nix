@@ -49,14 +49,6 @@ colors: {
     };
   };
 
-  "module/right2-4" = {
-    "inherit" = "glyphs-right";
-    format = {
-      foreground = "${colors.shade2}";
-      background = "${colors.shade4}";
-    };
-  };
-
   "module/right3" = {
     "inherit" = "glyphs-right";
     format = {
