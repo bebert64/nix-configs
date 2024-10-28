@@ -59,7 +59,6 @@ Host-specific
 
 Various 1
     Fix nixfmt vs nixfmt-pckgs
-    Add fixe-bureau-ipv6 and fixe-bureau to ssh config
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...
