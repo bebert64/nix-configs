@@ -38,10 +38,6 @@ Programs to migrate
         keep bookmarks
     rofi
         https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
-    ssh to ssh.nix
-        Check if can include comments
-        Check how to factorize the localFoward part
-        https://unix.stackexchange.com/questions/61655/multiple-similar-entries-in-ssh-config
     picom
         https://nix-community.github.io/home-manager/options.xhtml#opt-services.picom.enable
     qbittorrent
@@ -63,6 +59,8 @@ Host-specific
 
 Various 1
     Fix nixfmt vs nixfmt-pckgs
+    Test if download helper can be installed from nix
+        https://search.nixos.org/packages?channel=24.05&from=0&size=50&sort=relevance&type=packages&query=downloadhelper
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...
