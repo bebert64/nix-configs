@@ -2,18 +2,14 @@ host-specific:
 { pkgs, lib, ... }@inputs:
 
 let
-  monoFont = "DejaVu Sans Mono";
-  args = ({ inherit monoFont; } // inputs);
+  scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
 in
+
 {
 
   # Packages Home-Manager doesn't have specific handling for
   home.packages =
     let
-      polybar = pkgs.polybar.override {
-        i3Support = true;
-        pulseSupport = true;
-      };
       jetbrains = (import ../programs/jetbrains.nix inputs);
     in
     with pkgs;
@@ -22,10 +18,9 @@ in
       alock # locker allowing transparent background
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
-      zip
       avidemux
-      btop
       caffeine-ng # to prevent going to sleep when watching videos
+      chromium
       conky
       dconf # used for setting/loading gnome applications' settings (eg : tilix)
       direnv
@@ -43,11 +38,13 @@ in
       jq # cli json processor, for some scripts (to get workspace id from i3)
       microcodeIntel # for increased microprocessor performance
       mcomix
+      nixd
+      nixfmt-rfc-style
       nodejs
       nodePackages.npm
       nodePackages.pnpm
       pavucontrol # pulse audio volume controle
-      polybar
+      playerctl # to send data and retrieve metadata for polybar
       postgresql
       pulseaudio
       qbittorrent
@@ -64,17 +61,15 @@ in
       unzip
       vlc
       vscode
+      xclip # used by ranger to paste into global clipboard
       xidlehook
       yt-dlp
+      zip
 
       # imagemagick and scrot are used for image manipulation
       # to create the blur patches behind the conky widgets
       imagemagick
       scrot
-
-      # Needed to mount Ipad
-      ifuse
-      libimobiledevice
 
       # polkit is the utility used by vscode to save as sudo
       polkit
@@ -104,7 +99,8 @@ in
       picom-next
 
     ]
-    ++ import ../scripts.nix host-specific pkgs
+    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi then
         [
@@ -118,6 +114,7 @@ in
   # Programs known by Home-Manager
   programs = {
     autorandr = host-specific.autorandr;
+    btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
@@ -125,6 +122,7 @@ in
     };
     firefox = import ../programs/firefox.nix;
     git = import ../programs/git.nix;
+    ssh = import ../programs/ssh/default.nix;
     vim = {
       extraConfig = ''
         set autoindent
@@ -135,11 +133,18 @@ in
     zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
   };
 
+  services = {
+    polybar = import ../programs/polybar/default.nix {
+      inherit pkgs;
+      script-playerctl = scripts-playerctl.polybar;
+    };
+    playerctld = {
+      enable = true;
+    };
+  };
+
   # Copy custom files / dotfiles
   home.file.".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
-  home.file.".config/polybar/colors.ini".source = ../../dotfiles/polybar/colors.ini;
-  home.file.".config/polybar/modules.ini".source = ../../dotfiles/polybar/modules.ini;
-  home.file.".config/polybar/config.ini".source = host-specific.polybar_config;
   home.file.".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
   home.file.".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
   home.file.".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
@@ -192,7 +197,6 @@ in
   # Activation script
   home.activation = {
     createDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
       rm -f $HOME/mnt/Usb-drives
       ln -sf /run/media/romain/ $HOME/mnt/Usb-drives
@@ -200,9 +204,6 @@ in
 
       # load terminal theme
       ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../dotfiles/tilix.dconf}
-
-      # Symlink btop config folder
-      ln -sf ${../../dotfiles/btop} $HOME/.config
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/

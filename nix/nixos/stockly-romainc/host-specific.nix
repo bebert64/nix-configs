@@ -30,7 +30,7 @@
           };
         };
         hooks.postswitch = ''
-          echo "eDP1-tray-on" > $HOME/.config/polybar/bars
+          echo "eDP-1-tray-on" > $HOME/.config/polybar/bars
           systemctl --user restart polybar
         '';
       };
@@ -58,7 +58,7 @@
           };
         };
         hooks.postswitch = ''
-          echo "eDP1-tray-off HDMI-1-battery" > $HOME/.config/polybar/bars
+          echo "eDP-1-tray-off HDMI-1-battery" > $HOME/.config/polybar/bars
           systemctl --user restart polybar
         '';
       };

@@ -92,10 +92,8 @@
     battery = "BAT1";
     adapter = "ACAD";
 
-    label-full = "%percentage%%";
     format = {
       full = {
-        text = "<label-full>";
         prefix = {
           text = "󰂅  ";
           font = 2;
@@ -105,7 +103,6 @@
       };
 
       charging = {
-        text = "<label-full>";
         prefix = {
           text = "󰢝  ";
           font = 2;
@@ -115,7 +112,6 @@
       };
 
       discharging = {
-        text = "<label-full>";
         prefix = {
           text = "󰁾  ";
           font = 2;
@@ -125,7 +121,6 @@
       };
 
       low = {
-        text = "<label-full>";
         prefix = {
           text = "󰁺";
           font = 2;
@@ -259,11 +254,7 @@
 
     format = {
       connected = {
-        text = "<ramp-signal> <label-connected>";
-        prefix = {
-          text = "  ";
-          font = 2;
-        };
+        text = "%{T2}<ramp-signal>  %{T-}<label-connected>";
       };
 
       disconnected = {
@@ -280,7 +271,6 @@
         "3" = "󰤥";
         "4" = "󰤨";
       };
-      font = 2;
     };
   };
 

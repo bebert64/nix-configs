@@ -58,16 +58,22 @@
 
   fonts = {
     packages = with pkgs; [
-      fira-code
-      noto-fonts
-      noto-fonts-emoji
       dejavu_fonts
-      liberation_ttf_v1
-      powerline-fonts
+      fira-code
+      font-awesome
       font-awesome_4
       font-awesome_5
-      font-awesome
-      nerdfonts
+      helvetica-neue-lt-std
+      liberation_ttf_v1
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "Iosevka"
+        ];
+      })
+      noto-fonts
+      noto-fonts-emoji
+      powerline-fonts
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {

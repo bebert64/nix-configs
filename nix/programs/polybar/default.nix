@@ -18,6 +18,6 @@
   script = ''
     for BAR in $(${pkgs.coreutils}/bin/cat $HOME/.config/polybar/bars);
     do
-      polybar $BAR 2>/home/romain/polybar_log &
+      polybar $BAR
     done'';
 }

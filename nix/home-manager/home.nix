@@ -34,7 +34,6 @@ in
       direnv
       evince # pdf reader
       feh
-      firefox-bin-unwrapped
       gnome-calculator
       gnome-keyring
       hicolor-icon-theme
@@ -53,7 +52,7 @@ in
       openssh
       openssl
       pavucontrol # pulse audio volume controle
-      playerctl # to send data and retrieve metadata for polybarw
+      playerctl # to send data and retrieve metadata for polybar
       pulseaudio
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
       qt6.qttools # needed to extract artUrl from strawberry and display it with conky
@@ -225,7 +224,6 @@ in
   home.activation = {
     activationScript = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Create mount dirs
-      mkdir -p $HOME/mnt/Ipad/SideBooks $HOME/mnt/Ipad/Chunky $HOME/mnt/Ipad/MangaStorm
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
 
