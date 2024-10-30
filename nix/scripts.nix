@@ -16,7 +16,7 @@
 
     if ! ping -c1 $IP &> /dev/null; then
       echo "No machine responding at ''${IP}"
-      exit 0
+      exit 1
     fi
 
     if [[ $(curl -s ''${IP}:5000 | grep ''${NAME}) ]]; then
@@ -24,6 +24,7 @@
       echo "mounted ''${NAME} successfully"
     else
       echo "The machine at ''${IP} seems to not be ''${NAME}"
+      exit 1
     fi 
   '')
   (pkgs.writeScriptBin "umnas" ''
