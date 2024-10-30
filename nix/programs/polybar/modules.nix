@@ -205,7 +205,7 @@
       background = "${colors.shade5}";
     };
 
-    label = "%percentage_used:2%%";
+    label = "%percentage_used:3%%";
 
   };
   "module/cpu" = {
@@ -219,7 +219,7 @@
         font = 2;
       };
     };
-    label = "%percentage:2%%";
+    label = "%percentage:3%%";
   };
 
   "internet" = {
