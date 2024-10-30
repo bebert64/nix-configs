@@ -175,8 +175,11 @@ in
         };
         Timer = {
           Unit = "wallpapers-manager.service";
-          OnUnitActiveSec = "5";
+          OnUnitInactiveSec = "1h";
           OnBootSec = "1";
+        };
+        Install = {
+          WantedBy = ["timers.target"];
         };
 
       };
