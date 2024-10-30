@@ -7,10 +7,18 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    by-db = {
+      url = "git+ssh://git@github.com/bebert64/perso";
+    };
   };
 
   outputs =
-    inputs@{ nixpkgs, home-manager, ... }:
+    inputs@{
+      nixpkgs,
+      home-manager,
+      by-db,
+      ...
+    }:
     let
       host-specific = {
         stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
@@ -41,7 +49,7 @@
 
           modules = [
             (import ./nix/home-manager/home.nix {
-              inherit pkgs;
+              inherit pkgs by-db;
               host-specific = host-specific.fixe-bureau;
               lib = nixpkgs.lib;
               hm-lib = home-manager.lib;

@@ -35,13 +35,16 @@ Host-specific
     Check if all keys are used
 
 Various 1
+    Config for thunderbird
+    Test if autorandr (without --change) would be enough in i3 config
+        use stockly-romainc
+        desired behavior would be that nothing happens if no screen is connected, but that it changes if screens are new
     Fix nixfmt vs nixfmt-pckgs
+    Raccourci clavier pour basculer du casque aux enceintes et vice-versa
     Modify display-title-or-no-music
         send a long string of xxxxx
         use it to define the appropriate max-length value for the script output on stockly-romainc
     Check if rsync is needed is HM packages
-    Test if download helper can be installed from nix
-        https://search.nixos.org/packages?channel=24.05&from=0&size=50&sort=relevance&type=packages&query=downloadhelper
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...

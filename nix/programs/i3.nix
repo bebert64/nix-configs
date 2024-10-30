@@ -85,15 +85,11 @@
 
       startup =
         [
-          # Those two commands are run in succession to have the correct screens resolution when chosing wallpapers
           {
-            command = "autorandr --change --force && ${
-              host-specific.wallpapers-manager-cmd or "wallpapers-manager"
-            } cron --minutes 60 --mode fifty-fifty";
+            command = "autorandr --change";
             notification = false;
             always = true;
           }
-          { command = "mount-NAS"; }
           { command = "setxkbmap fr"; }
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
           {

@@ -39,6 +39,7 @@
         hooks.postswitch = ''
           echo "HDMI-1 HDMI-2" > $HOME/.config/polybar/bars
           systemctl --user restart polybar
+          systemctl --user restart wallpapers-manager
         '';
       };
     };

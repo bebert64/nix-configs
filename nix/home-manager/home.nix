@@ -3,11 +3,13 @@
   lib,
   hm-lib,
   host-specific,
+  by-db,
   ...
 }@inputs:
 
 let
   scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+  by-db-pkgs = by-db.packages.x86_64-linux;
 in
 
 {
@@ -25,11 +27,12 @@ in
       jetbrains = (import ../programs/jetbrains.nix inputs);
     in
     [
+      by-db-pkgs.wallpapers-manager
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
       avidemux
       caffeine-ng # to prevent going to sleep when watching videos
-      chromium
+      # chromium
       conky
       direnv
       evince # pdf reader
@@ -68,6 +71,7 @@ in
       udiskie
       unrar
       unzip
+      vdhcoapp # companion to VideoDownloadHelper browser add-on
       vlc
       vscode
       xclip # used by ranger to paste into global clipboard
@@ -112,7 +116,7 @@ in
     ++ import ../scripts.nix { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
-      if host-specific.wifi then
+      if host-specific.wifi or false then
         [
           networkmanager
           networkmanagerapplet
@@ -147,6 +151,35 @@ in
     polybar = import ../programs/polybar/default.nix { inherit pkgs scripts-playerctl; };
     playerctld = {
       enable = true;
+    };
+  };
+
+  systemd.user = {
+    enable = true;
+    services = {
+      wallpapers-manager = {
+        Unit = {
+          Description = "Chooses walpaper(s) based on the number of monitors connected";
+        };
+        Service = {
+          Type = "exec";
+          ExecStart = "${by-db-pkgs.wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
+        };
+
+      };
+    };
+    timers = {
+      wallpapers-manager = {
+        Unit = {
+          Description = "Timer for wallpapers-manager";
+        };
+        Timer = {
+          Unit = "wallpapers-manager.service";
+          OnUnitActiveSec = "5";
+          OnBootSec = "1";
+        };
+
+      };
     };
   };
 
