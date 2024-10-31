@@ -1,12 +1,9 @@
 
-Create nix flake for rust crate and add them to home-manager
-
 General fixes 1
-    Shortcut to open 1password
     Firefox shortcuts
-        nix search
         crates.io search
         rust doc search
+        https://addons.mozilla.org/en-US/firefox/addon/custom-search-engine/
     
 Refacto
     Merge home.nix

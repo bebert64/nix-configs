@@ -193,18 +193,18 @@ in
     mimeApps = {
       enable = true;
       associations.added = {
+        "defaut-web-browser" = [ "firefox.desktop" ];
         "text/html" = [ "firefox.desktop" ];
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
-        "defaut-web-browser" = [ "firefox.desktop" ];
       };
       defaultApplications = {
+        "defaut-web-browser" = [ "firefox.desktop" ];
         "text/html" = [ "firefox.desktop" ];
         "text/xml" = [ "firefox.desktop" ];
         "x-scheme-handler/http" = [ "firefox.desktop" ];
         "x-scheme-handler/https" = [ "firefox.desktop" ];
-        "defaut-web-browser" = [ "firefox.desktop" ];
       };
     };
   };

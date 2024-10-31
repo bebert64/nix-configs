@@ -50,12 +50,6 @@ rec {
             title_display=$title
         fi
 
-        if [[ $status == "Playing" ]]; then
-            button_status=$button_pause
-        else
-            button_status=$button_play
-        fi
-
         echo "$title_display"
     ''
   );
@@ -64,11 +58,11 @@ rec {
     pkgs.writeScriptBin "playerctl-cmd-bar-and-display-title" ''
       PATH=${
         lib.makeBinPath [
-          pkgs.playerctl
           display-title
           restart-or-previous
         ]
       }
+        playerctl=${pkgs.playerctl}/bin/playerctl
 
         status=$($playerctl status 2> /dev/null)
         previous=
@@ -82,6 +76,12 @@ rec {
         button_pause="%{A1:$playerctl pause:}  $pause  %{A}"
         button_stop="%{A1:$playerctl -a stop:}  $stop  %{A}"
         button_next="%{A1:$playerctl next:}  $next%{A}"
+
+        if [[ $status == "Playing" ]]; then
+            button_status=$button_pause
+        else
+            button_status=$button_play
+        fi
 
         command_bar="$button_previous$button_stop$button_status$button_next"
 
