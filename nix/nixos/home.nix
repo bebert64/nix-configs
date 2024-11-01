@@ -276,7 +276,7 @@ in
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" ${../../dotfiles/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
 
       # Datagrip
       ln -sf $HOME/nix-configs/dotfiles/Datagrip/DataGripProjects $HOME
