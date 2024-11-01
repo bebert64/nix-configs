@@ -33,6 +33,9 @@ Host-specific
 Various 1
     Config for thunderbird
     Add git pull cmd to upgrade
+    Create a simplified version of the nix-shell from Stockly
+        Place it in the store
+        Create it in ~/code at activation time
     Test if autorandr (without --change) would be enough in i3 config
         use stockly-romainc
         desired behavior would be that nothing happens if no screen is connected, but that it changes if screens are new

@@ -40,6 +40,7 @@ in
       (callPackage ../programs/insomnia.nix { })
       jetbrains.datagrip
       jq # cli json processor, for some scripts (to get workspace id from i3)
+      # less # not sure what it was used for, to delete if not needed after a while, but keeping for now just in case I can't remeber what to add
       microcodeIntel # for increased microprocessor performance
       mcomix
       nixd
@@ -48,7 +49,7 @@ in
       nodePackages.npm
       nodePackages.pnpm
       openssh
-      openssl
+      # openssl
       pavucontrol # pulse audio volume controle
       playerctl # to send data and retrieve metadata for polybar
       polkit # polkit is the utility used by vscode to save as sudo
@@ -166,7 +167,6 @@ in
       wallpapers-manager = {
         Unit = {
           Description = "Chooses walpaper(s) based on the number of monitors connected";
-          RequiresMountFor = "/";
         };
         Service = {
           Type = "exec";
@@ -261,13 +261,13 @@ in
 
   # Activation script
   home.activation = {
-    createDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Create mount dirs
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
 
       # Symlink fonts
-      ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
+      # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # Symlink picom config file
       ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config

@@ -1,7 +1,9 @@
 { pkgs, specialArgs, ... }:
 {
-  imports = [ ../common.nix 
-    ./hardware-configuration.nix];
+  imports = [
+    ../common.nix
+    ./hardware-configuration.nix
+  ];
 
   # Configuration options that are not standard NixOS, but were defined by Stockly
   stockly = {
