@@ -41,7 +41,7 @@
           modules = [ (import ./nix/home-manager/home_raspi.nix { inherit pkgs; }) ];
         };
 
-        fixe-bureau = home-manager.lib.homeManagerConfiguration rec {
+        fixe-bureau = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "x86_64-linux";
             # config = {
@@ -50,13 +50,13 @@
           };
 
           modules = [
-            (import ./nix/home-manager/home.nix {
-              inherit pkgs by-db;
-              host-specific = host-specific.fixe-bureau;
-              lib = nixpkgs.lib;
-              hm-lib = home-manager.lib;
-            })
+            ./nix/home-manager/home.nix
           ];
+           extraSpecialArgs={
+              inherit by-db;
+              host-specific = host-specific.fixe-bureau;
+              hm-lib = home-manager.lib;
+            };
         };
       };
     };

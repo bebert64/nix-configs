@@ -1,8 +1,9 @@
-host-specific:
+
 {
   pkgs,
   lib,
   by-db,
+  host-specific,
   ...
 }@inputs:
 
