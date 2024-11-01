@@ -1,14 +1,14 @@
 {
   pkgs,
   lib,
-  by-db,
+  # by-db,
   # host-specific,
   ...
 }@inputs:
 
 let
   scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
-  by-db-pkgs = by-db.packages.x86_64-linux;
+  # by-db-pkgs = by-db.packages.x86_64-linux;
 in
 
 {
@@ -21,7 +21,7 @@ in
     with pkgs;
     with gnome;
     [
-      by-db-pkgs.wallpapers-manager
+      # by-db-pkgs.wallpapers-manager
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
       avidemux
@@ -153,37 +153,37 @@ in
     };
   };
 
-  systemd.user = {
-    enable = true;
-    services = {
-      wallpapers-manager = {
-        Unit = {
-          Description = "Chooses walpaper(s) based on the number of monitors connected";
-        };
-        Service = {
-          Type = "exec";
-          ExecStart = "${by-db-pkgs.wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
-        };
+  # systemd.user = {
+  #   enable = true;
+  #   services = {
+  #     wallpapers-manager = {
+  #       Unit = {
+  #         Description = "Chooses walpaper(s) based on the number of monitors connected";
+  #       };
+  #       Service = {
+  #         Type = "exec";
+  #         ExecStart = "${by-db-pkgs.wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
+  #       };
 
-      };
-    };
-    timers = {
-      wallpapers-manager = {
-        Unit = {
-          Description = "Timer for wallpapers-manager";
-        };
-        Timer = {
-          Unit = "wallpapers-manager.service";
-          OnUnitInactiveSec = "1h";
-          OnBootSec = "1";
-        };
-        Install = {
-          WantedBy = [ "timers.target" ];
-        };
+  #     };
+  #   };
+  #   timers = {
+  #     wallpapers-manager = {
+  #       Unit = {
+  #         Description = "Timer for wallpapers-manager";
+  #       };
+  #       Timer = {
+  #         Unit = "wallpapers-manager.service";
+  #         OnUnitInactiveSec = "1h";
+  #         OnBootSec = "1";
+  #       };
+  #       Install = {
+  #         WantedBy = [ "timers.target" ];
+  #       };
 
-      };
-    };
-  };
+  #     };
+  #   };
+  # };
 
   # Copy custom files / dotfiles
   home.file = {
