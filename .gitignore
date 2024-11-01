@@ -1,7 +1,2 @@
-ranger_bookmarks
-**/__pycache__/
-Raspberry/scrapers/Algolia.ini
-Raspberry/scrapers/adultime_scene_search.json
+.vscode/
 test.sh
-dotfiles/btop/btop.log
-.uuid
