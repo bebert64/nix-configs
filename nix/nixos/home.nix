@@ -7,7 +7,7 @@
 }@inputs:
 
 let
-  scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+  scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 
