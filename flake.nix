@@ -20,18 +20,14 @@
       ...
     }:
     let
-      host-specific = {
-        stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
-        raspi = import ./nix/host-specific/raspi.nix;
-        fixe-bureau = import ./nix/host-specific/fixe-bureau.nix;
-      };
+      hosts-specific = import ./nix/nixos/hosts-specific;
     in
     {
       stockly-romainc = {
         nixosModule = ./nix/nixos/stockly-romainc/configuration.nix;
         specialArgs = {
           inherit by-db home-manager;
-          host-specific = host-specific.stockly-romainc;
+          host-specific = hosts-specific.stockly-romainc;
         };
       };
       homeConfigurations = {
@@ -49,14 +45,12 @@
             # };
           };
 
-          modules = [
-            ./nix/home-manager/home.nix
-          ];
-           extraSpecialArgs={
-              inherit by-db;
-              host-specific = host-specific.fixe-bureau;
-              hm-lib = home-manager.lib;
-            };
+          modules = [ ./nix/home-manager/home.nix ];
+          extraSpecialArgs = {
+            inherit by-db;
+            host-specific = hosts-specific.fixe-bureau;
+            hm-lib = home-manager.lib;
+          };
         };
       };
     };

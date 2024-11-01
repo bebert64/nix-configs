@@ -1,4 +1,5 @@
 {
+  username = "user";
   wifi = true;
   bluetooth = true;
   minutes-before-lock = 3;

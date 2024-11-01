@@ -12,8 +12,8 @@ in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "romain";
-  home.homeDirectory = "/home/romain";
+  home.username = host-specific.username;
+  home.homeDirectory = "/home/${host-specific.username}";
 
   home.packages =
     let

@@ -13,8 +13,8 @@ in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "user";
-  home.homeDirectory = "/home/user";
+  home.username = host-specific.username;
+  home.homeDirectory = "/home/${host-specific.username}";
   home.packages =
     let
       jetbrains = (import ../programs/jetbrains.nix inputs);
@@ -123,7 +123,6 @@ in
       else
         [ ]
     );
-    
 
   # Programs known by Home-Manager
   programs = {
