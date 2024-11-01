@@ -1,5 +1,5 @@
-{ pkgs, host-specifics2, ... }:
-let b= host-specifics2; in 
+{ pkgs, host-specifics, ... }:
+let b= host-specifics; in 
 {
   imports = [ ../common.nix ];
   inherit b;
