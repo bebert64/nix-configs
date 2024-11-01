@@ -68,7 +68,6 @@ in
       unrar
       unzip
       vdhcoapp # companion to VideoDownloadHelper browser add-on
-      vi # minimal version of vim, used especially by git
       vlc
       vscode
       xclip # used by ranger to paste into global clipboard
