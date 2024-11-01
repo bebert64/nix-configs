@@ -1,9 +1,8 @@
-{ inputs, ... }:
+{ pkgs, specialArgs, ... }:
 {
   imports = [
-    # Include the results of the hardware scan.
+    ../common.nix
     ./hardware-configuration.nix
-    inputs.romain-computers.stockly-romainc.nixosModule
   ];
 
   # Configuration options that are not standard NixOS, but were defined by Stockly
@@ -14,6 +13,30 @@
     auto-update.enable = true; # See auto-update.nix for doc
     keyboard-layout = "fr";
   };
+
+  home-manager = {
+    users.user.imports = [ ../../home-manager/home.nix ];
+    backupFileExtension = "bckp";
+    extraSpecialArgs = specialArgs;
+  };
+
+  services = {
+    xserver.windowManager.i3.package = pkgs.i3-gaps;
+
+    displayManager.autoLogin = {
+      enable = true;
+      user = "user";
+    };
+
+    # Enable touchpad support (enabled default in most desktopManager).
+    libinput = {
+      touchpad.naturalScrolling = true;
+      touchpad.middleEmulation = true;
+      touchpad.tapping = true;
+    };
+  };
+
+  nixpkgs.config.allowUnfree = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

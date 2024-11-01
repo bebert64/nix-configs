@@ -10,6 +10,7 @@
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso";
     };
+    stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
   };
 
   outputs =
@@ -17,49 +18,37 @@
       nixpkgs,
       home-manager,
       by-db,
+      stockly-computers,
       ...
     }:
     let
-      host-specific = {
-        stockly-romainc = import ./nix/nixos/stockly-romainc/host-specific.nix;
-        raspi = import ./nix/host-specific/raspi.nix;
-        fixe-bureau = import ./nix/host-specific/fixe-bureau.nix;
-      };
+      hosts-specific = import ./hosts-specific;
     in
     {
-      nixosModules = {
-        stockly-romainc = ./nix/nixos/stockly-romainc/configuration.nix;
+      nixosConfigurations.stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
+        hostname = "stockly-romainc";
+        configuration = ./nixos/stockly-romainc/configuration.nix;
+        specialArgs = {
+          inherit stockly-computers home-manager by-db;
+          host-specific = hosts-specific.stockly-romainc;
+        };
       };
+
       homeConfigurations = {
         raspi = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs {
-            system = "aarch64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
-          };
+          pkgs = import nixpkgs { system = "aarch64-linux"; };
 
-          modules = [ (import ./nix/home-manager/home_raspi.nix { inherit pkgs; }) ];
+          modules = [ (import ./home-manager/home_raspi.nix { inherit pkgs; }) ];
         };
+        fixe-bureau = home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs { system = "x86_64-linux"; };
 
-        fixe-bureau = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
-            config = {
-              allowUnfree = true;
-            };
+          modules = [ ./home-manager/home.nix ];
+          extraSpecialArgs = {
+            inherit by-db;
+            host-specific = hosts-specific.fixe-bureau;
           };
-
-          modules = [
-            (import ./nix/home-manager/home.nix {
-              inherit pkgs by-db;
-              host-specific = host-specific.fixe-bureau;
-              lib = nixpkgs.lib;
-              hm-lib = home-manager.lib;
-            })
-          ];
         };
-      };
-      stocklySpecialArgs = {
-        flake-inputs = inputs;
-        host-specific = host-specific.stockly-romainc;
       };
     };
 }

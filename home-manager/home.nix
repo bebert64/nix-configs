@@ -1,31 +1,26 @@
 {
   pkgs,
   lib,
-  hm-lib,
-  host-specific,
   by-db,
+  host-specific,
   ...
 }@inputs:
-
 let
-  scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+  scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
-
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "romain";
-  home.homeDirectory = "/home/romain";
+  home.username = host-specific.username;
+  home.homeDirectory = "/home/${host-specific.username}";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages =
-    with pkgs;
-    with gnome;
     let
       jetbrains = (import ../programs/jetbrains.nix inputs);
     in
+    with pkgs;
+    with gnome;
     [
       by-db-pkgs.wallpapers-manager
       anydesk
@@ -37,14 +32,15 @@ in
       direnv
       evince # pdf reader
       feh
+      fusee-launcher
       gnome-calculator
       gnome-keyring
-      hicolor-icon-theme
+      # hicolor-icon-theme
       inkscape
       (callPackage ../programs/insomnia.nix { })
       jetbrains.datagrip
       jq # cli json processor, for some scripts (to get workspace id from i3)
-      less
+      # less # not sure what it was used for, to delete if not needed after a while, but keeping for now just in case I can't remeber what to add
       microcodeIntel # for increased microprocessor performance
       mcomix
       nixd
@@ -53,15 +49,16 @@ in
       nodePackages.npm
       nodePackages.pnpm
       openssh
-      openssl
+      # openssl
       pavucontrol # pulse audio volume controle
       playerctl # to send data and retrieve metadata for polybar
-      pulseaudio
+      polkit # polkit is the utility used by vscode to save as sudo
+      polkit_gnome
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
+      pulseaudio
       qt6.qttools # needed to extract artUrl from strawberry and display it with conky
       rofi
       rsync
-      grsync # (= graphical rsync)
       slack
       sqlite
       sshfs
@@ -113,7 +110,17 @@ in
       powerline-fonts
 
     ]
-    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ (
+      if host-specific.nixos or false then
+        [
+
+          alock # locker allowing transparent background
+          picom-next
+        ]
+      else
+        [ ]
+    )
+    ++ import ../scripts { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi or false then
@@ -179,26 +186,25 @@ in
           OnBootSec = "1";
         };
         Install = {
-          WantedBy = ["timers.target"];
+          WantedBy = [ "timers.target" ];
         };
 
       };
     };
   };
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # Copy custom files / assets
   home.file = {
-    ".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
-    ".cargo/config.toml".source = ../../dotfiles/cargo_config.toml;
-    ".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
-    ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
-    ".config/rofi/theme".source = ../../dotfiles/rofi/theme;
-    ".conky".source = ../../dotfiles/conky;
-    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../dotfiles/MonokaiStockly;
+    ".anydesk/user.conf".source = ../assets/anydesk-user.conf;
+    ".cargo/config.toml".source = ../assets/cargo_config.toml;
+    ".config/qt5ct/qt5ct.conf".source = ../assets/qt5ct.conf;
+    ".config/ranger/rc.conf".source = ../assets/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../assets/ranger/scope.sh;
+    ".config/rofi/theme".source = ../assets/rofi/theme;
+    ".conky".source = ../assets/conky;
+    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../assets/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
-    ".xinitrc".source = ../../dotfiles/.xinitrc;
+    ".xinitrc".source = ../assets/.xinitrc;
   };
 
   home.pointerCursor = {
@@ -211,7 +217,8 @@ in
   # launch i3
   xsession = {
     enable = true;
-    windowManager.i3 = import ../programs/i3.nix inputs;
+    scriptPath = ".hm-xsession";
+    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
     numlock.enable = true;
   };
   gtk = {
@@ -227,7 +234,6 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    WALLPAPERS_DIR = "$HOME/wallpapers";
     XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
     LC_ALL = "en_US.UTF-8";
   };
@@ -255,35 +261,35 @@ in
 
   # Activation script
   home.activation = {
-    activationScript = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Create mount dirs
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
 
       # Symlink fonts
-      ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
+      # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # Symlink picom config file
-      ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config
+      ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
 
       # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../assets/tilix.dconf}
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" ${../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
 
       # Datagrip
-      ln -sf $HOME/nix-configs/dotfiles/Datagrip/DataGripProjects $HOME
+      ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
 
       # Symlink some ssh config file
       # Do NOT symlink the whole dir, to make sure to never git private key
       mkdir -p $HOME/.ssh
-      ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
+      ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
     '';
   };
 
-  nix = {
+  nix = lib.mkIf (!(host-specific.nixos or false)) {
     package = pkgs.nix;
     settings.experimental-features = [
       "nix-command"
@@ -293,6 +299,7 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true; # Necessary for vscode
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

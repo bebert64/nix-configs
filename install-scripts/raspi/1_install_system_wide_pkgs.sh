@@ -41,12 +41,12 @@ cd ~
 sudo curl -L https://github.com/stashapp/stash/releases/download/v0.22.1/stash-linux-arm64v8 -o /usr/local/bin/stash-linux-arm64v8
 sudo chmod +x /usr/local/bin/stash-linux-arm64v8
 sudo mkdir /usr/local/etc/stash
-sudo ln -s ~/nix-configs/dotfiles/stash/config.yml /usr/local/etc/stash/
-sudo ln -s ~/nix-configs/dotfiles/stash/scrapers /usr/local/etc/stash/
+sudo ln -s ~/nix-configs/assets/stash/config.yml /usr/local/etc/stash/
+sudo ln -s ~/nix-configs/assets/stash/scrapers /usr/local/etc/stash/
 
 # Symlink rc.local (to auto start packages at boot)
 sudo rm /etc/rc.local
-sudo ln -s ~/nix-configs/dotfiles/raspi/rc.local /etc/
+sudo ln -s ~/nix-configs/assets/raspi/rc.local /etc/
 
 # Update postgres config
 sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/13/main/postgresql.conf 

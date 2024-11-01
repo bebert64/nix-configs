@@ -1,12 +1,11 @@
 {
   pkgs,
-  flake-inputs,
+  home-manager,
   host-specific,
   ...
 }:
-
 {
-  imports = [ flake-inputs.home-manager.nixosModules.home-manager ];
+  imports = [ home-manager.nixosModules.home-manager ];
 
   # X11 Configuration
   services.xserver = {

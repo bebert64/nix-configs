@@ -115,7 +115,7 @@
             notification = false;
           }
           {
-            command = "conky -c ${../../dotfiles/conky/qclocktwo} -d";
+            command = "conky -c ${../assets/conky/qclocktwo} -d";
             notification = false;
           }
         ]
