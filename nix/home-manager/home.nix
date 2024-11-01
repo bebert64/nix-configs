@@ -1,8 +1,7 @@
+host-specific:
 {
   pkgs,
   lib,
-  hm-lib,
-  host-specific,
   by-db,
   ...
 }@inputs:
@@ -18,14 +17,13 @@ in
   home.username = "romain";
   home.homeDirectory = "/home/romain";
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
+  # Packages Home-Manager doesn't have specific handling for
   home.packages =
-    with pkgs;
-    with gnome;
     let
       jetbrains = (import ../programs/jetbrains.nix inputs);
     in
+    with pkgs;
+    with gnome;
     [
       by-db-pkgs.wallpapers-manager
       anydesk
@@ -37,14 +35,14 @@ in
       direnv
       evince # pdf reader
       feh
+      fusee-launcher
       gnome-calculator
       gnome-keyring
-      hicolor-icon-theme
+      # hicolor-icon-theme
       inkscape
       (callPackage ../programs/insomnia.nix { })
       jetbrains.datagrip
       jq # cli json processor, for some scripts (to get workspace id from i3)
-      less
       microcodeIntel # for increased microprocessor performance
       mcomix
       nixd
@@ -56,12 +54,13 @@ in
       openssl
       pavucontrol # pulse audio volume controle
       playerctl # to send data and retrieve metadata for polybar
-      pulseaudio
+      polkit # polkit is the utility used by vscode to save as sudo
+      polkit_gnome
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
+      pulseaudio
       qt6.qttools # needed to extract artUrl from strawberry and display it with conky
       rofi
       rsync
-      grsync # (= graphical rsync)
       slack
       sqlite
       sshfs
@@ -113,7 +112,7 @@ in
       powerline-fonts
 
     ]
-    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ import ../scripts { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi or false then
@@ -179,15 +178,14 @@ in
           OnBootSec = "1";
         };
         Install = {
-          WantedBy = ["timers.target"];
+          WantedBy = [ "timers.target" ];
         };
 
       };
     };
   };
 
-  # Home Manager is pretty good at managing dotfiles. The primary way to manage
-  # plain files is through 'home.file'.
+  # Copy custom files / dotfiles
   home.file = {
     ".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
     ".cargo/config.toml".source = ../../dotfiles/cargo_config.toml;
@@ -211,7 +209,8 @@ in
   # launch i3
   xsession = {
     enable = true;
-    windowManager.i3 = import ../programs/i3.nix inputs;
+    # scriptPath = ".hm-xsession";
+    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
     numlock.enable = true;
   };
   gtk = {
@@ -227,7 +226,6 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    WALLPAPERS_DIR = "$HOME/wallpapers";
     XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
     LC_ALL = "en_US.UTF-8";
   };
@@ -255,7 +253,7 @@ in
 
   # Activation script
   home.activation = {
-    activationScript = hm-lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    createDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       # Create mount dirs
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
@@ -267,7 +265,7 @@ in
       ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config
 
       # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < /home/romain/nix-configs/dotfiles/tilix.dconf
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../dotfiles/tilix.dconf}
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
@@ -293,6 +291,7 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  nixpkgs.config.allowUnfree = true; # Necessary for vscode
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

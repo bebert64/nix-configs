@@ -27,24 +27,26 @@
       };
     in
     {
-      nixosModules = {
-        stockly-romainc = ./nix/nixos/stockly-romainc/configuration.nix;
+      stockly-romainc = {
+        nixosModule = ./nix/nixos/stockly-romainc/configuration.nix;
+        specialArgs = {
+          inherit by-db home-manager;
+          host-specific = host-specific.stockly-romainc;
+        };
       };
       homeConfigurations = {
         raspi = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs {
-            system = "aarch64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
-          };
+          pkgs = import nixpkgs { system = "aarch64-linux"; };
 
           modules = [ (import ./nix/home-manager/home_raspi.nix { inherit pkgs; }) ];
         };
 
         fixe-bureau = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs {
-            system = "x86_64-linux"; # x86_64-linux, aarch64-multiplatform, etc.
-            config = {
-              allowUnfree = true;
-            };
+            system = "x86_64-linux";
+            # config = {
+            #   allowUnfree = true;
+            # };
           };
 
           modules = [
@@ -56,10 +58,6 @@
             })
           ];
         };
-      };
-      stocklySpecialArgs = {
-        flake-inputs = inputs;
-        host-specific = host-specific.stockly-romainc;
       };
     };
 }

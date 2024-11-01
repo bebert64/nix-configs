@@ -1,15 +1,10 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ host-specific, pkgs, ... }:
-
+{ pkgs, ... }:
 {
   imports = [ ../common.nix ];
 
   home-manager = {
-    users.user = import ../home.nix host-specific;
-    backupFileExtension = "backup2";
+    users.user.imports = [ ../home.nix ];
+    backupFileExtension = "bckp";
   };
 
   services = {

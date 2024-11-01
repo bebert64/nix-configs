@@ -1,7 +1,6 @@
 
 General fixes 1
     Firefox shortcuts
-        crates.io search
         rust doc search
         https://addons.mozilla.org/en-US/firefox/addon/custom-search-engine/
     
@@ -47,7 +46,7 @@ Various 1
     Check if I really need all this fonts...
     zsh.nix: check if the if [[ "$(tty)" == '/dev/tty1' ]]; block is necessary
     Think about where to use symlink / use store / write new files for dotfiles and comment in config about why
-    Move dotfiles/raspi/renew-cert.sh to scripts.nix
+    Move dotfiles/raspi/renew-cert.sh to scripts
     add plugins to ranger (icons, theme, ...)
     Better script for yt-dlp
         extract name of res including 720p
