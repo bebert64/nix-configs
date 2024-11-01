@@ -30,7 +30,7 @@
       stockly-romainc = {
         nixosModule = ./nix/nixos/stockly-romainc/configuration.nix;
         specialArgs = {
-          inherit inputs;
+          inherit by-db home-manager;
           host-specific = host-specific.stockly-romainc;
         };
       };
