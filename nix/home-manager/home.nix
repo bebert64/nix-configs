@@ -288,7 +288,7 @@ in
     '';
   };
 
-  nix = {
+  nix = lib.mkIf (!(host-specific.nixos or false)) {
     package = pkgs.nix;
     settings.experimental-features = [
       "nix-command"
