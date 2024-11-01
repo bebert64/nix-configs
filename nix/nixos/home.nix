@@ -109,7 +109,7 @@ in
       picom-next
 
     ]
-    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ import ../scripts { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi or false then
