@@ -2,6 +2,7 @@
 let b= host-specifics2; in 
 {
   imports = [ ../common.nix ];
+  inherit b;
 
   home-manager = {
     users.user.imports = [ ../home.nix ];
