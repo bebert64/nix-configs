@@ -1,9 +1,7 @@
-{ inputs, ... }:
 {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.romain-computers.stockly-romainc.nixosModule
   ];
 
   # Configuration options that are not standard NixOS, but were defined by Stockly

@@ -10,6 +10,7 @@
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso";
     };
+    stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
   };
 
   outputs =
@@ -17,16 +18,18 @@
       nixpkgs,
       home-manager,
       by-db,
+      stockly-computers,
       ...
     }:
     let
       hosts-specific = import ./nix/hosts-specific;
     in
     {
-      stockly-romainc = {
-        nixosModule = ./nix/nixos/stockly-romainc/configuration.nix;
+      nixosConfigurations.stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
+        hostname = "stockly-romainc";
+        configuration = ./stockly/configuration.nix;
         specialArgs = {
-          inherit by-db home-manager;
+          inherit inputs;
           host-specific = hosts-specific.stockly-romainc;
         };
       };
@@ -38,9 +41,7 @@
         };
 
         fixe-bureau = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            system = "x86_64-linux";
-          };
+          pkgs = import nixpkgs { system = "x86_64-linux"; };
 
           modules = [ ./nix/home-manager/home.nix ];
           extraSpecialArgs = {
