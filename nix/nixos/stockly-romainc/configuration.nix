@@ -15,7 +15,7 @@
   };
 
   home-manager = {
-    users.user.imports = [ ../home.nix ];
+    users.user.imports = [ ../../home-manager/home.nix ];
     backupFileExtension = "bckp";
     extraSpecialArgs = specialArgs;
   };

@@ -193,18 +193,18 @@ in
     };
   };
 
-  # Copy custom files / dotfiles
+  # Copy custom files / assets
   home.file = {
-    ".anydesk/user.conf".source = ../../dotfiles/anydesk-user.conf;
-    ".cargo/config.toml".source = ../../dotfiles/cargo_config.toml;
-    ".config/qt5ct/qt5ct.conf".source = ../../dotfiles/qt5ct.conf;
-    ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
-    ".config/rofi/theme".source = ../../dotfiles/rofi/theme;
-    ".conky".source = ../../dotfiles/conky;
-    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../dotfiles/MonokaiStockly;
+    ".anydesk/user.conf".source = ../../assets/anydesk-user.conf;
+    ".cargo/config.toml".source = ../../assets/cargo_config.toml;
+    ".config/qt5ct/qt5ct.conf".source = ../../assets/qt5ct.conf;
+    ".config/ranger/rc.conf".source = ../../assets/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../../assets/ranger/scope.sh;
+    ".config/rofi/theme".source = ../../assets/rofi/theme;
+    ".conky".source = ../../assets/conky;
+    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../assets/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
-    ".xinitrc".source = ../../dotfiles/.xinitrc;
+    ".xinitrc".source = ../../assets/.xinitrc;
   };
 
   home.pointerCursor = {
@@ -270,22 +270,22 @@ in
       # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # Symlink picom config file
-      ln -sf $HOME/nix-configs/dotfiles/picom.conf $HOME/.config
+      ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
 
       # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../dotfiles/tilix.dconf}
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../assets/tilix.dconf}
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" ${../../dotfiles/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" ${../../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
 
       # Datagrip
-      ln -sf $HOME/nix-configs/dotfiles/Datagrip/DataGripProjects $HOME
+      ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
 
       # Symlink some ssh config file
       # Do NOT symlink the whole dir, to make sure to never git private key
       mkdir -p $HOME/.ssh
-      ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
+      ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
     '';
   };
 

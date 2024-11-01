@@ -16,8 +16,8 @@
   ];
 
   home.file = {
-    ".config/ranger/rc.conf".source = ../../dotfiles/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = ../../dotfiles/ranger/scope.sh;
+    ".config/ranger/rc.conf".source = ../../assets/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../../assets/ranger/scope.sh;
   };
 
   # Session variable
@@ -36,17 +36,17 @@
       ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # Symlink btop config folder
-      ln -sf $HOME/nix-configs/dotfiles/btop $HOME/.config
+      ln -sf $HOME/nix-configs/assets/btop $HOME/.config
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" $HOME/nix-configs/dotfiles/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" $HOME/nix-configs/assets/ranger/bookmarks > $HOME/.local/share/ranger/bookmarks
 
       # Symlink some ssh config file
       # Do NOT symlink the whole dir, to make sure to never git private key
       mkdir -p $HOME/.ssh
-      ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
-      ln -sf $HOME/nix-configs/dotfiles/ssh/config $HOME/.ssh/
+      ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
+      ln -sf $HOME/nix-configs/assets/ssh/config $HOME/.ssh/
     '';
   };
 

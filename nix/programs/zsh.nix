@@ -32,12 +32,12 @@
   plugins = [
     {
       name = "stockly";
-      src = ../../dotfiles/OhMyZsh;
+      src = ../../assets/OhMyZsh;
       file = "stockly.zsh-theme";
     }
     {
       name = "git";
-      src = ../../dotfiles/OhMyZsh;
+      src = ../../assets/OhMyZsh;
       file = "git.zsh";
     }
   ];
