@@ -2,6 +2,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ../nix/nixos/stockly-romainc/configuration.nix
   ];
 
   # Configuration options that are not standard NixOS, but were defined by Stockly
