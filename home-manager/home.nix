@@ -195,16 +195,16 @@ in
 
   # Copy custom files / assets
   home.file = {
-    ".anydesk/user.conf".source = ../../assets/anydesk-user.conf;
-    ".cargo/config.toml".source = ../../assets/cargo_config.toml;
-    ".config/qt5ct/qt5ct.conf".source = ../../assets/qt5ct.conf;
-    ".config/ranger/rc.conf".source = ../../assets/ranger/rc.conf;
-    ".config/ranger/scope.sh".source = ../../assets/ranger/scope.sh;
-    ".config/rofi/theme".source = ../../assets/rofi/theme;
-    ".conky".source = ../../assets/conky;
-    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../../assets/MonokaiStockly;
+    ".anydesk/user.conf".source = ../assets/anydesk-user.conf;
+    ".cargo/config.toml".source = ../assets/cargo_config.toml;
+    ".config/qt5ct/qt5ct.conf".source = ../assets/qt5ct.conf;
+    ".config/ranger/rc.conf".source = ../assets/ranger/rc.conf;
+    ".config/ranger/scope.sh".source = ../assets/ranger/scope.sh;
+    ".config/rofi/theme".source = ../assets/rofi/theme;
+    ".conky".source = ../assets/conky;
+    ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../assets/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
-    ".xinitrc".source = ../../assets/.xinitrc;
+    ".xinitrc".source = ../assets/.xinitrc;
   };
 
   home.pointerCursor = {
@@ -273,11 +273,11 @@ in
       ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
 
       # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../../assets/tilix.dconf}
+      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../assets/tilix.dconf}
 
       # Create ranger's bookmarks
       mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" ${../../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
+      sed "s/\$USER/"$USER"/" ${../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
 
       # Datagrip
       ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
