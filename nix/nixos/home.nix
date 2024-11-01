@@ -8,7 +8,7 @@
 
 let
   scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
-  # by-db-pkgs = by-db.packages.x86_64-linux;
+  by-db-pkgs = by-db.packages.x86_64-linux;
 in
 
 {
@@ -21,7 +21,7 @@ in
     with pkgs;
     with gnome;
     [
-      # by-db-pkgs.wallpapers-manager
+      by-db-pkgs.wallpapers-manager
       anydesk
       arandr # GUI to configure screens positions (need to kill autorandr)
       avidemux
