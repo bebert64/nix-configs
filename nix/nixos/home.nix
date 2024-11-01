@@ -2,7 +2,7 @@
   pkgs,
   lib,
   by-db,
-  host-specific,
+  # host-specific,
   ...
 }@inputs:
 
@@ -111,21 +111,22 @@ in
       picom-next
 
     ]
-    ++ import ../scripts.nix { inherit host-specific pkgs; }
+    # ++ import ../scripts.nix { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
-    ++ (
-      if host-specific.wifi or false then
-        [
-          networkmanager
-          networkmanagerapplet
-        ]
-      else
-        [ ]
-    );
+    # ++ (
+    #   if host-specific.wifi or false then
+    #     [
+    #       networkmanager
+    #       networkmanagerapplet
+    #     ]
+    #   else
+    #     [ ]
+    # );
+    ;
 
   # Programs known by Home-Manager
   programs = {
-    autorandr = host-specific.autorandr;
+    # autorandr = host-specific.autorandr;
     btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
@@ -142,7 +143,7 @@ in
         syntax on
       '';
     };
-    zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
+    # zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
   };
 
   services = {
@@ -209,7 +210,7 @@ in
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
+    # windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
     numlock.enable = true;
   };
   gtk = {

@@ -1,7 +1,7 @@
 {
   pkgs,
   home-manager,
-  # host-specific,
+  host-specific,
   ...
 }:
 {
@@ -135,7 +135,7 @@
   # };
 
   # Enable the bluetooth daemon.
-  # services.blueman.enable = host-specific.bluetooth;
-  # hardware.bluetooth.enable = host-specific.bluetooth;
+  services.blueman.enable = host-specific.bluetooth;
+  hardware.bluetooth.enable = host-specific.bluetooth;
 
 }
