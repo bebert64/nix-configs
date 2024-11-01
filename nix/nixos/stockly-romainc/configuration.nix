@@ -1,12 +1,11 @@
-{ pkgs, host-specific, ... }:
-let b= host-specific; in 
+{ pkgs, specialArgs, ... }:
 {
   imports = [ ../common.nix ];
-  inherit b;
 
   home-manager = {
     users.user.imports = [ ../home.nix ];
     backupFileExtension = "bckp";
+    extraSpecialArgs = specialArgs;
   };
 
   services = {
