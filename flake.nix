@@ -20,7 +20,7 @@
       ...
     }:
     let
-      hosts-specific = import ./nix/nixos/hosts-specific;
+      hosts-specific = import ./nix/hosts-specific;
     in
     {
       stockly-romainc = {
