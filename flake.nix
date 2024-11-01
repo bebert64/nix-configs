@@ -27,7 +27,7 @@
     {
       nixosConfigurations.stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
         hostname = "stockly-romainc";
-        configuration = ./stockly/configuration.nix;
+        configuration = ./nix/nixos/stockly-romainc/configuration.nix;
         specialArgs = {
           inherit stockly-computers home-manager by-db;
           host-specific = hosts-specific.stockly-romainc;
