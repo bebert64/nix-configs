@@ -1,7 +1,7 @@
 {
   pkgs,
   lib,
-  # by-db,
+  by-db,
   # host-specific,
   ...
 }@inputs:
