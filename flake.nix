@@ -29,17 +29,17 @@
         hostname = "stockly-romainc";
         configuration = ./stockly/configuration.nix;
         specialArgs = {
-          inherit inputs;
+          inherit stockly-computers home-manager by-db;
           host-specific = hosts-specific.stockly-romainc;
         };
       };
+
       homeConfigurations = {
         raspi = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
 
           modules = [ (import ./nix/home-manager/home_raspi.nix { inherit pkgs; }) ];
         };
-
         fixe-bureau = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs { system = "x86_64-linux"; };
 
