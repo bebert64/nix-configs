@@ -43,6 +43,7 @@
   extraConfig = {
     pull.rebase = "true";
     core.commentchar = "%";
+    core.editor = "vim";
     color.ui = "true";
     push.default = "current";
     gc.autoDetach = "false";
