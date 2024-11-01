@@ -1,4 +1,3 @@
-
 {
   pkgs,
   lib,
@@ -6,19 +5,16 @@
   host-specific,
   ...
 }@inputs:
-
 let
-  scripts-playerctl = import ../scripts-playerctl.nix { inherit pkgs lib; };
+  scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
-
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "romain";
   home.homeDirectory = "/home/romain";
 
-  # Packages Home-Manager doesn't have specific handling for
   home.packages =
     let
       jetbrains = (import ../programs/jetbrains.nix inputs);
