@@ -1,4 +1,5 @@
-{ pkgs, ... }:
+{ pkgs, host-specifics, ... }:
+let b= host-specifics; in 
 {
   imports = [ ../common.nix ];
 
