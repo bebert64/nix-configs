@@ -5,7 +5,6 @@
   host-specific,
   ...
 }@inputs:
-
 let
   scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
   by-db-pkgs = by-db.packages.x86_64-linux;
@@ -15,6 +14,7 @@ in
   # manage.
   home.username = host-specific.username;
   home.homeDirectory = "/home/${host-specific.username}";
+
   home.packages =
     let
       jetbrains = (import ../programs/jetbrains.nix inputs);
@@ -108,10 +108,17 @@ in
       noto-fonts-emoji
       powerline-fonts
 
-      alock # locker allowing transparent background
-      picom-next
-
     ]
+    ++ (
+      if host-specific.nixos or false then
+        [
+
+          alock # locker allowing transparent background
+          picom-next
+        ]
+      else
+        [ ]
+    )
     ++ import ../scripts { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
@@ -126,7 +133,7 @@ in
 
   # Programs known by Home-Manager
   programs = {
-    # autorandr = host-specific.autorandr;
+    autorandr = host-specific.autorandr;
     btop = import ../programs/btop.nix;
     direnv = {
       enable = true;
@@ -210,7 +217,7 @@ in
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    # windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
+    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
     numlock.enable = true;
   };
   gtk = {
@@ -226,7 +233,7 @@ in
   # Session variable
   home.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "qt5ct";
-    # XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
+    XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
     LC_ALL = "en_US.UTF-8";
   };
 
@@ -279,6 +286,14 @@ in
       mkdir -p $HOME/.ssh
       ln -sf $HOME/nix-configs/dotfiles/ssh/authorized_keys $HOME/.ssh/
     '';
+  };
+
+  nix = {
+    package = pkgs.nix;
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   # Let Home Manager install and manage itself.

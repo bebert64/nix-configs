@@ -109,6 +109,16 @@ in
       powerline-fonts
 
     ]
+    ++ (
+      if host-specific.nixos or false then
+        [
+
+          alock # locker allowing transparent background
+          picom-next
+        ]
+      else
+        [ ]
+    )
     ++ import ../scripts { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
@@ -206,7 +216,7 @@ in
   # launch i3
   xsession = {
     enable = true;
-    # scriptPath = ".hm-xsession";
+    scriptPath = ".hm-xsession";
     windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
     numlock.enable = true;
   };
