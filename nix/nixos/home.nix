@@ -166,6 +166,7 @@ in
       wallpapers-manager = {
         Unit = {
           Description = "Chooses walpaper(s) based on the number of monitors connected";
+          RequiresMountFor = "/";
         };
         Service = {
           Type = "exec";
