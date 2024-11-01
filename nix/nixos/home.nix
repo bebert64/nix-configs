@@ -2,7 +2,7 @@
   pkgs,
   lib,
   by-db,
-  # host-specific,
+  host-specific,
   ...
 }@inputs:
 
@@ -12,8 +12,6 @@ let
 in
 
 {
-
-  # Packages Home-Manager doesn't have specific handling for
   home.packages =
     let
       jetbrains = (import ../programs/jetbrains.nix inputs);
@@ -111,18 +109,18 @@ in
       picom-next
 
     ]
-    # ++ import ../scripts.nix { inherit host-specific pkgs; }
+    ++ import ../scripts.nix { inherit host-specific pkgs; }
     ++ lib.attrsets.attrValues scripts-playerctl
-    # ++ (
-    #   if host-specific.wifi or false then
-    #     [
-    #       networkmanager
-    #       networkmanagerapplet
-    #     ]
-    #   else
-    #     [ ]
-    # );
-    ;
+    ++ (
+      if host-specific.wifi or false then
+        [
+          networkmanager
+          networkmanagerapplet
+        ]
+      else
+        [ ]
+    );
+    
 
   # Programs known by Home-Manager
   programs = {
@@ -143,7 +141,7 @@ in
         syntax on
       '';
     };
-    # zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
+    zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
   };
 
   services = {
@@ -153,37 +151,37 @@ in
     };
   };
 
-  # systemd.user = {
-  #   enable = true;
-  #   services = {
-  #     wallpapers-manager = {
-  #       Unit = {
-  #         Description = "Chooses walpaper(s) based on the number of monitors connected";
-  #       };
-  #       Service = {
-  #         Type = "exec";
-  #         ExecStart = "${by-db-pkgs.wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
-  #       };
+  systemd.user = {
+    enable = true;
+    services = {
+      wallpapers-manager = {
+        Unit = {
+          Description = "Chooses walpaper(s) based on the number of monitors connected";
+        };
+        Service = {
+          Type = "exec";
+          ExecStart = "${by-db-pkgs.wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
+        };
 
-  #     };
-  #   };
-  #   timers = {
-  #     wallpapers-manager = {
-  #       Unit = {
-  #         Description = "Timer for wallpapers-manager";
-  #       };
-  #       Timer = {
-  #         Unit = "wallpapers-manager.service";
-  #         OnUnitInactiveSec = "1h";
-  #         OnBootSec = "1";
-  #       };
-  #       Install = {
-  #         WantedBy = [ "timers.target" ];
-  #       };
+      };
+    };
+    timers = {
+      wallpapers-manager = {
+        Unit = {
+          Description = "Timer for wallpapers-manager";
+        };
+        Timer = {
+          Unit = "wallpapers-manager.service";
+          OnUnitInactiveSec = "1h";
+          OnBootSec = "1";
+        };
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
 
-  #     };
-  #   };
-  # };
+      };
+    };
+  };
 
   # Copy custom files / dotfiles
   home.file = {
