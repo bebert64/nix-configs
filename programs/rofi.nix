@@ -125,8 +125,8 @@ in
       element-text = {
         background-color = mkLiteral "transparent";
         text-color = mkLiteral "inherit";
-        expand = mkLiteral "true";
-        horizontal-align = mkLiteral "0";
+        expand = true;
+        horizontal-align = 0;
         vertical-align = mkLiteral "0.5";
         margin = mkLiteral "0px 2.5px 0px 2.5px";
       };
