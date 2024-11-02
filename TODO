@@ -14,6 +14,7 @@ Programs to migrate
         https://github.com/ranger/ranger/blob/master/ranger/config/rifle.conf
         https://unix.stackexchange.com/questions/367452/how-to-change-the-default-text-editor-in-ranger
         keep bookmarks
+    Thunderbird
     qbittorrent
         Check config file on raspberry
         https://github.com/hercules-ci/nixflk/blob/template/modules/services/torrent/qbittorrent.nix
@@ -23,13 +24,14 @@ Host-specific
     Check if all keys are used
 
 Various 1
-    Config for thunderbird
     Fix plyerctl-display-title script
         Use grep instead of current cmd because current cmd goes to second player if artist is not found on the first one
+    Bettter launch radio script
+        Try to sleep between opening strawberry and starting to play the track if strawberry is not yet opened
+        Use psg to find if opened
+        Check why play-playlist radio still show in processes
     Add git pull cmd to upgrade
-    Create a simplified version of the nix-shell from Stockly
-        Place it in the store
-        Create it in ~/code at activation time
+    Copy nix-shell in /code and git it
     Test if autorandr (without --change) would be enough in i3 config
         use stockly-romainc
         desired behavior would be that nothing happens if no screen is connected, but that it changes if screens are new
@@ -38,7 +40,6 @@ Various 1
     Modify display-title-or-no-music
         send a long string of xxxxx
         use it to define the appropriate max-length value for the script output on stockly-romainc
-    Check if rsync is needed is HM packages
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
     Check if I really need all this fonts...
