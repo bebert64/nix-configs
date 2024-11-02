@@ -6,7 +6,6 @@
 }:
 
 let
-
   rofi = config.home-manager.users.${config.user}.programs.rofi.finalPackage;
 in
 {
