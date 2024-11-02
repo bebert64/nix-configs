@@ -59,6 +59,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
+          "stockly-computers",
           "nixpkgs"
         ]
       },
@@ -163,22 +164,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1730481737,
-        "narHash": "sha256-HaUCfqLIFX/4wiSKkKKSTwUNmZd1EMy+lGB+faadQXU=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "f18ab3b08f56abc54bcc2ef9bbca627d45926fee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "release-24.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
         "lastModified": 1728909085,
         "narHash": "sha256-WLxED18lodtQiayIPDE5zwAfkPJSjHJ35UhZ8h3cJUg=",
         "owner": "nixos",
@@ -197,14 +182,17 @@
       "inputs": {
         "by-db": "by-db",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": [
+          "stockly-computers",
+          "nixpkgs"
+        ],
         "stockly-computers": "stockly-computers"
       }
     },
     "stockly-computers": {
       "inputs": {
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "vscode-server": "vscode-server"
       },
