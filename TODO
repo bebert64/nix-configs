@@ -5,8 +5,6 @@ General fixes 1
         https://addons.mozilla.org/en-US/firefox/addon/custom-search-engine/
 
 Programs to migrate
-    rofi
-        https://nix-community.github.io/home-manager/options.xhtml#opt-programs.rofi.enable
     picom
         https://nix-community.github.io/home-manager/options.xhtml#opt-services.picom.enable
     ranger
@@ -26,6 +24,8 @@ Host-specific
 
 Various 1
     Config for thunderbird
+    Fix plyerctl-display-title script
+        Use grep instead of current cmd because current cmd goes to second player if artist is not found on the first one
     Add git pull cmd to upgrade
     Create a simplified version of the nix-shell from Stockly
         Place it in the store
@@ -34,7 +34,7 @@ Various 1
         use stockly-romainc
         desired behavior would be that nothing happens if no screen is connected, but that it changes if screens are new
     Fix nixfmt vs nixfmt-pckgs
-    Raccourci clavier pour basculer du casque aux enceintes et vice-versa
+    Raccourci clavier pour basculer du casque aux enceintes et vice-versa + icon pour indiquer mode actuel
     Modify display-title-or-no-music
         send a long string of xxxxx
         use it to define the appropriate max-length value for the script output on stockly-romainc
@@ -46,6 +46,7 @@ Various 1
     Think about where to use symlink / use store / write new files for assets and comment in config about why
     Move assets/raspi/renew-cert.sh to scripts
     add plugins to ranger (icons, theme, ...)
+    script to remove sleep, but put it back next time manual sleep is activated ?? (is that possible ???)
     Better script for yt-dlp
         extract name of res including 720p
         if only one => dl with it

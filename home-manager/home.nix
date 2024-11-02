@@ -3,6 +3,7 @@
   lib,
   by-db,
   host-specific,
+  config,
   ...
 }@inputs:
 let
@@ -57,7 +58,6 @@ in
       # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
       pulseaudio
       qt6.qttools # needed to extract artUrl from strawberry and display it with conky
-      rofi
       rsync
       slack
       sqlite
@@ -143,6 +143,7 @@ in
     };
     firefox = import ../programs/firefox.nix;
     git = import ../programs/git.nix;
+    rofi = import ../programs/rofi.nix { inherit config; };
     ssh = import ../programs/ssh/default.nix;
     vim = {
       extraConfig = ''
