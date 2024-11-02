@@ -12,7 +12,7 @@
     {
       inherit modifier; # Check if possible to remove this line entirely (not sure if it's really necessary)
 
-      menu = "\"rofi -modi drun#window#run -show drun -show-icons -theme $HOME/.config/rofi/theme/launcher.rasi\"";
+      menu = "\"rofi -modi drun#window#run -show drun -show-icons\"";
 
       terminal = "--no-startup-id tilix"; # tilix is not notification-aware so we need the no-startup-id
 
@@ -79,6 +79,7 @@
         "$ws5" = [ { class = "thunderbird"; } ];
         "$ws6" = [ { class = "jetbrains-datagrip"; } ];
         "$ws8" = [ { class = "avidemux"; } ];
+        "$ws10" = [ { class = "strawberry"; } ];
       };
 
       bars = [ ];

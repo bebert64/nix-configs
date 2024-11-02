@@ -88,12 +88,19 @@
     set -euxo pipefail
 
     play_radio() {
-      strawberry --play-playlist Radios
-      strawberry --play-track $track
+      strawberry --play-playlist Radios &
+      strawberry --play-track $track &
     }
 
-    MENU="$(echo -n 'FIP|Jazz Radio|Radio Nova|Oui Fm|Classic FM|Chillhop Radio|Classical Piano Music' | rofi -no-config -no-lazy-grab -sep "|" -dmenu -i -p 'radio' \
-      -theme $HOME/.config/rofi/theme/styles.rasi)"
+    MENU="$(echo -en \
+    'Fip\0icon\x1f${../assets/icons/fip.png}
+    Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
+    Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
+    Oui Fm\0icon\x1f${../assets/icons/Oui-FM.png}
+    Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
+    Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
+    | rofi -dmenu -show-icons -i -p 'Radio')"
+    
     case "$MENU" in
       FIP) track=0 && play_radio ;;
       "Jazz Radio") track=1 && play_radio ;;
@@ -101,7 +108,6 @@
       "Oui Fm") track=3 && play_radio ;;
       "Classic FM") track=4 && play_radio ;;
       "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
-      "Classical Piano Music") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=tSlOlKRuudU" ;;
     esac
   '')
 
