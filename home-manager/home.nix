@@ -200,7 +200,6 @@ in
     ".config/qt5ct/qt5ct.conf".source = ../assets/qt5ct.conf;
     ".config/ranger/rc.conf".source = ../assets/ranger/rc.conf;
     ".config/ranger/scope.sh".source = ../assets/ranger/scope.sh;
-    ".config/rofi/theme".source = ../assets/rofi/theme;
     ".conky".source = ../assets/conky;
     ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../assets/MonokaiStockly;
     ".themes".source = "${pkgs.palenight-theme}/share/themes";
