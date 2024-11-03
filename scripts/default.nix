@@ -93,10 +93,10 @@
     }
 
     MENU="$(echo -en \
-    'Fip\0icon\x1f${../assets/icons/fip.png}
+    'FIP\0icon\x1f${../assets/icons/fip.png}
     Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
     Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
-    Oui Fm\0icon\x1f${../assets/icons/Oui-FM.png}
+    Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
     Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
     Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
     | rofi -dmenu -show-icons -i -p 'Radio')"
@@ -105,7 +105,7 @@
       FIP) track=0 && play_radio ;;
       "Jazz Radio") track=1 && play_radio ;;
       "Radio Nova") track=2 && play_radio ;;
-      "Oui Fm") track=3 && play_radio ;;
+      "Oui FM") track=3 && play_radio ;;
       "Classic FM") track=4 && play_radio ;;
       "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
     esac
