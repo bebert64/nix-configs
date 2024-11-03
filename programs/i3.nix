@@ -97,14 +97,12 @@
             command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets";
             notification = false;
           }
+          # Needed if not on nixos, to be removed if not stand alone installtion
           {
-            command = "caffeine";
+            command = "systemctl --user restart picom";
             notification = false;
           }
-          {
-            command = "picom";
-            notification = false;
-          }
+
           {
             command = "udiskie --tray";
             notification = false;

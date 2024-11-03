@@ -100,7 +100,7 @@
     Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
     Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
     | rofi -dmenu -show-icons -i -p 'Radio')"
-    
+
     case "$MENU" in
       FIP) track=0 && play_radio ;;
       "Jazz Radio") track=1 && play_radio ;;

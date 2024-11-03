@@ -115,7 +115,6 @@ in
         [
 
           alock # locker allowing transparent background
-          picom-next
         ]
       else
         [ ]
@@ -160,6 +159,10 @@ in
     playerctld = {
       enable = true;
     };
+    picom = {
+      enable = true;
+    };
+    caffeine.enable = true;
   };
 
   systemd.user = {
