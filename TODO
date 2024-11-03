@@ -24,9 +24,6 @@ Host-specific
     Check if all keys are used
 
 Various 1
-    Fix plyerctl-display-title script
-        Use grep instead of current cmd because current cmd goes to second player if artist is not found on the first one
-    vdhcoapp install at startup
     Bettter launch radio script
         Try to sleep between opening strawberry and starting to play the track if strawberry is not yet opened
         Use psg to find if opened
