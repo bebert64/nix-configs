@@ -41,16 +41,16 @@ rec {
     pkgs.writeScriptBin "playerctl-display-title" ''
       PATH=${lib.makeBinPath [ pkgs.playerctl ]}
 
-        title=$(playerctl metadata xesam:title 2> /dev/null)
-        artist=$(playerctl metadata xesam:artist 2> /dev/null)
+      title=$(playerctl metadata | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3- 2> /dev/null)
+      artist=$(playerctl metadata | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3- 2> /dev/null)
 
-        if [[ $artist ]]; then
-            title_display="$artist - $title"
-        else
-            title_display=$title
-        fi
+      if [[ $artist ]]; then
+          title_display="$artist - $title"
+      else
+          title_display=$title
+      fi
 
-        echo "$title_display"
+      echo "$title_display"
     ''
   );
 
