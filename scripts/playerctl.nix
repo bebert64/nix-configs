@@ -39,7 +39,7 @@ rec {
 
   display-title = (
     pkgs.writeScriptBin "playerctl-display-title" ''
-      PATH=${lib.makeBinPath [ pkgs.playerctl ]}
+      PATH=${lib.makeBinPath [ pkgs.playerctl pkgs.coreutils ]}
 
       title=$(playerctl metadata | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3- 2> /dev/null)
       artist=$(playerctl metadata | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3- 2> /dev/null)
