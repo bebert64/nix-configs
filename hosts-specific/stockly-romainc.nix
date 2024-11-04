@@ -15,7 +15,8 @@
     screen2 = "HDMI-1";
   };
   zsh-aliases = {
-    "upgrade" = "cd ~/nix-config && git pull && nix flake update && apply-nix";
+    update-dirty = "cd ~/nix-config && sudo nixos-rebuild switch --flake .#stockly-romainc ";
+    upgrade = "cd ~/nix-config && git pull && nix flake update && apply-nix";
   };
   wallpapers-manager-cmd = "$HOME/bin/wallpapers-manager";
   autorandr = {
