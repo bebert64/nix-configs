@@ -84,9 +84,6 @@
   '')
 
   (pkgs.writeScriptBin "launch_radios" ''
-    #!/usr/bin/env bash
-    set -euxo
-
     PATH=${
       lib.makeBinPath [
         pkgs.strawberry
