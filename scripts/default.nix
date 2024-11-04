@@ -115,25 +115,25 @@ echo "Moving on"
   echo $IS_STRAWBERRY_LAUNCHED
 
 
-  #   play_radio() {
-  #   echo "starting"
-  #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  # echo "launched :"
-  # echo $IS_STRAWBERRY_LAUNCHED
+    play_radio() {
+    echo "starting"
+      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  echo "launched :"
+  echo $IS_STRAWBERRY_LAUNCHED
 
-  #     if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
-  #     echo "launching"
-  #         strawberry &
-  #     fi
+      if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
+      echo "launching"
+          strawberry &
+      fi
 
-  #     while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
-  #         IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  #         sleep 1
-  #     done
+      while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
+          IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+          sleep 1
+      done
 
-  #     strawberry --play-playlist Radios &
-  #     strawberry --play-track $1 &
-  #   }
+      strawberry --play-playlist Radios &
+      strawberry --play-track $1 &
+    }
 
   #   MENU="$(echo -en \
   #   'FIP\0icon\x1f${../assets/icons/fip.png}
