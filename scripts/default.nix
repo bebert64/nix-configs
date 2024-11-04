@@ -86,12 +86,10 @@
   (pkgs.writeScriptBin "launch_radios" ''
     PATH="${
       lib.makeBinPath [
-        # pkgs.strawberry
-        pkgs.rofi
+        # pkgs.rofi
         pkgs.gnugrep
         pkgs.coreutils
         pkgs.procps
-        # psg
       ]
     }:$PATH"
 
