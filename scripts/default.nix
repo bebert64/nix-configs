@@ -90,6 +90,7 @@
     PATH=${
       lib.makeBinPath [
         pkgs.strawberry
+        pkgs.rofi
         # psg
       ]
     }
