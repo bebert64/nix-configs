@@ -25,7 +25,6 @@ Host-specific
 
 Various 1
     Add commands for playerctl-section in host-specific for fixe-bureau
-    Move assets/raspi/renew-cert.sh to scripts
     Copy nix-shell in /code and git it
     Fix nixfmt vs nixfmt-pckgs
     Use Stockly's configs where appropriate
@@ -74,6 +73,7 @@ General fixes 2
     Write script in install_scripts/raspi to download/compile all html stuff (when setting up new raspi)
 
 Move raspi to full nixos ?
+    Move assets/raspi/renew-cert.sh to scripts
     https://nix.dev/tutorials/nixos/installing-nixos-on-a-raspberry-pi.html
     rc.local can be replaced
         https://www.reddit.com/r/NixOS/comments/cg102t/how_to_run_a_shell_command_upon_startup/
