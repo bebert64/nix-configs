@@ -155,7 +155,9 @@ in
   };
 
   services = {
-    autorandr = { enable = true;};
+    autorandr = {
+      enable = true;
+    };
     polybar = import ../programs/polybar/default.nix { inherit pkgs scripts; };
     playerctld = {
       enable = true;
