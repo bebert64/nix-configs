@@ -105,14 +105,14 @@
   echo "start"
 echo $(psg strawberry)
 echo "Moving on"
-      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  echo "launched :"
-  echo $IS_STRAWBERRY_LAUNCHED
-    strawberry &
-    sleep 2
-      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  echo "launched again:"
-  echo $IS_STRAWBERRY_LAUNCHED
+  #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  # echo "launched :"
+  # echo $IS_STRAWBERRY_LAUNCHED
+  #   strawberry &
+  #   sleep 2
+  #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  # echo "launched again:"
+  # echo $IS_STRAWBERRY_LAUNCHED
 
 
     play_radio() {
@@ -134,6 +134,8 @@ echo "Moving on"
       strawberry --play-playlist Radios &
       strawberry --play-track $1 &
     }
+
+    play_radio 1
 
   #   MENU="$(echo -en \
   #   'FIP\0icon\x1f${../assets/icons/fip.png}
