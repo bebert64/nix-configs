@@ -108,12 +108,11 @@ echo "Moving on"
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
   echo "launched :"
   echo $IS_STRAWBERRY_LAUNCHED
-  echo "done"
-  #   strawberry &
-  #   sleep 2
-  #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  # echo "launched again:"
-  # echo $IS_STRAWBERRY_LAUNCHED
+    strawberry &
+    sleep 2
+      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  echo "launched again:"
+  echo $IS_STRAWBERRY_LAUNCHED
 
 
   #   play_radio() {
