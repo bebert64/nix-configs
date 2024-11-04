@@ -108,6 +108,7 @@ echo "Moving on"
       IS_STRAWBERRY_LAUNCHED=$(echo "test " $(psg strawberry))
   echo "launched :"
   echo $IS_STRAWBERRY_LAUNCHED
+  echo "done"
   #   strawberry &
   #   sleep 2
   #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
