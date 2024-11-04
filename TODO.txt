@@ -26,7 +26,6 @@ Host-specific
 Various 1
     Add commands for playerctl-section in host-specific for fixe-bureau
     Move assets/raspi/renew-cert.sh to scripts
-    Add git pull cmd to upgrade
     Copy nix-shell in /code and git it
     Fix nixfmt vs nixfmt-pckgs
     Use Stockly's configs where appropriate
