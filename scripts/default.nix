@@ -98,8 +98,8 @@
     }
 
     echo ${pkgs.procps}/bin/ps
-    echo $(${pkgs.procps}/bin/ps firefox)
-    echo $(ps firefox)
+    echo $(${pkgs.procps}/bin/ps aux | grep firefox)
+    echo $(ps aux | grep firefox)
     echo "done testing ps"
 
     psg() {
