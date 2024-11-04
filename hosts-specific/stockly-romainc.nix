@@ -5,6 +5,11 @@
   bluetooth = true;
   minutes-before-lock = 3;
   minutes-from-lock-to-sleep = 7;
+  playerctl = {
+    set-headphones = "set-sink-port 56 '[Out] Headphones'";
+    set-speaker = "set-sink-port 56 '[Out] Speaker'";
+    is-headphones-on-regex = "Active Port.*Headphones";
+  };
   screens = {
     screen1 = "eDP-1";
     screen2 = "HDMI-1";

@@ -7,7 +7,7 @@
   ...
 }@inputs:
 let
-  scripts-playerctl = import ../scripts/playerctl.nix { inherit pkgs lib; };
+  scripts = import ../scripts { inherit host-specific pkgs lib; };
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
@@ -120,8 +120,7 @@ in
       else
         [ ]
     )
-    ++ import ../scripts { inherit host-specific pkgs; }
-    ++ lib.attrsets.attrValues scripts-playerctl
+    ++ lib.attrsets.attrValues scripts
     ++ (
       if host-specific.wifi or false then
         [
@@ -156,7 +155,7 @@ in
   };
 
   services = {
-    polybar = import ../programs/polybar/default.nix { inherit pkgs scripts-playerctl; };
+    polybar = import ../programs/polybar/default.nix { inherit pkgs scripts; };
     playerctld = {
       enable = true;
     };
@@ -286,6 +285,9 @@ in
       # Do NOT symlink the whole dir, to make sure to never git private key
       mkdir -p $HOME/.ssh
       ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
+
+      # Install VideoHelper companion
+      ${pkgs.vdhcoapp}/bin/vdhcoapp install
     '';
   };
 
