@@ -84,7 +84,7 @@
   '')
 
   (pkgs.writeScriptBin "launch_radios" ''
-    PATH=${
+    PATH="${
       lib.makeBinPath [
         # pkgs.strawberry
         pkgs.rofi
@@ -93,7 +93,7 @@
         pkgs.procps
         # psg
       ]
-    }
+    }:$PATH"
 
     psg() {
     ps aux | grep $1 | grep -v psg | grep -v grep
@@ -103,7 +103,6 @@
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
 
       if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
-      echo "launching"
           strawberry &
       fi
 
