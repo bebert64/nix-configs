@@ -105,6 +105,9 @@
   echo "start"
 echo $(psg strawberry)
 echo "Moving on"
+      IS_STRAWBERRY_LAUNCHED="not launched"
+  echo "launched :"
+  echo $IS_STRAWBERRY_LAUNCHED
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
   echo "launched :"
   echo $IS_STRAWBERRY_LAUNCHED
