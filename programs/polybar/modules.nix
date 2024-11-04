@@ -1,4 +1,4 @@
-{ colors, scripts-playerctl }:
+{ colors, scripts }:
 {
   "module/i3" = {
     type = "internal/i3";
@@ -65,13 +65,13 @@
 
   "module/playerctl-full" = {
     "inherit" = "player-ctl";
-    exec = "${scripts-playerctl.cmd-bar-and-display-title}/bin/playerctl-cmd-bar-and-display-title";
+    exec = "${scripts.cmd-bar-and-display-title}/bin/playerctl-cmd-bar-and-display-title";
     label = "Don Beberto's      •      %output%";
   };
 
   "module/playerctl-mini" = {
     "inherit" = "player-ctl";
-    exec = "${scripts-playerctl.display-title-or-no-music}/bin/playerctl-display-title-or-no-music";
+    exec = "${scripts.display-title-or-no-music}/bin/playerctl-display-title-or-no-music";
     label = "%output:0:100%";
   };
 

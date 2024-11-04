@@ -1,6 +1,12 @@
-{ host-specific, pkgs, ... }:
-[
-  (pkgs.writeScriptBin "mnas" ''
+{
+  host-specific,
+  pkgs,
+  lib,
+  ...
+}:
+import ./playerctl.nix { inherit lib pkgs; }
+// rec {
+  mnas = pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
     set -euo pipefail
 
@@ -26,29 +32,30 @@
       echo "The machine at ''${IP} seems to not be ''${NAME}"
       exit 1
     fi 
-  '')
-  (pkgs.writeScriptBin "umnas" ''
+  '';
+
+  umnas = pkgs.writeScriptBin "umnas" ''
     #!/usr/bin/env bash
     set -euo pipefail
 
     sudo umount /mnt/NAS
-  '')
+  '';
 
-  (pkgs.writeScriptBin "psg" ''
+  psg = pkgs.writeScriptBin "psg" ''
     #!/usr/bin/env bash
     set -euo pipefail
 
     ps aux | grep $1 | grep -v psg | grep -v grep
-  '')
+  '';
 
-  (pkgs.writeScriptBin "run" ''
+  run = pkgs.writeScriptBin "run" ''
     #!/usr/bin/env bash
     set -euxo pipefail
 
     nix run "nixpkgs#$1" -- "''${@:2}"
-  '')
+  '';
 
-  (pkgs.writeScriptBin "sshr" ''
+  sshr = pkgs.writeScriptBin "sshr" ''
     #!/usr/bin/env bash
     set -euo pipefail
 
@@ -60,73 +67,65 @@
     esac
 
     tilix -p Ranger -e "ssh ''$1 -t ''${CMD}"
-  '')
+  '';
 
-  (pkgs.writeScriptBin "sync-wallpapers" ''
+  sync-wallpapers = pkgs.writeScriptBin "sync-wallpapers" ''
     #!/usr/bin/env bash
     set -euxo pipefail
 
     mnas
     rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
     rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
-  '')
+  '';
 
-  (pkgs.writeScriptBin "is-music-playing" ''
-    #!/usr/bin/env bash
-    set -euxo pipefail
-
+  is-music-playing = pkgs.writeScriptBin "is-music-playing" ''
     TITLE="$(playerctl metadata title 2>&1)"
     if [[ "$TITLE" == *"No player could handle this command"* || "$TITLE" == *"No players found"* ]];then
             echo false;
     else
           echo true;
     fi;
-  '')
+  '';
 
-  (pkgs.writeScriptBin "launch_radios" ''
-    psg() {
-    ps aux | grep $1 | grep -v psg | grep -v grep
-    }
+  launch-radios = pkgs.writeScriptBin "launch-radios" ''
+      PATH="${lib.makeBinPath [ psg ]}:$PATH"
 
-    play_radio() {
-      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+      play_radio() {
+        IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
 
-      if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
-          strawberry &
-      fi
+        if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
+            strawberry &
+        fi
 
-      while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
-          IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-          sleep 1
-      done
+        while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
+            IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+            sleep 1
+        done
 
-      strawberry --play-playlist Radios &
-      strawberry --play-track $1 &
-    }
+        strawberry --play-playlist Radios &
+        strawberry --play-track $1 &
+      }
 
-    MENU="$(echo -en \
+      MENU="$(echo -en \
 'FIP\0icon\x1f${../assets/icons/fip.png}
 Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
 Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
 Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
 Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
 Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
-    | rofi -dmenu -show-icons -i -p 'Radio')"
+      | rofi -dmenu -show-icons -i -p 'Radio')"
 
-    case "$MENU" in
-      FIP) play_radio 0 ;;
-      "Jazz Radio") play_radio 1 ;;
-      "Radio Nova") play_radio 2 ;;
-      "Oui FM") play_radio 3 ;;
-      "Classic FM") play_radio 4 ;;
-      "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
-    esac
-  '')
+      case "$MENU" in
+        FIP) play_radio 0 ;;
+        "Jazz Radio") play_radio 1 ;;
+        "Radio Nova") play_radio 2 ;;
+        "Oui FM") play_radio 3 ;;
+        "Classic FM") play_radio 4 ;;
+        "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
+      esac
+  '';
 
-  (pkgs.writeScriptBin "lock-conky" ''
-    #!/usr/bin/env bash
-    set -euxo pipefail
-
+  lock-conky = pkgs.writeScriptBin "lock-conky" ''
     SLEEP=false
     while getopts "s" opt; do
       case $opt in
@@ -160,5 +159,5 @@ Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
     systemctl --user restart polybar
     pkill xidlehook || echo "xidlehook already killed"
     xidlehook --timer ${toString (host-specific.minutes-before-lock * 60)} 'lock-conky' ' ' &
-  '')
-]
+  '';
+}

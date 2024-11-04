@@ -168,7 +168,7 @@
           "s" = "exec playerctl stop, mode default";
           "${modifier}+s" = "exec playerctl -a stop, mode default";
           "l" = "workspace $ws10, exec strawberry, mode default";
-          "r" = "exec launch_radios, mode default";
+          "r" = "exec launch-radios, mode default";
           "${modifier}+m" = "mode default";
           "Escape" = "mode default";
         };
