@@ -98,14 +98,18 @@
     }
 
     psg() {
-    set -euxo pipefail
+    echo $1
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
     play_radio() {
+    echo "starting
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  echo "launched :"
+  echo $IS_STRAWBERRY_LAUNCHED
 
       if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
+      echo "launching"
           strawberry &
       fi
 
