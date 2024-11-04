@@ -105,7 +105,7 @@
   echo "start"
 echo $(psg strawberry)
 echo "Moving on"
-      IS_STRAWBERRY_LAUNCHED=$(echo "test " $(psg strawberry))
+      IS_STRAWBERRY_LAUNCHED=$(echo $(psg strawberry))
   echo "launched :"
   echo $IS_STRAWBERRY_LAUNCHED
   echo "done"
