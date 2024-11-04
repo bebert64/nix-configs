@@ -102,24 +102,8 @@
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
-  echo "start"
-echo $(psg strawberry)
-echo "Moving on"
-  #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  # echo "launched :"
-  # echo $IS_STRAWBERRY_LAUNCHED
-  #   strawberry &
-  #   sleep 2
-  #     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  # echo "launched again:"
-  # echo $IS_STRAWBERRY_LAUNCHED
-
-
     play_radio() {
-    echo "starting"
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-  echo "launched :"
-  echo $IS_STRAWBERRY_LAUNCHED
 
       if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
       echo "launching"
@@ -139,11 +123,11 @@ echo "Moving on"
 
     MENU="$(echo -en \
     'FIP\0icon\x1f${../assets/icons/fip.png}
-    Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
-    Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
-    Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
-    Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
-    Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
+Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
+Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
+Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
+Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
+Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
     | rofi -dmenu -show-icons -i -p 'Radio')"
 
     case "$MENU" in
