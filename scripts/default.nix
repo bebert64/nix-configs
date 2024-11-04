@@ -102,6 +102,9 @@
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
+  echo "start"
+echo $(psg strawberry)
+echo "Moving on"
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
   echo "launched :"
   echo $IS_STRAWBERRY_LAUNCHED
