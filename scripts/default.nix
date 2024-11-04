@@ -86,9 +86,7 @@
   (pkgs.writeScriptBin "launch_radios" ''
     PATH="${
       lib.makeBinPath [
-        # pkgs.rofi
         pkgs.gnugrep
-        pkgs.coreutils
         pkgs.procps
       ]
     }:$PATH"
@@ -112,8 +110,6 @@
       strawberry --play-playlist Radios &
       strawberry --play-track $1 &
     }
-
-    # play_radio 1
 
     MENU="$(echo -en \
     'FIP\0icon\x1f${../assets/icons/fip.png}
