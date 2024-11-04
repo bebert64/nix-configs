@@ -92,7 +92,7 @@
         pkgs.strawberry
         pkgs.rofi
         pkgs.gnugrep
-        # pkgs.ps-procps
+        pkgs.procps
         # psg
       ]
     }
