@@ -1,4 +1,4 @@
-{
+hook_postswitch: {
   username = "user";
   nixos = true;
   wifi = true;
@@ -35,11 +35,7 @@
             rate = "120.00";
           };
         };
-        hooks.postswitch = ''
-          echo "eDP-1-tray-on" > $HOME/.config/polybar/bars
-          systemctl --user restart polybar
-          systemctl --user restart wallpapers-manager
-        '';
+        hooks.postswitch = hook_postswitch "eDP-1-tray-on";
       };
 
       "bureau-maison" = {
@@ -64,11 +60,7 @@
             rate = "59.95";
           };
         };
-        hooks.postswitch = ''
-          echo "eDP-1-tray-off HDMI-1-battery" > $HOME/.config/polybar/bars
-          systemctl --user restart polybar
-          systemctl --user restart wallpapers-manager
-        '';
+        hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
       };
 
       "bureau-stockly" = {
@@ -93,11 +85,7 @@
             rate = "59.95";
           };
         };
-        hooks.postswitch = ''
-          echo "eDP-1-tray-off HDMI-1-battery" > $HOME/.config/polybar/bars
-          systemctl --user restart polybar
-          systemctl --user restart wallpapers-manager
-        '';
+        hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
       };
     };
   };

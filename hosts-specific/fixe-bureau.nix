@@ -1,4 +1,4 @@
-{
+hook_postswitch: {
   username = "romain";
   minutes-before-lock = 30;
   minutes-from-lock-to-sleep = 30;
@@ -37,11 +37,7 @@
             rate = "59.96";
           };
         };
-        hooks.postswitch = ''
-          echo "HDMI-1 HDMI-2" > $HOME/.config/polybar/bars
-          systemctl --user restart polybar
-          systemctl --user restart wallpapers-manager
-        '';
+        hooks.postswitch = hook_postswitch "HDMI-1 HDMI-2";
       };
     };
   };
