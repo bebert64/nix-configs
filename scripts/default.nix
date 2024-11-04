@@ -85,7 +85,7 @@
 
   (pkgs.writeScriptBin "launch_radios" ''
     #!/usr/bin/env bash
-    set -euxo pipefail
+    set -euxo
 
     PATH=${
       lib.makeBinPath [
