@@ -98,6 +98,7 @@
     }
 
     psg() {
+    set -euxo pipefail
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
