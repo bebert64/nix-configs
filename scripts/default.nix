@@ -95,7 +95,8 @@
     }
 
     psg() {
-    ps aux | grep $1 | grep -v psg | grep -v grep}
+    ps aux | grep $1 | grep -v psg | grep -v grep
+    }
 
     play_radio() {
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
