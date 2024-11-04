@@ -27,9 +27,6 @@ Various 1
     Raccourci clavier pour basculer du casque aux enceintes et vice-versa + icon pour indiquer mode actuel
         Add commands in host-specific
         pactl set-sink-port 56 "[Out] Headphones" / pactl set-sink-port 56 "[Out] Speaker"
-    Modify display-title-or-no-music
-        send a long string of xxxxx
-        use it to define the appropriate max-length value for the script output on stockly-romainc
     Move assets/raspi/renew-cert.sh to scripts
     Add git pull cmd to upgrade
     Copy nix-shell in /code and git it
@@ -64,6 +61,8 @@ Autorandr
         Ask user if wants to save/commit and switch to new nix profile
 
 Various 2
+    Investigate why alock doesn't work on non-nixos config
+        If possible, move alcok to general list of pkgs and remove `nixos` attribute from host-specific
     Fix DataGrip (projects are not copied to proper dir during deployment)
     Finish ranger config with displaying previews for various files
     Finish conky configs

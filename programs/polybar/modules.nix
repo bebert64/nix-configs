@@ -72,7 +72,7 @@
   "module/playerctl-mini" = {
     "inherit" = "player-ctl";
     exec = "${scripts.display-title-or-no-music}/bin/playerctl-display-title-or-no-music";
-    label = "%output:0:100%";
+    label = "%output:0:80%";
   };
 
   # ; #######################
