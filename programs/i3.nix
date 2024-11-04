@@ -170,6 +170,8 @@
           "l" = "workspace $ws10, exec strawberry, mode default";
           "r" = "exec launch-radios, mode default";
           "${modifier}+m" = "mode default";
+          "h" = "exec set-headphones, mode default";
+          "p" = "exec set-speaker, mode default";
           "Escape" = "mode default";
         };
       };

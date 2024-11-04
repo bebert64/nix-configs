@@ -6,9 +6,9 @@
   minutes-before-lock = 3;
   minutes-from-lock-to-sleep = 7;
   playerctl = {
-    set-headphone = "set-sink-port 56 '[Out] Headphones'";
+    set-headphones = "set-sink-port 56 '[Out] Headphones'";
     set-speaker = "set-sink-port 56 '[Out] Speaker'";
-    is-headphone-regex = "Active Port.*Headphones";
+    is-headphones-on-regex = "Active Port.*Headphones";
   };
   screens = {
     screen1 = "eDP-1";

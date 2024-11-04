@@ -4,7 +4,7 @@
   lib,
   ...
 }:
-import ./playerctl.nix { inherit lib pkgs; }
+import ./playerctl.nix { inherit host-specific lib pkgs; }
 // rec {
   mnas = pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash

@@ -1,4 +1,9 @@
-{ lib, pkgs, psg, ... }:
+{
+  host-specific,
+  lib,
+  pkgs,
+  ...
+}:
 rec {
   move = pkgs.writeScriptBin "playerctl-move" ''
     CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
@@ -97,51 +102,28 @@ rec {
     fi
   '';
 
-
-  is-music-playing = pkgs.writeScriptBin "is-music-playing" ''
-    TITLE="$(playerctl metadata title 2>&1)"
-    if [[ "$TITLE" == *"No player could handle this command"* || "$TITLE" == *"No players found"* ]];then
-            echo false;
+  headphones-or-speaker-icon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
+    PATH=${
+      lib.makeBinPath [
+        pkgs.gnugrep
+        pkgs.pulseaudio
+      ]
+    }
+    IS_HEADPHONES_ON=$(pactl list sinks | grep "${host-specific.playerctl.is-headphones-on-regex}")
+    if [[ $IS_HEADPHONES_ON ]]; then
+      echo " "
     else
-          echo true;
-    fi;
+      echo "󰓃 "
+    fi
   '';
 
-  launch-radios = pkgs.writeScriptBin "launch-radios" ''
-    PATH="${lib.makeBinPath [ psg ]}:$PATH"
+  set-headphones = pkgs.writeScriptBin "set-headphones" ''
+    PATH=${lib.makeBinPath [ pkgs.pulseaudio ]}
+    pactl ${host-specific.playerctl.set-headphones}
+  '';
 
-    play_radio() {
-      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-
-      if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
-          strawberry &
-      fi
-
-      while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
-          IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-          sleep 1
-      done
-
-      strawberry --play-playlist Radios &
-      strawberry --play-track $1 &
-    }
-
-    MENU="$(echo -en \
-    'FIP\0icon\x1f${../assets/icons/fip.png}
-    Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
-    Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
-    Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
-    Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
-    Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
-    | rofi -dmenu -show-icons -i -p 'Radio')"
-
-    case "$MENU" in
-      FIP) play_radio 0 ;;
-      "Jazz Radio") play_radio 1 ;;
-      "Radio Nova") play_radio 2 ;;
-      "Oui FM") play_radio 3 ;;
-      "Classic FM") play_radio 4 ;;
-      "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
-    esac
+  set-speaker = pkgs.writeScriptBin "set-speaker" ''
+    PATH=${lib.makeBinPath [ pkgs.pulseaudio ]}
+    pactl ${host-specific.playerctl.set-speaker}
   '';
 }

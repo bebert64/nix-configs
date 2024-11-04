@@ -24,9 +24,7 @@ Host-specific
     Check if all keys are used
 
 Various 1
-    Raccourci clavier pour basculer du casque aux enceintes et vice-versa + icon pour indiquer mode actuel
-        Add commands in host-specific
-        pactl set-sink-port 56 "[Out] Headphones" / pactl set-sink-port 56 "[Out] Speaker"
+    Add commands for playerctl-section in host-specific for fixe-bureau
     Move assets/raspi/renew-cert.sh to scripts
     Add git pull cmd to upgrade
     Copy nix-shell in /code and git it

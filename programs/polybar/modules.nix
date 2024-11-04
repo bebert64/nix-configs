@@ -72,7 +72,7 @@
   "module/playerctl-mini" = {
     "inherit" = "player-ctl";
     exec = "${scripts.display-title-or-no-music}/bin/playerctl-display-title-or-no-music";
-    label = "%output:0:80%";
+    label = "%output:0:70%";
   };
 
   # ; #######################
@@ -134,7 +134,7 @@
 
     format = {
       mounted = {
-        text = "<ramp-capacity> <label-mounted>";
+        text = "%{T2}<ramp-capacity>%{T-} <label-mounted>";
         padding = 1;
         background = "${colors.shade7}";
       };
@@ -191,8 +191,18 @@
         font = 2;
       };
     };
-
   };
+
+  "module/headphones_or_speaker" = {
+    type = "custom/script";
+    exec = "${scripts.headphones-or-speaker-icon}/bin/headphones-or-speaker-icon";
+    format = {
+      background = "${colors.shade6}";
+      font = 2;
+      padding = 1;
+    };
+  };
+
   "module/memory" = {
     type = "internal/memory";
     interval = 2;
@@ -227,7 +237,7 @@
     interval = 1;
     speed-unit = "o/s";
     label = {
-      connected = " %downspeed:9%  %upspeed:9%";
+      connected = "%{T2} %{T-}%downspeed:9%  %{T2} %{T-}%upspeed:9%";
     };
     format = {
       connected = {
