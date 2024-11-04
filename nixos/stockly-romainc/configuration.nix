@@ -23,6 +23,8 @@
   services = {
     xserver.windowManager.i3.package = pkgs.i3-gaps;
 
+    udev.extraRules = ''ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr -c"'';
+
     displayManager.autoLogin = {
       enable = true;
       user = "user";
