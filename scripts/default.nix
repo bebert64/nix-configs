@@ -103,7 +103,7 @@
     }
 
     play_radio() {
-    echo "starting
+    echo "starting"
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
   echo "launched :"
   echo $IS_STRAWBERRY_LAUNCHED
