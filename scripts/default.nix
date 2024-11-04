@@ -88,8 +88,19 @@
     set -euxo pipefail
 
     play_radio() {
+      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+
+      if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
+          strawberry &
+      fi
+
+      while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
+          IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+          sleep 1
+      done
+
       strawberry --play-playlist Radios &
-      strawberry --play-track $track &
+      strawberry --play-track $1 &
     }
 
     MENU="$(echo -en \
@@ -100,13 +111,13 @@
     Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
     Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
     | rofi -dmenu -show-icons -i -p 'Radio')"
-    
+
     case "$MENU" in
-      FIP) track=0 && play_radio ;;
-      "Jazz Radio") track=1 && play_radio ;;
-      "Radio Nova") track=2 && play_radio ;;
-      "Oui FM") track=3 && play_radio ;;
-      "Classic FM") track=4 && play_radio ;;
+      FIP) play_radio 0 ;;
+      "Jazz Radio") play_radio 1 ;;
+      "Radio Nova") play_radio 2 ;;
+      "Oui FM") play_radio 3 ;;
+      "Classic FM") play_radio 4 ;;
       "Chillhop Radio") i3-msg "workspace 10:; exec firefox -new-window https://www.youtube.com/watch\?v\=5yx6BWlEVcY" ;;
     esac
   '')
