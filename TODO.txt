@@ -28,9 +28,6 @@ Various 1
     Move assets/raspi/renew-cert.sh to scripts
     Add git pull cmd to upgrade
     Copy nix-shell in /code and git it
-    Test if autorandr (without --change) would be enough in i3 config
-        use stockly-romainc
-        desired behavior would be that nothing happens if no screen is connected, but that it changes if screens are new
     Fix nixfmt vs nixfmt-pckgs
     Use Stockly's configs where appropriate
         https://github.com/Stockly/Computers/tree/master/programs
@@ -55,8 +52,14 @@ Autorandr
         Parse files
         Ask user list of polybar bars to launch
         Edit correct host-specific file (maybe pass the name of the config as an argument of the script)
-        Remove config grom .config/autorandr
+        Remove config from .config/autorandr
         Ask user if wants to save/commit and switch to new nix profile
+    Test if autorandr (without --change) would be enough in i3 config
+        use stockly-romainc
+        desired behavior would be that nothing happens if no screen is connected, but that it changes if screens are new
+        That works if service.autorandr.enable + use systemctl --user restart autorandr in i3 always
+        Check if adding a udev rule is better (because it should add autoswitch)
+        Remove autorandr config entirely from fixe-bureau ?
 
 Various 2
     Investigate why alock doesn't work on non-nixos config
