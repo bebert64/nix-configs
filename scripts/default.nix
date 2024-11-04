@@ -97,14 +97,17 @@
       ]
     }
 
-    echo ${pkgs.procps}/bin/ps
-    echo $(${pkgs.procps}/bin/ps aux | grep firefox)
-    echo $(ps aux | grep firefox)
-    echo "done testing ps"
-
     psg() {
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
+
+    echo "psg strawberry"
+    echo $(psg strawberry)
+    strawberry &
+    sleep 2
+    echo "psg strawberry again"
+    echo $(psg strawberry)
+
 
     play_radio() {
     echo "starting"
