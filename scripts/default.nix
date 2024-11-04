@@ -91,6 +91,8 @@
       lib.makeBinPath [
         pkgs.strawberry
         pkgs.rofi
+        pkgs.gnugrep
+        # pkgs.ps-procps
         # psg
       ]
     }
