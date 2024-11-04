@@ -87,7 +87,7 @@
     PATH="${
       lib.makeBinPath [
         pkgs.gnugrep
-        pkgs.procps
+        # pkgs.procps
       ]
     }:$PATH"
 
