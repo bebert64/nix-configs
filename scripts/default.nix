@@ -102,12 +102,14 @@
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
-    echo "psg strawberry"
-    echo $(psg strawberry)
+      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  echo "launched :"
+  echo $IS_STRAWBERRY_LAUNCHED
     strawberry &
     sleep 2
-    echo "psg strawberry again"
-    echo $(psg strawberry)
+      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+  echo "launched again:"
+  echo $IS_STRAWBERRY_LAUNCHED
 
 
     play_radio() {
