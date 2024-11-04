@@ -1,4 +1,4 @@
-{ host-specific, pkgs, ... }:
+{ host-specific, pkgs, lib, ... }:
 [
   (pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
@@ -86,6 +86,16 @@
   (pkgs.writeScriptBin "launch_radios" ''
     #!/usr/bin/env bash
     set -euxo pipefail
+
+    PATH=${
+      lib.makeBinPath [
+        pkgs.strawberry
+        # psg
+      ]
+    }
+
+    psg() {
+    ps aux | grep $1 | grep -v psg | grep -v grep}
 
     play_radio() {
       IS_STRAWBERRY_LAUNCHED=$(psg strawberry)

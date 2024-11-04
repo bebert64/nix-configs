@@ -120,7 +120,7 @@ in
       else
         [ ]
     )
-    ++ import ../scripts { inherit host-specific pkgs; }
+    ++ import ../scripts { inherit host-specific pkgs lib; }
     ++ lib.attrsets.attrValues scripts-playerctl
     ++ (
       if host-specific.wifi or false then
