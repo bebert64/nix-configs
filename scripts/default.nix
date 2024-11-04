@@ -1,4 +1,4 @@
-{ host-specific, pkgs, lib, ... }:
+{ host-specific, pkgs, ... }:
 [
   (pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
@@ -111,7 +111,6 @@ Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
 Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
 Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
 Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
-    | tr -s ' ' \
     | rofi -dmenu -show-icons -i -p 'Radio')"
 
     case "$MENU" in
