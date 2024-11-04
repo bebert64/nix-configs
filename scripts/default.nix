@@ -92,6 +92,7 @@
         pkgs.strawberry
         pkgs.rofi
         pkgs.gnugrep
+        pkgs.coreutils
         pkgs.procps
         # psg
       ]
@@ -101,12 +102,12 @@
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
-    echo "psg strawberry"
-    echo $(psg strawberry)
-    strawberry &
-    sleep 2
-    echo "psg strawberry again"
-    echo $(psg strawberry)
+    # echo "psg strawberry"
+    # echo $(psg strawberry)
+    # strawberry &
+    # sleep 2
+    # echo "psg strawberry again"
+    # echo $(psg strawberry)
 
 
     play_radio() {
