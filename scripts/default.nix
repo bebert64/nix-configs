@@ -84,13 +84,6 @@
   '')
 
   (pkgs.writeScriptBin "launch_radios" ''
-    PATH="${
-      lib.makeBinPath [
-        # pkgs.gnugrep
-        # pkgs.procps
-      ]
-    }:$PATH"
-
     psg() {
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
