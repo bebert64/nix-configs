@@ -97,8 +97,12 @@
       ]
     }
 
+    echo ${pkgs.procps}/bin/ps
+    echo $(${pkgs.procps}/bin/ps firefox)
+    echo $(ps firefox)
+    echo "done testing ps"
+
     psg() {
-    echo $1
     ps aux | grep $1 | grep -v psg | grep -v grep
     }
 
