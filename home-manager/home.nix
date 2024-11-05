@@ -13,6 +13,13 @@ let
 in
 {
   imports = [sops-nix.homeManagerModules.sops];
+
+  sops = {
+    defaultSopsFile = ../secrets/example.yaml;
+    age.sshKeyPaths =  [ "/home/user/.ssh/id_ed25519"];
+    secrets.example_key = {};
+
+  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = host-specific.username;
@@ -263,6 +270,8 @@ in
   # Activation script
   home.activation = {
     activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # Test sops
+    cat /run/secrets/example_key > /home/user/test_sops.txt
       # Create mount dirs
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
