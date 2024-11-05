@@ -4,6 +4,7 @@
   by-db,
   host-specific,
   config,
+  sops-nix,
   ...
 }@inputs:
 let
@@ -11,6 +12,7 @@ let
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
+  imports = [sops-nix.homeManagerModules.sops];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = host-specific.username;
