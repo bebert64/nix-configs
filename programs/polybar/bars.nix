@@ -10,7 +10,7 @@ colors: {
 
     font = {
       "0" = "Iosevka Nerd Font:style=Medium:size=10;3";
-      "1" = "Iosevka Nerd Font:style=Medium:size=15;5";
+      "1" = "Iosevka Nerd Font:style=Medium:size=13;4";
       "2" = "Iosevka Nerd Font:style=Medium:size=40;25";
     };
 
@@ -39,7 +39,7 @@ colors: {
     "inherit" = "HDMI";
     monitor = "HDMI-1";
     modules = {
-      right = "right7-background filesystem right6 pulseaudio right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
+      right = "right7-background filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
     };
   };
 
@@ -47,7 +47,7 @@ colors: {
     "inherit" = "HDMI";
     monitor = "HDMI-1";
     modules = {
-      right = "right8 battery right7 filesystem right6 pulseaudio right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
+      right = "right8 battery right7 filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
     };
   };
 
@@ -55,7 +55,7 @@ colors: {
     "inherit" = "HDMI";
     monitor = "HDMI-2";
     modules = {
-      right = "right7-background filesystem right6 pulseaudio right5 memory right4 cpu right3 wired right2 date right1";
+      right = "right7-background filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wired right2 date right1";
     };
   };
 
@@ -70,7 +70,7 @@ colors: {
     "inherit" = "EDP";
     monitor = "eDP-1";
     modules = {
-      right = "right8 battery right7 filesystem right6 pulseaudio right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
+      right = "right8 battery right7 filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
     };
   };
 
@@ -78,7 +78,7 @@ colors: {
     "inherit" = "EDP";
     monitor = "eDP-1";
     modules = {
-      right = "right8 battery right7 filesystem right6 pulseaudio right5 memory right4 cpu right3 wireless wired right2 date right1";
+      right = "right8 battery right7 filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1";
     };
   };
 }
