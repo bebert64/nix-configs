@@ -4,7 +4,6 @@
   by-db,
   host-specific,
   config,
-  sops-nix,
   ...
 }@inputs:
 let
@@ -12,14 +11,6 @@ let
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
-  imports = [sops-nix.homeManagerModules.sops];
-
-  sops = {
-    defaultSopsFile = ../secrets/example.yaml;
-    age.sshKeyPaths =  [ "/home/user/.ssh/id_ed25519"];
-    secrets.example_key = {};
-
-  };
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = host-specific.username;
@@ -270,35 +261,35 @@ in
   # Activation script
   home.activation = {
     activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    # Test sops
-    cat /run/secrets/example_key > /home/user/test_sops.txt
-      # Create mount dirs
-      ln -sf /mnt/NAS $HOME/mnt/
-      ln -sf -T /run/media/romain ~/mnt/usb
+      # Test sops
+      cat /run/secrets/example_key > /home/user/test_sops.txt
+        # Create mount dirs
+        ln -sf /mnt/NAS $HOME/mnt/
+        ln -sf -T /run/media/romain ~/mnt/usb
 
-      # Symlink fonts
-      # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
+        # Symlink fonts
+        # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
-      # Symlink picom config file
-      ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
+        # Symlink picom config file
+        ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
 
-      # load terminal theme
-      ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../assets/tilix.dconf}
+        # load terminal theme
+        ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../assets/tilix.dconf}
 
-      # Create ranger's bookmarks
-      mkdir -p $HOME/.local/share/ranger/
-      sed "s/\$USER/"$USER"/" ${../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
+        # Create ranger's bookmarks
+        mkdir -p $HOME/.local/share/ranger/
+        sed "s/\$USER/"$USER"/" ${../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
 
-      # Datagrip
-      ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
+        # Datagrip
+        ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
 
-      # Symlink some ssh config file
-      # Do NOT symlink the whole dir, to make sure to never git private key
-      mkdir -p $HOME/.ssh
-      ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
+        # Symlink some ssh config file
+        # Do NOT symlink the whole dir, to make sure to never git private key
+        mkdir -p $HOME/.ssh
+        ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
 
-      # Install VideoHelper companion
-      ${pkgs.vdhcoapp}/bin/vdhcoapp install
+        # Install VideoHelper companion
+        ${pkgs.vdhcoapp}/bin/vdhcoapp install
     '';
   };
 

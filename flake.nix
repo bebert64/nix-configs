@@ -11,7 +11,9 @@
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso";
     };
-    sops-nix = {url = "github:Mic92/sops-nix";};
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+    };
 
   };
 
@@ -32,7 +34,12 @@
         hostname = "stockly-romainc";
         configuration = ./nixos/stockly-romainc/configuration.nix;
         specialArgs = {
-          inherit stockly-computers home-manager by-db sops-nix;
+          inherit
+            stockly-computers
+            home-manager
+            by-db
+            sops-nix
+            ;
           host-specific = hosts-specific.stockly-romainc;
         };
       };

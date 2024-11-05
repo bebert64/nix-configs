@@ -5,7 +5,10 @@
   ...
 }:
 {
-  imports = [ home-manager.nixosModules.home-manager ];
+  imports = [
+    home-manager.nixosModules.home-manager
+    ../secrets/sops.nix
+  ];
 
   # X11 Configuration
   services.xserver = {
