@@ -197,11 +197,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1730426787,
-        "narHash": "sha256-CYF5HAZcyz9mOnZsj4RYkLTC+cyEi+TkxzWfzHcQ5zs=",
+        "lastModified": 1730909937,
+        "narHash": "sha256-OOJhHakS10p41e/iRoOwq/zMMQfSU3Kuf/gSMwMh+VA=",
         "ref": "refs/heads/master",
-        "rev": "c649ea735e47d2c9ffe72c208f0b4b36a11a454f",
-        "revCount": 126,
+        "rev": "03bc30205f568e6b86fd8cf613a81074d78bb3de",
+        "revCount": 127,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
