@@ -15,6 +15,7 @@ in
     fullscreen = false;
     hide-scrollbar = true;
     sidebar-mode = false;
+    other = config.sops.secrets.example_key.path;
   };
 
   theme =

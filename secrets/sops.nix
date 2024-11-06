@@ -1,5 +1,4 @@
 {
-  config,
   sops-nix,
   home-manager,
   ...
