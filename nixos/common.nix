@@ -92,9 +92,6 @@
     };
   };
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   programs = {
     zsh = {
       enable = true;
