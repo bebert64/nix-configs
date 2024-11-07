@@ -3,15 +3,9 @@
 ## Accounts syncing
 
 - Setup 1password accounts (info for both accounts are on NAS)
-- Create and sync firefox profiles
+- Sync firefox profiles
 - Login / sync setting for VsCode / DataGrip / Slack
 - Import database sources for DataGrip
-
-```
-cd ... && cp ...
-```
-
-- Copy profile from existing Thunderbird (into correct account a.k.a. Regular)
 
 ```
 cd ... && cp ...
@@ -31,17 +25,6 @@ ssh-keygen -t ed25519
 - Might need to add this computer to general ssh config and add other keys
   <br />
 
-## Autorandr
-
-- save a profile
-
-```
-autorandr --save profile-name
-```
-
-After that, copy the fingerprint from setup and the config inside host-specific + update the launch script
-<br />
-
 # Pacman / Yay
 
 ## List all packages installed by user
@@ -53,6 +36,17 @@ pacman/yay -Qqe
 pacman/yay -Rns
 
 # Various
+
+## Screen
+
+type `screen` before starting long task
+start long task
+if disconnected, reconnect and type `screen -r` to reconnect
+
+## Reinstall nixos boot
+
+sudo nix-collect-garbage -d
+sudo nixos-rebuild switch --flake .#
 
 ## To sync Tilix settings
 
@@ -88,11 +82,6 @@ fc-cache -f -v
 The font used in this setup is "Iosevka Nerd Font". To make VsCode display those characters correctly, add the font's
 name to settings `Editor: Font Family`
 To insert a new character, search for it on https://www.nerdfonts.com/cheat-sheet and copy/paste it as Icon
-
-## Reinstall nixos boot
-
-sudo nix-collect-garbage -d
-sudo nixos-rebuild switch --flake .#
 
 # Comics
 

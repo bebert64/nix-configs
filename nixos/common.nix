@@ -108,7 +108,13 @@
 
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    vim
+     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    (vim_configurable.customize {
+      name = "vim";
+      vimrcConfig.packages.myplugins = with vimPlugins; {
+        start = [ vim-nix ];
+      };
+    })
     git
     ntfs3g
     wget
@@ -121,6 +127,13 @@
   #   networking.extraHosts = ''
   #    127.0.0.1 mafreebox.freebox.fr
   #  '';
+
+  # Auto perodic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   # Enable the bluetooth daemon.
   services.blueman.enable = host-specific.bluetooth;
