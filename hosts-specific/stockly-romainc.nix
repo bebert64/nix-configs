@@ -35,7 +35,7 @@ hook_postswitch: {
             rate = "120.00";
           };
         };
-        hooks.postswitch = hook_postswitch "eDP-1-tray-on";
+        hooks.postswitch = hook_postswitch "eDP-1-tray-on" "solo";
       };
 
       bureau-maison = {
@@ -60,7 +60,7 @@ hook_postswitch: {
             rate = "59.95";
           };
         };
-        hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
+        hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery" "bureau-maison";
       };
 
       bureau-stockly = {
@@ -85,8 +85,15 @@ hook_postswitch: {
             rate = "59.95";
           };
         };
-        hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
+        # hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
       };
+    };
+    hooks.preswitch = {
+      cmd = ''
+        if [[ $(cat $HOME/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
+          pkill autorandr
+        fi
+      '';
     };
   };
 }

@@ -1,8 +1,9 @@
 let
-  hook_postswitch = bars: ''
+  hook_postswitch = bars: profile-name: ''
     echo "${bars}" > $HOME/.config/polybar/bars
     systemctl --user restart polybar
     systemctl --user restart wallpapers-manager
+    echo "${profile-name}" > $HOME/.config/autorandr/current
   '';
 in
 {

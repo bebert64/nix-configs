@@ -1,4 +1,9 @@
-{ lib, host-specific, ... }:
+{
+  lib,
+  pkgs,
+  host-specific,
+  ...
+}:
 
 {
   enable = true;
@@ -117,6 +122,10 @@
           }
           {
             command = "conky -c ${../assets/conky/qclocktwo} -d";
+            notification = false;
+          }
+          {
+            command = "${pkgs.srandrd}/bin/srandrd -n autorandr -c";
             notification = false;
           }
         ]

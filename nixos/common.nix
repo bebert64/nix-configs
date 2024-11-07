@@ -92,9 +92,6 @@
     };
   };
 
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
   programs = {
     zsh = {
       enable = true;
@@ -109,10 +106,9 @@
     light.enable = true;
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     git
     ntfs3g
     wget
@@ -125,14 +121,6 @@
   #   networking.extraHosts = ''
   #    127.0.0.1 mafreebox.freebox.fr
   #  '';
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
 
   # Enable the bluetooth daemon.
   services.blueman.enable = host-specific.bluetooth;

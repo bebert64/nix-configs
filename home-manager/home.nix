@@ -155,9 +155,6 @@ in
   };
 
   services = {
-    autorandr = {
-      enable = true;
-    };
     polybar = import ../programs/polybar/default.nix { inherit pkgs scripts; };
     playerctld = {
       enable = true;
@@ -220,7 +217,7 @@ in
   xsession = {
     enable = true;
     scriptPath = ".hm-xsession";
-    windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
+    windowManager.i3 = import ../programs/i3.nix { inherit lib pkgs host-specific; };
     numlock.enable = true;
   };
   gtk = {
