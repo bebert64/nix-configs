@@ -49,57 +49,20 @@ rec {
 
     title=$(playerctl metadata 2> /dev/null | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3-)
     artist=$(playerctl metadata 2> /dev/null | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3-)
-
     if [[ $artist ]]; then
       title_display="$artist - $title"
     else
       title_display=$title
     fi
 
-    echo "$title_display"
-  '';
-
-  cmd-bar-and-display-title = pkgs.writeScriptBin "playerctl-cmd-bar-and-display-title" ''
-    PATH=${
-      lib.makeBinPath [
-        display-title
-        restart-or-previous
-      ]
-    }
-    playerctl=${pkgs.playerctl}/bin/playerctl
-
-    status=$($playerctl status 2> /dev/null)
-    previous=
-    next=
-    play=
-    pause=
-    stop=
-
-    button_previous="%{A1:playerctl-restart-or-previous:}$previous  %{A}"
-    button_play="%{A1:$playerctl play:}  $play  %{A}"
-    button_pause="%{A1:$playerctl pause:}  $pause  %{A}"
-    button_stop="%{A1:$playerctl -a stop:}  $stop  %{A}"
-    button_next="%{A1:$playerctl next:}  $next%{A}"
-
+    status=$(playerctl status 2> /dev/null)
     if [[ $status == "Playing" ]]; then
-      button_status=$button_pause
+      prefix=" "
     else
-      button_status=$button_play
+      prefix="󰝛 "
     fi
 
-    command_bar="$button_previous$button_stop$button_status$button_next"
-
-    echo "$command_bar     $(playerctl-display-title)"
-  '';
-
-  display-title-or-no-music = pkgs.writeScriptBin "playerctl-display-title-or-no-music" ''
-    PATH=${lib.makeBinPath [ display-title ]}
-    display_title_opt=$(playerctl-display-title)
-    if [[ $display_title_opt ]]; then
-        echo $display_title_opt
-    else
-        echo "%{T2}󰝛 %{T-}"
-    fi
+    echo "%{T2}$prefix %{T-}  $title_display"
   '';
 
   headphones-or-speaker-icon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''

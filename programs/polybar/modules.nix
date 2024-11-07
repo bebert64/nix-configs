@@ -65,13 +65,13 @@
 
   "module/playerctl-full" = {
     "inherit" = "player-ctl";
-    exec = "${scripts.cmd-bar-and-display-title}/bin/playerctl-cmd-bar-and-display-title";
+    exec = "${scripts.display-title}/bin/playerctl-display-title";
     label = "Don Beberto's      •      %output%";
   };
 
   "module/playerctl-mini" = {
     "inherit" = "player-ctl";
-    exec = "${scripts.display-title-or-no-music}/bin/playerctl-display-title-or-no-music";
+    exec = "${scripts.display-title}/bin/playerctl-display-title";
     label = "%output:0:70%";
   };
 
