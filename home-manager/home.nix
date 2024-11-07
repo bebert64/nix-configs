@@ -91,20 +91,18 @@ in
       fontforge # thumbnail for fonts preview
       poppler_utils # thumbnail for pdf preview
 
-      # fonts
+      #fonts
       (nerdfonts.override {
         fonts = [
           "FiraCode"
           "Iosevka"
         ];
       })
-      powerline-fonts
 
     ]
     ++ (
       if host-specific.nixos or false then
         [
-
           alock # locker allowing transparent background
           picom-next
         ]
