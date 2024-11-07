@@ -132,13 +132,12 @@
   #    127.0.0.1 mafreebox.freebox.fr
   #  '';
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # Auto perodic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 
   # Enable the bluetooth daemon.
   services.blueman.enable = host-specific.bluetooth;
