@@ -92,21 +92,12 @@ in
       poppler_utils # thumbnail for pdf preview
 
       # fonts
-      dejavu_fonts
-      fira-code
-      font-awesome
-      font-awesome_4
-      font-awesome_5
-      helvetica-neue-lt-std
-      liberation_ttf_v1
       (nerdfonts.override {
         fonts = [
           "FiraCode"
           "Iosevka"
         ];
       })
-      noto-fonts
-      noto-fonts-emoji
       powerline-fonts
 
     ]

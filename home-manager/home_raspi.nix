@@ -32,9 +32,6 @@
       mkdir -p $HOME/mnt/
       ln -sf /mnt/NAS $HOME/mnt/
 
-      # Symlink fonts
-      ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
-
       # Symlink btop config folder
       ln -sf $HOME/nix-configs/assets/btop $HOME/.config
 

@@ -58,36 +58,17 @@
   fonts = {
     packages = with pkgs; [
       dejavu_fonts
-      fira-code
-      font-awesome
-      font-awesome_4
-      font-awesome_5
-      helvetica-neue-lt-std
-      liberation_ttf_v1
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "Iosevka"
-        ];
-      })
-      noto-fonts
-      noto-fonts-emoji
-      powerline-fonts
     ];
     fontconfig.enable = true;
     fontconfig.defaultFonts = {
       monospace = [
         "DejaVu Sans Mono"
-        "Noto mono"
       ];
       sansSerif = [
         "DejaVu Sans"
-        "Noto Sans"
       ];
       serif = [
-        "Liberation Serif"
         "DejaVu Serif"
-        "Noto Serif"
       ];
     };
   };
