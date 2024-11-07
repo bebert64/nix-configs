@@ -85,7 +85,7 @@ hook_postswitch: {
             rate = "59.95";
           };
         };
-        # hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
+        hooks.postswitch = hook_postswitch "eDP-1-tray-off HDMI-1-battery";
       };
     };
     hooks.preswitch = {
