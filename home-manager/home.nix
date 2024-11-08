@@ -19,6 +19,8 @@ in
   # manage.
   home.username = host-specific.username;
   home.homeDirectory = "/home/${host-specific.username}";
+  # home.username = lib.mkDefault "user";
+  # home.homeDirectory = lib.mkDefault "/home/user";
 
   home.packages =
     let
