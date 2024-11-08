@@ -18,11 +18,11 @@
     };
     set-headphones = mkOption {
       type = types.str;
-      description = "Command to set headphones";
+      description = "Command to redirect the sound output to headphones";
     };
     set-speaker = mkOption {
       type = types.str;
-      description = "Command to set speaker";
+      description = "Command to redirect the sound output to speaker";
     };
   };
 
