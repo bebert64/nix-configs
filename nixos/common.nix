@@ -7,27 +7,26 @@
 {
   imports = [ home-manager.nixosModules.home-manager ];
 
-  # X11 Configuration
-  services.xserver = {
-    enable = true;
-    desktopManager.session = [
-      {
-        name = "home-manager";
-        start = ''
-          ${pkgs.runtimeShell} $HOME/.hm-xsession &
-          waitPID=$!
-        '';
-      }
-    ];
-
-    xkb = {
-      layout = "fr";
-      variant = "";
-    };
-    # xkbOptions = "caps:swapescape";
-  };
-
   services = {
+    # X11 Configuration
+    xserver = {
+      enable = true;
+      desktopManager = {
+        session = [
+          {
+            name = "home-manager";
+            start = ''
+              ${pkgs.runtimeShell} $HOME/.hm-xsession &
+              waitPID=$!
+            '';
+          }
+        ];
+      };
+      xkb = {
+        layout = "fr";
+        variant = "";
+      };
+    };
     udisks2.enable = true; # automount usb keys and drives
     usbmuxd = {
       # used to mount Ipad
@@ -56,20 +55,14 @@
   };
 
   fonts = {
-    packages = with pkgs; [
-      dejavu_fonts
-    ];
-    fontconfig.enable = true;
-    fontconfig.defaultFonts = {
-      monospace = [
-        "DejaVu Sans Mono"
-      ];
-      sansSerif = [
-        "DejaVu Sans"
-      ];
-      serif = [
-        "DejaVu Serif"
-      ];
+    packages = with pkgs; [ dejavu_fonts ];
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        monospace = [ "DejaVu Sans Mono" ];
+        sansSerif = [ "DejaVu Sans" ];
+        serif = [ "DejaVu Serif" ];
+      };
     };
   };
 
@@ -89,32 +82,38 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-     # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    (vim_configurable.customize {
-      name = "vim";
-      vimrcConfig.packages.myplugins = with vimPlugins; {
-        start = [ vim-nix ];
-      };
-    })
-    git
-    ntfs3g
-    wget
-  ];
-  environment.pathsToLink = [ "/libexec" ];
+  environment = {
+    systemPackages = with pkgs; [
+      # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      (vim_configurable.customize {
+        name = "vim";
+        vimrcConfig.packages.myplugins = with vimPlugins; {
+          start = [ vim-nix ];
+        };
+      })
+      git
+      ntfs3g
+      wget
+    ];
+    pathsToLink = [ "/libexec" ];
+  };
 
-  security.polkit.enable = true;
-  security.pam.services.lightdm.enableGnomeKeyring = true;
+  security = {
+    polkit.enable = true;
+    pam.services.lightdm.enableGnomeKeyring = true;
+  };
 
   #   networking.extraHosts = ''
   #    127.0.0.1 mafreebox.freebox.fr
   #  '';
 
   # Auto perodic garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
   };
 
   # Enable the bluetooth daemon.

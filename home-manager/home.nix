@@ -91,7 +91,7 @@ in
       fontforge # thumbnail for fonts preview
       poppler_utils # thumbnail for pdf preview
 
-      #fonts
+      # fonts
       (nerdfonts.override {
         fonts = [
           "FiraCode"
@@ -253,9 +253,6 @@ in
       # Create mount dirs
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
-
-      # Symlink fonts
-      # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # Symlink picom config file
       ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
