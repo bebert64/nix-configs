@@ -7,10 +7,14 @@
   ...
 }@inputs:
 let
-  scripts = import ../scripts { inherit host-specific pkgs lib; };
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
+
+  imports = [
+    ../scripts
+    ../programs/polybar
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = host-specific.username;
@@ -109,7 +113,6 @@ in
       else
         [ ]
     )
-    ++ lib.attrsets.attrValues scripts
     ++ (
       if host-specific.wifi or false then
         [
@@ -144,10 +147,7 @@ in
   };
 
   services = {
-    polybar = import ../programs/polybar/default.nix { inherit pkgs scripts; };
-    playerctld = {
-      enable = true;
-    };
+    playerctld.enable = true;
   };
 
   systemd.user = {

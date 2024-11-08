@@ -3,8 +3,6 @@
   nixos = true;
   wifi = true;
   bluetooth = true;
-  minutes-before-lock = 3;
-  minutes-from-lock-to-sleep = 7;
   screens = {
     screen1 = "eDP-1";
     screen2 = "HDMI-1";
@@ -13,7 +11,6 @@
     update-dirty = "cd ~/nix-config && sudo nixos-rebuild switch --flake .#stockly-romainc ";
     upgrade = "cd ~/nix-config && git pull && nix flake update && apply-nix";
   };
-  wallpapers-manager-cmd = "$HOME/bin/wallpapers-manager";
   autorandr = {
     enable = true;
     profiles = {

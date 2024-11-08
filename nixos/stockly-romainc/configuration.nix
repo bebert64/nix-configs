@@ -5,14 +5,6 @@
     ./hardware-configuration.nix
   ];
 
-  by-db = {
-    player-ctl = {
-      set-headphones = "set-sink-port 56 '[Out] Headphones'";
-      set-speaker = "set-sink-port 56 '[Out] Speaker'";
-      is-headphones-on-regex = "Active Port.*Headphones";
-    };
-  };
-
   # Configuration options that are not standard NixOS, but were defined by Stockly
   stockly = {
     acer-quanta-webcam-fix = true;
@@ -23,7 +15,18 @@
   };
 
   home-manager = {
-    users.user.imports = [ ../../home-manager/home.nix ];
+    users.user = {
+      imports = [ ../../home-manager/home.nix ];
+      by-db = {
+        scripts = {
+          set-headphones = "set-sink-port 56 '[Out] Headphones'";
+          set-speaker = "set-sink-port 56 '[Out] Speaker'";
+        };
+        polybar = {
+          is-headphones-on-regex = "Active Port.*Headphones";
+        };
+      };
+    };
     backupFileExtension = "bckp";
     extraSpecialArgs = specialArgs;
   };
