@@ -92,28 +92,17 @@ in
       poppler_utils # thumbnail for pdf preview
 
       # fonts
-      dejavu_fonts
-      fira-code
-      font-awesome
-      font-awesome_4
-      font-awesome_5
-      helvetica-neue-lt-std
-      liberation_ttf_v1
       (nerdfonts.override {
         fonts = [
           "FiraCode"
           "Iosevka"
         ];
       })
-      noto-fonts
-      noto-fonts-emoji
-      powerline-fonts
 
     ]
     ++ (
       if host-specific.nixos or false then
         [
-
           alock # locker allowing transparent background
           picom-next
         ]
@@ -264,9 +253,6 @@ in
       # Create mount dirs
       ln -sf /mnt/NAS $HOME/mnt/
       ln -sf -T /run/media/romain ~/mnt/usb
-
-      # Symlink fonts
-      # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
       # Symlink picom config file
       ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
