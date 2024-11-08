@@ -1,92 +1,116 @@
 {
-  host-specific,
-  lib,
   pkgs,
+  lib,
+  config,
   ...
 }:
-rec {
-  move = pkgs.writeScriptBin "playerctl-move" ''
-    CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
+{
+  options.by_db.player-ctl = with lib; {
+    is-headphones-on-regex = mkOption {
+      type = types.str;
+      default = "Headphones";
+      description = "Regex to match if headphones are on";
+    };
 
-    case $CURRENT_PLAYER in
-      "strawberry") playerctl position $2$1;;
-      *) playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2);;
-    esac
+    set-headphones = mkOption {
+      type = types.str;
+      description = "Command to set headphones";
+    };
 
-  '';
+    set-speaker = mkOption {
+      type = types.str;
+      description = "Command to set speaker";
+    };
+  };
 
-  restart-or-previous = pkgs.writeScriptBin "playerctl-restart-or-previous" ''
-    PATH=${
-      lib.makeBinPath [
-        pkgs.playerctl
-        pkgs.coreutils
-        pkgs.strawberry
-      ]
-    }
+  config =
+    let
+      cfg = config.by_db.player-ctl;
+    in
+    {
+      move = pkgs.writeScriptBin "playerctl-move" ''
+        CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
 
-    CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
+        case $CURRENT_PLAYER in
+          "strawberry") playerctl position $2$1;;
+          *) playerctl position $(expr $(playerctl position | cut -d . -f 1) $1 $2);;
+        esac
 
-    case $CURRENT_PLAYER in
-      "strawberry")
-        strawberry --restart-or-previous;;
-      *)
-        if (($(playerctl position | cut -d . -f 1) < 10)); then
-          playerctl previous;
+      '';
+
+      restart-or-previous = pkgs.writeScriptBin "playerctl-restart-or-previous" ''
+        PATH=${
+          lib.makeBinPath [
+            pkgs.playerctl
+            pkgs.coreutils
+            pkgs.strawberry
+          ]
+        }
+
+        CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
+
+        case $CURRENT_PLAYER in
+          "strawberry")
+            strawberry --restart-or-previous;;
+          *)
+            if (($(playerctl position | cut -d . -f 1) < 10)); then
+              playerctl previous;
+            else
+              playerctl position 1;
+            fi;;
+        esac
+      '';
+
+      display-title = pkgs.writeScriptBin "playerctl-display-title" ''
+        PATH=${
+          lib.makeBinPath [
+            pkgs.playerctl
+            pkgs.gnugrep
+            pkgs.coreutils
+          ]
+        }
+
+        title=$(playerctl metadata 2> /dev/null | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3-)
+        artist=$(playerctl metadata 2> /dev/null | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3-)
+        if [[ $artist ]]; then
+          title_display="$artist - $title"
         else
-          playerctl position 1;
-        fi;;
-    esac
-  '';
+          title_display=$title
+        fi
 
-  display-title = pkgs.writeScriptBin "playerctl-display-title" ''
-    PATH=${
-      lib.makeBinPath [
-        pkgs.playerctl
-        pkgs.gnugrep
-        pkgs.coreutils
-      ]
-    }
+        status=$(playerctl status 2> /dev/null)
+        if [[ $status == "Playing" ]]; then
+          prefix=" "
+        else
+          prefix="󰝛 "
+        fi
 
-    title=$(playerctl metadata 2> /dev/null | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3-)
-    artist=$(playerctl metadata 2> /dev/null | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3-)
-    if [[ $artist ]]; then
-      title_display="$artist - $title"
-    else
-      title_display=$title
-    fi
+        echo "%{T2}$prefix %{T-}  $title_display"
+      '';
 
-    status=$(playerctl status 2> /dev/null)
-    if [[ $status == "Playing" ]]; then
-      prefix=" "
-    else
-      prefix="󰝛 "
-    fi
+      headphones-or-speaker-icon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
+        PATH=${
+          lib.makeBinPath [
+            pkgs.gnugrep
+            pkgs.pulseaudio
+          ]
+        }
+        IS_HEADPHONES_ON=$(pactl list sinks | grep "${cfg.is-headphones-on-regex}")
+        if [[ $IS_HEADPHONES_ON ]]; then
+          echo " "
+        else
+          echo "󰓃 "
+        fi
+      '';
 
-    echo "%{T2}$prefix %{T-}  $title_display"
-  '';
+      set-headphones = pkgs.writeScriptBin "set-headphones" ''
+        PATH=${lib.makeBinPath [ pkgs.pulseaudio ]}
+        pactl ${cfg.set-headphones}
+      '';
 
-  headphones-or-speaker-icon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
-    PATH=${
-      lib.makeBinPath [
-        pkgs.gnugrep
-        pkgs.pulseaudio
-      ]
-    }
-    IS_HEADPHONES_ON=$(pactl list sinks | grep "${host-specific.playerctl.is-headphones-on-regex}")
-    if [[ $IS_HEADPHONES_ON ]]; then
-      echo " "
-    else
-      echo "󰓃 "
-    fi
-  '';
-
-  set-headphones = pkgs.writeScriptBin "set-headphones" ''
-    PATH=${lib.makeBinPath [ pkgs.pulseaudio ]}
-    pactl ${host-specific.playerctl.set-headphones}
-  '';
-
-  set-speaker = pkgs.writeScriptBin "set-speaker" ''
-    PATH=${lib.makeBinPath [ pkgs.pulseaudio ]}
-    pactl ${host-specific.playerctl.set-speaker}
-  '';
+      set-speaker = pkgs.writeScriptBin "set-speaker" ''
+        PATH=${lib.makeBinPath [ pkgs.pulseaudio ]}
+        pactl ${cfg.set-speaker}
+      '';
+    };
 }
