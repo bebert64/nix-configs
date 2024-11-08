@@ -70,9 +70,7 @@
     zsh = {
       enable = true;
       histSize = 200000;
-      ohMyZsh = {
-        enable = true;
-      };
+      ohMyZsh.enable = true;
       autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
     };

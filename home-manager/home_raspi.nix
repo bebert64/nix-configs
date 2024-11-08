@@ -13,6 +13,7 @@
     openssh
     openssl
     ranger
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
   ];
 
   home.file = {
