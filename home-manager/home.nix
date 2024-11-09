@@ -15,115 +15,113 @@ in
     ../scripts.nix
     ../programs/polybar
   ];
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = host-specific.username;
-  home.homeDirectory = "/home/${host-specific.username}";
-  # home.username = lib.mkDefault "user";
-  # home.homeDirectory = lib.mkDefault "/home/user";
 
-  home.packages =
-    let
-      jetbrains = (import ../programs/jetbrains.nix inputs);
-    in
-    with pkgs;
-    with gnome;
-    [
-      by-db-pkgs.wallpapers-manager
-      anydesk
-      arandr # GUI to configure screens positions (need to kill autorandr)
-      avidemux
-      caffeine-ng # to prevent going to sleep when watching videos
-      # chromium
-      conky
-      direnv
-      evince # pdf reader
-      feh
-      fusee-launcher
-      gnome-calculator
-      gnome-keyring
-      # hicolor-icon-theme
-      inkscape
-      (callPackage ../programs/insomnia.nix { })
-      jetbrains.datagrip
-      jq # cli json processor, for some scripts (to get workspace id from i3)
-      # less # not sure what it was used for, to delete if not needed after a while, but keeping for now just in case I can't remeber what to add
-      microcodeIntel # for increased microprocessor performance
-      mcomix
-      nixd
-      nixfmt-rfc-style
-      nodejs
-      nodePackages.npm
-      nodePackages.pnpm
-      openssh
-      # openssl
-      pavucontrol # pulse audio volume controle
-      playerctl # to send data and retrieve metadata for polybar
-      polkit # polkit is the utility used by vscode to save as sudo
-      polkit_gnome
-      # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
-      pulseaudio
-      qt6.qttools # needed to extract artUrl from strawberry and display it with conky
-      rsync
-      slack
-      sqlite
-      sshfs
-      strawberry
-      thunderbird-bin-unwrapped
-      tilix # terminal
-      udiskie
-      unrar
-      unzip
-      vdhcoapp # companion to VideoDownloadHelper browser add-on
-      vlc
-      vscode
-      xclip # used by ranger to paste into global clipboard
-      xidlehook
-      yt-dlp
-      zip
+  home = {
+    username = lib.mkDefault "romain";
+    homeDirectory = lib.mkDefault "/home/romain";
+    packages =
+      let
+        jetbrains = (import ../programs/jetbrains.nix inputs);
+      in
+      with pkgs;
+      with gnome;
+      [
+        by-db-pkgs.wallpapers-manager
+        anydesk
+        arandr # GUI to configure screens positions (need to kill autorandr)
+        avidemux
+        caffeine-ng # to prevent going to sleep when watching videos
+        # chromium
+        conky
+        direnv
+        evince # pdf reader
+        feh
+        fusee-launcher
+        gnome-calculator
+        gnome-keyring
+        # hicolor-icon-theme
+        inkscape
+        (callPackage ../programs/insomnia.nix { })
+        jetbrains.datagrip
+        jq # cli json processor, for some scripts (to get workspace id from i3)
+        # less # not sure what it was used for, to delete if not needed after a while, but keeping for now just in case I can't remeber what to add
+        microcodeIntel # for increased microprocessor performance
+        mcomix
+        nixd
+        nixfmt-rfc-style
+        nodejs
+        nodePackages.npm
+        nodePackages.pnpm
+        openssh
+        # openssl
+        pavucontrol # pulse audio volume controle
+        playerctl # to send data and retrieve metadata for polybar
+        polkit # polkit is the utility used by vscode to save as sudo
+        polkit_gnome
+        # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
+        pulseaudio
+        qt6.qttools # needed to extract artUrl from strawberry and display it with conky
+        rsync
+        slack
+        sqlite
+        sshfs
+        strawberry
+        thunderbird-bin-unwrapped
+        tilix # terminal
+        udiskie
+        unrar
+        unzip
+        vdhcoapp # companion to VideoDownloadHelper browser add-on
+        vlc
+        vscode
+        xclip # used by ranger to paste into global clipboard
+        xidlehook
+        yt-dlp
+        zip
 
-      # imagemagick and scrot are used for image manipulation
-      # to create the blur patches behind the conky widgets
-      imagemagick
-      scrot
+        # imagemagick and scrot are used for image manipulation
+        # to create the blur patches behind the conky widgets
+        imagemagick
+        scrot
 
-      # Theme for QT applications (vlc, strawberry...)
-      qt5ct
-      libsForQt5.qtstyleplugins
+        # Theme for QT applications (vlc, strawberry...)
+        qt5ct
+        libsForQt5.qtstyleplugins
 
-      # Ranger
-      ranger
-      ffmpegthumbnailer # thumbnail for videos preview
-      fontforge # thumbnail for fonts preview
-      poppler_utils # thumbnail for pdf preview
+        # Ranger
+        ranger
+        ffmpegthumbnailer # thumbnail for videos preview
+        fontforge # thumbnail for fonts preview
+        poppler_utils # thumbnail for pdf preview
 
-      # fonts
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "Iosevka"
-        ];
-      })
+        # fonts
+        (nerdfonts.override {
+          fonts = [
+            "FiraCode"
+            "Iosevka"
+          ];
+        })
 
-    ]
-    ++ (
-      if host-specific.nixos or false then
-        [
-          alock # locker allowing transparent background
-          picom-next
-        ]
-      else
-        [ ]
-    )
-    ++ (
-      if host-specific.wifi or false then
-        [
-          networkmanager
-          networkmanagerapplet
-        ]
-      else
-        [ ]
-    );
+      ]
+      ++ (
+        if host-specific.nixos or false then
+          [
+            alock # locker allowing transparent background
+            picom-next
+          ]
+        else
+          [ ]
+      )
+      ++ (
+        if host-specific.wifi or false then
+          [
+            networkmanager
+            networkmanagerapplet
+          ]
+        else
+          [ ]
+      );
+  };
 
   # Programs known by Home-Manager
   programs = {

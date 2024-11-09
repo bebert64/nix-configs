@@ -135,12 +135,12 @@
           }
 
           MENU="$(echo -en \
-          'FIP\0icon\x1f${../assets/icons/fip.png}
-          Jazz Radio\0icon\x1f${../assets/icons/jazz-radio.jpg}
-          Radio Nova\0icon\x1f${../assets/icons/nova.jpg}
-          Oui FM\0icon\x1f${../assets/icons/Oui-FM.png}
-          Classic FM\0icon\x1f${../assets/icons/classic-FM.png}
-          Chillhop Radio\0icon\x1f${../assets/icons/chillhop.jpg}' \
+          'FIP\0icon\x1f${./assets/icons/fip.png}
+          Jazz Radio\0icon\x1f${./assets/icons/jazz-radio.jpg}
+          Radio Nova\0icon\x1f${./assets/icons/nova.jpg}
+          Oui FM\0icon\x1f${./assets/icons/Oui-FM.png}
+          Classic FM\0icon\x1f${./assets/icons/classic-FM.png}
+          Chillhop Radio\0icon\x1f${./assets/icons/chillhop.jpg}' \
           | rofi -dmenu -show-icons -i -p 'Radio')"
 
           case "$MENU" in

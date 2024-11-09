@@ -1,4 +1,9 @@
-{ pkgs, specialArgs, lib, ... }:
+{
+  pkgs,
+  specialArgs,
+  lib,
+  ...
+}:
 {
   imports = [
     ../common.nix
@@ -16,10 +21,10 @@
 
   home-manager = {
     users.user = {
-      # home = {
-      #   username = lib.mkForce "user";
-      #   homeDirectory = lib.mkForce "/home/user";
-      # };
+      home = {
+        username = lib.mkForce "user";
+        homeDirectory = lib.mkForce "/home/user";
+      };
       imports = [ ../../home-manager/home.nix ];
       by-db = {
         scripts = {
