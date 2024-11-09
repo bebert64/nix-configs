@@ -271,9 +271,6 @@ in
       # Symlink fonts
       # ln -sf $HOME/nix-configs/fonts $HOME/.local/share/
 
-      # Symlink picom config file
-      ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
-
       # load terminal theme
       ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../assets/tilix.dconf}
 
