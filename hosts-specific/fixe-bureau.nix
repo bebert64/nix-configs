@@ -1,5 +1,4 @@
 {
-  nixos = true;
   minutes-before-lock = 30;
   minutes-from-lock-to-sleep = 30;
   playerctl = {

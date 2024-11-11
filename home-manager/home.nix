@@ -30,6 +30,7 @@ in
         with gnome;
         [
           by-db-pkgs.wallpapers-manager
+          alock # locker allowing transparent background
           anydesk
           arandr # GUI to configure screens positions (need to kill autorandr)
           avidemux
@@ -59,6 +60,7 @@ in
           openssh
           # openssl
           pavucontrol # pulse audio volume controle
+          picom-next
           playerctl # to send data and retrieve metadata for polybar
           polkit # polkit is the utility used by vscode to save as sudo
           polkit_gnome
@@ -108,15 +110,6 @@ in
           })
 
         ]
-        ++ (
-          if host-specific.nixos or false then
-            [
-              alock # locker allowing transparent background
-              picom-next
-            ]
-          else
-            [ ]
-        )
         ++ lib.attrsets.attrValues scripts
         ++ (
           if host-specific.wifi or false then
@@ -286,14 +279,6 @@ in
           # Install VideoHelper companion
           ${pkgs.vdhcoapp}/bin/vdhcoapp install
         '';
-      };
-
-      nix = lib.mkIf (!(host-specific.nixos or false)) {
-        package = pkgs.nix;
-        settings.experimental-features = [
-          "nix-command"
-          "flakes"
-        ];
       };
 
       # Let Home Manager install and manage itself.

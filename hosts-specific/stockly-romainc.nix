@@ -1,6 +1,4 @@
 {
-  username = "user";
-  nixos = true;
   wifi = true;
   bluetooth = true;
   minutes-before-lock = 3;
