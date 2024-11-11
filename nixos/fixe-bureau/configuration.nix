@@ -1,36 +1,45 @@
-{ pkgs, specialArgs, ... }:
+{
+  pkgs,
+  specialArgs,
+  lib,
+  ...
+}:
+
+let
+  username = "romain";
+in
 {
   imports = [
     ../common.nix
     ./hardware-configuration.nix
   ];
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  # Configuration options that are not standard NixOS, but were defined by Stockly
-  stockly = {
-    acer-quanta-webcam-fix = false;
-    ui = null;
-    nvidia = false;
-    auto-update.enable = true; # See auto-update.nix for doc
-    keyboard-layout = "fr";
+  users.users.${username} = {
+    isNormalUser = true;
+    description = lib.mkDefault "Romain";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
-  home-manager =
-    let
-      username = "romain";
-    in
-    {
-      users.${username} = {
-        imports = [ ../../home-manager/home.nix ];
-        by-db.username = "${username}";
-      };
-      backupFileExtension = "bckp";
-      extraSpecialArgs = specialArgs;
-
+  home-manager = {
+    users.${username} = {
+      imports = [ ../../home-manager/home.nix ];
+      by-db.username = "${username}";
     };
+    backupFileExtension = "bckp";
+    extraSpecialArgs = specialArgs;
+
+  };
 
   services = {
     xserver.windowManager.i3.package = pkgs.i3-gaps;
   };
+  networking.hostName = "fixe-bureau";
 
   nixpkgs.config.allowUnfree = true;
 

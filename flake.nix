@@ -35,9 +35,8 @@
           };
         };
 
-        fixe-bureau = stockly-computers.personalComputers.stocklyNixosSystem {
-          hostname = "fixe-bureau";
-          configuration = ./nixos/fixe-bureau/configuration.nix;
+        fixe-bureau = nixpkgs.lib.nixosSystem {
+          modules = [ ./nixos/fixe-bureau/configuration.nix ];
           specialArgs = {
             inherit stockly-computers home-manager by-db;
             host-specific = hosts-specific.fixe-bureau;
