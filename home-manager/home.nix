@@ -150,7 +150,6 @@ in
         };
         zsh = import ../programs/zsh.nix {
           additional-aliases = host-specific.zsh-aliases or { };
-          inherit pkgs;
         };
       };
 
