@@ -14,31 +14,22 @@
     keyboard-layout = "fr";
   };
 
-  home-manager = {
-    #users.user.imports = [ ../../home-manager/home.nix ];
-    #users.user.by-db.username = "user";
-    backupFileExtension = "bckp";
-    extraSpecialArgs = specialArgs;
+  home-manager =
+    let
+      username = "romain";
+    in
+    {
+      users.${username} = {
+        imports = [ ../../home-manager/home.nix ];
+        by-db.username = "${username}";
+      };
+      backupFileExtension = "bckp";
+      extraSpecialArgs = specialArgs;
 
-
-    users.romain.imports = [ ../../home-manager/home.nix ];
-    users.romain.by-db.username = "romain";
-  };
+    };
 
   services = {
     xserver.windowManager.i3.package = pkgs.i3-gaps;
-
-    # displayManager.autoLogin = {
-    #   enable = true;
-    #   user = "romain";
-    # };
-
-    # # Enable touchpad support (enabled default in most desktopManager).
-    # libinput = {
-    #   touchpad.naturalScrolling = true;
-    #   touchpad.middleEmulation = true;
-    #   touchpad.tapping = true;
-    # };
   };
 
   nixpkgs.config.allowUnfree = true;

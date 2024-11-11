@@ -11,9 +11,7 @@ let
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
-  options.by-db.username = with lib; mkOption {
-    type = types.str;
-  };
+  options.by-db.username = with lib; mkOption { type = types.str; };
 
   config =
     let
