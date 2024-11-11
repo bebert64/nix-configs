@@ -43,6 +43,34 @@ in
 
   nixpkgs.config.allowUnfree = true;
 
+  # Set your time zone.
+  time.timeZone = lib.mkDefault "Europe/Paris";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = lib.mkDefault "en_US.utf8";
+
+  i18n.extraLocaleSettings = lib.mkDefault {
+    LC_ADDRESS = "fr_FR.utf8";
+    LC_IDENTIFICATION = "fr_FR.utf8";
+    LC_MEASUREMENT = "fr_FR.utf8";
+    LC_MONETARY = "fr_FR.utf8";
+    LC_NAME = "fr_FR.utf8";
+    LC_NUMERIC = "fr_FR.utf8";
+    LC_PAPER = "fr_FR.utf8";
+    LC_TELEPHONE = "fr_FR.utf8";
+    LC_TIME = "fr_FR.utf8";
+  };
+
+  # Configure console keymap
+  console.keyMap = lib.mkDefault "fr";
+  hardware.pulseaudio.enable = true;
+
+  # X11 Configuration
+  services.xserver = {
+    enable = true;
+    xkb.layout = lib.mkDefault "fr";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

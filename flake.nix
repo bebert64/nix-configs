@@ -2,7 +2,7 @@
   description = "NixOS and HomeManager configurations";
 
   inputs = {
-    stockly-computers.url = "git+file:///home/romain/Computers/";
+    stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
     nixpkgs.follows = "stockly-computers/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";

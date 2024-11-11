@@ -1,4 +1,4 @@
-{ additional-aliases }:
+{ additional-aliases, pkgs }:
 {
   enable = true;
   shellAliases = {

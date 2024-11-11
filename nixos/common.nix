@@ -35,8 +35,22 @@
     };
     gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
     # Enable the OpenSSH daemon.
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      # require public key authentication for better security
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        X11Forwarding = true;
+      };
+    };
   };
+  users.defaultUserShell = pkgs.zsh;
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {

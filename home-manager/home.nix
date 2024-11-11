@@ -148,7 +148,7 @@ in
             syntax on
           '';
         };
-        zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
+        zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; inherit pkgs;};
       };
 
       services = {
