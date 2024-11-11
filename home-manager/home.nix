@@ -1,10 +1,9 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  host-specific,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, host-specific
+, config
+, ...
 }@inputs:
 let
   scripts = import ../scripts { inherit host-specific pkgs lib; };
@@ -53,6 +52,7 @@ in
           mcomix
           nixd
           nixfmt-rfc-style
+          nixpkgs-fmt
           nodejs
           nodePackages.npm
           nodePackages.pnpm
@@ -148,7 +148,10 @@ in
             syntax on
           '';
         };
-        zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; inherit pkgs;};
+        zsh = import ../programs/zsh.nix {
+          additional-aliases = host-specific.zsh-aliases or { };
+          inherit pkgs;
+        };
       };
 
       services = {

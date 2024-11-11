@@ -1,11 +1,10 @@
-{
-  host-specific,
-  pkgs,
-  lib,
-  ...
+{ host-specific
+, pkgs
+, lib
+, ...
 }:
 import ./playerctl.nix { inherit host-specific lib pkgs; }
-// rec {
+  // rec {
   mnas = pkgs.writeScriptBin "mnas" ''
     #!/usr/bin/env bash
     set -euo pipefail

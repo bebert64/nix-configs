@@ -1,8 +1,7 @@
-{
-  host-specific,
-  lib,
-  pkgs,
-  ...
+{ host-specific
+, lib
+, pkgs
+, ...
 }:
 rec {
   move = pkgs.writeScriptBin "playerctl-move" ''
