@@ -115,7 +115,7 @@
   };
 
   # Enable the bluetooth daemon.
-  services.blueman.enable = host-specific.bluetooth;
-  hardware.bluetooth.enable = host-specific.bluetooth;
+  services.blueman.enable = (host-specific.bluetooth or false);
+  hardware.bluetooth.enable = (host-specific.bluetooth or false);
 
 }

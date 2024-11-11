@@ -1,15 +1,20 @@
 {
-  username = "romain";
+  nixos = true;
   minutes-before-lock = 30;
   minutes-from-lock-to-sleep = 30;
+  playerctl = {
+    set-headphones = "set-sink-port 56 '[Out] Headphones'";
+    set-speaker = "set-sink-port 56 '[Out] Speaker'";
+    is-headphones-on-regex = "Active Port.*Headphones";
+  };
   screens = {
     screen1 = "HDMI-1";
     screen2 = "HDMI-2";
   };
   zsh-aliases = {
-    "update" = "cd ~/nix-configs && git pull && home-manager switch --flake .#fixe-bureau";
-    "update-dirty" = "cd ~/nix-configs && git add . && home-manager switch --flake .#fixe-bureau";
-    "upgrade" = "yay -Syu && cd ~/nix-configs && git pull && nix flake update --commit-lock-file && home-manager switch --flake .#fixe-bureau && git push";
+    "update" = "cd ~/nix-configs && git pull && sudo nixos-rebuild switch --flake .#fixe-bureau";
+    "update-dirty" = "cd ~/nix-configs && git add . && sudo nixos-rebuild switch --flake .#fixe-bureau";
+    "upgrade" = "yay -Syu && cd ~/nix-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#fixe-bureau && git push";
   };
   autorandr = {
     enable = true;
