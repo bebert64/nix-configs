@@ -271,11 +271,6 @@ in
           # Datagrip
           ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
 
-          # Symlink some ssh config file
-          # Do NOT symlink the whole dir, to make sure to never git private key
-          mkdir -p $HOME/.ssh
-          ln -sf $HOME/nix-configs/assets/ssh/authorized_keys $HOME/.ssh/
-
           # Install VideoHelper companion
           ${pkgs.vdhcoapp}/bin/vdhcoapp install
         '';

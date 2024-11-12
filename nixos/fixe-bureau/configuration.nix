@@ -23,6 +23,12 @@ in
       "networkmanager"
       "wheel"
     ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJxBmEvziBiowhj2vd0fbExl4b5Dkf/5rSBjnw3iMbV romain@stockly.ai"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjhHLih5ykkFc2kOGxVboxjnUARDNMn4/ptovfaNceC bebert64@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILl4CdsJeD+h9xmNfuSPSHHFz6N9pWfa0uCIYq2b1sGR romain@fixe-salon"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJoCrtZ5Gy9g7kLEhyqVyvdHIVgCq/hhZuY5ghu9GLzc bebert64@gmail.com"
+    ];
   };
 
   home-manager = {
