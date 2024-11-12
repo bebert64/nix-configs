@@ -1,7 +1,8 @@
-{ pkgs
-, home-manager
-, host-specific
-, ...
+{
+  pkgs,
+  home-manager,
+  host-specific,
+  ...
 }:
 {
   imports = [ home-manager.nixosModules.home-manager ];

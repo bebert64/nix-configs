@@ -74,12 +74,12 @@
       };
 
       assigns = {
-        "$ws3" = [{ class = "Code"; }];
-        "$ws4" = [{ class = "Slack"; }];
-        "$ws5" = [{ class = "thunderbird"; }];
-        "$ws6" = [{ class = "jetbrains-datagrip"; }];
-        "$ws8" = [{ class = "avidemux"; }];
-        "$ws10" = [{ class = "strawberry"; }];
+        "$ws3" = [ { class = "Code"; } ];
+        "$ws4" = [ { class = "Slack"; } ];
+        "$ws5" = [ { class = "thunderbird"; } ];
+        "$ws6" = [ { class = "jetbrains-datagrip"; } ];
+        "$ws8" = [ { class = "avidemux"; } ];
+        "$ws10" = [ { class = "strawberry"; } ];
       };
 
       bars = [ ];

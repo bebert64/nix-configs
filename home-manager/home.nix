@@ -1,9 +1,10 @@
-{ pkgs
-, lib
-, by-db
-, host-specific
-, config
-, ...
+{
+  pkgs,
+  lib,
+  by-db,
+  host-specific,
+  config,
+  ...
 }@inputs:
 let
   scripts = import ../scripts { inherit host-specific pkgs lib; };
@@ -141,9 +142,7 @@ in
             syntax on
           '';
         };
-        zsh = import ../programs/zsh.nix {
-          additional-aliases = host-specific.zsh-aliases or { };
-        };
+        zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
       };
 
       services = {

@@ -14,11 +14,12 @@
   };
 
   outputs =
-    inputs@{ nixpkgs
-    , home-manager
-    , by-db
-    , stockly-computers
-    , ...
+    inputs@{
+      nixpkgs,
+      home-manager,
+      by-db,
+      stockly-computers,
+      ...
     }:
     let
       hosts-specific = import ./hosts-specific;
