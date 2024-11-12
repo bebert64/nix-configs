@@ -25,12 +25,22 @@
       hosts-specific = import ./hosts-specific;
     in
     {
-      nixosConfigurations.stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
-        hostname = "stockly-romainc";
-        configuration = ./nixos/stockly-romainc/configuration.nix;
-        specialArgs = {
-          inherit stockly-computers home-manager by-db;
-          host-specific = hosts-specific.stockly-romainc;
+      nixosConfigurations = {
+        stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
+          hostname = "stockly-romainc";
+          configuration = ./nixos/stockly-romainc/configuration.nix;
+          specialArgs = {
+            inherit stockly-computers home-manager by-db;
+            host-specific = hosts-specific.stockly-romainc;
+          };
+        };
+
+        fixe-bureau = nixpkgs.lib.nixosSystem {
+          modules = [ ./nixos/fixe-bureau/configuration.nix ];
+          specialArgs = {
+            inherit stockly-computers home-manager by-db;
+            host-specific = hosts-specific.fixe-bureau;
+          };
         };
       };
 
