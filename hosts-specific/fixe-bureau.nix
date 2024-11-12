@@ -13,7 +13,7 @@
   zsh-aliases = {
     "update" = "cd ~/nix-configs && git pull && sudo nixos-rebuild switch --flake .#fixe-bureau";
     "update-dirty" = "cd ~/nix-configs && git add . && sudo nixos-rebuild switch --flake .#fixe-bureau";
-    "upgrade" = "yay -Syu && cd ~/nix-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#fixe-bureau && git push";
+    "upgrade" = "cd ~/nix-configs && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#fixe-bureau && git push";
   };
   autorandr = {
     enable = true;
