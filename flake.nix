@@ -28,6 +28,14 @@
       nixosConfigurations = {
         stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
           hostname = "stockly-romainc";
+          modules = [
+            {
+              by-db.user = {
+                name = "romain";
+                description = "Romain";
+              };
+            }
+          ];
           configuration = ./nixos/stockly-romainc/configuration.nix;
           specialArgs = {
             inherit stockly-computers home-manager by-db;
@@ -36,9 +44,17 @@
         };
 
         fixe-bureau = nixpkgs.lib.nixosSystem {
-          modules = [ ./nixos/fixe-bureau/configuration.nix ];
+          modules = [
+            {
+              by-db.user = {
+                name = "romain";
+                description = "Romain";
+              };
+            }
+            ./nixos/fixe-bureau/configuration.nix
+          ];
           specialArgs = {
-            inherit stockly-computers home-manager by-db;
+            inherit home-manager by-db;
             host-specific = hosts-specific.fixe-bureau;
           };
         };

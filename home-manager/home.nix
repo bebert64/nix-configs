@@ -1,14 +1,20 @@
-{ pkgs
-, lib
-, by-db
-, host-specific
-, config
-, ...
+{
+  pkgs,
+  lib,
+  by-db,
+  host-specific,
+  config,
+  ...
 }@inputs:
 let
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
+
+  imports = [
+    ../scripts.nix
+    ../programs/polybar
+  ];
   options.by-db.username = with lib; mkOption { type = types.str; };
 
   config =
@@ -16,11 +22,6 @@ in
       username = config.by-db.username;
     in
     {
-
-      imports = [
-        ../scripts.nix
-        ../programs/polybar
-      ];
 
       home.username = "${username}";
       home.homeDirectory = "/home/${username}";
@@ -235,6 +236,8 @@ in
             "text/xml" = [ "firefox.desktop" ];
             "x-scheme-handler/http" = [ "firefox.desktop" ];
             "x-scheme-handler/https" = [ "firefox.desktop" ];
+
+            "video/mp4" = [ "vlc.desktop" ];
           };
           defaultApplications = {
             "defaut-web-browser" = [ "firefox.desktop" ];
@@ -242,6 +245,8 @@ in
             "text/xml" = [ "firefox.desktop" ];
             "x-scheme-handler/http" = [ "firefox.desktop" ];
             "x-scheme-handler/https" = [ "firefox.desktop" ];
+
+            "video/mp4" = [ "vlc.desktop" ];
           };
         };
       };
