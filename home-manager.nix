@@ -1,10 +1,9 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  host-specific,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, host-specific
+, config
+, ...
 }@inputs:
 let
   by-db-pkgs = by-db.packages.x86_64-linux;
@@ -14,6 +13,7 @@ in
   imports = [
     ./scripts.nix
     ./programs/polybar
+    ./programs/git.nix
   ];
   options.by-db.username = with lib; mkOption { type = types.str; };
 
@@ -133,7 +133,6 @@ in
           enableZshIntegration = true;
         };
         firefox = import ./programs/firefox.nix;
-        git = import ./programs/git.nix;
         rofi = import ./programs/rofi.nix { inherit config; };
         ssh = import ./programs/ssh/default.nix;
         vim = {

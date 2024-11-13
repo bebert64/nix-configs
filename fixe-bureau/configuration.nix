@@ -1,9 +1,5 @@
-{
-  pkgs,
-  specialArgs,
-  lib,
-  config,
-  ...
+{ config
+, ...
 }:
 let
   user = config.by-db.user;
@@ -16,12 +12,12 @@ in
 
   home-manager = {
     users.${user.name}.by-db = {
+      polybar = {
+        is-headphones-on-regex = "Active Port.*Headphones";
+      };
       scripts = {
         set-headphones = "set-sink-port 56 '[Out] Headphones'";
         set-speaker = "set-sink-port 56 '[Out] Speaker'";
-      };
-      polybar = {
-        is-headphones-on-regex = "Active Port.*Headphones";
       };
     };
   };

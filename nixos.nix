@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [ home-manager.nixosModules.home-manager ];
@@ -14,7 +13,7 @@
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
-    enableBluetooth = mkOption{
+    enableBluetooth = mkOption {
       type = types.bool;
       default = false;
     };
@@ -49,6 +48,10 @@
           imports = [ ./home-manager.nix ];
           by-db = {
             username = "${cfg.user.name}";
+            git = {
+              userName = "RomainC";
+              userEmail = "bebert64@gmal.com";
+            };
           };
         };
         backupFileExtension = "bckp";
