@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    ../common.nix
+    ../nixos.nix
     ./hardware-configuration.nix
   ];
 

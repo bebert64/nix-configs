@@ -46,7 +46,7 @@
 
       home-manager = {
         users.${cfg.user.name} = {
-          imports = [ ../home-manager/home.nix ];
+          imports = [ ./home-manager.nix ];
           by-db = {
             username = "${cfg.user.name}";
           };

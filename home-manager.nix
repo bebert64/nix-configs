@@ -12,8 +12,8 @@ in
 {
 
   imports = [
-    ../scripts.nix
-    ../programs/polybar
+    ./scripts.nix
+    ./programs/polybar
   ];
   options.by-db.username = with lib; mkOption { type = types.str; };
 
@@ -28,7 +28,7 @@ in
 
       home.packages =
         let
-          jetbrains = (import ../programs/jetbrains.nix inputs);
+          jetbrains = (import ./programs/jetbrains.nix inputs);
         in
         with pkgs;
         with gnome;
@@ -49,7 +49,7 @@ in
           gnome-keyring
           # hicolor-icon-theme
           inkscape
-          (callPackage ../programs/insomnia.nix { })
+          (callPackage ./programs/insomnia.nix { })
           jetbrains.datagrip
           jq # cli json processor, for some scripts (to get workspace id from i3)
           # less # not sure what it was used for, to delete if not needed after a while, but keeping for now just in case I can't remeber what to add
@@ -126,16 +126,16 @@ in
       # Programs known by Home-Manager
       programs = {
         autorandr = host-specific.autorandr;
-        btop = import ../programs/btop.nix;
+        btop = import ./programs/btop.nix;
         direnv = {
           enable = true;
           nix-direnv.enable = true;
           enableZshIntegration = true;
         };
-        firefox = import ../programs/firefox.nix;
-        git = import ../programs/git.nix;
-        rofi = import ../programs/rofi.nix { inherit config; };
-        ssh = import ../programs/ssh/default.nix;
+        firefox = import ./programs/firefox.nix;
+        git = import ./programs/git.nix;
+        rofi = import ./programs/rofi.nix { inherit config; };
+        ssh = import ./programs/ssh/default.nix;
         vim = {
           extraConfig = ''
             set autoindent
@@ -143,7 +143,7 @@ in
             syntax on
           '';
         };
-        zsh = import ../programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
+        zsh = import ./programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
       };
 
       services = {
@@ -184,15 +184,15 @@ in
 
       # Copy custom files / assets
       home.file = {
-        ".anydesk/user.conf".source = ../assets/anydesk-user.conf;
-        ".cargo/config.toml".source = ../assets/cargo_config.toml;
-        ".config/qt5ct/qt5ct.conf".source = ../assets/qt5ct.conf;
-        ".config/ranger/rc.conf".source = ../assets/ranger/rc.conf;
-        ".config/ranger/scope.sh".source = ../assets/ranger/scope.sh;
-        ".conky".source = ../assets/conky;
-        ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ../assets/MonokaiStockly;
+        ".anydesk/user.conf".source = ./assets/anydesk-user.conf;
+        ".cargo/config.toml".source = ./assets/cargo_config.toml;
+        ".config/qt5ct/qt5ct.conf".source = ./assets/qt5ct.conf;
+        ".config/ranger/rc.conf".source = ./assets/ranger/rc.conf;
+        ".config/ranger/scope.sh".source = ./assets/ranger/scope.sh;
+        ".conky".source = ./assets/conky;
+        ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./assets/MonokaiStockly;
         ".themes".source = "${pkgs.palenight-theme}/share/themes";
-        ".xinitrc".source = ../assets/.xinitrc;
+        # ".xinitrc".source = ./assets/.xinitrc;
       };
 
       home.pointerCursor = {
@@ -206,7 +206,7 @@ in
       xsession = {
         enable = true;
         scriptPath = ".hm-xsession";
-        windowManager.i3 = import ../programs/i3.nix { inherit lib host-specific; };
+        windowManager.i3 = import ./programs/i3.nix { inherit lib host-specific; };
         numlock.enable = true;
       };
       gtk = {
@@ -263,11 +263,11 @@ in
           ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
 
           # load terminal theme
-          # ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${../assets/tilix.dconf}
+          # ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${./assets/tilix.dconf}
 
           # Create ranger's bookmarks
           mkdir -p $HOME/.local/share/ranger/
-          sed "s/\$USER/"$USER"/" ${../assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
+          sed "s/\$USER/"$USER"/" ${./assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
 
           # Datagrip
           ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME

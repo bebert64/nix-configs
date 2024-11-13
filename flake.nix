@@ -39,7 +39,7 @@
               };
             }
           ];
-          configuration = ./nixos/stockly-romainc/configuration.nix;
+          configuration = ./stockly-romainc/configuration.nix;
           specialArgs = {
             inherit stockly-computers home-manager by-db;
             host-specific = hosts-specific.stockly-romainc;
@@ -54,7 +54,7 @@
                 description = "Romain";
               };
             }
-            ./nixos/fixe-bureau/configuration.nix
+            ./fixe-bureau/configuration.nix
           ];
           specialArgs = {
             inherit home-manager by-db;
@@ -67,16 +67,7 @@
         raspi = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
 
-          modules = [ (import ./home-manager/home_raspi.nix { inherit pkgs; }) ];
-        };
-        fixe-bureau = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
-
-          modules = [ ./home-manager/home.nix ];
-          extraSpecialArgs = {
-            inherit by-db;
-            host-specific = hosts-specific.fixe-bureau;
-          };
+          modules = [ (import ./raspi/home_raspi.nix { inherit pkgs; }) ];
         };
       };
     };
