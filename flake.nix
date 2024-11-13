@@ -35,7 +35,7 @@
                   name = "romain";
                   description = "Romain";
                 };
-                enableBluetooth = true;
+                bluetooth.enable = true;
               };
             }
           ];

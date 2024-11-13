@@ -74,12 +74,12 @@
       };
 
       assigns = {
-        "$ws3" = [ { class = "Code"; } ];
-        "$ws4" = [ { class = "Slack"; } ];
-        "$ws5" = [ { class = "thunderbird"; } ];
-        "$ws6" = [ { class = "jetbrains-datagrip"; } ];
-        "$ws8" = [ { class = "avidemux"; } ];
-        "$ws10" = [ { class = "strawberry"; } ];
+        "$ws3" = [{ class = "Code"; }];
+        "$ws4" = [{ class = "Slack"; }];
+        "$ws5" = [{ class = "thunderbird"; }];
+        "$ws6" = [{ class = "jetbrains-datagrip"; }];
+        "$ws8" = [{ class = "avidemux"; }];
+        "$ws10" = [{ class = "strawberry"; }];
       };
 
       bars = [ ];
@@ -170,8 +170,8 @@
           "l" = "workspace $ws10, exec strawberry, mode default";
           "r" = "exec launch-radios, mode default";
           "${modifier}+m" = "mode default";
-          "h" = "exec set-headphones, mode default";
-          "p" = "exec set-speaker, mode default";
+          "h" = "exec setHeadphones, mode default";
+          "p" = "exec setSpeaker, mode default";
           "Escape" = "mode default";
         };
       };

@@ -1,8 +1,7 @@
-{
-  pkgs,
-  specialArgs,
-  lib,
-  ...
+{ pkgs
+, specialArgs
+, lib
+, ...
 }:
 
 let
@@ -29,11 +28,11 @@ in
       by-db = {
         username = "${username}";
         scripts = {
-          set-headphones = "set-sink-port 56 '[Out] Headphones'";
+          setHeadphones = "set-sink-port 56 '[Out] Headphones'";
           set-speaker = "set-sink-port 56 '[Out] Speaker'";
         };
         polybar = {
-          is-headphones-on-regex = "Active Port.*Headphones";
+          isHeadphonesOnRegex = "Active Port.*Headphones";
         };
       };
     };

@@ -14,6 +14,11 @@ in
     ./scripts.nix
     ./programs/polybar
     ./programs/git.nix
+    ./programs/btop.nix
+    ./programs/firefox.nix
+    ./programs/rofi.nix
+    ./programs/ssh
+    ./programs/zsh.nix
   ];
   options.by-db.username = with lib; mkOption { type = types.str; };
 
@@ -126,15 +131,11 @@ in
       # Programs known by Home-Manager
       programs = {
         autorandr = host-specific.autorandr;
-        btop = import ./programs/btop.nix;
         direnv = {
           enable = true;
           nix-direnv.enable = true;
           enableZshIntegration = true;
         };
-        firefox = import ./programs/firefox.nix;
-        rofi = import ./programs/rofi.nix { inherit config; };
-        ssh = import ./programs/ssh/default.nix;
         vim = {
           extraConfig = ''
             set autoindent
@@ -142,7 +143,6 @@ in
             syntax on
           '';
         };
-        zsh = import ./programs/zsh.nix { additional-aliases = host-specific.zsh-aliases or { }; };
       };
 
       services = {
@@ -235,8 +235,6 @@ in
             "text/xml" = [ "firefox.desktop" ];
             "x-scheme-handler/http" = [ "firefox.desktop" ];
             "x-scheme-handler/https" = [ "firefox.desktop" ];
-
-            "video/mp4" = [ "vlc.desktop" ];
           };
           defaultApplications = {
             "defaut-web-browser" = [ "firefox.desktop" ];
@@ -244,8 +242,6 @@ in
             "text/xml" = [ "firefox.desktop" ];
             "x-scheme-handler/http" = [ "firefox.desktop" ];
             "x-scheme-handler/https" = [ "firefox.desktop" ];
-
-            "video/mp4" = [ "vlc.desktop" ];
           };
         };
       };

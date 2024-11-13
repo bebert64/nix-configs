@@ -1,6 +1,4 @@
-{ config
-, ...
-}:
+{ config, ... }:
 let
   user = config.by-db.user;
 in
@@ -13,11 +11,11 @@ in
   home-manager = {
     users.${user.name}.by-db = {
       polybar = {
-        is-headphones-on-regex = "Active Port.*Headphones";
+        isHeadphonesOnRegex = "Active Port.*Headphones";
       };
       scripts = {
-        set-headphones = "set-sink-port 56 '[Out] Headphones'";
-        set-speaker = "set-sink-port 56 '[Out] Speaker'";
+        setHeadphones = "set-sink-port 56 '[Out] Headphones'";
+        setSpeaker = "set-sink-port 56 '[Out] Speaker'";
       };
     };
   };

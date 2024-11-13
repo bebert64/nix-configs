@@ -1,9 +1,10 @@
-{ pkgs
-, home-manager
-, lib
-, config
-, specialArgs
-, ...
+{
+  pkgs,
+  home-manager,
+  lib,
+  config,
+  specialArgs,
+  ...
 }:
 {
   imports = [ home-manager.nixosModules.home-manager ];
@@ -13,7 +14,7 @@
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
-    enableBluetooth = mkOption {
+    bluetooth.enable = mkOption {
       type = types.bool;
       default = false;
     };
@@ -92,7 +93,7 @@
           };
         };
         # Enable the bluetooth daemon.
-        blueman.enable = cfg.enableBluetooth;
+        blueman.enable = cfg.bluetooth.enable;
       };
 
       nix = {
@@ -112,7 +113,7 @@
 
       hardware = {
         pulseaudio.enable = lib.mkDefault true;
-        bluetooth.enable = cfg.enableBluetooth;
+        bluetooth.enable = cfg.bluetooth.enable;
       };
 
       # Bootloader.

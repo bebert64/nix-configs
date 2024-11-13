@@ -1,8 +1,12 @@
 { config, lib, ... }:
 {
-  options.by-db.git = {
-    userName = with lib; mkOption { type = types.str; };
-    userEmail = with lib; mkOption { type = types.str; };
+  options.by-db.git = with lib; {
+    userName = mkOption { type = types.str; };
+    userEmail = mkOption { type = types.str; };
+    mainOrMaster = mkOption {
+      type = types.str;
+      default = "main";
+    };
   };
 
   config.programs.git =
@@ -25,7 +29,7 @@
         ca = "commit --amend";
         cap = "!git commit --amend && git push -u --force-with-lease";
         co = "checkout";
-        com = "!git checkout master || git checkout main";
+        com = "!git checkout ${cfg.mainOrMaster}";
         cop = "!git commit && git push -u";
         cp = "cherry-pick";
         d = "diff";
@@ -36,9 +40,9 @@
         ma = "merge --abort";
         mc = "merge --continue";
         mcp = "!git merge --continue && git push";
-        mom = "merge --no-edit origin/master || merge --no-edit origin/main";
-        momp = "!git merge --no-edit origin/master || git merge --no-edit origin/main && git push";
-        mum = "merge --ff-only upstream/master || merge --ff-only upstream/main";
+        mom = "merge --no-edit origin/${cfg.mainOrMaster}";
+        momp = "!git merge --no-edit origin/${cfg.mainOrMaster} && git push";
+        mum = "merge --ff-only upstream/${cfg.mainOrMaster}";
         pfl = "push --force-with-lease";
         pl = "pull";
         pmp = "!git pull && git momp";
@@ -46,7 +50,7 @@
         r = "rebase";
         rc = "rebase --continue";
         ri = "rebase -i";
-        riom = "rebase -i origin/master || rebase -i origin/main";
+        riom = "rebase -i origin/${cfg.mainOrMaster}";
         rt = "restore";
         s = "status";
         sp = "stash pop";

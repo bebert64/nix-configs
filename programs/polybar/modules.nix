@@ -1,13 +1,12 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 {
 
   options.by-db.polybar = with lib; {
-    is-headphones-on-regex = mkOption {
+    isHeadphonesOnRegex = mkOption {
       type = types.str;
       default = 3;
       description = "Regex to use to extract the information about headphones being plugged in from the pactl list sinks";
@@ -52,7 +51,7 @@
             pkgs.pulseaudio
           ]
         }
-        IS_HEADPHONES_ON=$(pactl list sinks | grep "${cfg.is-headphones-on-regex}")
+        IS_HEADPHONES_ON=$(pactl list sinks | grep "${cfg.isHeadphonesOnRegex}")
         if [[ $IS_HEADPHONES_ON ]]; then
           echo " "
         else

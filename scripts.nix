@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 {
   options.by-db.scripts = with lib; {
@@ -16,11 +15,11 @@
       default = 7;
       description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };
-    set-headphones = mkOption {
+    setHeadphones = mkOption {
       type = types.str;
       description = "Command to redirect the sound output to headphones";
     };
-    set-speaker = mkOption {
+    setSpeaker = mkOption {
       type = types.str;
       description = "Command to redirect the sound output to speaker";
     };
