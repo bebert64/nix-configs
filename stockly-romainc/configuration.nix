@@ -1,7 +1,4 @@
-{ pkgs
-, specialArgs
-, lib
-, config
+{ config
 , ...
 }:
 let
@@ -15,7 +12,7 @@ in
 
   home-manager = {
     users.${user.name}.by-db = {
-      nixRepo = "nix-config";
+      nixConfigsRepo = "nix-config";
       polybar = {
         isHeadphonesOnRegex = "Active Port.*Headphones";
       };
@@ -23,6 +20,8 @@ in
         setHeadphones = "set-sink-port 56 '[Out] Headphones'";
         setSpeaker = "set-sink-port 56 '[Out] Speaker'";
       };
+      bluetooth.enable = true;
+      wifi.enable = true;
     };
 
   };

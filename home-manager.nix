@@ -12,13 +12,7 @@ in
 
   imports = [
     ./scripts.nix
-    ./programs/polybar
-    ./programs/git.nix
-    ./programs/btop.nix
-    ./programs/firefox.nix
-    ./programs/rofi.nix
-    ./programs/ssh
-    ./programs/zsh.nix
+    ./programs
   ];
   options.by-db.username = with lib; mkOption { type = types.str; };
 
@@ -205,7 +199,6 @@ in
       xsession = {
         enable = true;
         scriptPath = ".hm-xsession";
-        windowManager.i3 = import ./programs/i3.nix { inherit lib host-specific; };
         numlock.enable = true;
       };
       gtk = {
