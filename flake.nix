@@ -30,9 +30,12 @@
           hostname = "stockly-romainc";
           modules = [
             {
-              by-db.user = {
-                name = "romain";
-                description = "Romain";
+              by-db = {
+                user = {
+                  name = "romain";
+                  description = "Romain";
+                };
+                enableBluetooth = true;
               };
             }
           ];

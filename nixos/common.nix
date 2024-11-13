@@ -1,7 +1,6 @@
 {
   pkgs,
   home-manager,
-  host-specific,
   lib,
   config,
   specialArgs,
@@ -10,23 +9,27 @@
 {
   imports = [ home-manager.nixosModules.home-manager ];
 
-  options.by-db = {
-    user = with lib; {
+  options.by-db = with lib; {
+    user = {
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
+    };
+    enableBluetooth = mkOption{
+      type = types.bool;
+      default = false;
     };
   };
 
   config =
     let
-      user = config.by-db.user;
+      cfg = config.by-db;
     in
     {
 
       users = {
-        users.${user.name} = {
+        users.${cfg.user.name} = {
           isNormalUser = true;
-          description = "${user.description}";
+          description = "${cfg.user.description}";
           extraGroups = [
             "networkmanager"
             "wheel"
@@ -42,10 +45,10 @@
       };
 
       home-manager = {
-        users.${user.name} = {
+        users.${cfg.user.name} = {
           imports = [ ../home-manager/home.nix ];
           by-db = {
-            username = "${user.name}";
+            username = "${cfg.user.name}";
           };
         };
         backupFileExtension = "bckp";
@@ -86,7 +89,7 @@
           };
         };
         # Enable the bluetooth daemon.
-        blueman.enable = (host-specific.bluetooth or false);
+        blueman.enable = cfg.enableBluetooth;
       };
 
       nix = {
@@ -106,7 +109,7 @@
 
       hardware = {
         pulseaudio.enable = lib.mkDefault true;
-        bluetooth.enable = (host-specific.bluetooth or false);
+        bluetooth.enable = cfg.enableBluetooth;
       };
 
       # Bootloader.
