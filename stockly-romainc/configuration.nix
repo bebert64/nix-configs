@@ -13,11 +13,11 @@ in
       autorandr.enable = true;
       nixConfigsRepo = "nix-config";
       polybar = {
-        isHeadphonesOnRegex = "Active Port.*Headphones";
+        isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
       };
       scripts = {
-        setHeadphones = "set-sink-port 56 '[Out] Headphones'";
-        setSpeaker = "set-sink-port 56 '[Out] Speaker'";
+        setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
+        setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
       };
       bluetooth.enable = true;
       wifi.enable = true;

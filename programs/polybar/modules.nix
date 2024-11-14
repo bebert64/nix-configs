@@ -1,16 +1,15 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 {
 
   options.by-db.polybar = with lib; {
-    isHeadphonesOnRegex = mkOption {
+    isHeadphonesOnCommand = mkOption {
       type = types.str;
       default = 3;
-      description = "Regex to use to extract the information about headphones being plugged in from the pactl list sinks";
+      description = "Command that should return something if the headphones are on, or nothing if the speaker are on";
     };
   };
 
@@ -18,7 +17,7 @@
     let
       cfg = config.by-db.polybar;
       colors = config.by-db.polybar.colors;
-      display-title = pkgs.writeScriptBin "playerctl-display-title" ''
+      displayTitle = pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
             pkgs.playerctl
@@ -45,14 +44,14 @@
         echo "%{T2}$prefix %{T-}  $title_display"
       '';
 
-      headphones-or-speaker-icon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
+      headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
         PATH=${
           lib.makeBinPath [
             pkgs.gnugrep
             pkgs.pulseaudio
           ]
         }
-        IS_HEADPHONES_ON=$(pactl list sinks | grep "${cfg.isHeadphonesOnRegex}")
+        IS_HEADPHONES_ON=$(${cfg.isHeadphonesOnCommand})
         if [[ $IS_HEADPHONES_ON ]]; then
           echo " "
         else
@@ -127,13 +126,13 @@
 
         "module/playerctl-full" = {
           "inherit" = "player-ctl";
-          exec = "${display-title}/bin/playerctl-display-title";
+          exec = "${displayTitle}/bin/playerctl-display-title";
           label = "Don Beberto's      •      %output%";
         };
 
         "module/playerctl-mini" = {
           "inherit" = "player-ctl";
-          exec = "${display-title}/bin/playerctl-display-title";
+          exec = "${displayTitle}/bin/playerctl-display-title";
           label = "%output:0:70%";
         };
 
@@ -257,7 +256,7 @@
 
         "module/headphones_or_speaker" = {
           type = "custom/script";
-          exec = "${headphones-or-speaker-icon}/bin/headphones-or-speaker-icon";
+          exec = "${headphonesOrSpeakerIcon}/bin/headphones-or-speaker-icon";
           format = {
             background = "${colors.shade6}";
             font = 2;

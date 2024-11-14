@@ -1,27 +1,26 @@
+{ pkgs
+, lib
+, config
+, ...
+}: with lib;
 {
-  pkgs,
-  lib,
-  config,
-  ...
-}:
-{
-  options.by-db.scripts = with lib; {
+  options.by-db.scripts = with types;{
     minutes-before-lock = mkOption {
-      type = types.int;
+      type = int;
       default = 3;
       description = "Minutes before the computer locks itself";
     };
     minutes-from-lock-to-sleep = mkOption {
-      type = types.int;
+      type = int;
       default = 7;
       description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };
-    setHeadphones = mkOption {
-      type = types.str;
+    setHeadphonesCommand = mkOption {
+      type = str;
       description = "Command to redirect the sound output to headphones";
     };
-    setSpeaker = mkOption {
-      type = types.str;
+    setSpeakerCommand = mkOption {
+      type = str;
       description = "Command to redirect the sound output to speaker";
     };
   };
@@ -199,7 +198,7 @@
 
         (writeScriptBin "playerctl-restart-or-previous" ''
           PATH=${
-            lib.makeBinPath [
+            makeBinPath [
               playerctl
               coreutils
               strawberry
@@ -218,6 +217,18 @@
                 playerctl position 1;
               fi;;
           esac
+        '')
+
+
+
+        (writeScriptBin "set-headphones" ''
+          PATH=${makeBinPath [ pulseaudio ]}
+          pactl ${cfg.setHeadphonesCommand}
+        '')
+
+        (writeScriptBin "set-speaker" ''
+          PATH=${makeBinPath [ pulseaudio ]}
+          pactl ${cfg.setSpeakerCommand}
         '')
       ];
     };

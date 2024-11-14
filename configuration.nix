@@ -1,8 +1,7 @@
-{
-  pkgs,
-  specialArgs,
-  lib,
-  ...
+{ pkgs
+, specialArgs
+, lib
+, ...
 }:
 
 let
@@ -33,7 +32,7 @@ in
           setSpeaker = "set-sink-port 56 '[Out] Speaker'";
         };
         polybar = {
-          isHeadphonesOnRegex = "Active Port.*Headphones";
+          isHeadphonesOnCommand = "Active Port.*Headphones";
         };
       };
     };

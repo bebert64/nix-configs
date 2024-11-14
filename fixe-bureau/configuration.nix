@@ -11,11 +11,11 @@ in
   home-manager = {
     users.${user.name}.by-db = {
       polybar = {
-        isHeadphonesOnRegex = "Active Port.*Headphones";
+        isHeadphonesOnCommand = "pactl get-default-sink | grep alsa_output.pci-0000_00_1b.0.analog-stereo";
       };
       scripts = {
-        setHeadphones = "set-sink-port 56 '[Out] Headphones'";
-        setSpeaker = "set-sink-port 56 '[Out] Speaker'";
+        setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
+        setSpeakerCommand = "set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2";
       };
     };
   };
