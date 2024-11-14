@@ -4,7 +4,7 @@
     ./btop.nix
     ./firefox.nix
     ./git.nix
-    ./i3.nix
+    ./i3
     ./polybar
     ./rofi.nix
     ./ssh

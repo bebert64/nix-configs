@@ -1,11 +1,12 @@
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 {
 
-  options.by-db.polybar = with lib; {
+  options.by-db = with lib; {
     isHeadphonesOnCommand = mkOption {
       type = types.str;
       default = 3;
@@ -15,9 +16,9 @@
 
   config =
     let
-      cfg = config.by-db.polybar;
+      cfg = config.by-db;
       colors = config.by-db.polybar.colors;
-      displayTitle = pkgs.writeScriptBin "playerctl-display-title" ''
+      displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
             pkgs.playerctl
@@ -42,7 +43,7 @@
         fi
 
         echo "%{T2}$prefix %{T-}  $title_display"
-      '';
+      ''}/bin/playerctl-display-title";
 
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
         PATH=${
@@ -126,13 +127,13 @@
 
         "module/playerctl-full" = {
           "inherit" = "player-ctl";
-          exec = "${displayTitle}/bin/playerctl-display-title";
+          exec = "${displayTitle}";
           label = "Don Beberto's      •      %output%";
         };
 
         "module/playerctl-mini" = {
           "inherit" = "player-ctl";
-          exec = "${displayTitle}/bin/playerctl-display-title";
+          exec = "${displayTitle}";
           label = "%output:0:70%";
         };
 

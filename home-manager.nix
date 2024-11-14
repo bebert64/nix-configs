@@ -2,15 +2,54 @@
   pkgs,
   lib,
   by-db,
-  host-specific,
   config,
   ...
 }@inputs:
 let
-  by-db-pkgs = by-db.packages.x86_64-linux;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
+  inherit (types) int str;
+  inherit (pkgs) callPackage;
+  inherit (by-db.packages.x86_64-linux) wallpapers-manager;
 in
 {
-  options.by-db = with lib; with types; { username = mkOption { type = str; }; };
+  options.by-db = {
+    username = mkOption { type = str; };
+    bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
+    wifi.enable = mkEnableOption "Whether or not to install network manager";
+    screens = {
+      primary = mkOption {
+        type = str;
+        description = "The primary screen";
+      };
+      secondary = mkOption {
+        type = str;
+        description = "The secondary screen";
+      };
+    };
+    minutes-before-lock = mkOption {
+      type = int;
+      default = 3;
+      description = "Minutes before the computer locks itself";
+    };
+    minutes-from-lock-to-sleep = mkOption {
+      type = int;
+      default = 7;
+      description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
+    };
+    setHeadphonesCommand = mkOption {
+      type = str;
+      description = "Command to redirect the sound output to headphones";
+    };
+    setSpeakerCommand = mkOption {
+      type = str;
+      description = "Command to redirect the sound output to speaker";
+    };
+  };
 
   imports = [
     ./scripts.nix
@@ -19,21 +58,15 @@ in
 
   config =
     let
-      username = config.by-db.username;
+      cfg = config.by-db;
     in
     {
 
-      home.username = "${username}";
-      home.homeDirectory = "/home/${username}";
+      home.username = "${cfg.username}";
+      home.homeDirectory = "/home/${cfg.username}";
 
       home.packages =
-        let
-          jetbrains = (import ./programs/jetbrains.nix inputs);
-        in
-        with pkgs;
-        with gnome;
-        [
-          by-db-pkgs.wallpapers-manager
+        (with pkgs; [
           alock # locker allowing transparent background
           anydesk
           arandr # GUI to configure screens positions (need to kill autorandr)
@@ -45,12 +78,10 @@ in
           evince # pdf reader
           feh
           fusee-launcher
-          gnome-calculator
-          gnome-keyring
+          gnome.gnome-calculator
+          gnome.gnome-keyring
           # hicolor-icon-theme
           inkscape
-          (callPackage ./programs/insomnia.nix { })
-          jetbrains.datagrip
           jq # cli json processor, for some scripts (to get workspace id from i3)
           microcodeIntel # for increased microprocessor performance
           mcomix
@@ -108,17 +139,19 @@ in
               "Iosevka"
             ];
           })
-
-        ]
-        ++ (
-          if host-specific.wifi or false then
+        ])
+        ++ [
+          (callPackage ./programs/insomnia.nix { })
+          (import ./programs/jetbrains.nix inputs).datagrip
+          wallpapers-manager
+          (mkIf cfg.wifi.enable (
+            with pkgs;
             [
               networkmanager
               networkmanagerapplet
             ]
-          else
-            [ ]
-        );
+          ))
+        ];
 
       # Programs known by Home-Manager
       programs = {
@@ -149,7 +182,7 @@ in
             };
             Service = {
               Type = "exec";
-              ExecStart = "${by-db-pkgs.wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
+              ExecStart = "${wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
             };
 
           };
@@ -242,7 +275,7 @@ in
           # Create mount dirs
           mkdir -p $HOME/mnt/
           ln -sf /mnt/NAS $HOME/mnt/
-          ln -sf -T /run/media/${username} ~/mnt/usb
+          ln -sf -T /run/media/${cfg.username} ~/mnt/usb
 
           # Symlink picom config file
           ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config

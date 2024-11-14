@@ -11,16 +11,18 @@ in
   home-manager = {
     users.${user.name}.by-db = {
       autorandr.enable = true;
+      bluetooth.enable = true;
+      wifi.enable = true;
       nixConfigsRepo = "nix-config";
       polybar = {
         isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
       };
-      scripts = {
-        setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
-        setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
+      setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
+      setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
+      screens = {
+        primary = "eDP-1";
+        secondary = "HDMI-1";
       };
-      bluetooth.enable = true;
-      wifi.enable = true;
     };
 
   };

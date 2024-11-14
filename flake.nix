@@ -21,9 +21,6 @@
       stockly-computers,
       ...
     }:
-    let
-      hosts-specific = import ./hosts-specific;
-    in
     {
       nixosConfigurations = {
         stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
@@ -42,7 +39,6 @@
           configuration = ./stockly-romainc/configuration.nix;
           specialArgs = {
             inherit stockly-computers home-manager by-db;
-            host-specific = hosts-specific.stockly-romainc;
           };
         };
 
@@ -58,7 +54,6 @@
           ];
           specialArgs = {
             inherit home-manager by-db;
-            host-specific = hosts-specific.fixe-bureau;
           };
         };
       };
