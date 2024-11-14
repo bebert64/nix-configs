@@ -1,18 +1,11 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
+{ lib
+, config
+, pkgs
+, ...
 }:
 let
   cfg = config.by-db;
-  inherit (lib)
-    types
-    mkEnableOption
-    mkOption
-    mkOptionDefault
-    ;
-  inherit (types) str int;
+  inherit (lib) mkOptionDefault;
   inherit (import ./scripts.nix { inherit cfg pkgs lib; })
     playerctl-move
     playerctl-restart-or-previous
@@ -20,6 +13,7 @@ let
     set-speaker
     lock-conky
     ;
+  playerctl = "${pkgs.playerctl}/bin/playerctl";
 in
 {
   xsession.windowManager.i3 = {
@@ -96,12 +90,12 @@ in
         };
 
         assigns = {
-          "$ws3" = [ { class = "Code"; } ];
-          "$ws4" = [ { class = "Slack"; } ];
-          "$ws5" = [ { class = "thunderbird"; } ];
-          "$ws6" = [ { class = "jetbrains-datagrip"; } ];
-          "$ws8" = [ { class = "avidemux"; } ];
-          "$ws10" = [ { class = "strawberry"; } ];
+          "$ws3" = [{ class = "Code"; }];
+          "$ws4" = [{ class = "Slack"; }];
+          "$ws5" = [{ class = "thunderbird"; }];
+          "$ws6" = [{ class = "jetbrains-datagrip"; }];
+          "$ws8" = [{ class = "avidemux"; }];
+          "$ws10" = [{ class = "strawberry"; }];
         };
 
         bars = [ ];
@@ -172,7 +166,7 @@ in
 
         modes = {
           ${exit_mode} = {
-            "--release s" = "exec lock-conky -s, mode default";
+            "--release s" = "exec ${lock-conky} -s, mode default";
             "r" = "exec systemctl reboot";
             "p" = "exec shutdown now";
             "l" = "exec i3-msg exit";
@@ -181,14 +175,14 @@ in
           };
           ${music_mode} = {
             "${modifier}+Left" = " exec ${playerctl-restart-or-previous}";
-            "${modifier}+Right" = "exec playerctl next";
+            "${modifier}+Right" = "exec ${playerctl} next";
             "Left" = "exec ${playerctl-move} - 10";
             "Right" = "exec ${playerctl-move} + 10";
-            "Up" = "exec playerctl volume 0.1+";
-            "Down" = "exec playerctl volume 0.1-";
-            "space" = "exec playerctl play-pause, mode default";
-            "s" = "exec playerctl stop, mode default";
-            "${modifier}+s" = "exec playerctl -a stop, mode default";
+            "Up" = "exec ${playerctl} volume 0.1+";
+            "Down" = "exec ${playerctl} volume 0.1-";
+            "space" = "exec ${playerctl} play-pause, mode default";
+            "s" = "exec ${playerctl} stop, mode default";
+            "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
             "l" = "workspace $ws10, exec strawberry, mode default";
             "r" = "exec launch-radios, mode default";
             "${modifier}+m" = "mode default";

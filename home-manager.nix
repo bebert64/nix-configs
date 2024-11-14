@@ -1,17 +1,11 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }@inputs:
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    mkOption
-    types
-    ;
+  inherit (lib) mkEnableOption mkOption types;
   inherit (types) int str;
   inherit (pkgs) callPackage;
   inherit (by-db.packages.x86_64-linux) wallpapers-manager;
@@ -80,9 +74,7 @@ in
           fusee-launcher
           gnome.gnome-calculator
           gnome.gnome-keyring
-          # hicolor-icon-theme
           inkscape
-          jq # cli json processor, for some scripts (to get workspace id from i3)
           microcodeIntel # for increased microprocessor performance
           mcomix
           nixd
@@ -91,17 +83,17 @@ in
           nodejs
           nodePackages.npm
           nodePackages.pnpm
-          openssh
+          # openssh
           pavucontrol # pulse audio volume controle
           picom-next
-          playerctl # to send data and retrieve metadata for polybar
+          # playerctl # necesary to get the daemon running
           polkit # polkit is the utility used by vscode to save as sudo
           polkit_gnome
-          pulseaudio
+          # pulseaudio
           qt6.qttools # needed to extract artUrl from strawberry and display it with conky
           rsync
           slack
-          sqlite
+          # sqlite
           sshfs
           strawberry
           thunderbird-bin-unwrapped
@@ -145,10 +137,13 @@ in
           (import ./programs/jetbrains.nix inputs).datagrip
           wallpapers-manager
         ]
-        ++ (lib.optionalAttrs cfg.wifi.enable [
-          pkgs.networkmanager
-          pkgs.networkmanagerapplet
-        ]);
+        ++ lib.lists.optional cfg.wifi.enable (
+          with pkgs;
+          [
+            networkmanager
+            networkmanagerapplet
+          ]
+        );
 
       # Programs known by Home-Manager
       programs = {
@@ -242,7 +237,7 @@ in
       home.sessionVariables = {
         QT_QPA_PLATFORMTHEME = "qt5ct";
         XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
-        LC_ALL = "en_US.UTF-8";
+        # LC_ALL = "en_US.UTF-8";
       };
 
       xdg = {

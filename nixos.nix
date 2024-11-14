@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [ home-manager.nixosModules.home-manager ];
@@ -108,8 +107,6 @@
           "flakes"
         ];
       };
-
-      nixpkgs.config.allowUnfree = true;
 
       hardware = {
         pulseaudio.enable = lib.mkDefault true;

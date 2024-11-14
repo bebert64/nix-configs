@@ -13,6 +13,7 @@ let
   inherit (lib) makeBinPath;
   inherit (pkgs)
     coreutils
+    jq
     playerctl
     pulseaudio
     strawberry
@@ -73,8 +74,8 @@ in
 
     # Prepare screen
     pkill polybar || echo "polybar already killed"
-    wk1=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | head -1)
-    wk2=$(i3-msg -t get_workspaces | jq '.[] | select(.visible==true).name' | tail -1)
+    wk1=$(i3-msg -t get_workspaces | ${jq} '.[] | select(.visible==true).name' | head -1)
+    wk2=$(i3-msg -t get_workspaces | ${jq} '.[] | select(.visible==true).name' | tail -1)
     i3-msg "workspace \" \"; workspace \"  \""
 
     # Sleep or prepare to sleep
