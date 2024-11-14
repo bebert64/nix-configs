@@ -71,11 +71,11 @@ in
             "${modifier}+Mod1+Right" = "move workspace to output right";
 
             # Used to display empty workspaces, allowing to see the wallpapers
-            "${modifier}+i" = "workspace $wse1; workspace $wse2";
+            "${modifier}+i" = "workspace $ws11; workspace $ws12";
 
             # Lock the screen.
-            # "--release ${modifier}+o" = "exec lock-conky";
-            "${modifier}+o" = "exec lock-conky";
+            "--release ${modifier}+o" = "exec lock-conky";
+            # "${modifier}+o" = "exec lock-conky";
 
             # Modes
             "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
@@ -205,12 +205,11 @@ in
         set $ws8 "8:󰷝"
         set $ws9 "9:"
         set $ws10 "10:"
-        set $wse1 "11:󰸉"
-        workspace $wse1 output ${cfg.screens.primary}
-        set $wse2 "12:󰸉"
-        workspace $wse2 output ${cfg.screens.secondary}
-
         workspace $ws10 gaps inner 80
+        set $ws11 "11:󰸉"
+        workspace $ws11 output ${cfg.screens.primary}
+        set $ws12 "12:󰸉"
+        workspace $ws12 output ${cfg.screens.secondary}
       '';
     };
   };

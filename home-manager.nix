@@ -83,7 +83,6 @@ in
             unrar
             unzip
             vlc
-            xclip # used by ranger to paste into global clipboard
             xidlehook
             yt-dlp
             zip

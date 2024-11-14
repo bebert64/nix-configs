@@ -7,6 +7,7 @@
       ffmpegthumbnailer # thumbnail for videos preview
       fontforge # thumbnail for fonts preview
       poppler_utils # thumbnail for pdf preview
+      xclip # used by ranger to paste into global clipboard
     ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

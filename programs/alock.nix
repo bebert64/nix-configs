@@ -1,3 +1,4 @@
+# Alock is a locker allowing transparent background
 { config
 , pkgs
 , lib
@@ -40,9 +41,10 @@ in
 
       # Prepare screen
       pkill polybar || echo "polybar already killed"
-      wk1=$(i3-msg -t get_workspaces | ${jq} '.[] | select(.visible==true).name' | head -1)
-      wk2=$(i3-msg -t get_workspaces | ${jq} '.[] | select(.visible==true).name' | tail -1)
-      i3-msg "workspace \" \"; workspace \"  \""
+      wk1=$(i3-msg -t get_workspaces | ${jq}/bin/jq '.[] | select(.visible==true).name' | head -1)
+      wk2=$(i3-msg -t get_workspaces | ${jq}/bin/jq '.[] | select(.visible==true).name' | tail -1)
+      i3-msg workspace 11:󰸉
+      i3-msg workspace 12:󰸉
 
       # Sleep or prepare to sleep
       if [[ $SLEEP == true ]]; then
@@ -62,6 +64,6 @@ in
       pkill xidlehook || echo "xidlehook already killed"
       xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock-conky' ' ' &
     '')
-  ]; # locker allowing transparent background]
+  ];
 
 }

@@ -6,7 +6,7 @@
     ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sf $HOME/${config.by-db.nixConfigsRepo}/programs/datagrip/Datagrip $HOME/Datagrip
+        ln -sf $HOME/${config.by-db.nixConfigsRepo}/programs/datagrip/Datagrip $HOME/
       '';
     };
   };
