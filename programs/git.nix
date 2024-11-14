@@ -1,13 +1,19 @@
 { config, lib, ... }:
 {
-  options.by-db.git = with lib; with types;{
-    userName = mkOption { type = str; };
-    userEmail = mkOption { type = str; };
-    mainOrMaster = mkOption {
-      type = enum [ "main" "master" ];
-      default = "main";
+  options.by-db.git =
+    with lib;
+    with types;
+    {
+      userName = mkOption { type = str; };
+      userEmail = mkOption { type = str; };
+      mainOrMaster = mkOption {
+        type = enum [
+          "main"
+          "master"
+        ];
+        default = "main";
+      };
     };
-  };
 
   config.programs.git =
     let

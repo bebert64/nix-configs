@@ -1,14 +1,13 @@
-{ pkgs
-, home-manager
-, lib
-, config
-, specialArgs
-, ...
+{
+  pkgs,
+  home-manager,
+  lib,
+  config,
+  specialArgs,
+  ...
 }:
 {
-  imports = [
-    home-manager.nixosModules.home-manager
-  ];
+  imports = [ home-manager.nixosModules.home-manager ];
 
   options.by-db = with lib; {
     user = {

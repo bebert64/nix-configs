@@ -1,23 +1,21 @@
-{ pkgs
-, lib
-, by-db
-, host-specific
-, config
-, ...
+{
+  pkgs,
+  lib,
+  by-db,
+  host-specific,
+  config,
+  ...
 }@inputs:
 let
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
-  options.by-db = with lib; with types;{
-    username = mkOption { type = str; };
-  };
+  options.by-db = with lib; with types; { username = mkOption { type = str; }; };
 
-  imports =
-    [
-      ./scripts.nix
-      ./programs/common-user.nix
-    ];
+  imports = [
+    ./scripts.nix
+    ./programs/common-user.nix
+  ];
 
   config =
     let

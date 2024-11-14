@@ -30,7 +30,7 @@ in
         username = "${username}";
         scripts = {
           setHeadphones = "set-sink-port 56 '[Out] Headphones'";
-          set-speaker = "set-sink-port 56 '[Out] Speaker'";
+          setSpeaker = "set-sink-port 56 '[Out] Speaker'";
         };
         polybar = {
           isHeadphonesOnRegex = "Active Port.*Headphones";
