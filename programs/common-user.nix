@@ -3,10 +3,12 @@
     ./conky
     ./datagrip
     ./i3
+    ./picom
     ./polybar
     ./qt
     ./ranger
     ./ssh
+    ./strawberry
     ./tilix
     ./vscode
     ./zsh
@@ -16,5 +18,8 @@
     ./firefox.nix
     ./git.nix
     ./rofi.nix
+    ./thunderbird.nix
+    ./udiskie.nix
+    ./vdhcoapp.nix
   ];
 }

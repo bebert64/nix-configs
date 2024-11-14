@@ -74,24 +74,14 @@ in
             nodejs
             nodePackages.npm
             nodePackages.pnpm
-            # openssh
             pavucontrol # pulse audio volume controle
-            picom-next
-            # playerctl # necesary to get the daemon running
             polkit # polkit is the utility used by vscode to save as sudo
             polkit_gnome
-            # pulseaudio
-            # qt6.qttools # needed to extract artUrl from strawberry and display it with conky
             rsync
             slack
-            # sqlite
             sshfs
-            strawberry
-            thunderbird-bin-unwrapped
-            udiskie
             unrar
             unzip
-            vdhcoapp # companion to VideoDownloadHelper browser add-on
             vlc
             xclip # used by ranger to paste into global clipboard
             xidlehook
@@ -134,13 +124,6 @@ in
             # Create mount dirs
             mkdir -p $HOME/mnt/
             ln -sf /mnt/NAS $HOME/mnt/
-            ln -sf -T /run/media/${cfg.username} ~/mnt/usb
-
-            # Symlink picom config file
-            ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
-
-            # Install VideoHelper companion
-            ${pkgs.vdhcoapp}/bin/vdhcoapp install
           '';
         };
       };

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, config, ... }:
 {
   config.home = {
     packages = [
@@ -6,7 +6,7 @@
     ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sf ${./Datagrip/DataGripProjects} $HOME/Datagrip
+        ln -sf $HOME/${config.by-db.nixConfigsRepo}/programs/datagrip/Datagrip $HOME/Datagrip
       '';
     };
   };

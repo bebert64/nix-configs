@@ -6,10 +6,8 @@
       conky
       imagemagick
       scrot
+      # qt6.qttools # needed to extract artUrl from strawberry and display it with conky
     ];
-    # file = {
-    #   ".conky".source = ./conky;
-    # };
   };
   xsession.windowManager.i3.config.startup = [
     {
