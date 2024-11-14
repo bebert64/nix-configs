@@ -6,7 +6,7 @@
     ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sf ${./Datagrip/DataGripProjects} $HOME
+        ln -sf ${./Datagrip/DataGripProjects} $HOME/Datagrip
       '';
     };
   };

@@ -11,6 +11,12 @@ let
   inherit (by-db.packages.x86_64-linux) wallpapers-manager;
 in
 {
+  imports = [
+    ./programs/common-user.nix
+    ./scripts.nix
+    ./fonts.nix
+  ];
+
   options.by-db = {
     username = mkOption { type = str; };
     bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
@@ -35,91 +41,113 @@ in
     };
   };
 
-  imports = [
-    ./scripts.nix
-    ./programs/common-user.nix
-  ];
-
   config =
     let
       cfg = config.by-db;
     in
     {
+      nixpkgs.config.allowUnfree = true; # Necessary for vscode
 
-      home.username = "${cfg.username}";
-      home.homeDirectory = "/home/${cfg.username}";
+      home = {
+        username = "${cfg.username}";
+        homeDirectory = "/home/${cfg.username}";
 
-      home.packages =
-        (with pkgs; [
-          anydesk
-          arandr # GUI to configure screens positions (need to kill autorandr)
-          avidemux
-          caffeine-ng # to prevent going to sleep when watching videos
-          # chromium
-          direnv
-          evince # pdf reader
-          feh
-          fusee-launcher
-          gnome.gnome-calculator
-          gnome.gnome-keyring
-          inkscape
-          microcodeIntel # for increased microprocessor performance
-          mcomix
-          nixd
-          nixfmt-rfc-style
-          nixpkgs-fmt
-          nodejs
-          nodePackages.npm
-          nodePackages.pnpm
-          # openssh
-          pavucontrol # pulse audio volume controle
-          picom-next
-          # playerctl # necesary to get the daemon running
-          polkit # polkit is the utility used by vscode to save as sudo
-          polkit_gnome
-          # pulseaudio
-          # qt6.qttools # needed to extract artUrl from strawberry and display it with conky
-          rsync
-          slack
-          # sqlite
-          sshfs
-          strawberry
-          thunderbird-bin-unwrapped
-          udiskie
-          unrar
-          unzip
-          vdhcoapp # companion to VideoDownloadHelper browser add-on
-          vlc
-          xclip # used by ranger to paste into global clipboard
-          xidlehook
-          yt-dlp
-          zip
-
-
-          # Theme for QT applications (vlc, strawberry...)
-
-          # fonts
-          (nerdfonts.override {
-            fonts = [
-              "FiraCode"
-              "Iosevka"
-            ];
-          })
-        ])
-        ++ [
-          (callPackage ./programs/insomnia.nix { })
-          wallpapers-manager
-        ]
-        ++ lib.lists.optional cfg.wifi.enable (
-          with pkgs;
-          [
-            networkmanager
-            networkmanagerapplet
+        packages =
+          (with pkgs; [
+            anydesk
+            arandr # GUI to configure screens positions (need to kill autorandr)
+            avidemux
+            caffeine-ng # to prevent going to sleep when watching videos
+            # chromium
+            direnv
+            evince # pdf reader
+            feh
+            fusee-launcher
+            gnome.gnome-calculator
+            gnome.gnome-keyring
+            inkscape
+            microcodeIntel # for increased microprocessor performance
+            mcomix
+            nixd
+            nixfmt-rfc-style
+            nixpkgs-fmt
+            nodejs
+            nodePackages.npm
+            nodePackages.pnpm
+            # openssh
+            pavucontrol # pulse audio volume controle
+            picom-next
+            # playerctl # necesary to get the daemon running
+            polkit # polkit is the utility used by vscode to save as sudo
+            polkit_gnome
+            # pulseaudio
+            # qt6.qttools # needed to extract artUrl from strawberry and display it with conky
+            rsync
+            slack
+            # sqlite
+            sshfs
+            strawberry
+            thunderbird-bin-unwrapped
+            udiskie
+            unrar
+            unzip
+            vdhcoapp # companion to VideoDownloadHelper browser add-on
+            vlc
+            xclip # used by ranger to paste into global clipboard
+            xidlehook
+            yt-dlp
+            zip
+          ])
+          ++ [
+            (callPackage ./programs/insomnia.nix { })
+            wallpapers-manager
           ]
-        );
+          ++ lib.lists.optional cfg.wifi.enable (
+            with pkgs;
+            [
+              networkmanager
+              networkmanagerapplet
+            ]
+          );
 
-      # Programs known by Home-Manager
+        file = {
+          ".themes".source = "${pkgs.palenight-theme}/share/themes";
+          # ".anydesk/user.conf".source = ./assets/anydesk-user.conf;
+          # ".cargo/config.toml".source = ./assets/cargo_config.toml;
+        };
+
+        pointerCursor = {
+          x11.enable = true;
+          package = pkgs.gnome.adwaita-icon-theme;
+          name = "Adwaita";
+          size = 32;
+        };
+
+        # Session variable
+        sessionVariables = {
+          XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
+          # LC_ALL = "en_US.UTF-8";
+        };
+
+        activation = {
+          activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            # Create mount dirs
+            mkdir -p $HOME/mnt/
+            ln -sf /mnt/NAS $HOME/mnt/
+            ln -sf -T /run/media/${cfg.username} ~/mnt/usb
+
+            # Symlink picom config file
+            ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
+
+            # Install VideoHelper companion
+            ${pkgs.vdhcoapp}/bin/vdhcoapp install
+          '';
+        };
+      };
+
       programs = {
+        # Let Home Manager install and manage itself.
+        home-manager.enable = true;
         direnv = {
           enable = true;
           nix-direnv.enable = true;
@@ -170,41 +198,12 @@ in
         };
       };
 
-      # Copy custom files / assets
-      home.file = {
-        # ".anydesk/user.conf".source = ./assets/anydesk-user.conf;
-        # ".cargo/config.toml".source = ./assets/cargo_config.toml;
-        ".themes".source = "${pkgs.palenight-theme}/share/themes";
-      };
-
-      home.pointerCursor = {
-        x11.enable = true;
-        package = pkgs.gnome.adwaita-icon-theme;
-        name = "Adwaita";
-        size = 32;
-      };
-
-      # launch i3
-      xsession = {
-        enable = true;
-        scriptPath = ".hm-xsession";
-        numlock.enable = true;
-      };
       gtk = {
         enable = true;
         theme = {
           name = "palenight";
           package = pkgs.palenight-theme;
         };
-      };
-
-      fonts.fontconfig.enable = true;
-
-      # Session variable
-      home.sessionVariables = {
-        QT_QPA_PLATFORMTHEME = "qt5ct";
-        XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
-        # LC_ALL = "en_US.UTF-8";
       };
 
       xdg = {
@@ -227,26 +226,6 @@ in
           };
         };
       };
-
-      # Activation script
-      home.activation = {
-        activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          # Create mount dirs
-          mkdir -p $HOME/mnt/
-          ln -sf /mnt/NAS $HOME/mnt/
-          ln -sf -T /run/media/${cfg.username} ~/mnt/usb
-
-          # Symlink picom config file
-          ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
-
-          # Install VideoHelper companion
-          ${pkgs.vdhcoapp}/bin/vdhcoapp install
-        '';
-      };
-
-      # Let Home Manager install and manage itself.
-      programs.home-manager.enable = true;
-      nixpkgs.config.allowUnfree = true; # Necessary for vscode
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
