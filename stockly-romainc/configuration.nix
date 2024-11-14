@@ -1,6 +1,4 @@
-{ config
-, ...
-}:
+{ config, ... }:
 let
   user = config.by-db.user;
 in

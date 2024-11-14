@@ -1,7 +1,8 @@
-{ pkgs
-, specialArgs
-, lib
-, ...
+{
+  pkgs,
+  specialArgs,
+  lib,
+  ...
 }:
 
 let
