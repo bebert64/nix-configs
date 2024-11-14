@@ -11,7 +11,6 @@ let
     playerctl-restart-or-previous
     set-headphones
     set-speaker
-    lock-conky
     ;
   playerctl = "${pkgs.playerctl}/bin/playerctl";
 in
@@ -70,8 +69,9 @@ in
           # Used to display empty workspaces, allowing to see the wallpapers
           "${modifier}+i" = "workspace $wse1; workspace $wse2";
 
-          # Lock the screen
-          "--release ${modifier}+o" = "exec ${lock-conky}";
+          # Lock the screen.
+          # "--release ${modifier}+o" = "exec lock-conky";
+          "${modifier}+o" = "exec lock-conky";
 
           # Modes
           "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
@@ -98,8 +98,6 @@ in
           "$ws10" = [{ class = "strawberry"; }];
         };
 
-        bars = [ ];
-
         startup =
           [
             {
@@ -125,39 +123,31 @@ in
               command = "udiskie --tray";
               notification = false;
             }
-            # {
-            #   command = "xidlehook --timer ${
-            #   toString (host-specific.minutes-before-lock or 3 * 60)
-            # } 'lock-conky' ' ' &";
-            #   notification = false;
-            # }
             {
-              command = "conky -c ${../../assets/conky/qclocktwo} -d";
+              command = "xidlehook --timer ${
+              toString (cfg.minutes-before-lock or 3 * 60)
+            } 'lock-conky' ' ' &";
               notification = false;
             }
           ]
-          ++ (
-            if cfg.wifi.enable then
-              [
-                {
-                  command = "nm-applet";
-                  notification = false;
-                }
-              ]
-            else
-              [ ]
-          )
-          ++ (
-            if cfg.bluetooth.enable then
-              [
-                {
-                  command = "blueman-applet";
-                  notification = false;
-                }
-              ]
-            else
-              [ ]
-          );
+          ++
+          lib.lists.optional cfg.wifi.enable
+            [
+              {
+                command = "nm-applet";
+                notification = false;
+              }
+            ]
+
+          ++
+          lib.lists.optional cfg.bluetooth.enable
+            [
+              {
+                command = "blueman-applet";
+                notification = false;
+              }
+            ]
+        ;
 
         window = {
           titlebar = false;
@@ -166,12 +156,13 @@ in
 
         modes = {
           ${exit_mode} = {
-            "--release s" = "exec ${lock-conky} -s, mode default";
-            "r" = "exec systemctl reboot";
-            "p" = "exec shutdown now";
-            "l" = "exec i3-msg exit";
-            "Escape" = "mode default";
-            "Return" = "mode default";
+            s = "exec lock-conky -s, mode default";
+            # "--release s" = "exec lock-conky -s, mode default";
+            r = "exec systemctl reboot";
+            p = "exec shutdown now";
+            l = "exec i3-msg exit";
+            Escape = "mode default";
+            Return = "mode default";
           };
           ${music_mode} = {
             "${modifier}+Left" = " exec ${playerctl-restart-or-previous}";

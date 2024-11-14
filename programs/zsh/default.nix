@@ -80,12 +80,12 @@
       plugins = [
         {
           name = "stockly";
-          src = ../assets/OhMyZsh;
+          src = ./OhMyZsh;
           file = "stockly.zsh-theme";
         }
         {
           name = "git";
-          src = ../assets/OhMyZsh;
+          src = ./OhMyZsh;
           file = "git.zsh";
         }
       ];

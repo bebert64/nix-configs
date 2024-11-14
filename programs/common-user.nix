@@ -1,13 +1,20 @@
 {
   imports = [
+    ./conky
+    ./datagrip
+    ./i3
+    ./polybar
+    ./qt
+    ./ranger
+    ./ssh
+    ./tilix
+    ./vscode
+    ./zsh
+    ./alock.nix
     ./autorandr.nix
     ./btop.nix
     ./firefox.nix
     ./git.nix
-    ./i3
-    ./polybar
     ./rofi.nix
-    ./ssh
-    ./zsh.nix
   ];
 }

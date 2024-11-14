@@ -6,7 +6,7 @@
 }@inputs:
 let
   inherit (lib) mkEnableOption mkOption types;
-  inherit (types) int str;
+  inherit (types) str;
   inherit (pkgs) callPackage;
   inherit (by-db.packages.x86_64-linux) wallpapers-manager;
 in
@@ -24,16 +24,6 @@ in
         type = str;
         description = "The secondary screen";
       };
-    };
-    minutes-before-lock = mkOption {
-      type = int;
-      default = 3;
-      description = "Minutes before the computer locks itself";
-    };
-    minutes-from-lock-to-sleep = mkOption {
-      type = int;
-      default = 7;
-      description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };
     setHeadphonesCommand = mkOption {
       type = str;
@@ -61,13 +51,11 @@ in
 
       home.packages =
         (with pkgs; [
-          alock # locker allowing transparent background
           anydesk
           arandr # GUI to configure screens positions (need to kill autorandr)
           avidemux
           caffeine-ng # to prevent going to sleep when watching videos
           # chromium
-          conky
           direnv
           evince # pdf reader
           feh
@@ -90,39 +78,25 @@ in
           polkit # polkit is the utility used by vscode to save as sudo
           polkit_gnome
           # pulseaudio
-          qt6.qttools # needed to extract artUrl from strawberry and display it with conky
+          # qt6.qttools # needed to extract artUrl from strawberry and display it with conky
           rsync
           slack
           # sqlite
           sshfs
           strawberry
           thunderbird-bin-unwrapped
-          tilix # terminal
           udiskie
           unrar
           unzip
           vdhcoapp # companion to VideoDownloadHelper browser add-on
           vlc
-          vscode
           xclip # used by ranger to paste into global clipboard
           xidlehook
           yt-dlp
           zip
 
-          # imagemagick and scrot are used for image manipulation
-          # to create the blur patches behind the conky widgets
-          imagemagick
-          scrot
 
           # Theme for QT applications (vlc, strawberry...)
-          libsForQt5.qt5ct
-          libsForQt5.qtstyleplugins
-
-          # Ranger
-          ranger
-          ffmpegthumbnailer # thumbnail for videos preview
-          fontforge # thumbnail for fonts preview
-          poppler_utils # thumbnail for pdf preview
 
           # fonts
           (nerdfonts.override {
@@ -134,7 +108,6 @@ in
         ])
         ++ [
           (callPackage ./programs/insomnia.nix { })
-          (import ./programs/jetbrains.nix inputs).datagrip
           wallpapers-manager
         ]
         ++ lib.lists.optional cfg.wifi.enable (
@@ -199,15 +172,9 @@ in
 
       # Copy custom files / assets
       home.file = {
-        ".anydesk/user.conf".source = ./assets/anydesk-user.conf;
-        ".cargo/config.toml".source = ./assets/cargo_config.toml;
-        ".config/qt5ct/qt5ct.conf".source = ./assets/qt5ct.conf;
-        ".config/ranger/rc.conf".source = ./assets/ranger/rc.conf;
-        ".config/ranger/scope.sh".source = ./assets/ranger/scope.sh;
-        ".conky".source = ./assets/conky;
-        ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./assets/MonokaiStockly;
+        # ".anydesk/user.conf".source = ./assets/anydesk-user.conf;
+        # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         ".themes".source = "${pkgs.palenight-theme}/share/themes";
-        # ".xinitrc".source = ./assets/.xinitrc;
       };
 
       home.pointerCursor = {
@@ -271,16 +238,6 @@ in
 
           # Symlink picom config file
           ln -sf $HOME/nix-configs/assets/picom.conf $HOME/.config
-
-          # load terminal theme
-          # ${pkgs.dconf}/bin/dconf load /com/gexperts/Tilix/ < ${./assets/tilix.dconf}
-
-          # Create ranger's bookmarks
-          mkdir -p $HOME/.local/share/ranger/
-          sed "s/\$USER/"$USER"/" ${./assets/ranger/bookmarks} > $HOME/.local/share/ranger/bookmarks
-
-          # Datagrip
-          ln -sf $HOME/nix-configs/assets/Datagrip/DataGripProjects $HOME
 
           # Install VideoHelper companion
           ${pkgs.vdhcoapp}/bin/vdhcoapp install
