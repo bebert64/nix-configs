@@ -144,14 +144,11 @@ in
           (callPackage ./programs/insomnia.nix { })
           (import ./programs/jetbrains.nix inputs).datagrip
           wallpapers-manager
-          (mkIf cfg.wifi.enable (
-            with pkgs;
-            [
-              networkmanager
-              networkmanagerapplet
-            ]
-          ))
-        ];
+        ]
+        ++ (lib.optionalAttrs cfg.wifi.enable [
+          pkgs.networkmanager
+          pkgs.networkmanagerapplet
+        ]);
 
       # Programs known by Home-Manager
       programs = {

@@ -14,9 +14,7 @@ in
       bluetooth.enable = true;
       wifi.enable = true;
       nixConfigsRepo = "nix-config";
-      polybar = {
-        isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
-      };
+      isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
       setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
       setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
       screens = {
