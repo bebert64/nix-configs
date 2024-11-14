@@ -1,9 +1,12 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   config.home = {
-    packages = [
-      pkgs.udiskie
-    ];
+    packages = [ pkgs.udiskie ];
     activation = {
       symlinkUsbMountPoint = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p $HOME/mnt/

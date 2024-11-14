@@ -29,7 +29,7 @@ in
           music_mode = "Music";
         in
         {
-          inherit modifier; # Check if possible to remove this line entirely (not sure if it's really necessary)
+          inherit modifier;
 
           menu = "\"rofi -modi drun#window#run -show drun -show-icons\"";
 
@@ -128,30 +128,23 @@ in
                 notification = false;
               }
               {
-                command = "xidlehook --timer ${
-              toString (cfg.minutes-before-lock or 3 * 60)
-            } 'lock-conky' ' ' &";
+                command = "xidlehook --timer ${toString (cfg.minutes-before-lock or 3 * 60)} 'lock-conky' ' ' &";
                 notification = false;
               }
             ]
-            ++
-            lib.lists.optional cfg.wifi.enable
-              [
-                {
-                  command = "nm-applet";
-                  notification = false;
-                }
-              ]
+            ++ lib.lists.optional cfg.wifi.enable [
+              {
+                command = "nm-applet";
+                notification = false;
+              }
+            ]
 
-            ++
-            lib.lists.optional cfg.bluetooth.enable
-              [
-                {
-                  command = "blueman-applet";
-                  notification = false;
-                }
-              ]
-          ;
+            ++ lib.lists.optional cfg.bluetooth.enable [
+              {
+                command = "blueman-applet";
+                notification = false;
+              }
+            ];
 
           window = {
             titlebar = false;
@@ -160,8 +153,7 @@ in
 
           modes = {
             ${exit_mode} = {
-              s = "exec lock-conky -s, mode default";
-              # "--release s" = "exec lock-conky -s, mode default";
+              "--release s" = "exec lock-conky -s, mode default";
               r = "exec systemctl reboot";
               p = "exec shutdown now";
               l = "exec i3-msg exit";
@@ -186,6 +178,9 @@ in
               "Escape" = "mode default";
             };
           };
+
+          # Needed to keep i3bar from being displayed
+          bars = [ ];
 
           defaultWorkspace = "$ws1";
 

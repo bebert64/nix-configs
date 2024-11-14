@@ -1,13 +1,10 @@
-{ cfg
-, pkgs
-, lib
-,
+{
+  cfg,
+  pkgs,
+  lib,
 }:
 let
-  inherit (cfg)
-    setHeadphonesCommand
-    setSpeakerCommand
-    ;
+  inherit (cfg) setHeadphonesCommand setSpeakerCommand;
   inherit (lib) makeBinPath;
   inherit (pkgs)
     coreutils

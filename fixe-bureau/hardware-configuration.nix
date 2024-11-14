@@ -41,17 +41,6 @@
         "dmask=0077"
       ];
     };
-
-    "/mnt/NAS" = {
-      device = "192.168.1.3:/volume1/NAS";
-      fsType = "nfs";
-      options = [
-        "user"
-        "users"
-        "noexec"
-        "noauto"
-      ];
-    };
   };
 
   swapDevices = [ ];

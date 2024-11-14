@@ -10,7 +10,6 @@ in
 
   home-manager = {
     users.${user.name}.by-db = {
-      autorandr.enable = true;
       bluetooth.enable = true;
       wifi.enable = true;
       nixConfigsRepo = "nix-config";

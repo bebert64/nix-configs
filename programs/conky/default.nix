@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   home = {
     # imagemagick and scrot are used for image manipulation
     # to create the blur patches behind the conky widgets

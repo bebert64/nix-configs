@@ -1,17 +1,14 @@
 # Alock is a locker allowing transparent background
-{ config
-, pkgs
-, lib
-, ...
+{
+  config,
+  pkgs,
+  lib,
+  ...
 }:
 let
   inherit (lib) mkOption types;
   inherit (types) int;
-  inherit (pkgs)
-    alock
-    jq
-    writeScriptBin
-    ;
+  inherit (pkgs) alock jq writeScriptBin;
   cfg = config.by-db;
 in
 {
