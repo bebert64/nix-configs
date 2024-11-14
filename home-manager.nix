@@ -1,21 +1,23 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  host-specific,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, host-specific
+, config
+, ...
 }@inputs:
 let
   by-db-pkgs = by-db.packages.x86_64-linux;
 in
 {
+  options.by-db = with lib; with types;{
+    username = mkOption { type = str; };
+  };
 
-  imports = [
-    ./scripts.nix
-    ./programs/common-user.nix
-  ];
-  options.by-db.username = with lib; mkOption { type = types.str; };
+  imports =
+    [
+      ./scripts.nix
+      ./programs/common-user.nix
+    ];
 
   config =
     let
@@ -52,7 +54,6 @@ in
           (callPackage ./programs/insomnia.nix { })
           jetbrains.datagrip
           jq # cli json processor, for some scripts (to get workspace id from i3)
-          # less # not sure what it was used for, to delete if not needed after a while, but keeping for now just in case I can't remeber what to add
           microcodeIntel # for increased microprocessor performance
           mcomix
           nixd
@@ -62,13 +63,11 @@ in
           nodePackages.npm
           nodePackages.pnpm
           openssh
-          # openssl
           pavucontrol # pulse audio volume controle
           picom-next
           playerctl # to send data and retrieve metadata for polybar
           polkit # polkit is the utility used by vscode to save as sudo
           polkit_gnome
-          # postgresql  # Check if really needed, as we now intall postgresql-libs through yay
           pulseaudio
           qt6.qttools # needed to extract artUrl from strawberry and display it with conky
           rsync
@@ -125,7 +124,6 @@ in
 
       # Programs known by Home-Manager
       programs = {
-        autorandr = host-specific.autorandr;
         direnv = {
           enable = true;
           nix-direnv.enable = true;

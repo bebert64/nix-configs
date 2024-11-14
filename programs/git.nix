@@ -1,10 +1,10 @@
 { config, lib, ... }:
 {
-  options.by-db.git = with lib; {
-    userName = mkOption { type = types.str; };
-    userEmail = mkOption { type = types.str; };
+  options.by-db.git = with lib; with types;{
+    userName = mkOption { type = str; };
+    userEmail = mkOption { type = str; };
     mainOrMaster = mkOption {
-      type = types.str;
+      type = enum [ "main" "master" ];
       default = "main";
     };
   };

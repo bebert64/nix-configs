@@ -1,5 +1,6 @@
 {
   imports = [
+    ./autorandr.nix
     ./btop.nix
     ./firefox.nix
     ./git.nix

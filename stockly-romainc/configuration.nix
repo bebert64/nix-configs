@@ -10,6 +10,7 @@ in
 
   home-manager = {
     users.${user.name}.by-db = {
+      autorandr.enable = true;
       nixConfigsRepo = "nix-config";
       polybar = {
         isHeadphonesOnRegex = "Active Port.*Headphones";
