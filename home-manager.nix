@@ -1,14 +1,12 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }@inputs:
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
-  inherit (pkgs) callPackage;
   inherit (by-db.packages.x86_64-linux) wallpapers-manager;
 in
 {
@@ -85,17 +83,14 @@ in
             yt-dlp
             zip
           ])
-          ++ [
-            (callPackage ./programs/insomnia.nix { })
-            wallpapers-manager
-          ]
           ++ lib.optionals cfg.wifi.enable (
             with pkgs;
             [
               networkmanager
               networkmanagerapplet
             ]
-          );
+          )
+          ++ [ wallpapers-manager ];
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
@@ -108,20 +103,6 @@ in
           package = pkgs.gnome.adwaita-icon-theme;
           name = "Adwaita";
           size = 32;
-        };
-
-        # Session variable
-        sessionVariables = {
-          XDG_DATA_DIRS = "$HOME/.nix-profile/share:/usr/local/share:/usr/share:$HOME/.local/share";
-          # LC_ALL = "en_US.UTF-8";
-        };
-
-        activation = {
-          activationScript = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            # Create mount dirs
-            mkdir -p $HOME/mnt/
-            ln -sf /mnt/NAS $HOME/mnt/
-          '';
         };
       };
 

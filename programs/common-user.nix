@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   imports = [
     ./conky
@@ -22,4 +23,6 @@
     ./udiskie.nix
     ./vdhcoapp.nix
   ];
+
+  home.packages = [ (pkgs.callPackage ./insomnia.nix { }) ];
 }

@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (pkgs) writeScriptBin;
@@ -92,9 +91,17 @@ in
     unmountNas
   ];
 
-  home-manager.users.${config.by-db.user.name}.programs.zsh.shellAliases = {
-    mnas = "sudo mount-nas";
-    umnas = "sudo unmount-mnas";
+  home-manager.users.${config.by-db.user.name} = {
+    programs.zsh.shellAliases = {
+      mnas = "sudo mount-nas";
+      umnas = "sudo unmount-mnas";
+    };
+    home.activation = {
+      symlinkMountDirNas = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p $HOME/mnt/
+        ln -sf /mnt/NAS $HOME/mnt/
+      '';
+    };
   };
 
 }
