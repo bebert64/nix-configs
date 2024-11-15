@@ -1,20 +1,20 @@
-{ pkgs
-, lib
-, config
-, home-manager
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  home-manager,
+  ...
 }:
 let
   inherit (pkgs) writeScriptBin;
   inherit (lib) makeBinPath;
   mountNas = writeScriptBin "mount-nas" ''
     PATH=${
-      makeBinPath 
-        [
-          pkgs.curlMinimal
-          pkgs.toybox # contains mkdir, grep and ping
-          unmountNas
-        ]
+      makeBinPath [
+        pkgs.curlMinimal
+        pkgs.toybox # contains mkdir, grep and ping
+        unmountNas
+      ]
     }
     set -euo pipefail
 
@@ -44,11 +44,7 @@ let
     fi
   '';
   unmountNas = writeScriptBin "unmount-nas" ''
-    PATH=${
-      makeBinPath 
-        [pkgs.util-linux
-        ]
-    }
+    PATH=${makeBinPath [ pkgs.util-linux ]}
     if mountpoint -q /mnt/NAS ; then
       umount /mnt/NAS 
     fi
