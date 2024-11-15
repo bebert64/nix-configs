@@ -51,19 +51,6 @@ in
 
             # Modes
             "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
-
-            # Starting apps
-            "${modifier}+Control+l" = "workspace $ws4; exec slack";
-            "${modifier}+Control+t" = "workspace $ws5; exec thunderbird -P Regular";
-            "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
-            "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-            # Maps to the + key on the numpad
-            "${modifier}+Control+KP_Add" = "exec gnome-calculator";
-          };
-
-          assigns = {
-            "$ws4" = [ { class = "Slack"; } ];
-            "$ws8" = [ { class = "avidemux"; } ];
           };
 
           startup =

@@ -60,7 +60,6 @@ in
             evince # pdf reader
             feh
             fusee-launcher
-            gnome.gnome-calculator
             gnome.gnome-keyring
             inkscape
             microcodeIntel # for increased microprocessor performance

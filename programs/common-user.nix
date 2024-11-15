@@ -16,6 +16,7 @@
     ./autorandr.nix
     ./avidemux.nix
     ./btop.nix
+    ./calculator.nix
     ./direnv.nix
     ./email.nix
     ./firefox.nix

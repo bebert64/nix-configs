@@ -4,6 +4,9 @@
   config,
   ...
 }:
+let
+  modifier = config.xsession.windowManager.i3.config.modifier;
+in
 {
   config = {
     home = {
@@ -15,8 +18,13 @@
       };
     };
 
-    xsession.windowManager.i3.config.assigns = {
-      "$ws6" = [ { class = "jetbrains-datagrip"; } ];
+    xsession.windowManager.i3.config = {
+      assigns = {
+        "$ws6" = [ { class = "jetbrains-datagrip"; } ];
+      };
+      keybindings = {
+        "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
+      };
     };
   };
 }
