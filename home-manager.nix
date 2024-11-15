@@ -57,7 +57,7 @@ in
             arandr # GUI to configure screens positions (need to kill autorandr)
             avidemux
             caffeine-ng # to prevent going to sleep when watching videos
-            # chromium
+            chromium
             evince # pdf reader
             feh
             fusee-launcher

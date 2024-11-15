@@ -6,21 +6,18 @@ in
 
   home.packages = [
     (writeScriptBin "psg" ''
-      #!/usr/bin/env bash
       set -euo pipefail
 
       ps aux | grep $1 | grep -v psg | grep -v grep
     '')
 
     (writeScriptBin "run" ''
-      #!/usr/bin/env bash
       set -euxo pipefail
 
       nix run "nixpkgs#$1" -- "''${@:2}"
     '')
 
     (writeScriptBin "sshr" ''
-      #!/usr/bin/env bash
       set -euo pipefail
 
       REMOTE=$1
@@ -34,7 +31,6 @@ in
     '')
 
     (writeScriptBin "sync-wallpapers" ''
-      #!/usr/bin/env bash
       set -euxo pipefail
 
       mnas
