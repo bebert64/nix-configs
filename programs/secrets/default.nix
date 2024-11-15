@@ -5,8 +5,8 @@ let cfg = config.by-db; in
   imports = [ sops-nix.homeManagerModules.sops ];
 
   sops = {
-    defaultSopsFile = ../secrets/example.yaml;
-    age.sshKeyPaths = [ "/home/user/.ssh/id_ed25519" ];
+    defaultSopsFile = ./secrets.yaml;
+    age.sshKeyPaths = [ "$HOMEer/.ssh/id_ed25519" ];
     # secrets.example_key = {
     #   owner = home-manager.users.user.name;
     #   group = home-manager.users.user.group;
@@ -23,7 +23,7 @@ let cfg = config.by-db; in
   };
 
   programs.zsh.shellAliases = {
-    sops-edit = "cd $HOME/${cfg.nixConfigsRepo}/programs/secrets/secrets.yaml";
+    sops-edit = "EDITOR=vim cd $HOME/${cfg.nixConfigsRepo}/programs/secrets && sops secrets.yaml";
   };
 }
 
