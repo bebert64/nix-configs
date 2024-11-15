@@ -1,8 +1,4 @@
-{
-  sops-nix,
-  home-manager,
-  ...
-}:
+{ sops-nix, home-manager, ... }:
 {
 
   imports = [ sops-nix.homeManagerModules.sops ];
