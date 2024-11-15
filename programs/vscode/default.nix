@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
 in
@@ -17,8 +22,6 @@ in
     assigns = {
       "$ws3" = [ { class = "Code"; } ];
     };
-    keybindings = {
-      "${modifier}+Control+v" = "workspace $ws3; exec code";
-    };
+    keybindings = lib.mkOptionDefault { "${modifier}+Control+v" = "workspace $ws3; exec code"; };
   };
 }

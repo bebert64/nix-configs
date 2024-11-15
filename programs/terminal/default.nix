@@ -11,7 +11,7 @@
   };
 
   # tilix is not notification-aware so we need the no-startup-id
-  # xsession.windowManager.i3.config = {
-  #   terminal = "--no-startup-id tilix";
-  # };
+  xsession.windowManager.i3.config = {
+    terminal = "--no-startup-id tilix";
+  };
 }

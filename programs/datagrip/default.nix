@@ -21,8 +21,6 @@ in
     assigns = {
       "$ws6" = [ { class = "jetbrains-datagrip"; } ];
     };
-    keybindings = {
-      "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
-    };
+    keybindings = lib.mkOptionDefault { "${modifier}+Control+d" = "workspace $ws6; exec datagrip"; };
   };
 }

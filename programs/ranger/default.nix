@@ -30,7 +30,7 @@ in
   };
 
   xsession.windowManager.i3.config = {
-    keybindings = {
+    keybindings = lib.mkOptionDefault {
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
     };
   };

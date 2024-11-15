@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
 in
@@ -11,7 +16,7 @@ in
         "$ws5" = [ { class = "thunderbird"; } ];
       };
 
-      keybindings = {
+      keybindings = lib.mkOptionDefault {
         "${modifier}+Control+t" = "workspace $ws5; exec thunderbird -P Regular";
       };
     };

@@ -78,7 +78,7 @@ in
           notification = false;
         }
       ];
-      keybindings = {
+      keybindings = lib.mkOptionDefault {
         # Lock the screen.
         "--release ${modifier}+o" = "exec lock-conky";
       };

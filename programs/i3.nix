@@ -16,9 +16,8 @@ in
         in
         rec {
           modifier = "Mod4";
-          terminal = "--no-startup-id tilix";
 
-          keybindings = {
+          keybindings = lib.mkOptionDefault {
             # Workspace definition
             "${modifier}+1" = "workspace number $ws1";
             "${modifier}+2" = "workspace number $ws2";
