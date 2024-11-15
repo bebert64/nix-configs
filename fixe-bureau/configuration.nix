@@ -8,6 +8,11 @@ in
     ./hardware-configuration.nix
   ];
 
+  by-db.user = {
+    name = "romain";
+    description = "Romain";
+  };
+
   home-manager = {
     users.${user.name}.by-db = {
       minutes-before-lock = 10;

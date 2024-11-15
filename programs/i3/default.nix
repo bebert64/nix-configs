@@ -132,19 +132,17 @@ in
                 notification = false;
               }
             ]
-            ++ lib.lists.optional cfg.wifi.enable [
+            ++ lib.optional cfg.wifi.enable
               {
                 command = "nm-applet";
                 notification = false;
               }
-            ]
-
-            ++ lib.lists.optional cfg.bluetooth.enable [
+            ++ lib.optional cfg.bluetooth.enable
               {
                 command = "blueman-applet";
                 notification = false;
               }
-            ];
+          ;
 
           window = {
             titlebar = false;

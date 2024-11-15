@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (pkgs) writeScriptBin;
   inherit (lib) makeBinPath;
@@ -40,14 +45,7 @@ let
     fi
   '';
   unmountNas = writeScriptBin "unmount-mnas" ''
-    PATH=${
-      makeBinPath (
-        with pkgs;
-        [
-          umount
-        ]
-      )
-    }
+    PATH=${makeBinPath (with pkgs; [ umount ])}
     # We want the exit code to be 0 even if the NAS is already unmounted
     # This is because in case of fail, the timer doesn't retry in 5 min (to check actually...)
     umount /mnt/NAS || exit 0

@@ -14,27 +14,17 @@
   };
 
   outputs =
-    inputs@{ nixpkgs
-    , home-manager
-    , by-db
-    , stockly-computers
-    , ...
+    {
+      nixpkgs,
+      home-manager,
+      by-db,
+      stockly-computers,
+      ...
     }:
     {
       nixosConfigurations = {
         stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
           hostname = "stockly-romainc";
-          modules = [
-            {
-              by-db = {
-                user = {
-                  name = "user";
-                  description = "User";
-                };
-                bluetooth.enable = true;
-              };
-            }
-          ];
           configuration = ./stockly-romainc/configuration.nix;
           specialArgs = {
             inherit stockly-computers home-manager by-db;
@@ -42,15 +32,7 @@
         };
 
         fixe-bureau = nixpkgs.lib.nixosSystem {
-          modules = [
-            {
-              by-db.user = {
-                name = "romain";
-                description = "Romain";
-              };
-            }
-            ./fixe-bureau/configuration.nix
-          ];
+          modules = [ ./fixe-bureau/configuration.nix ];
           specialArgs = {
             inherit home-manager by-db;
           };

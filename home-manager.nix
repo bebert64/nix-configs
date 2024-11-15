@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }@inputs:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -92,7 +91,7 @@ in
             (callPackage ./programs/insomnia.nix { })
             wallpapers-manager
           ]
-          ++ lib.lists.optional cfg.wifi.enable (
+          ++ lib.optionals cfg.wifi.enable (
             with pkgs;
             [
               networkmanager

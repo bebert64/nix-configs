@@ -8,6 +8,14 @@ in
     ./hardware-configuration.nix
   ];
 
+  by-db = {
+    user = {
+      name = "user";
+      description = "User";
+    };
+    bluetooth.enable = true;
+  };
+
   home-manager = {
     users.${user.name}.by-db = {
       bluetooth.enable = true;
