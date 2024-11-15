@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  config.home = {
+  home = {
     packages = with pkgs.libsForQt5; [
       qt5ct
       qtstyleplugins

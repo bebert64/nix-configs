@@ -1,5 +1,5 @@
 {
-  config.programs.ssh = {
+  programs.ssh = {
     enable = true;
     serverAliveCountMax = 2;
     serverAliveInterval = 40;

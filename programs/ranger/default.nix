@@ -1,13 +1,21 @@
 # Terminal
-{ pkgs, lib, ... }:
 {
-  config.home = {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+let
+  modifier = config.xsession.windowManager.i3.config.modifier;
+in
+{
+  home = {
     packages = with pkgs; [
       ranger
       ffmpegthumbnailer # thumbnail for videos preview
       fontforge # thumbnail for fonts preview
       poppler_utils # thumbnail for pdf preview
-      xclip # used by ranger to paste into global clipboard
+      xclip # used to paste into global clipboard
     ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -19,6 +27,11 @@
       ".config/ranger/rc.conf".source = ./rc.conf;
       ".config/ranger/scope.sh".source = ./scope.sh;
     };
+  };
 
+  xsession.windowManager.i3.config = {
+    keybindings = {
+      "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
+    };
   };
 }
