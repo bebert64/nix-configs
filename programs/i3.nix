@@ -1,20 +1,24 @@
 { lib, config, ... }:
 let
   cfg = config.by-db;
+  exitMode = cfg.i3.exitMode;
 in
 {
-  xsession = {
-    enable = true;
-    scriptPath = ".hm-xsession";
-    numlock.enable = true;
-    windowManager.i3 = {
-      enable = true;
+  options.by-db.i3.exitMode = lib.mkOption {
+    type = lib.types.str;
+    description = "This is a hack to share the value with lock.nix, but is not meant to be overriden";
+    default = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
+  };
 
-      config =
-        let
-          exit_mode = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
-        in
-        rec {
+  config = {
+    xsession = {
+      enable = true;
+      scriptPath = ".hm-xsession";
+      numlock.enable = true;
+      windowManager.i3 = {
+        enable = true;
+
+        config = rec {
           modifier = "Mod4";
 
           keybindings = lib.mkOptionDefault {
@@ -50,7 +54,7 @@ in
             "${modifier}+i" = "workspace $ws11; workspace $ws12";
 
             # Modes
-            "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
+            "${modifier}+Shift+e" = "mode \"${exitMode}\"";
           };
 
           startup =
@@ -81,8 +85,7 @@ in
           };
 
           modes = {
-            ${exit_mode} = {
-              "--release s" = "exec lock-conky -s, mode default";
+            ${exitMode} = {
               r = "exec systemctl reboot";
               p = "exec shutdown now";
               l = "exec i3-msg exit";
@@ -101,23 +104,24 @@ in
           };
         };
 
-      extraConfig = ''
-        set $ws1 "1:"
-        set $ws2 "2:"
-        set $ws3 "3:"
-        set $ws4 "4:"
-        set $ws5 "5:"
-        set $ws6 "6:"
-        set $ws7 "7:"
-        set $ws8 "8:󰷝"
-        set $ws9 "9:"
-        set $ws10 "10:"
-        workspace $ws10 gaps inner 80
-        set $ws11 "11:󰸉"
-        workspace $ws11 output ${cfg.screens.primary}
-        set $ws12 "12:󰸉"
-        workspace $ws12 output ${cfg.screens.secondary}
-      '';
+        extraConfig = ''
+          set $ws1 "1:"
+          set $ws2 "2:"
+          set $ws3 "3:"
+          set $ws4 "4:"
+          set $ws5 "5:"
+          set $ws6 "6:"
+          set $ws7 "7:"
+          set $ws8 "8:󰷝"
+          set $ws9 "9:"
+          set $ws10 "10:"
+          workspace $ws10 gaps inner 80
+          set $ws11 "11:󰸉"
+          workspace $ws11 output ${cfg.screens.primary}
+          set $ws12 "12:󰸉"
+          workspace $ws12 output ${cfg.screens.secondary}
+        '';
+      };
     };
   };
 }

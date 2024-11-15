@@ -82,6 +82,11 @@ in
         # Lock the screen.
         "--release ${modifier}+o" = "exec lock-conky";
       };
+      modes = {
+        ${cfg.i3.exitMode} = {
+          "--release s" = "exec lock-conky -s, mode default";
+        };
+      };
     };
   };
 
