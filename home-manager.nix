@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, by-db
-, config
-, ...
+{
+  pkgs,
+  lib,
+  by-db,
+  config,
+  ...
 }@inputs:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -59,7 +60,6 @@ in
             avidemux
             caffeine-ng # to prevent going to sleep when watching videos
             # chromium
-            direnv
             evince # pdf reader
             feh
             fusee-launcher
@@ -75,7 +75,6 @@ in
             nodePackages.npm
             nodePackages.pnpm
             pavucontrol # pulse audio volume controle
-            polkit # polkit is the utility used by vscode to save as sudo
             polkit_gnome
             rsync
             slack
@@ -83,7 +82,6 @@ in
             unrar
             unzip
             vlc
-            xidlehook
             yt-dlp
             zip
           ])

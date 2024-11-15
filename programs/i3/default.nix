@@ -1,7 +1,8 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 let
   cfg = config.by-db;
@@ -94,12 +95,12 @@ in
           };
 
           assigns = {
-            "$ws3" = [{ class = "Code"; }];
-            "$ws4" = [{ class = "Slack"; }];
-            "$ws5" = [{ class = "thunderbird"; }];
-            "$ws6" = [{ class = "jetbrains-datagrip"; }];
-            "$ws8" = [{ class = "avidemux"; }];
-            "$ws10" = [{ class = "strawberry"; }];
+            "$ws3" = [ { class = "Code"; } ];
+            "$ws4" = [ { class = "Slack"; } ];
+            "$ws5" = [ { class = "thunderbird"; } ];
+            "$ws6" = [ { class = "jetbrains-datagrip"; } ];
+            "$ws8" = [ { class = "avidemux"; } ];
+            "$ws10" = [ { class = "strawberry"; } ];
           };
 
           startup =
@@ -132,17 +133,14 @@ in
                 notification = false;
               }
             ]
-            ++ lib.optional cfg.wifi.enable
-              {
-                command = "nm-applet";
-                notification = false;
-              }
-            ++ lib.optional cfg.bluetooth.enable
-              {
-                command = "blueman-applet";
-                notification = false;
-              }
-          ;
+            ++ lib.optional cfg.wifi.enable {
+              command = "nm-applet";
+              notification = false;
+            }
+            ++ lib.optional cfg.bluetooth.enable {
+              command = "blueman-applet";
+              notification = false;
+            };
 
           window = {
             titlebar = false;

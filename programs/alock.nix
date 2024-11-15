@@ -8,7 +8,12 @@
 let
   inherit (lib) mkOption types;
   inherit (types) int;
-  inherit (pkgs) alock jq writeScriptBin;
+  inherit (pkgs)
+    alock
+    jq
+    xidlehook
+    writeScriptBin
+    ;
   cfg = config.by-db;
 in
 {
@@ -27,6 +32,7 @@ in
 
   config.home.packages = [
     alock
+    xidlehook
     (writeScriptBin "lock-conky" ''
       SLEEP=false
       while getopts "s" opt; do
