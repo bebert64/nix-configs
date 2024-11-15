@@ -111,8 +111,8 @@
       };
 
       hardware = {
-        pulseaudio.enable = lib.mkDefault true;
         bluetooth.enable = cfg.bluetooth.enable;
+        pulseaudio.enable = lib.mkDefault true;
       };
 
       # Bootloader.
@@ -145,7 +145,7 @@
       console.keyMap = lib.mkDefault "fr";
 
       fonts = {
-        packages = with pkgs; [ dejavu_fonts ];
+        packages = [ pkgs.dejavu_fonts ];
         fontconfig = {
           enable = true;
           defaultFonts = {
