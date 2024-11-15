@@ -1,51 +1,84 @@
+{ config, lib, ... }:
 {
-  enable = true;
-  userName = "RomainC";
-  userEmail = "bebert64@gmail.com";
-  aliases = {
-    a = "add";
-    b = "branch";
-    c = "commit";
-    ca = "commit --amend";
-    co = "checkout";
-    com = "checkout master";
-    cp = "cherry-pick";
-    d = "diff";
-    ds = "diff --staged";
-    l = "log --graph --pretty=oneline --abbrev-commit";
-    last = "log -1 HEAD";
-    ma = "merge --abort";
-    mc = "merge --continue";
-    mom = "merge origin/master --no-edit";
-    f = "fetch -p";
-    pl = "pull";
-    ps = "push -u";
-    r = "rebase";
-    rc = "rebase --continue";
-    ri = "rebase -i";
-    ra = "rebase --abort";
-    riom = "rebase -i origin/master";
-    s = "status";
-    # Scripts
-    arc = "!git add $(git rev-parse --show-toplevel) && git commit";
-    arca = "!git add $(git rev-parse --show-toplevel) && git commit --amend";
-    arcap = "!git add $(git rev-parse --show-toplevel) && git commit --amend && git push -u --force-with-lease";
-    arcp = "!git add $(git rev-parse --show-toplevel) && git commit && git push -u";
-    clean-local = "git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d";
-    pmp = "!git pl && git mom && git ps";
-    wip = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip'";
-    wipp = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip' && git push -u";
-  };
-  ignores = [
-    "*.swp"
-    ".vscode"
-  ];
-  extraConfig = {
-    pull.rebase = "true";
-    core.commentchar = "%";
-    core.editor = "vim";
-    color.ui = "true";
-    push.default = "current";
-    gc.autoDetach = "false";
-  };
+  options.by-db.git =
+    with lib;
+    with types;
+    {
+      userName = mkOption { type = str; };
+      userEmail = mkOption { type = str; };
+      mainOrMaster = mkOption {
+        type = enum [
+          "main"
+          "master"
+        ];
+        default = "main";
+      };
+    };
+
+  config.programs.git =
+    let
+      cfg = config.by-db.git;
+    in
+    {
+      enable = true;
+      userName = "${cfg.userName}";
+      userEmail = "${cfg.userEmail}";
+      aliases = {
+        a = "add";
+        ar = "!git add $(git rev-parse --show-toplevel)";
+        arc = "!git add $(git rev-parse --show-toplevel) && git commit";
+        arca = "!git add $(git rev-parse --show-toplevel) && git commit --amend";
+        arcap = "!git add $(git rev-parse --show-toplevel) && git commit --amend && git push -u --force-with-lease";
+        arcp = "!git add $(git rev-parse --show-toplevel) && git commit && git push -u";
+        b = "branch";
+        c = "commit";
+        ca = "commit --amend";
+        cap = "!git commit --amend && git push -u --force-with-lease";
+        co = "checkout";
+        com = "!git checkout ${cfg.mainOrMaster}";
+        cop = "!git commit && git push -u";
+        cp = "cherry-pick";
+        d = "diff";
+        ds = "diff --staged";
+        f = "fetch -pa";
+        l = "log --graph --pretty=oneline --abbrev-commit";
+        last = "log -1 HEAD";
+        ma = "merge --abort";
+        mc = "merge --continue";
+        mcp = "!git merge --continue && git push";
+        mom = "merge --no-edit origin/${cfg.mainOrMaster}";
+        momp = "!git merge --no-edit origin/${cfg.mainOrMaster} && git push";
+        ms = "merge --squash";
+        mum = "merge --ff-only upstream/${cfg.mainOrMaster}";
+        pfl = "push --force-with-lease";
+        pl = "pull";
+        pmp = "!git pull && git momp";
+        ps = "push -u";
+        r = "rebase";
+        rc = "rebase --continue";
+        ri = "rebase -i";
+        riom = "rebase -i origin/${cfg.mainOrMaster}";
+        rt = "restore";
+        s = "status";
+        sp = "stash pop";
+        st = "stash";
+        sw = "switch";
+        wip = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip'";
+        wipp = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip' && git push -u";
+      };
+      ignores = [
+        "*.swp"
+        ".vscode"
+      ];
+      extraConfig = {
+        pull.rebase = "true";
+        core = {
+          commentchar = "%";
+          editor = "vim";
+          ui = "true";
+        };
+        push.default = "current";
+        gc.autoDetach = "false";
+      };
+    };
 }
