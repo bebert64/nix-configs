@@ -1,5 +1,5 @@
 {
-  config.programs.vim = {
+  programs.vim = {
     extraConfig = ''
       set autoindent
       set number

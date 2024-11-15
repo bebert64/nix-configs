@@ -48,6 +48,7 @@
         mcp = "!git merge --continue && git push";
         mom = "merge --no-edit origin/${cfg.mainOrMaster}";
         momp = "!git merge --no-edit origin/${cfg.mainOrMaster} && git push";
+        ms = "merge --squash";
         mum = "merge --ff-only upstream/${cfg.mainOrMaster}";
         pfl = "push --force-with-lease";
         pl = "pull";
