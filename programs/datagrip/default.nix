@@ -12,7 +12,7 @@ in
     packages = [ (import ./jetbrains.nix { inherit lib pkgs; }).datagrip ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sf $HOME/${config.by-db.nixConfigsRepo}/programs/datagrip/Datagrip $HOME/
+        ln -sf $HOME/${config.by-db.nixConfigsRepo}/programs/datagrip/datagrip-projects $HOME/
       '';
     };
   };
