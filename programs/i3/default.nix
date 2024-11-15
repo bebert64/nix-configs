@@ -7,7 +7,7 @@
 let
   cfg = config.by-db;
   inherit (lib) mkOptionDefault;
-  inherit (import ./scripts.nix { inherit cfg pkgs lib; })
+  inherit (import ./scripts.nix { inherit cfg pkgs; })
     playerctl-move
     playerctl-restart-or-previous
     set-headphones

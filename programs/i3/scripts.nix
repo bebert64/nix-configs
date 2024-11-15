@@ -1,18 +1,7 @@
-{
-  cfg,
-  pkgs,
-  lib,
-}:
+{ cfg, pkgs }:
 let
   inherit (cfg) setHeadphonesCommand setSpeakerCommand;
-  inherit (lib) makeBinPath;
-  inherit (pkgs)
-    coreutils
-    playerctl
-    pulseaudio
-    strawberry
-    writeScriptBin
-    ;
+  inherit (pkgs) writeScriptBin;
 in
 {
   playerctl-move = "${writeScriptBin "playerctl-move" ''
@@ -25,14 +14,6 @@ in
   ''}/bin/playerctl-move";
 
   playerctl-restart-or-previous = "${writeScriptBin "playerctl-restart-or-previous" ''
-    PATH=${
-      makeBinPath [
-        playerctl
-        coreutils
-        strawberry
-      ]
-    }
-
     CURRENT_PLAYER=$(playerctl --list-all | head -n 1)
 
     case $CURRENT_PLAYER in
@@ -48,12 +29,10 @@ in
   ''}/bin/playerctl-restart-or-previous";
 
   set-headphones = "${writeScriptBin "set-headphones" ''
-    PATH=${makeBinPath [ pulseaudio ]}
     pactl ${setHeadphonesCommand}
   ''}/bin/set-headphones";
 
   set-speaker = "${writeScriptBin "set-speaker" ''
-    PATH=${makeBinPath [ pulseaudio ]}
     pactl ${setSpeakerCommand}
   ''}/bin/set-speaker";
 }
