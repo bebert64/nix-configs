@@ -13,8 +13,8 @@ in
     description = "Romain";
   };
 
-  home-manager = {
-    users.${user.name}.by-db = {
+  home-manager.users.${user.name} = {
+    by-db = {
       minutes-before-lock = 10;
       minutes-from-lock-to-sleep = 30;
       screens = {
@@ -24,7 +24,6 @@ in
       isHeadphonesOnCommand = "pactl get-default-sink | grep alsa_output.pci-0000_00_1b.0.analog-stereo";
       setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
       setSpeakerCommand = "set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2";
-
     };
   };
 

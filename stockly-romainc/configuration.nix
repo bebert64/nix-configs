@@ -18,7 +18,6 @@ in
 
   home-manager = {
     users.${user.name}.by-db = {
-      bluetooth.enable = true;
       wifi.enable = true;
       nixConfigsRepo = "nix-config";
       isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";

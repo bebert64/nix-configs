@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [
@@ -49,6 +48,7 @@
           imports = [ ./home-manager.nix ];
           by-db = {
             username = "${cfg.user.name}";
+            bluetooth.enable = cfg.bluetooth.enable;
             git = {
               userName = "RomainC";
               userEmail = "bebert64@gmal.com";
