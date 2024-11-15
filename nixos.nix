@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [
@@ -17,10 +16,7 @@
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
-    bluetooth.enable = mkOption {
-      type = types.bool;
-      default = false;
-    };
+    bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
   };
 
   config =

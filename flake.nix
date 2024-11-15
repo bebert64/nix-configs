@@ -14,12 +14,11 @@
   };
 
   outputs =
-    inputs@{
-      nixpkgs,
-      home-manager,
-      by-db,
-      stockly-computers,
-      ...
+    inputs@{ nixpkgs
+    , home-manager
+    , by-db
+    , stockly-computers
+    , ...
     }:
     {
       nixosConfigurations = {
@@ -61,7 +60,6 @@
       homeConfigurations = {
         raspi = home-manager.lib.homeManagerConfiguration rec {
           pkgs = import nixpkgs { system = "aarch64-linux"; };
-
           modules = [ (import ./raspi/home_raspi.nix { inherit pkgs; }) ];
         };
       };
