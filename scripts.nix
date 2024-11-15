@@ -27,7 +27,7 @@ in
         *) CMD="ranger";;
       esac
 
-      tilix -p Ranger -e "ssh ''$1 -t ''${CMD}"
+      tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
     '')
 
     (writeScriptBin "sync-wallpapers" ''
