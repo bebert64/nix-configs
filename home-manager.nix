@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, by-db
-, config
-, ...
+{
+  pkgs,
+  lib,
+  by-db,
+  config,
+  ...
 }@inputs:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -109,18 +110,6 @@ in
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
-        direnv = {
-          enable = true;
-          nix-direnv.enable = true;
-          enableZshIntegration = true;
-        };
-        vim = {
-          extraConfig = ''
-            set autoindent
-            set number
-            syntax on
-          '';
-        };
       };
 
       services = {

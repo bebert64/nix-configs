@@ -1,6 +1,7 @@
 { pkgs
 , lib
 , config
+, home-manager
 , ...
 }:
 let
@@ -8,17 +9,16 @@ let
   inherit (lib) makeBinPath;
   mountNas = writeScriptBin "mount-nas" ''
     PATH=${
-      makeBinPath (
-        with pkgs;
+      makeBinPath 
         [
-          curlMinimal
-          toybox # contains mkdir, grep and ping
+          pkgs.curlMinimal
+          pkgs.toybox # contains mkdir, grep and ping
+          unmountNas
         ]
-      )
     }
     set -euo pipefail
 
-    IP=192.168.1.3
+    IP=192.168.1.30
     NAME=NasLaFouillouse
 
     mkdir -p /mnt/NAS
@@ -30,7 +30,7 @@ let
 
     if ! ping -c1 $IP &> /dev/null; then
       echo "No machine responding at $IP"
-      ${unmountNas}/bin/unmount-mnas
+      unmount-mnas
       exit
     fi
 
@@ -40,11 +40,11 @@ let
       echo "mounted $NAME successfully"
     else
       echo "The machine at $IP seems to not be $NAME"
-      ${unmountNas}/bin/unmount-mnas
+      unmount-mnas
     fi
   '';
   unmountNas = writeScriptBin "unmount-mnas" ''
-    PATH=${makeBinPath (with pkgs; [ umount ])}
+    PATH=${makeBinPath [ pkgs.umount ]}
     # We want the exit code to be 0 even if the NAS is already unmounted
     # This is because in case of fail, the timer doesn't retry in 5 min (to check actually...)
     umount /mnt/NAS || exit 0
@@ -97,7 +97,7 @@ in
       umnas = "sudo unmount-mnas";
     };
     home.activation = {
-      symlinkMountDirNas = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      symlinkMountDirNas = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p $HOME/mnt/
         ln -sf /mnt/NAS $HOME/mnt/
       '';
