@@ -16,6 +16,7 @@ in
         in
         rec {
           modifier = "Mod4";
+          terminal = "--no-startup-id tilix";
 
           keybindings = {
             # Workspace definition

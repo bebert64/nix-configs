@@ -43,7 +43,8 @@
         # Nix updates
         update-dirty() {
           cd ~/${cfg.nixConfigsRepo}
-          
+          sudo nixos-rebuild switch --flake .#
+        }
         update() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
@@ -54,7 +55,6 @@
           git pull
           sudo nix-collect-garbage -d
           sudo nixos-rebuild switch --flake .#
-        }sudo nixos-rebuild switch --flake .#
         }
         upgrade() {
           cd ~/${cfg.nixConfigsRepo}
