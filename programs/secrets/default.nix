@@ -1,16 +1,14 @@
 { sops-nix, pkgs, config, lib, ... }:
-let cfg = config.by-db; in
+let cfg = config.by-db; defaultSymlinkPath = "/run/user/1000/secrets"; in
 {
 
   imports = [ sops-nix.homeManagerModules.sops ];
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [ "$HOMEer/.ssh/id_ed25519" ];
-    # secrets.example_key = {
-    #   owner = home-manager.users.user.name;
-    #   group = home-manager.users.user.group;
-    # };
+    inherit defaultSymlinkPath;
+    age.sshKeyPaths = [ "/home/${cfg.username}/.ssh/id_ed25519" ];
+    secrets."gmail/bebert64" = { };
   };
 
   home = {
@@ -22,8 +20,18 @@ let cfg = config.by-db; in
     };
   };
 
-  programs.zsh.shellAliases = {
-    sops-edit = "EDITOR=vim cd $HOME/${cfg.nixConfigsRepo}/programs/secrets && sops secrets.yaml";
+  programs.zsh = {
+    shellAliases = {
+      sops-edit = "EDITOR=vim && cd $HOME/${cfg.nixConfigsRepo}/programs/secrets && sops secrets.yaml";
+    };
+
+    initExtra = ''
+      compdef '_files -W "${defaultSymlinkPath}" -/' sops-read
+      sops-read () {
+        cat ${defaultSymlinkPath}/$1
+      }
+
+    '';
   };
 }
 
