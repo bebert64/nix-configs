@@ -3,24 +3,26 @@
   imports = [
     ./conky
     ./datagrip
-    ./i3
     ./picom
     ./polybar
     ./qt
     ./ranger
+    ./rofi
     ./ssh
-    ./strawberry
-    ./tilix
+    ./music
+    ./terminal
     ./vscode
     ./zsh
-    ./alock.nix
     ./autorandr.nix
+    ./avidemux.nix
     ./btop.nix
     ./direnv.nix
+    ./email.nix
     ./firefox.nix
     ./git.nix
-    ./rofi.nix
-    ./thunderbird.nix
+    ./i3.nix
+    ./lock.nix
+    ./slack.nix
     ./udiskie.nix
     ./vdhcoapp.nix
     ./vim.nix

@@ -1,3 +1,7 @@
+{ config, ... }:
+let
+  modifier = config.xsession.windowManager.i3.config.modifier;
+in
 {
   config.programs.firefox = {
     enable = true;
@@ -13,4 +17,10 @@
       };
     };
   };
+
+  xsession.windowManager.i3.config.keybindings = {
+    "${modifier}+Control+f" = "workspace $ws2; exec firefox";
+    "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
+  };
+
 }

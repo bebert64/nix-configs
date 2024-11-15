@@ -1,19 +1,6 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ lib, config, ... }:
 let
   cfg = config.by-db;
-  inherit (lib) mkOptionDefault;
-  inherit (import ./scripts.nix { inherit cfg pkgs; })
-    playerctl-move
-    playerctl-restart-or-previous
-    set-headphones
-    set-speaker
-    ;
-  playerctl = "${pkgs.playerctl}/bin/playerctl";
 in
 {
   xsession = {
@@ -25,24 +12,12 @@ in
 
       config =
         let
-          modifier = "Mod4";
           exit_mode = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
-          music_mode = "Music";
         in
-        {
-          inherit modifier;
+        rec {
+          modifier = "Mod4";
 
-          menu = "\"rofi -modi drun#window#run -show drun -show-icons\"";
-
-          terminal = "--no-startup-id tilix"; # tilix is not notification-aware so we need the no-startup-id
-
-          keybindings = mkOptionDefault {
-            # Volume
-            XF86AudioRaiseVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status";
-            XF86AudioLowerVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status";
-            XF86AudioMute = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status";
-            XF86AudioMicMute = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status";
-
+          keybindings = {
             # Workspace definition
             "${modifier}+1" = "workspace number $ws1";
             "${modifier}+2" = "workspace number $ws2";
@@ -74,43 +49,26 @@ in
             # Used to display empty workspaces, allowing to see the wallpapers
             "${modifier}+i" = "workspace $ws11; workspace $ws12";
 
-            # Lock the screen.
-            "--release ${modifier}+o" = "exec lock-conky";
-            # "${modifier}+o" = "exec lock-conky";
-
             # Modes
             "${modifier}+Shift+e" = "mode \"${exit_mode}\"";
-            "${modifier}+m" = "mode \"${music_mode}\"";
 
             # Starting apps
-            "${modifier}+Control+f" = "workspace $ws2; exec firefox";
-            "${modifier}+Control+v" = "workspace $ws3; exec code";
             "${modifier}+Control+l" = "workspace $ws4; exec slack";
             "${modifier}+Control+t" = "workspace $ws5; exec thunderbird -P Regular";
             "${modifier}+Control+d" = "workspace $ws6; exec datagrip";
             "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-            "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
             # Maps to the + key on the numpad
             "${modifier}+Control+KP_Add" = "exec gnome-calculator";
           };
 
           assigns = {
-            "$ws3" = [ { class = "Code"; } ];
             "$ws4" = [ { class = "Slack"; } ];
-            "$ws5" = [ { class = "thunderbird"; } ];
-            "$ws6" = [ { class = "jetbrains-datagrip"; } ];
             "$ws8" = [ { class = "avidemux"; } ];
-            "$ws10" = [ { class = "strawberry"; } ];
           };
 
           startup =
             [
-              {
-                command = "autorandr --change";
-                notification = false;
-                always = true;
-              }
-              { command = "setxkbmap fr"; }
+              # { command = "setxkbmap fr"; }
               # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
               {
                 command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets";
@@ -118,18 +76,6 @@ in
               }
               {
                 command = "caffeine";
-                notification = false;
-              }
-              {
-                command = "picom";
-                notification = false;
-              }
-              {
-                command = "udiskie --tray";
-                notification = false;
-              }
-              {
-                command = "xidlehook --timer ${toString (cfg.minutes-before-lock or 3 * 60)} 'lock-conky' ' ' &";
                 notification = false;
               }
             ]
@@ -155,23 +101,6 @@ in
               l = "exec i3-msg exit";
               Escape = "mode default";
               Return = "mode default";
-            };
-            ${music_mode} = {
-              "${modifier}+Left" = " exec ${playerctl-restart-or-previous}";
-              "${modifier}+Right" = "exec ${playerctl} next";
-              "Left" = "exec ${playerctl-move} - 10";
-              "Right" = "exec ${playerctl-move} + 10";
-              "Up" = "exec ${playerctl} volume 0.1+";
-              "Down" = "exec ${playerctl} volume 0.1-";
-              "space" = "exec ${playerctl} play-pause, mode default";
-              "s" = "exec ${playerctl} stop, mode default";
-              "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
-              "l" = "workspace $ws10, exec strawberry, mode default";
-              "r" = "exec launch-radios, mode default";
-              "${modifier}+m" = "mode default";
-              "h" = "exec ${set-headphones}, mode default";
-              "p" = "exec ${set-speaker}, mode default";
-              "Escape" = "mode default";
             };
           };
 

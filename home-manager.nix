@@ -55,7 +55,6 @@ in
         packages =
           (with pkgs; [
             arandr # GUI to configure screens positions (need to kill autorandr)
-            avidemux
             caffeine-ng # to prevent going to sleep when watching videos
             chromium
             evince # pdf reader
@@ -75,7 +74,6 @@ in
             pavucontrol # pulse audio volume controle
             polkit_gnome
             rsync
-            slack
             sshfs
             unrar
             unzip
