@@ -27,9 +27,10 @@
         "c" = "code .";
         "wke1" = "i3-msg workspace \"\\\" \\\"\"";
         "de" = "yt-dlp -f 720p_HD";
-        "update" = "cd ~/${cfg.nixConfigsRepo} && git pull && sudo nixos-rebuild switch --flake .#fixe-bureau";
-        "update-dirty" = "cd ~/${cfg.nixConfigsRepo} && git add . && sudo nixos-rebuild switch --flake .#fixe-bureau";
-        "upgrade" = "cd ~/${cfg.nixConfigsRepo} && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#fixe-bureau && git push";
+        "update" = "cd ~/${cfg.nixConfigsRepo} && git pull && sudo nixos-rebuild switch --flake .#";
+        "update-clean" = "cd ~/${cfg.nixConfigsRepo} && git pull && sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake .#";
+        "update-dirty" = "cd ~/${cfg.nixConfigsRepo} && git add . && sudo nixos-rebuild switch --flake .#";
+        "upgrade" = "cd ~/${cfg.nixConfigsRepo} && git pull && nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .# && git push";
       };
       history = {
         size = 200000;

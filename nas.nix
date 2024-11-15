@@ -1,8 +1,8 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
   inherit (pkgs) writeScriptBin;
   inherit (lib) makeBinPath;
-  mountNas = writeScriptBin "mnas" ''
+  mountNas = writeScriptBin "mount-nas" ''
     PATH=${
       makeBinPath (
         with pkgs;
@@ -26,7 +26,7 @@ let
 
     if ! ping -c1 $IP &> /dev/null; then
       echo "No machine responding at $IP"
-      ${unmountNas}/bin/umnas
+      ${unmountNas}/bin/unmount-mnas
       exit
     fi
 
@@ -36,10 +36,10 @@ let
       echo "mounted $NAME successfully"
     else
       echo "The machine at $IP seems to not be $NAME"
-      ${unmountNas}/bin/umnas
+      ${unmountNas}/bin/unmount-mnas
     fi
   '';
-  unmountNas = writeScriptBin "umnas" ''
+  unmountNas = writeScriptBin "unmount-mnas" ''
     PATH=${
       makeBinPath (
         with pkgs;
@@ -59,8 +59,6 @@ in
     device = "192.168.1.3:/volume1/NAS";
     fsType = "nfs";
     options = [
-      "user"
-      "users"
       "noexec"
       "noauto"
     ];
@@ -69,7 +67,7 @@ in
   systemd = {
     services = {
       mount-nas = {
-        script = "${mountNas}/bin/mnas";
+        script = "${mountNas}/bin/mount-nas";
         serviceConfig = {
           Type = "oneshot";
           User = "root";
@@ -82,7 +80,7 @@ in
       mount-nas = {
         wantedBy = [ "timers.target" ];
         timerConfig = {
-          OnBootSec = "30s";
+          OnBootSec = "20s";
           OnUnitInactiveSec = "5m";
           OnUnitActiveSec = "5m";
           Unit = "mount-nas.service";
@@ -95,5 +93,10 @@ in
     mountNas
     unmountNas
   ];
+
+  home-manager.users.${config.by-db.user.name}.programs.zsh.shellAliases = {
+    mnas = "sudo mount-nas";
+    umnas = "sudo unmount-mnas";
+  };
 
 }
