@@ -30,7 +30,7 @@ let
 
     if ! ping -c1 $IP &> /dev/null; then
       echo "No machine responding at $IP"
-      unmount-mnas
+      unmount-nas
       exit
     fi
 
@@ -40,14 +40,18 @@ let
       echo "mounted $NAME successfully"
     else
       echo "The machine at $IP seems to not be $NAME"
-      unmount-mnas
+      unmount-nas
     fi
   '';
-  unmountNas = writeScriptBin "unmount-mnas" ''
-    PATH=${makeBinPath [ pkgs.umount ]}
-    # We want the exit code to be 0 even if the NAS is already unmounted
-    # This is because in case of fail, the timer doesn't retry in 5 min (to check actually...)
-    umount /mnt/NAS || exit 0
+  unmountNas = writeScriptBin "unmount-nas" ''
+    PATH=${
+      makeBinPath 
+        [pkgs.util-linux
+        ]
+    }
+    if mountpoint -q /mnt/NAS ; then
+      umount /mnt/NAS 
+    fi
   '';
 in
 {
@@ -69,8 +73,6 @@ in
           Type = "oneshot";
           User = "root";
         };
-        wants = [ "network-online.target" ];
-        after = [ "network-online.target" ];
       };
     };
     timers = {
@@ -78,7 +80,6 @@ in
         wantedBy = [ "timers.target" ];
         timerConfig = {
           OnBootSec = "20s";
-          OnUnitInactiveSec = "5m";
           OnUnitActiveSec = "5m";
           Unit = "mount-nas.service";
         };
