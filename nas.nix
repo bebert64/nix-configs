@@ -8,6 +8,12 @@
 let
   inherit (pkgs) writeScriptBin;
   inherit (lib) makeBinPath;
+  nasIp = "192.168.1.3";
+  nasIpAndVolume = "${nasIp}:/volume1/NAS";
+  nasMountPoint = "/mnt/NAS";
+  nasName = "NasLaFouillouse";
+  nasPort = "5000";
+  homeMountDir = "$HOME/mnt/";
   mountNas = writeScriptBin "mount-nas" ''
     PATH=${
       makeBinPath [
@@ -18,42 +24,39 @@ let
     }
     set -euo pipefail
 
-    IP=192.168.1.30
-    NAME=NasLaFouillouse
+    mkdir -p ${nasMountPoint}
 
-    mkdir -p /mnt/NAS
-
-    if [[ $(ls /mnt/NAS) ]]; then
+    if [[ $(ls ${nasMountPoint}) ]]; then
       echo "NAS seems to already be mounted"
       exit
     fi
 
-    if ! ping -c1 $IP &> /dev/null; then
-      echo "No machine responding at $IP"
+    if ! ping -c1 ${nasIp} &> /dev/null; then
+      echo "No machine responding at ${nasIp}"
       unmount-nas
       exit
     fi
 
-    if [[ $(curl -s $IP:5000 | grep $NAME) ]]; then
+    if [[ $(curl -s ${nasIp}:${nasPort} | grep ${nasName}) ]]; then
       # We specifically want to avoid using toybox's mount, which doesn't work with nfs
-      ${pkgs.mount}/bin/mount $IP:/volume1/NAS /mnt/NAS
-      echo "mounted $NAME successfully"
+      ${pkgs.mount}/bin/mount ${nasIpAndVolume} ${nasMountPoint}
+      echo "mounted ${nasName} successfully"
     else
-      echo "The machine at $IP seems to not be $NAME"
+      echo "The machine at ${nasIp} seems to not be ${nasName}"
       unmount-nas
     fi
   '';
   unmountNas = writeScriptBin "unmount-nas" ''
     PATH=${makeBinPath [ pkgs.util-linux ]}
-    if mountpoint -q /mnt/NAS ; then
-      umount /mnt/NAS 
+    if mountpoint -q ${nasMountPoint} ; then
+      umount ${nasMountPoint} 
     fi
   '';
 in
 {
 
-  fileSystems."/mnt/NAS" = {
-    device = "192.168.1.3:/volume1/NAS";
+  fileSystems."${nasMountPoint}" = {
+    device = "${nasIpAndVolume}";
     fsType = "nfs";
     options = [
       "noexec"
@@ -95,8 +98,8 @@ in
     };
     home.activation = {
       symlinkMountDirNas = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p $HOME/mnt/
-        ln -sf /mnt/NAS $HOME/mnt/
+        mkdir -p ${homeMountDir}
+        ln -sf ${nasMountPoint} ${homeMountDir}
       '';
     };
   };

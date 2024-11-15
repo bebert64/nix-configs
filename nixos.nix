@@ -52,7 +52,7 @@
             bluetooth.enable = cfg.bluetooth.enable;
             git = {
               userName = "RomainC";
-              userEmail = "bebert64@gmal.com";
+              userEmail = "bebert64@gmail.com";
             };
           };
         };
