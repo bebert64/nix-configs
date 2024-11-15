@@ -4,7 +4,7 @@
   by-db,
   config,
   ...
-}@inputs:
+}:
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
@@ -54,7 +54,6 @@ in
 
         packages =
           (with pkgs; [
-            anydesk
             arandr # GUI to configure screens positions (need to kill autorandr)
             avidemux
             caffeine-ng # to prevent going to sleep when watching videos
@@ -95,7 +94,6 @@ in
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
-          # ".anydesk/user.conf".source = ./assets/anydesk-user.conf;
           # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         };
 
