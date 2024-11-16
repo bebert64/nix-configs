@@ -1,4 +1,4 @@
-{ sops-nix, pkgs, config, lib, ... }:
+{ sops-nix, pkgs, config, ... }:
 let cfg = config.by-db; defaultSymlinkPath = "/run/user/1000/secrets"; in
 {
 
@@ -9,18 +9,19 @@ let cfg = config.by-db; defaultSymlinkPath = "/run/user/1000/secrets"; in
     inherit defaultSymlinkPath;
     age.sshKeyPaths = [ "/home/${cfg.username}/.ssh/id_ed25519" ];
     secrets = {
+      "1password-secret-keys/bebert64" = { };
+      "1password-secret-keys/stockly" = { };
+      "ffsync/bebert64" = { };
+      "ffsync/shortcuts-db" = { };
+      "github-refined-token" = { };
       "gmail/bebert64" = { };
-      "gmail/shortcuts-db" = { };
+      "gmail/stockly" = { };
+      "raspi/postgresql/rw" = { };
     };
   };
 
   home = {
     packages = [ pkgs.sops ];
-    activation = {
-      createSopsAgeDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p $HOME/.config/sops/age
-      '';
-    };
   };
 
   programs.zsh = {
