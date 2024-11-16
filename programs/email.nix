@@ -1,27 +1,22 @@
 { config, lib, ... }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  gmailAccount = address: {
+    address = address;
+    flavor = "gmail.com";
+    realName = "Romain Cassan";
+    thunderbird = {
+      enable = true;
+    };
+  };
 in
 {
   accounts.email.accounts = {
-    bebert64 = {
+    bebert64 = gmailAccount "bebert64@gmail.com" // {
       primary = true;
-      address = "bebert64@gmail.com";
       aliases = [ "romain.cassan.64@gmail.com" ];
-      flavor = "gmail.com";
-      realName = "Romain Cassan";
-      thunderbird = {
-        enable = true;
-      };
     };
-    stockly = {
-      address = "romain@stockly.ai";
-      flavor = "gmail.com";
-      realName = "Romain Cassan";
-      thunderbird = {
-        enable = true;
-      };
-    };
+    stockly = gmailAccount "romain@stockly.ai";
   };
 
   programs.thunderbird = {
