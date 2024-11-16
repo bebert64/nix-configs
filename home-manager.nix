@@ -1,9 +1,10 @@
-{ pkgs
-, lib
-, by-db
-, config
-, sops-nix
-, ...
+{
+  pkgs,
+  lib,
+  by-db,
+  config,
+  sops-nix,
+  ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;

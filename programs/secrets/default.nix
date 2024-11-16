@@ -1,5 +1,13 @@
-{ sops-nix, pkgs, config, ... }:
-let cfg = config.by-db; defaultSymlinkPath = "/run/user/1000/secrets"; in
+{
+  sops-nix,
+  pkgs,
+  config,
+  ...
+}:
+let
+  cfg = config.by-db;
+  defaultSymlinkPath = "$HOME/.secrets";
+in
 {
 
   imports = [ sops-nix.homeManagerModules.sops ];
