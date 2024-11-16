@@ -20,9 +20,6 @@ in
       "1password-secret-keys/stockly" = { };
       "ffsync/bebert64" = { };
       "ffsync/shortcuts-db" = { };
-      "github-refined-token" = { };
-      "gmail/bebert64" = { };
-      "gmail/stockly" = { };
       "raspi/postgresql/rw" = { };
     };
   };
