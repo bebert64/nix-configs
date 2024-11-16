@@ -228,11 +228,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1730746162,
-        "narHash": "sha256-ZGmI+3AbT8NkDdBQujF+HIxZ+sWXuyT6X8B49etWY2g=",
+        "lastModified": 1731748189,
+        "narHash": "sha256-Zd/Uukvpcu26M6YGhpbsgqm6LUSLz+Q8mDZ5LOEGdiE=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "59d6988329626132eaf107761643f55eb979eef1",
+        "rev": "d2bd7f433b28db6bc7ae03d5eca43564da0af054",
         "type": "github"
       },
       "original": {
@@ -249,11 +249,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1731409817,
-        "narHash": "sha256-37b1fRNXEJ9Viuj8tiGLdN9FV+XRx/YCOxTvEUDl7b8=",
+        "lastModified": 1731699390,
+        "narHash": "sha256-5an5wATINDFyARp3DGvHVpBn1y/pO0jtccvKeL/Uj2U=",
         "ref": "refs/heads/master",
-        "rev": "845bfb20536e3a618e5ac33ac7693e528ef0dc18",
-        "revCount": 129,
+        "rev": "e6ba5d8503b8d7058de797e8c5fc0f6956b9bb8d",
+        "revCount": 130,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
