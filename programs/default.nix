@@ -8,6 +8,7 @@
     ./qt
     ./ranger
     ./rofi
+    ./secrets
     ./ssh
     ./music
     ./terminal

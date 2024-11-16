@@ -12,7 +12,7 @@ let
 in
 {
   imports = [
-    ./programs/common-user.nix
+    ./programs
     ./scripts.nix
     ./fonts.nix
   ];
