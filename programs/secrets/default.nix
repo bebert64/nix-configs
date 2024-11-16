@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.by-db;
-  defaultSymlinkPath = "$HOME/.secrets";
+  SymlinkPath = config.sops.defaultSymlinkPath;
 in
 {
 
@@ -14,7 +14,6 @@ in
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    inherit defaultSymlinkPath;
     age.sshKeyPaths = [ "/home/${cfg.username}/.ssh/id_ed25519" ];
     secrets = {
       "1password-secret-keys/bebert64" = { };
@@ -38,10 +37,10 @@ in
     };
 
     initExtra = ''
-      compdef '_files -W "${defaultSymlinkPath}" -/' sops-read
+      compdef '_files -W "${SymlinkPath}" -/' sops-read
       sops-read () {
         PROMPT_EOL_MARK=""
-        cat ${defaultSymlinkPath}/$1
+        cat ${SymlinkPath}/$1
       }
 
     '';

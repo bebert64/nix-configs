@@ -3,7 +3,6 @@
   lib,
   by-db,
   config,
-  sops-nix,
   ...
 }:
 let
