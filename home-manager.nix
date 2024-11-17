@@ -7,13 +7,13 @@
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
-  inherit (by-db.packages) wallpapers-manager;
 in
 {
   imports = [
     ./programs
     ./scripts.nix
     ./fonts.nix
+    by-db.module
   ];
 
   options.by-db = {
@@ -45,6 +45,8 @@ in
       cfg = config.by-db;
     in
     {
+      by-db-pkgs.wallpapers-manager.service.enable = true;
+
       nixpkgs.config.allowUnfree = true; # Necessary for vscode
 
       home = {
@@ -57,7 +59,6 @@ in
             caffeine-ng # to prevent going to sleep when watching videos
             chromium
             evince # pdf reader
-            feh
             fusee-launcher
             gnome.gnome-keyring
             inkscape
@@ -86,7 +87,6 @@ in
               networkmanagerapplet
             ]
           );
-        # ++ [ wallpapers-manager.package2 ];
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
@@ -109,38 +109,6 @@ in
       services = {
         playerctld.enable = true;
       };
-
-      # systemd.user = {
-      #   enable = true;
-      #   services = {
-      #     wallpapers-manager = {
-      #       Unit = {
-      #         Description = "Chooses walpaper(s) based on the number of monitors connected";
-      #       };
-      #       Service = {
-      #         Type = "exec";
-      #         ExecStart = "${wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
-      #       };
-
-      #     };
-      #   };
-      #   timers = {
-      #     wallpapers-manager = {
-      #       Unit = {
-      #         Description = "Timer for wallpapers-manager";
-      #       };
-      #       Timer = {
-      #         Unit = "wallpapers-manager.service";
-      #         OnUnitInactiveSec = "1h";
-      #         OnBootSec = "1";
-      #       };
-      #       Install = {
-      #         WantedBy = [ "timers.target" ];
-      #       };
-
-      #     };
-      #   };
-      # };
 
       gtk = {
         enable = true;

@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1731835437,
-        "narHash": "sha256-QSgS+pXG2akEugATSbiSaJyY4NmpVCnFB1H1xhClLTM=",
+        "lastModified": 1731860611,
+        "narHash": "sha256-cyHBoMlKMsSiVIgON3siw59dWt5HJ16xzpHJEkn75uo=",
         "ref": "clean-up",
-        "rev": "7737b80eefa083f54ecac1fe5743e48213d9f5b4",
-        "revCount": 87,
+        "rev": "54eb6ddb2aa6b1047619e1aedeaa5faaa8b12137",
+        "revCount": 102,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
