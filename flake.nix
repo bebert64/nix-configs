@@ -12,19 +12,18 @@
       url = "git+ssh://git@github.com/bebert64/perso";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = "github:Mic92/sops-nix?ref=d2bd7f433b28db6bc7ae03d5eca43564da0af054";
     };
 
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      by-db,
-      stockly-computers,
-      sops-nix,
-      ...
+    { nixpkgs
+    , home-manager
+    , by-db
+    , stockly-computers
+    , sops-nix
+    , ...
     }:
     {
       nixosConfigurations = {
