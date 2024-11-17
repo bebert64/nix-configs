@@ -1,14 +1,13 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
-  inherit (by-db.packages.x86_64-linux) wallpapers-manager;
+  inherit (by-db.packages) wallpapers-manager;
 in
 {
   imports = [
@@ -87,7 +86,7 @@ in
               networkmanagerapplet
             ]
           )
-          ++ [ wallpapers-manager ];
+          ++ [ wallpapers-manager.package ];
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
