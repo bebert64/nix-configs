@@ -219,6 +219,7 @@
       },
       "original": {
         "owner": "Mic92",
+        "ref": "d2bd7f433b28db6bc7ae03d5eca43564da0af054",
         "repo": "sops-nix",
         "type": "github"
       }

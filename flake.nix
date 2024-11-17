@@ -12,7 +12,7 @@
       url = "git+ssh://git@github.com/bebert64/perso?ref=clean-up";
     };
     sops-nix = {
-      url = "github:Mic92/sops-nix";
+      url = "github:Mic92/sops-nix?ref=d2bd7f433b28db6bc7ae03d5eca43564da0af054";
     };
 
   };
