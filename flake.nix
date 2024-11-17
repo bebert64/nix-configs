@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "stockly-computers/nixpkgs";
     };
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=clean-up";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -18,13 +18,12 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      by-db,
-      stockly-computers,
-      sops-nix,
-      ...
+    { nixpkgs
+    , home-manager
+    , by-db
+    , stockly-computers
+    , sops-nix
+    , ...
     }:
     {
       nixosConfigurations = {

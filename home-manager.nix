@@ -85,8 +85,8 @@ in
               networkmanager
               networkmanagerapplet
             ]
-          )
-          ++ [ wallpapers-manager.package ];
+          );
+        # ++ [ wallpapers-manager.package2 ];
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
@@ -110,37 +110,37 @@ in
         playerctld.enable = true;
       };
 
-      systemd.user = {
-        enable = true;
-        services = {
-          wallpapers-manager = {
-            Unit = {
-              Description = "Chooses walpaper(s) based on the number of monitors connected";
-            };
-            Service = {
-              Type = "exec";
-              ExecStart = "${wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
-            };
+      # systemd.user = {
+      #   enable = true;
+      #   services = {
+      #     wallpapers-manager = {
+      #       Unit = {
+      #         Description = "Chooses walpaper(s) based on the number of monitors connected";
+      #       };
+      #       Service = {
+      #         Type = "exec";
+      #         ExecStart = "${wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
+      #       };
 
-          };
-        };
-        timers = {
-          wallpapers-manager = {
-            Unit = {
-              Description = "Timer for wallpapers-manager";
-            };
-            Timer = {
-              Unit = "wallpapers-manager.service";
-              OnUnitInactiveSec = "1h";
-              OnBootSec = "1";
-            };
-            Install = {
-              WantedBy = [ "timers.target" ];
-            };
+      #     };
+      #   };
+      #   timers = {
+      #     wallpapers-manager = {
+      #       Unit = {
+      #         Description = "Timer for wallpapers-manager";
+      #       };
+      #       Timer = {
+      #         Unit = "wallpapers-manager.service";
+      #         OnUnitInactiveSec = "1h";
+      #         OnBootSec = "1";
+      #       };
+      #       Install = {
+      #         WantedBy = [ "timers.target" ];
+      #       };
 
-          };
-        };
-      };
+      #     };
+      #   };
+      # };
 
       gtk = {
         enable = true;
