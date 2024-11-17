@@ -18,12 +18,13 @@
   };
 
   outputs =
-    { nixpkgs
-    , home-manager
-    , by-db
-    , stockly-computers
-    , sops-nix
-    , ...
+    {
+      nixpkgs,
+      home-manager,
+      by-db,
+      stockly-computers,
+      sops-nix,
+      ...
     }:
     {
       nixosConfigurations = {
