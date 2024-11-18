@@ -37,7 +37,7 @@ in
     };
     setSpeakerCommand = mkOption {
       type = str;
-      description = "Command to redirect the sound output to speaker ";
+      description = "Command to redirect the sound output to speaker";
     };
   };
 
