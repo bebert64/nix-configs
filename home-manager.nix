@@ -157,9 +157,16 @@ in
             }
           ];
         };
-        wallpapers-manager.service = {
-          enable = true;
-          commandArgs = "--mode fifty-fifty";
+        wallpapers-manager = {
+          app.enable = true;
+          service = {
+            enable = true;
+            commandArgs = "--mode fifty-fifty";
+          };
+          ffsync = {
+            username = "bebert64";
+            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+          };
         };
       };
 
