@@ -131,6 +131,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1730602179,
+        "narHash": "sha256-efgLzQAWSzJuCLiCaQUCDu4NudNlHdg2NzGLX5GYaEY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3c2f1c4ca372622cb2f9de8016c9a0b1cbd0f37c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1728492678,
@@ -164,6 +180,22 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1730272153,
+        "narHash": "sha256-B5WRZYsRlJgwVHIV6DvidFN7VX7Fg9uuwkRW9Ha8z+w=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2d2a9ddbe3f2c00747398f3dc9b05f7f2ebb0f53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1728909085,
         "narHash": "sha256-WLxED18lodtQiayIPDE5zwAfkPJSjHJ35UhZ8h3cJUg=",
         "owner": "nixos",
@@ -186,22 +218,43 @@
           "stockly-computers",
           "nixpkgs"
         ],
+        "sops-nix": "sops-nix",
         "stockly-computers": "stockly-computers"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3",
+        "nixpkgs-stable": "nixpkgs-stable"
+      },
+      "locked": {
+        "lastModified": 1731748189,
+        "narHash": "sha256-Zd/Uukvpcu26M6YGhpbsgqm6LUSLz+Q8mDZ5LOEGdiE=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "d2bd7f433b28db6bc7ae03d5eca43564da0af054",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "ref": "d2bd7f433b28db6bc7ae03d5eca43564da0af054",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "stockly-computers": {
       "inputs": {
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1731000391,
-        "narHash": "sha256-8rkUDGEjgnqmjnQbBtotP7ikTDkCFwyuQj0VhigCkhU=",
+        "lastModified": 1731699390,
+        "narHash": "sha256-5an5wATINDFyARp3DGvHVpBn1y/pO0jtccvKeL/Uj2U=",
         "ref": "refs/heads/master",
-        "rev": "678e27d960ac03ff3081cafd58e46313275cdc76",
-        "revCount": 128,
+        "rev": "e6ba5d8503b8d7058de797e8c5fc0f6956b9bb8d",
+        "revCount": 130,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },

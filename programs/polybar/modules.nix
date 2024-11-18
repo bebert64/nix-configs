@@ -1,8 +1,7 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 {
 
@@ -18,7 +17,7 @@
     let
       cfg = config.by-db.polybar;
       colors = config.by-db.polybar.colors;
-      display-title = pkgs.writeScriptBin "playerctl-display-title" ''
+      displayTitle = pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
             pkgs.playerctl
@@ -45,7 +44,7 @@
         echo "%{T2}$prefix %{T-}  $title_display"
       '';
 
-      headphones-or-speaker-icon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
+      headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
         PATH=${
           lib.makeBinPath [
             pkgs.gnugrep
@@ -127,13 +126,13 @@
 
         "module/playerctl-full" = {
           "inherit" = "player-ctl";
-          exec = "${display-title}/bin/playerctl-display-title";
+          exec = "${displayTitle}";
           label = "Don Beberto's      •      %output%";
         };
 
         "module/playerctl-mini" = {
           "inherit" = "player-ctl";
-          exec = "${display-title}/bin/playerctl-display-title";
+          exec = "${displayTitle}";
           label = "%output:0:70%";
         };
 
@@ -257,7 +256,7 @@
 
         "module/headphones_or_speaker" = {
           type = "custom/script";
-          exec = "${headphones-or-speaker-icon}/bin/headphones-or-speaker-icon";
+          exec = "${headphonesOrSpeakerIcon}/bin/headphones-or-speaker-icon";
           format = {
             background = "${colors.shade6}";
             font = 2;
