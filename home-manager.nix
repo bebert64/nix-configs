@@ -108,55 +108,6 @@ in
       };
 
       by-db-pkgs = {
-        strawberry-radios = {
-          activationScript.enable = true;
-          radios = [
-            {
-              name = "FIP";
-              url = "http://direct.fipradio.fr/live/fip-midfi.mp3";
-            }
-            {
-              name = "FIP Jazz";
-              url = "http://direct.fipradio.fr/live/fipjazz-midfi.mp3";
-            }
-            {
-              name = "FIP Rock";
-              url = "http://direct.fipradio.fr/live/fiprock-midfi.mp3";
-            }
-            {
-              name = "FIP Groove";
-              url = "http://direct.fipradio.fr/live/fipgroove-midfi.mp3";
-            }
-            {
-              name = "FIP Reggae";
-              url = "http://direct.fipradio.fr/live/fipreggae-midfi.mp3";
-            }
-            {
-              name = "FIP Pop";
-              url = "   http://direct.fipradio.fr/live/fippop-midfi.mp3";
-            }
-            {
-              name = "FIP Monde";
-              url = "http://direct.fipradio.fr/live/fipworld-midfi.mp3";
-            }
-            {
-              name = "FIP Nouveautés";
-              url = "http://direct.fipradio.fr/live/fipnouveautes-midfi.mp3";
-            }
-            {
-              name = "Radio Nova";
-              url = "http://broadcast.infomaniak.ch/radionova-high.mp3";
-            }
-            {
-              name = "Radio Swiss Classic";
-              url = "http://stream.srg-ssr.ch/m/rsc_fr/mp3_128";
-            }
-            {
-              name = "Chillhop Music";
-              url = "https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/";
-            }
-          ];
-        };
         wallpapers-manager = {
           app.enable = true;
           service = {
