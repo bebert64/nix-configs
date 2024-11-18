@@ -7,7 +7,6 @@
     ./polybar
     ./qt
     ./ranger
-    ./rofi
     ./secrets
     ./ssh
     ./music
@@ -24,6 +23,7 @@
     ./git.nix
     ./i3.nix
     ./lock.nix
+    ./rofi.nix
     ./slack.nix
     ./udiskie.nix
     ./vdhcoapp.nix
