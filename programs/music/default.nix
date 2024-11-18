@@ -16,7 +16,9 @@ let
     ;
 in
 {
-  imports = [ ./launch-radios.nix ];
+  imports = [ ./choose-radios.nix ];
+
+  home.packages = [ pkgs.strawberry ];
 
   by-db-pkgs = {
     strawberry-radios = {
