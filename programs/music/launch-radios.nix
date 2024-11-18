@@ -27,15 +27,15 @@ in
 
       MENU="$(echo -en \
       'FIP\0icon\x1f${./icons/fip.png}
-      FIP Jazz\0icon\x1f${./icons/fip.png}
-      FIP Rock\0icon\x1f${./icons/fip.png}
+      FIP Jazz\0icon\x1f${./icons/fip-jazz.png}
+      FIP Rock\0icon\x1f${./icons/fip-rock.png}
       FIP Groove\0icon\x1f${./icons/fip.png}
       FIP Reggae\0icon\x1f${./icons/fip.png}
       FIP Pop\0icon\x1f${./icons/fip.png}
       FIP Monde\0icon\x1f${./icons/fip.png}
       FIP Nouveautés\0icon\x1f${./icons/fip.png}
       Radio Nova\0icon\x1f${./icons/nova.jpg}
-      Radio Swiss Classic\0icon\x1f${./icons/Oui-FM.png}
+      Radio Swiss Classic\0icon\x1f${./icons/fip.png}
       Chillhop Music\0icon\x1f${./icons/chillhop.jpg}' \
       | rofi -dmenu -show-icons -i -p 'Radio')"
 
@@ -54,4 +54,4 @@ in
       esac
     '')
   ];
-};
+}
