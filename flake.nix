@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "stockly-computers/nixpkgs";
     };
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso?ref=clean-up";
+      url = "git+ssh://git@github.com/bebert64/perso";
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
