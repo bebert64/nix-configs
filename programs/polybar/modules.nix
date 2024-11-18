@@ -6,19 +6,19 @@
 }:
 {
 
-  options.by-db.polybar = with lib; {
-    is-headphones-on-regex = mkOption {
+  options.by-db = with lib; {
+    isHeadphonesOnCommand = mkOption {
       type = types.str;
       default = 3;
-      description = "Regex to use to extract the information about headphones being plugged in from the pactl list sinks";
+      description = "Command that should return something if the headphones are on, or nothing if the speaker are on";
     };
   };
 
   config =
     let
-      cfg = config.by-db.polybar;
-      colors = config.by-db.polybar.colors;
-      displayTitle = pkgs.writeScriptBin "playerctl-display-title" ''
+      cfg = config.by-db;
+      colors = cfg.polybar.colors;
+      displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
             pkgs.playerctl
@@ -43,7 +43,7 @@
         fi
 
         echo "%{T2}$prefix %{T-}  $title_display"
-      '';
+      ''}/bin/playerctl-display-title";
 
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
         PATH=${
@@ -52,7 +52,7 @@
             pkgs.pulseaudio
           ]
         }
-        IS_HEADPHONES_ON=$(pactl list sinks | grep "${cfg.is-headphones-on-regex}")
+        IS_HEADPHONES_ON=$(${cfg.isHeadphonesOnCommand})
         if [[ $IS_HEADPHONES_ON ]]; then
           echo " "
         else
