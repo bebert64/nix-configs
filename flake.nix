@@ -47,12 +47,12 @@
             inherit home-manager by-db sops-nix;
           };
         };
-      };
 
-      homeConfigurations = {
-        raspi = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs { system = "aarch64-linux"; };
-          modules = [ (import ./raspi/home_raspi.nix { inherit pkgs; }) ];
+        raspi = nixpkgs.lib.nixosSystem {
+          modules = [ ./fixe-bureau/configuration.nix ];
+          specialArgs = {
+            inherit home-manager by-db sops-nix;
+          };
         };
       };
     };
