@@ -28,7 +28,7 @@
       users = {
         users.${cfg.user.name} = {
           isNormalUser = true;
-          hashedPassw = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
+          hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
           description = "${cfg.user.description}";
           extraGroups = [
             "networkmanager"
