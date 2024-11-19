@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [
@@ -25,9 +24,11 @@
     in
     {
 
+
       users = {
         users.${cfg.user.name} = {
           isNormalUser = true;
+          hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
           description = "${cfg.user.description}";
           extraGroups = [
             "networkmanager"

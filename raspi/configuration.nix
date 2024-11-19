@@ -1,8 +1,11 @@
 {
   imports = [
+    <nixos/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix>
     ./hardware-configuration.nix
     ./nixos-raspi.nix
   ];
+
+  sdImage.compressImage = false;
 
   by-db.user = {
     name = "romain";
