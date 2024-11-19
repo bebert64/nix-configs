@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -109,9 +108,9 @@ in
 
       by-db-pkgs = {
         wallpapers-manager = {
-          app.enable = true;
+          # app.enable = true;
           service = {
-            enable = true;
+            # enable = true;
             commandArgs = "--mode fifty-fifty";
           };
           ffsync = {
