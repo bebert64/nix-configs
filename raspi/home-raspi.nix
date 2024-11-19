@@ -66,8 +66,7 @@ in
 
       by-db-pkgs = { };
 
-      # systemd.user.systemctlPath = "${pkgs.systemd}/bin/systemctl";
-
+      nixpkgs.config.allowUnfree = true; # Necessary for unrar
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
       # introduces backwards incompatible changes.
