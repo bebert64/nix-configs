@@ -5,7 +5,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$USER_HOME$/strawberry.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$USER_HOME$/.local/share/strawberry/strawberry/strawberry.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="ShortCuts - Legacy" uuid="3e1ffff1-d693-4ec7-bd38-5788d5727d6b">

@@ -8,13 +8,13 @@
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
-  inherit (by-db.packages.x86_64-linux) wallpapers-manager;
 in
 {
   imports = [
     ./programs
     ./scripts.nix
     ./fonts.nix
+    by-db.module
   ];
 
   options.by-db = {
@@ -46,8 +46,6 @@ in
       cfg = config.by-db;
     in
     {
-      nixpkgs.config.allowUnfree = true; # Necessary for vscode
-
       home = {
         username = "${cfg.username}";
         homeDirectory = "/home/${cfg.username}";
@@ -58,7 +56,6 @@ in
             caffeine-ng # to prevent going to sleep when watching videos
             chromium
             evince # pdf reader
-            feh
             fusee-launcher
             gnome.gnome-keyring
             inkscape
@@ -86,8 +83,7 @@ in
               networkmanager
               networkmanagerapplet
             ]
-          )
-          ++ [ wallpapers-manager ];
+          );
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
@@ -111,34 +107,16 @@ in
         playerctld.enable = true;
       };
 
-      systemd.user = {
-        enable = true;
-        services = {
-          wallpapers-manager = {
-            Unit = {
-              Description = "Chooses walpaper(s) based on the number of monitors connected";
-            };
-            Service = {
-              Type = "exec";
-              ExecStart = "${wallpapers-manager}/bin/wallpapers-manager change --mode fifty-fifty";
-            };
-
+      by-db-pkgs = {
+        wallpapers-manager = {
+          app.enable = true;
+          service = {
+            enable = true;
+            commandArgs = "--mode fifty-fifty";
           };
-        };
-        timers = {
-          wallpapers-manager = {
-            Unit = {
-              Description = "Timer for wallpapers-manager";
-            };
-            Timer = {
-              Unit = "wallpapers-manager.service";
-              OnUnitInactiveSec = "1h";
-              OnBootSec = "1";
-            };
-            Install = {
-              WantedBy = [ "timers.target" ];
-            };
-
+          ffsync = {
+            username = "bebert64";
+            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
           };
         };
       };
@@ -172,6 +150,7 @@ in
         };
       };
 
+      nixpkgs.config.allowUnfree = true; # Necessary for vscode
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
       # introduces backwards incompatible changes.
