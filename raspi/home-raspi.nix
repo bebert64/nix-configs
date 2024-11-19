@@ -1,6 +1,6 @@
 { pkgs
 , lib
-, by-db
+  # , by-db
 , config
 , ...
 }:
@@ -19,7 +19,7 @@ in
     ../programs/git.nix
     ../programs/vim.nix
     ../scripts.nix
-    by-db.module
+    # by-db.module
   ];
 
   options.by-db = {
