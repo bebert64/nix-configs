@@ -48,7 +48,6 @@
         };
 
         raspi = nixpkgs.lib.nixosSystem {
-          pkgs = import nixpkgs { system = "aarch64-linux"; };
           modules = [ ./raspi/configuration.nix ];
           specialArgs = {
             inherit home-manager by-db sops-nix;
