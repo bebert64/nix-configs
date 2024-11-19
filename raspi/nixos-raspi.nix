@@ -28,7 +28,7 @@
       users = {
         users.${cfg.user.name} = {
           isNormalUser = true;
-          hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
+          hashedPassw = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
           description = "${cfg.user.description}";
           extraGroups = [
             "networkmanager"
@@ -38,6 +38,12 @@
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjhHLih5ykkFc2kOGxVboxjnUARDNMn4/ptovfaNceC bebert64@gmail.com"
           ];
         };
+        extraUsers = {
+          root = {
+            hashedPassword = "$y$j9T$.H6IC0PPdWVat4f9ejoo6.$U6v8LpKV/hW4CKomjOdNk9Gz2IWrj7HWzjfRLfT7Z92";
+          };
+        };
+
         defaultUserShell = pkgs.zsh;
       };
 
