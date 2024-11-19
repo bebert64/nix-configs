@@ -9,7 +9,7 @@
 {
   imports = [
     home-manager.nixosModules.home-manager
-    ./nas.nix
+    ../nas.nix
   ];
 
   options.by-db = with lib; {
