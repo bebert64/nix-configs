@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, # by-db,
+  config
+, ...
 }:
 let
   inherit (lib) mkOption types;
@@ -20,7 +19,7 @@ in
     ../programs/git.nix
     ../programs/vim.nix
     ../scripts.nix
-    by-db.module
+    # by-db.module
   ];
 
   options.by-db = {
@@ -65,9 +64,8 @@ in
         home-manager.enable = true;
       };
 
-      by-db-pkgs = { };
+      # by-db-pkgs = { };
 
-      nixpkgs.config.allowUnfree = true; # Necessary for vscode
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
       # introduces backwards incompatible changes.
