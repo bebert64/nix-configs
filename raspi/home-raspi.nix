@@ -64,7 +64,7 @@ in
         home-manager.enable = true;
       };
 
-      by-db-pkgs = { };
+      # by-db-pkgs = { };
 
       nixpkgs.config.allowUnfree = true; # Necessary for unrar
       # This value determines the Home Manager release that your configuration is
