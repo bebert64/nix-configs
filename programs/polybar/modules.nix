@@ -17,7 +17,7 @@
   config =
     let
       cfg = config.by-db;
-      colors = config.by-db.polybar.colors;
+      colors = cfg.polybar.colors;
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
