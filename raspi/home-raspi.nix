@@ -1,7 +1,7 @@
 { pkgs
 , lib
-, by-db,
-  config
+, by-db
+, config
 , ...
 }:
 let
@@ -66,7 +66,7 @@ in
 
       by-db-pkgs = { };
 
-      systemd.user.systemctlPath = "${pkgs.systemd}/bin/systemctl";
+      # systemd.user.systemctlPath = "${pkgs.systemd}/bin/systemctl";
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
