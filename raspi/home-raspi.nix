@@ -1,6 +1,6 @@
 { pkgs
 , lib
-, # by-db,
+, by-db,
   config
 , ...
 }:
@@ -19,7 +19,7 @@ in
     ../programs/git.nix
     ../programs/vim.nix
     ../scripts.nix
-    # by-db.module
+    by-db.module
   ];
 
   options.by-db = {
@@ -64,7 +64,9 @@ in
         home-manager.enable = true;
       };
 
-      # by-db-pkgs = { };
+      by-db-pkgs = { };
+
+      systemd.user.systemctlPath = "${pkgs.systemd}/bin/systemctl";
 
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
