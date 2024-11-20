@@ -24,7 +24,7 @@ in
   system.activationScripts = {
     symlingStashConfig = ''
       ${pkgs.coreutils}/bin/mkdir -p /usr/local/etc/stash
-      ${pkgs.coreutils}/bin/ln -s ${./config.yml} /usr/local/etc/stash/
+      ${pkgs.coreutils}/bin/ln -s ${./config.yml} /usr/local/etc/stash/config.yaml
     '';
   };
 }
