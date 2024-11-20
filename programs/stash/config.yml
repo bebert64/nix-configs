@@ -127,7 +127,7 @@ defaults:
     usefilemetadata: false
 exclude:
   - .* - intro.*
-external_host: https://stash.capucina.house
+# external_host: https://stash.capucina.house
 gallery_cover_regex: (poster|cover|folder|board)\.[^\.]+$
 generated: /root/.stash/generated
 host: 127.0.0.1
@@ -148,7 +148,7 @@ plugins:
     - localpath: community
       name: Community (stable)
       url: https://stashapp.github.io/CommunityScripts/stable/index.yml
-plugins_path: /usr/local/etc/stash/plugins
+plugins_path: /root/.stash/plugins
 port: 9999
 preview_audio: true
 preview_exclude_end: "0"
@@ -162,7 +162,7 @@ scrapers:
     - localpath: community
       name: Community (stable)
       url: https://stashapp.github.io/CommunityScrapers/stable/index.yml
-scrapers_path: /usr/local/etc/stash/scrapers
+scrapers_path: /root/.stash/scrapers
 security_tripwire_accessed_from_public_internet: ""
 sequential_scanning: false
 session_store_key: d15fcbf5457be122589cd9a5fa15925a93b5cbc67c898a6334efa4cbeb7f3d63
