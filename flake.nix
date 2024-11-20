@@ -4,9 +4,12 @@
   inputs = {
     stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
     nixpkgs.follows = "stockly-computers/nixpkgs";
+    nixpkgs-unstable = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "stockly-computers/nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso";
@@ -19,6 +22,7 @@
 
   outputs =
     { nixpkgs
+    , nixpkgs-unstable
     , home-manager
     , by-db
     , stockly-computers
@@ -50,7 +54,7 @@
         raspi = nixpkgs.lib.nixosSystem {
           modules = [ ./raspi/configuration.nix ];
           specialArgs = {
-            inherit home-manager by-db sops-nix;
+            inherit home-manager by-db sops-nix nixpkgs-unstable;
           };
         };
       };

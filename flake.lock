@@ -6,10 +6,10 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1732031260,
+        "lastModified": 1732031926,
         "narHash": "sha256-USKzFt2rQIRgLzBeeiTmo09dUAIiaONaasi3qzdvzrc=",
         "ref": "refs/heads/main",
-        "rev": "fb8a1de5bd42826918a6903f1718ed831af78ac1",
+        "rev": "d8e92b1565c02217287e2d6c8676db8edef8fc5e",
         "revCount": 81,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
@@ -40,7 +40,6 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "stockly-computers",
           "nixpkgs"
         ]
       },
@@ -114,6 +113,22 @@
     },
     "nixpkgs-unstable": {
       "locked": {
+        "lastModified": 1731676054,
+        "narHash": "sha256-OZiZ3m8SCMfh3B6bfGC/Bm4x3qc1m2SVEAlkV6iY7Yg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5e4fbfb6b3de1aa2872b76d49fafc942626e2add",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-unstable_2": {
+      "locked": {
         "lastModified": 1728492678,
         "narHash": "sha256-9UTxR8eukdg+XZeHgxW5hQA9fIKHsKCdOIUycTryeVw=",
         "owner": "nixos",
@@ -183,6 +198,7 @@
           "stockly-computers",
           "nixpkgs"
         ],
+        "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "stockly-computers": "stockly-computers"
       }
@@ -209,7 +225,7 @@
       "inputs": {
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_4",
-        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-unstable": "nixpkgs-unstable_2",
         "vscode-server": "vscode-server"
       },
       "locked": {
