@@ -3,6 +3,9 @@ let
   overlay-unstable = final: prev: {
     unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
   };
+  test-script = (pkgs.writeScriptBin "test" ''
+    ${pkgs.coreutils}/bin/date >> /home/romainc/test
+  '');
 in
 {
   home.packages = [ pkgs.unstable.stash ];
@@ -18,7 +21,7 @@ in
         };
         Service = {
           Type = "exec";
-          ExecStart = "${pkgs.coreutils}/bin/date >> /home/romainc/test";
+          ExecStart = "${test-script}/bin/test";
         };
 
       };
