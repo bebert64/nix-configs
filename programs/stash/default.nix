@@ -37,5 +37,4 @@ in
     enable = true;
     allowedTCPPorts = [ 80 443 9999 ];
   };
-
 }

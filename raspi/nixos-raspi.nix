@@ -10,6 +10,7 @@
     home-manager.nixosModules.home-manager
     ../nas.nix
     ../programs/stash
+    ../programs/postgresql.nix
   ];
 
   options.by-db = with lib; {
