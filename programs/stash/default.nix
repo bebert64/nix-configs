@@ -21,7 +21,7 @@ in
         };
         Service = {
           Type = "exec";
-          ExecStart = "${test-script}/bin/test";
+          ExecStart = "${pkgs.bash}/bin/bash ${test-script}/bin/test";
         };
 
       };
