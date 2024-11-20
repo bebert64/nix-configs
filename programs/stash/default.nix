@@ -3,7 +3,7 @@
 # { nixpkgs-unstable, pkgs, config, ... }:
 { pkgs, config, ... }:
 let
-  hmCfg = config.home-manager.users.${config.by-db.username};
+  hmCfg = config.home-manager.users.${config.by-db.user.name};
   nixConfigsRepo = hmCfg.by-db.nixConfigsRepo;
   #   overlay-unstable = final: prev: {
   #     unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
