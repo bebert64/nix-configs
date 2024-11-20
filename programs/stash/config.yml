@@ -1,7 +1,6 @@
 api_key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJzaG9ydGN1dHMuZGJAZ21haWwuY29tIiwiaWF0IjoxNjc4NzIzMzY4LCJzdWIiOiJBUElLZXkifQ.hhf_vN_o3uuT3d9rnAmjTJGXaeoQ0ZjM1oKcRZEVOaI
-blobs_path: /root/.stash/blobs
+blobs_path: /root/.stash/data
 blobs_storage: FILESYSTEM
-cache: /root/.stash/cache
 calculate_md5: false
 create_image_clip_from_videos: false
 dangerous_allow_public_without_auth: "false"
