@@ -34,8 +34,7 @@ in
         Timer = {
           Unit = "test.service";
           OnBootSec = "1s";
-          OnUnitInactiveSec = "1s";
-          OnUnitActiveSec = "1s";
+          OnUnitInactiveSec = "5";
         };
         Install = {
           WantedBy = [ "timers.target" ];
