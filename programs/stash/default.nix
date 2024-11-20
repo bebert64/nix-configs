@@ -12,10 +12,8 @@ in
   systemd = {
     services = {
       stash = {
-        enable = true;
-        Unit = {
-          Description = "Stash server";
-        };
+        # enable = true;
+        description = "Stash server";
         serviceConfig = {
           Type = "exec";
           ExecStart = "${pkgs.unstable.stash}/bin/stash";
