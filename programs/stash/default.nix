@@ -3,43 +3,41 @@ let
   overlay-unstable = final: prev: {
     unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
   };
-  test-script = (pkgs.writeScriptBin "test" ''
-    ${pkgs.coreutils}/bin/date >> /home/romain/test
-  '');
 in
 {
-  home.packages = [ pkgs.unstable.stash ];
+  # environment.systemPackages = [ pkgs.unstable.stash ];
 
   nixpkgs.overlays = [ overlay-unstable ];
 
-  systemd.user = {
+  systemd = {
     enable = true;
     services = {
-      test = {
+      stash = {
+        enable = true;
         Unit = {
-          Description = "Test";
+          Description = "Stash server";
         };
         Service = {
           Type = "exec";
-          ExecStart = "${pkgs.bash}/bin/bash ${test-script}/bin/test";
+          ExecStart = "${pkgs.unstable.stash}/bin/stash";
         };
 
       };
     };
-    timers = {
-      test = {
-        Unit = {
-          Description = "Timer for test";
-        };
-        Timer = {
-          Unit = "test.service";
-          OnBootSec = "1s";
-          OnUnitInactiveSec = "5";
-        };
-        Install = {
-          WantedBy = [ "timers.target" ];
-        };
-      };
-    };
+    # timers = {
+    #   stash = {
+    #     Unit = {
+    #       Description = "Timer for test";
+    #     };
+    #     Timer = {
+    #       Unit = "test.service";
+    #       OnBootSec = "1s";
+    #       OnUnitInactiveSec = "5";
+    #     };
+    #     Install = {
+    #       WantedBy = [ "timers.target" ];
+    #     };
+    #   };
+    # };
   };
 }
