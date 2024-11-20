@@ -15,7 +15,7 @@ in
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
-          ExecStart = "${pkgs.unstable.stash}/bin/stash";
+          ExecStart = "/root/.stash/stash";
         };
       };
     };
@@ -27,4 +27,9 @@ in
       ${pkgs.coreutils}/bin/ln -s /home/romain/nix-configs/programs/stash/config.yml /root/.stash/config.yml
     '';
   };
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 80 443 9999 ];
+  };
+
 }
