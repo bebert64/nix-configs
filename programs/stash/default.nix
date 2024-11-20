@@ -14,6 +14,7 @@ in
       stash = {
         enable = true;
         description = "Stash server";
+        wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
           ExecStart = "${pkgs.unstable.stash}/bin/stash";
