@@ -4,7 +4,7 @@ let
     unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
   };
   test-script = (pkgs.writeScriptBin "test" ''
-    ${pkgs.coreutils}/bin/date >> /home/romainc/test
+    ${pkgs.coreutils}/bin/date >> /home/romain/test
   '');
 in
 {
