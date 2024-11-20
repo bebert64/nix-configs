@@ -9,33 +9,35 @@ in
 
   nixpkgs.overlays = [ overlay-unstable ];
 
-  # systemd.user =  {
-  #           enable = true;
-  #           services = {
-  #             test = {
-  #               Unit = {
-  #                 Description = "Chooses walpaper(s) based on the number of monitors connected";
-  #               };
-  #               Service = {
-  #                 Type = "exec";
-  #                 ExecStart = "${package}/bin/wallpapers-manager change ${cfg.service.commandArgs}";
-  #               };
+  systemd.user = {
+    enable = true;
+    services = {
+      test = {
+        Unit = {
+          Description = "Test";
+        };
+        Service = {
+          Type = "exec";
+          ExecStart = "${pkgs.coreutils}/bin/date >> /home/romainc/test";
+        };
 
-  #             };
-  #           };
-  #           timers = {
-  #             wallpapers-manager = {
-  #               Unit = {
-  #                 Description = "Timer for wallpapers-manager";
-  #               };
-  #               Timer = {
-  #                 Unit = "wallpapers-manager.service";
-  #                 OnUnitInactiveSec = "1h";
-  #               };
-  #               Install = {
-  #                 WantedBy = [ "timers.target" ];
-  #               };
-  #             };
-  #           };
-  #         };
+      };
+    };
+    timers = {
+      test = {
+        Unit = {
+          Description = "Timer for test";
+        };
+        Timer = {
+          Unit = "test.service";
+          OnBootSec = "1";
+          OnUnitInactiveSec = "1";
+          OnUnitActiveSec = "1";
+        };
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
+      };
+    };
+  };
 }
