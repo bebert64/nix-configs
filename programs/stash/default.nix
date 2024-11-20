@@ -12,7 +12,7 @@ in
   systemd = {
     services = {
       stash = {
-        # enable = true;
+        enable = true;
         description = "Stash server";
         serviceConfig = {
           Type = "exec";
