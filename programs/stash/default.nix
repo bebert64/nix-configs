@@ -15,7 +15,7 @@ in
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
-          ExecStart = "/root/.stash/stash";
+          ExecStart = "/stash/stash --config /stash/config.yml";
         };
       };
     };
@@ -23,8 +23,8 @@ in
 
   system.activationScripts = {
     symlingStashConfig = ''
-      ${pkgs.coreutils}/bin/mkdir -p /root/.stash
-      ${pkgs.coreutils}/bin/cp -s /home/romain/nix-configs/programs/stash/config.yml /root/.stash/config.yml
+      # ${pkgs.coreutils}/bin/mkdir -p /root/.stash
+      # ${pkgs.coreutils}/bin/cp -s /home/romain/nix-configs/programs/stash/config.yml /root/.stash/config.yml
     '';
   };
 
