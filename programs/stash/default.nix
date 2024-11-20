@@ -15,7 +15,7 @@ in
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
-          ExecStart = "${pkgs.unstable.stash}/bin/stash --config /usr/local/etc/stash/config.yml";
+          ExecStart = "${pkgs.unstable.stash}/bin/stash";
         };
       };
     };
@@ -23,8 +23,8 @@ in
 
   system.activationScripts = {
     symlingStashConfig = ''
-      ${pkgs.coreutils}/bin/mkdir -p /usr/local/etc/stash
-      ${pkgs.coreutils}/bin/ln -s ${./config.yml} /usr/local/etc/stash/config.yml
+      ${pkgs.coreutils}/bin/mkdir -p /root/.stash
+      ${pkgs.coreutils}/bin/ln -s ${./config.yml} /root/.stash/config.yml
     '';
   };
 }
