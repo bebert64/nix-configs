@@ -10,7 +10,6 @@ in
   nixpkgs.overlays = [ overlay-unstable ];
 
   systemd = {
-    enable = true;
     services = {
       stash = {
         enable = true;
