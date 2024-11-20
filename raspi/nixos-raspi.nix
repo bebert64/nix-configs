@@ -9,6 +9,7 @@
   imports = [
     home-manager.nixosModules.home-manager
     ../nas.nix
+    ../programs/stash
   ];
 
   options.by-db = with lib; {

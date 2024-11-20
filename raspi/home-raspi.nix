@@ -12,7 +12,6 @@ in
   imports = [
     ../programs/ranger
     ../programs/secrets
-    ../programs/stash
     ../programs/ssh
     ../programs/zsh
     ../programs/btop.nix
