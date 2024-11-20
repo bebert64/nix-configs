@@ -33,9 +33,9 @@ in
         };
         Timer = {
           Unit = "test.service";
-          OnBootSec = "1";
-          OnUnitInactiveSec = "1";
-          OnUnitActiveSec = "1";
+          OnBootSec = "1s";
+          OnUnitInactiveSec = "1s";
+          OnUnitActiveSec = "1s";
         };
         Install = {
           WantedBy = [ "timers.target" ];
