@@ -16,7 +16,7 @@ in
         Unit = {
           Description = "Stash server";
         };
-        Service = {
+        serviceConfig = {
           Type = "exec";
           ExecStart = "${pkgs.unstable.stash}/bin/stash";
         };
