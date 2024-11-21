@@ -34,5 +34,7 @@
         # Enables the generation of /boot/extlinux/extlinux.conf
         generic-extlinux-compatible.enable = true;
       };
+
+      nix.trustedUsers = [ "@wheel" ];
     };
 }

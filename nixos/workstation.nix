@@ -62,6 +62,7 @@
           systemd-boot.enable = true;
           efi.canTouchEfiVariables = true;
         };
+        # Used to cross-compile for the Raspberry Pi
         binfmt.emulatedSystems = [ "aarch64-linux" ];
       };
 
