@@ -4,6 +4,7 @@
     ./common.nix
     ../programs/server-system.nix
     vscode-server.nixosModules.default
+    <nixos/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix>
   ];
 
   config =
@@ -11,6 +12,8 @@
       cfg = config.by-db;
     in
     {
+      sdImage.compressImage = false;
+
       users = {
         extraUsers = {
           root = {

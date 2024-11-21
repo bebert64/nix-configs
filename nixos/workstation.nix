@@ -4,7 +4,7 @@
 , ...
 }:
 {
-  imports = [ ./common.nix <nixos/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix> ];
+  imports = [ ./common.nix ];
 
   options.by-db = with lib; {
     bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
@@ -15,8 +15,6 @@
       cfg = config.by-db;
     in
     {
-      sdImage.compressImage = false;
-
       home-manager = {
         users.${cfg.user.name} = {
           imports = [ ../home-manager/workstation.nix ];
