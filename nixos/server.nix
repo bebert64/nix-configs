@@ -22,14 +22,14 @@
         users.${cfg.user.name} = {
           imports = [ ../home-manager/server.nix ];
         };
+      };
 
-        # Bootloader.
-        boot.loader = {
-          # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
-          grub.enable = false;
-          # Enables the generation of /boot/extlinux/extlinux.conf
-          generic-extlinux-compatible.enable = true;
-        };
+      # Bootloader.
+      boot.loader = {
+        # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
+        grub.enable = false;
+        # Enables the generation of /boot/extlinux/extlinux.conf
+        generic-extlinux-compatible.enable = true;
       };
     };
 }
