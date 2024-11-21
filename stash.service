@@ -1,0 +1,12 @@
+[Unit]
+Description=Stash server
+
+[Service]
+Environment="LOCALE_ARCHIVE=/nix/store/5g2fmkqr46120xmqdl1lljh810nphqdr-glibc-locales-2.39-52/lib/locale/locale-archive"
+Environment="PATH=/nix/store/vfm9lz6rc3x6q6igwdx47s8l7zj45jij-coreutils-9.5/bin:/nix/store/jjc7pni47c5rbk0sb3y8yrmcivmhh5mw-findutils-4.9.0/bin:/nix/store/7zjpbna09ifc17jzkx5f8f7hn7psjidv-gnugrep-3.11/bin:/nix/store/3q27pbsikb56rnqlxrhh07rrqdxcjiqy-gnused-4.9/bin:/nix/store/ip56qy9255b7b3ldmn6w1ki1nm70k0ax-systemd-255.9/bin:/nix/store/vfm9lz6rc3x6q6igwdx47s8l7zj45jij-coreutils-9.5/sbin:/nix/store/jjc7pni47c5rbk0sb3y8yrmcivmhh5mw-findutils-4.9.0/sbin:/nix/store/7zjpbna09ifc17jzkx5f8f7hn7psjidv-gnugrep-3.11/sbin:/nix/store/3q27pbsikb56rnqlxrhh07rrqdxcjiqy-gnused-4.9/sbin:/nix/store/ip56qy9255b7b3ldmn6w1ki1nm70k0ax-systemd-255.9/sbin"
+Environment="TZDIR=/nix/store/8jbbvg9jvnpsmh5mykcd16q922akfyv7-tzdata-2024a/share/zoneinfo"
+ExecStart=/root/.stash/stash
+Type=exec
+
+[Install]
+WantedBy=multi-user.target
