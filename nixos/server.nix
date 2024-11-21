@@ -35,6 +35,6 @@
         generic-extlinux-compatible.enable = true;
       };
 
-      nix.trustedUsers = [ "@wheel" ];
+      nix.settings.trustedUsers = [ "@wheel" ];
     };
 }
