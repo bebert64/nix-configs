@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1731966556,
-        "narHash": "sha256-m5upKBPTxjlGrgz8xekKJtxokd6u3+7lFRvBkmHbSA0=",
+        "lastModified": 1732031926,
+        "narHash": "sha256-USKzFt2rQIRgLzBeeiTmo09dUAIiaONaasi3qzdvzrc=",
         "ref": "refs/heads/main",
-        "rev": "fba505452f48450a44f0cd3090de0ee130bf9f4d",
-        "revCount": 80,
+        "rev": "d8e92b1565c02217287e2d6c8676db8edef8fc5e",
+        "revCount": 81,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -192,11 +192,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1731954233,
-        "narHash": "sha256-vvXx1m2Rsw7MkbKJdpcICzz4YPgZPApGKQGhNZfkhOI=",
+        "lastModified": 1732186149,
+        "narHash": "sha256-N9JGWe/T8BC0Tss2Cv30plvZUYoiRmykP7ZdY2on2b0=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "e39947d0ee8e341fa7108bd02a33cdfa24a1360e",
+        "rev": "53c853fb1a7e4f25f68805ee25c83d5de18dc699",
         "type": "github"
       },
       "original": {
