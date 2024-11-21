@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }:
 let
   inherit (lib) mkOption types;
@@ -11,15 +10,7 @@ let
 in
 {
   imports = [
-    ../programs/ranger
-    ../programs/secrets
-    ../programs/ssh
-    ../programs/zsh
-    ../programs/btop.nix
-    ../programs/direnv.nix
-    ../programs/git.nix
-    ../programs/vim.nix
-    ../scripts.nix
+    ../programs/common.nix
     by-db.module
   ];
 
@@ -54,18 +45,14 @@ in
             zip
           ]
         );
-
         file = {
           # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         };
       };
-
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
       };
-
-      by-db-pkgs = { };
 
       nixpkgs.config.allowUnfree = true; # Necessary for unrar
       # This value determines the Home Manager release that your configuration is
@@ -76,5 +63,6 @@ in
       # want to update the value, then make sure to first check the Home Manager
       # release notes.
       home.stateVersion = "23.05"; # Please read the comment before changing.
+
     };
 }

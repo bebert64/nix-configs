@@ -1,7 +1,7 @@
 {
   imports = [
+    ../nixos/server.nix
     ./hardware-configuration.nix
-    ./nixos-raspi.nix
   ];
 
   by-db.user = {

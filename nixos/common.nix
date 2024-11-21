@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [
@@ -17,7 +16,6 @@
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
-    bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
   };
 
   config =
@@ -25,10 +23,10 @@
       cfg = config.by-db;
     in
     {
-
       users = {
         users.${cfg.user.name} = {
           isNormalUser = true;
+          hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
           description = "${cfg.user.description}";
           extraGroups = [
             "networkmanager"
@@ -43,10 +41,8 @@
 
       home-manager = {
         users.${cfg.user.name} = {
-          imports = [ ./home-manager.nix ];
           by-db = {
             username = "${cfg.user.name}";
-            bluetooth.enable = cfg.bluetooth.enable;
             git = {
               userName = "RomainC";
               userEmail = "bebert64@gmail.com";
@@ -58,28 +54,6 @@
       };
 
       services = {
-        # X11 Configuration
-        xserver = {
-          enable = true;
-          desktopManager = {
-            session = [
-              {
-                name = "home-manager";
-                start = ''
-                  ${pkgs.runtimeShell} $HOME/.hm-xsession &
-                  waitPID=$!
-                '';
-              }
-            ];
-          };
-          windowManager.i3.package = pkgs.i3-gaps;
-          xkb = {
-            layout = "fr";
-            variant = "";
-          };
-        };
-        udisks2.enable = true; # automount usb keys and drives
-        gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
         # Enable the OpenSSH daemon.
         openssh = {
           enable = true;
@@ -90,8 +64,6 @@
             X11Forwarding = true;
           };
         };
-        # Enable the bluetooth daemon.
-        blueman.enable = cfg.bluetooth.enable;
       };
 
       nix = {
@@ -105,17 +77,6 @@
           "nix-command"
           "flakes"
         ];
-      };
-
-      hardware = {
-        bluetooth.enable = cfg.bluetooth.enable;
-        # pulseaudio.enable = lib.mkDefault true;
-      };
-
-      # Bootloader.
-      boot.loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
       };
 
       # Set your time zone.
@@ -141,18 +102,6 @@
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
 
-      fonts = {
-        packages = [ pkgs.dejavu_fonts ];
-        fontconfig = {
-          enable = true;
-          defaultFonts = {
-            monospace = [ "DejaVu Sans Mono" ];
-            sansSerif = [ "DejaVu Sans" ];
-            serif = [ "DejaVu Serif" ];
-          };
-        };
-      };
-
       programs = {
         zsh = {
           enable = true;
@@ -161,8 +110,6 @@
           autosuggestions.enable = true;
           syntaxHighlighting.enable = true;
         };
-        dconf.enable = true; # Necessary for some GTK settings to get properly saved
-        light.enable = true;
       };
 
       # List packages installed in system profile. To search, run:
@@ -186,22 +133,6 @@
       security = {
         polkit.enable = true;
         pam.services.lightdm.enableGnomeKeyring = true;
-      };
-
-      systemd = {
-        user.services.polkit-gnome-authentication-agent-1 = {
-          description = "polkit-gnome-authentication-agent-1";
-          wantedBy = [ "graphical-session.target" ];
-          wants = [ "graphical-session.target" ];
-          after = [ "graphical-session.target" ];
-          serviceConfig = {
-            Type = "simple";
-            ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-            Restart = "on-failure";
-            RestartSec = 1;
-            TimeoutStopSec = 10;
-          };
-        };
       };
 
     };

@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -11,14 +10,12 @@ let
 in
 {
   imports = [
-    ./programs
-    ./scripts.nix
-    ./fonts.nix
-    by-db.module
+    ./common.nix
+    ../programs/workstation.nix
+    ../fonts.nix
   ];
 
   options.by-db = {
-    username = mkOption { type = str; };
     bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
     wifi.enable = mkEnableOption "Whether or not to install network manager";
     screens = {
@@ -47,8 +44,6 @@ in
     in
     {
       home = {
-        username = "${cfg.username}";
-        homeDirectory = "/home/${cfg.username}";
 
         packages =
           (with pkgs; [
@@ -61,21 +56,8 @@ in
             inkscape
             microcodeIntel # for increased microprocessor performance
             mcomix
-            nixd
-            nixfmt-rfc-style
-            nixpkgs-fmt
-            nodejs
-            nodePackages.npm
-            nodePackages.pnpm
             pavucontrol # pulse audio volume controle
-            polkit_gnome
-            rsync
-            sshfs
-            unrar
-            unzip
             vlc
-            yt-dlp
-            zip
           ])
           ++ lib.optionals cfg.wifi.enable (
             with pkgs;
@@ -87,7 +69,6 @@ in
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
-          # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         };
 
         pointerCursor = {
@@ -149,15 +130,5 @@ in
           };
         };
       };
-
-      nixpkgs.config.allowUnfree = true; # Necessary for vscode
-      # This value determines the Home Manager release that your configuration is
-      # compatible with. This helps avoid breakage when a new Home Manager release
-      # introduces backwards incompatible changes.
-      #
-      # You should not change this value, even if you update Home Manager. If you do
-      # want to update the value, then make sure to first check the Home Manager
-      # release notes.
-      home.stateVersion = "23.05"; # Please read the comment before changing.
     };
 }
