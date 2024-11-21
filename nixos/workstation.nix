@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 {
   imports = [ ./common.nix ];
@@ -58,9 +57,12 @@
       };
 
       # Bootloader.
-      boot.loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
+      boot = {
+        loader = {
+          systemd-boot.enable = true;
+          efi.canTouchEfiVariables = true;
+        };
+        binfmt.emulatedSystems = [ "aarch64-linux" ];
       };
 
       fonts = {
