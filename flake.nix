@@ -18,13 +18,12 @@
   };
 
   outputs =
-    {
-      nixpkgs,
-      home-manager,
-      by-db,
-      stockly-computers,
-      sops-nix,
-      ...
+    { nixpkgs
+    , home-manager
+    , by-db
+    , stockly-computers
+    , sops-nix
+    , ...
     }:
     {
       nixosConfigurations = {
@@ -49,10 +48,11 @@
         };
       };
 
-      homeConfigurations = {
-        raspi = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs { system = "aarch64-linux"; };
-          modules = [ (import ./raspi/home_raspi.nix { inherit pkgs; }) ];
+      raspi = nixpkgs.lib.nixosSystem {
+        modules = [ ./raspi/configuration.nix ];
+        specialArgs = {
+          inherit home-manager by-db sops-nix;
+          # inherit home-manager by-db sops-nix nixpkgs-unstable;
         };
       };
     };
