@@ -1,8 +1,9 @@
-{ config, ... }:
+{ config, vscode-server, ... }:
 {
   imports = [
     ./common.nix
     ../programs/server-system.nix
+    vscode-server.nixosModules.default
   ];
 
   config =
