@@ -4,11 +4,13 @@
   lib,
   config,
   specialArgs,
+  vscode-server,
   ...
 }:
 {
   imports = [
     home-manager.nixosModules.home-manager
+    vscode-server.nixosModules.default
     ./nas.nix
   ];
 
@@ -43,7 +45,10 @@
 
       home-manager = {
         users.${cfg.user.name} = {
-          imports = [ ./home-manager.nix ];
+          imports = [
+            ./home-manager.nix
+            # vscode-server.homeModules.default
+          ];
           by-db = {
             username = "${cfg.user.name}";
             bluetooth.enable = cfg.bluetooth.enable;
@@ -92,6 +97,8 @@
         };
         # Enable the bluetooth daemon.
         blueman.enable = cfg.bluetooth.enable;
+
+        vscode-server.enable = true;
       };
 
       nix = {
@@ -107,36 +114,14 @@
         ];
       };
 
-      hardware = {
-        bluetooth.enable = cfg.bluetooth.enable;
-        pulseaudio.enable = lib.mkDefault true;
-      };
-
-      # Bootloader.
-      boot.loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
-      };
+      # qt = {
+      #   enable = true;
+      #   platformTheme = "gnome";
+      #   style = "adwaita-dark";
+      # };
 
       # Set your time zone.
       time.timeZone = lib.mkDefault "Europe/Paris";
-
-      # Select internationalisation properties.
-      i18n = {
-        defaultLocale = lib.mkDefault "en_US.utf8";
-
-        extraLocaleSettings = lib.mkDefault {
-          LC_ADDRESS = "fr_FR.utf8";
-          LC_IDENTIFICATION = "fr_FR.utf8";
-          LC_MEASUREMENT = "fr_FR.utf8";
-          LC_MONETARY = "fr_FR.utf8";
-          LC_NAME = "fr_FR.utf8";
-          LC_NUMERIC = "fr_FR.utf8";
-          LC_PAPER = "fr_FR.utf8";
-          LC_TELEPHONE = "fr_FR.utf8";
-          LC_TIME = "fr_FR.utf8";
-        };
-      };
 
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
@@ -183,6 +168,30 @@
         pathsToLink = [ "/libexec" ];
       };
 
+      hardware.bluetooth.enable = cfg.bluetooth.enable;
+
+      # Select internationalisation properties.
+      i18n = {
+        defaultLocale = lib.mkDefault "en_US.utf8";
+
+        extraLocaleSettings = lib.mkDefault {
+          LC_ADDRESS = "fr_FR.utf8";
+          LC_IDENTIFICATION = "fr_FR.utf8";
+          LC_MEASUREMENT = "fr_FR.utf8";
+          LC_MONETARY = "fr_FR.utf8";
+          LC_NAME = "fr_FR.utf8";
+          LC_NUMERIC = "fr_FR.utf8";
+          LC_PAPER = "fr_FR.utf8";
+          LC_TELEPHONE = "fr_FR.utf8";
+          LC_TIME = "fr_FR.utf8";
+        };
+      };
+
+      boot.loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+      };
+
       security = {
         polkit.enable = true;
         pam.services.lightdm.enableGnomeKeyring = true;
@@ -203,6 +212,5 @@
           };
         };
       };
-
     };
 }

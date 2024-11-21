@@ -19,7 +19,10 @@ in
 {
   imports = [ ./choose-radios.nix ];
 
-  home.packages = [ pkgs.strawberry ];
+  home.packages = with pkgs; [
+    strawberry
+    pulseaudio
+  ];
 
   by-db-pkgs = {
     strawberry-radios = {

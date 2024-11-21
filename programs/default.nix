@@ -5,7 +5,7 @@
     ./datagrip
     ./picom
     ./polybar
-    ./qt
+    ./theme
     ./ranger
     ./secrets
     ./ssh

@@ -52,12 +52,13 @@ in
 
         packages =
           (with pkgs; [
+            anydesk
             arandr # GUI to configure screens positions (need to kill autorandr)
             caffeine-ng # to prevent going to sleep when watching videos
             chromium
             evince # pdf reader
             fusee-launcher
-            gnome.gnome-keyring
+            gnome-keyring
             inkscape
             microcodeIntel # for increased microprocessor performance
             mcomix
@@ -89,13 +90,6 @@ in
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
           # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         };
-
-        pointerCursor = {
-          x11.enable = true;
-          package = pkgs.gnome.adwaita-icon-theme;
-          name = "Adwaita";
-          size = 32;
-        };
       };
 
       programs = {
@@ -105,6 +99,7 @@ in
 
       services = {
         playerctld.enable = true;
+        # vscode-server.enable = true;
       };
 
       by-db-pkgs = {
@@ -118,14 +113,6 @@ in
             username = "bebert64";
             passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
           };
-        };
-      };
-
-      gtk = {
-        enable = true;
-        theme = {
-          name = "palenight";
-          package = pkgs.palenight-theme;
         };
       };
 
