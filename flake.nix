@@ -46,13 +46,13 @@
             inherit home-manager by-db sops-nix;
           };
         };
-      };
 
-      raspi = nixpkgs.lib.nixosSystem {
-        modules = [ ./raspi/configuration.nix ];
-        specialArgs = {
-          inherit home-manager by-db sops-nix;
-          # inherit home-manager by-db sops-nix nixpkgs-unstable;
+        raspi = nixpkgs.lib.nixosSystem {
+          modules = [ ./raspi/configuration.nix ];
+          specialArgs = {
+            inherit home-manager by-db sops-nix;
+            # inherit home-manager by-db sops-nix nixpkgs-unstable;
+          };
         };
       };
     };
