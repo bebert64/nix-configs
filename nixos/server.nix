@@ -1,6 +1,4 @@
-{ config
-, ...
-}:
+{ config, ... }:
 {
   imports = [
     ./common.nix
@@ -33,6 +31,5 @@
           generic-extlinux-compatible.enable = true;
         };
       };
-    }
-  ;
+    };
 }

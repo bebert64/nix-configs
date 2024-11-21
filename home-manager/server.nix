@@ -4,8 +4,7 @@
     ../programs/server.nix
   ];
 
-  config =
-    {
-      by-db-pkgs = { };
-    };
+  config = {
+    by-db-pkgs = { };
+  };
 }

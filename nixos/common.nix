@@ -1,14 +1,15 @@
-{ pkgs
-, home-manager
-, lib
-, config
-, specialArgs
-, ...
+{
+  pkgs,
+  home-manager,
+  lib,
+  config,
+  specialArgs,
+  ...
 }:
 {
   imports = [
     home-manager.nixosModules.home-manager
-    ./nas.nix
+    ../nas.nix
   ];
 
   options.by-db = with lib; {
