@@ -14,6 +14,10 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
     };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "stockly-computers/nixpkgs";
+    };
 
   };
 
@@ -23,6 +27,7 @@
     , by-db
     , stockly-computers
     , sops-nix
+    , vscode-server
     , ...
     }:
     {
@@ -50,7 +55,7 @@
         raspi = nixpkgs.lib.nixosSystem {
           modules = [ ./raspi/configuration.nix ];
           specialArgs = {
-            inherit home-manager by-db sops-nix;
+            inherit home-manager by-db sops-nix vscode-server;
             # inherit home-manager by-db sops-nix nixpkgs-unstable;
           };
         };

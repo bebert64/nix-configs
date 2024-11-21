@@ -24,6 +24,8 @@
         };
       };
 
+      services.vscode-server.enable = true;
+
       # Bootloader.
       boot.loader = {
         # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
