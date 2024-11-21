@@ -1,9 +1,10 @@
-{ pkgs
-, home-manager
-, lib
-, config
-, specialArgs
-, ...
+{
+  pkgs,
+  home-manager,
+  lib,
+  config,
+  specialArgs,
+  ...
 }:
 {
   imports = [
@@ -25,7 +26,6 @@
       cfg = config.by-db;
     in
     {
-
 
       users = {
         users.${cfg.user.name} = {

@@ -1,16 +1,12 @@
 # Waiting for stash version from nixpkgs to catch up with the installed version
 # so that the schema is compatible with my current db.
-# { nixpkgs-unstable, pkgs, config, ... }:
 { pkgs, config, ... }:
 let
   hmCfg = config.home-manager.users.${config.by-db.user.name};
   nixConfigsRepo = hmCfg.by-db.nixConfigsRepo;
-  #   overlay-unstable = final: prev: {
-  #     unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
-  #   };
 in
 {
-  # nixpkgs.overlays = [ overlay-unstable ];
+  # environment.systemPackages = [ pkgs.stash ];
 
   systemd = {
     services = {
@@ -20,6 +16,7 @@ in
         wantedBy = [ "multi-user.target" ];
         serviceConfig = {
           Type = "exec";
+          # ExecStart = "stash --config /stash/config.yml";
           ExecStart = "/stash/stash --config /stash/config.yml";
         };
       };
@@ -29,12 +26,17 @@ in
   system.activationScripts = {
     symlingStashConfig = ''
       ${pkgs.coreutils}/bin/mkdir -p /stash
-      ${pkgs.coreutils}/bin/ln -s ${nixConfigsRepo}/programs/stash/config.yml /stash/config.yml
+      ${pkgs.coreutils}/bin/ln -sf ${nixConfigsRepo}/programs/stash/config.yml /stash/
+      ${pkgs.coreutils}/bin/ln -sf ${nixConfigsRepo}/programs/stash/scrapers /stash/
     '';
   };
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 9999 ];
+    allowedTCPPorts = [
+      80
+      443
+      9999
+    ];
   };
 }
