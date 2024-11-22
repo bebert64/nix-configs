@@ -55,8 +55,7 @@
         raspi = nixpkgs.lib.nixosSystem {
           modules = [ ./raspi/configuration.nix ];
           specialArgs = {
-            inherit home-manager by-db sops-nix vscode-server;
-            # inherit home-manager by-db sops-nix nixpkgs-unstable;
+            inherit home-manager by-db sops-nix vscode-server nixpkgs;
           };
         };
       };

@@ -1,10 +1,10 @@
-{ config, vscode-server, ... }:
+{ config, vscode-server, nixpkgs, ... }:
 {
   imports = [
     ./common.nix
     ../programs/server-system.nix
     vscode-server.nixosModules.default
-    <nixos/nixos/modules/installer/cd-dvd/sd-image-aarch64.nix>
+    "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
 
   config =
@@ -14,13 +14,13 @@
     {
       sdImage.compressImage = false;
 
-      users = {
-        extraUsers = {
-          root = {
-            hashedPassword = "$y$j9T$.H6IC0PPdWVat4f9ejoo6.$U6v8LpKV/hW4CKomjOdNk9Gz2IWrj7HWzjfRLfT7Z92";
-          };
-        };
-      };
+      # users = {
+      #   extraUsers = {
+      #     root = {
+      #       hashedPassword = "$y$j9T$.H6IC0PPdWVat4f9ejoo6.$U6v8LpKV/hW4CKomjOdNk9Gz2IWrj7HWzjfRLfT7Z92";
+      #     };
+      #   };
+      # };
 
       home-manager = {
         users.${cfg.user.name} = {
@@ -38,6 +38,6 @@
         generic-extlinux-compatible.enable = true;
       };
 
-      nix.settings.trustedUsers = [ "@wheel" ];
+      nix.settings.trusted-users = [ "@wheel" ];
     };
 }
