@@ -3,7 +3,7 @@
 { pkgs, config, ... }:
 let
   hmCfg = config.home-manager.users.${config.by-db.user.name};
-  nixConfigsRepo = hmCfg.by-db.nixConfigsRepo;
+  nixConfigsRepo = "${hmCfg.home.directory}/${hmCfg.by-db.nixConfigsRepo}";
 in
 {
   # environment.systemPackages = [ pkgs.stash ];

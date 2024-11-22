@@ -100,3 +100,7 @@ for n in $(seq 1 $#); do
     shift
 done
 ```
+
+nix build .#nixosConfigurations.raspi.config.system.build.sdImage
+
+sudo dd if=nixos-sd-image-23.05pre482417.9c7cc804254-aarch64-linux.img of=/dev/sdX
