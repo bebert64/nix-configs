@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -12,7 +11,7 @@ in
   imports = [
     ./common.nix
     ../programs/workstation.nix
-    ../fonts.nix
+    ../fonts
   ];
 
   options.by-db = {
