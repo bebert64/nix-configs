@@ -39,13 +39,4 @@ in
     auto-update.enable = true; # See auto-update.nix for doc
     keyboard-layout = "fr";
   };
-
-  services = {
-    # Enable touchpad support (enabled default in most desktopManager).
-    libinput = {
-      touchpad.naturalScrolling = true;
-      touchpad.middleEmulation = true;
-      touchpad.tapping = true;
-    };
-  };
 }
