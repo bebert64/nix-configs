@@ -1,18 +1,3 @@
-# Manual operations still needed
-
-## Accounts syncing
-
-- Setup 1password accounts (info for both accounts are on NAS)
-- Sync firefox profiles
-- Login / sync setting for VsCode / DataGrip / Slack
-- Import database sources for DataGrip
-
-```
-cd ... && cp ...
-```
-
-<br />
-
 ## SSH
 
 - Generate key with
@@ -25,16 +10,6 @@ ssh-keygen -t ed25519
 - Might need to add this computer to general ssh config and add other keys
   <br />
 
-# Pacman / Yay
-
-## List all packages installed by user
-
-pacman/yay -Qqe
-
-## Remove a package and all its unused dependencies
-
-pacman/yay -Rns
-
 # Various
 
 ## Screen
@@ -42,11 +17,6 @@ pacman/yay -Rns
 type `screen` before starting long task
 start long task
 if disconnected, reconnect and type `screen -r` to reconnect
-
-## Reinstall nixos boot
-
-sudo nix-collect-garbage -d
-sudo nixos-rebuild switch --flake .#
 
 ## To sync Tilix settings
 
@@ -69,9 +39,12 @@ dconf load /com/gexperts/Tilix/ < tilix.dconf
 
 ### Add new fonts
 
-- copy them in fonts folder inside configs
-- rebuild
-- reset font cache
+- check if available as a nix package (prefered option)
+- if not
+  - copy them in fonts folder inside configs
+  - symlink files to appropriate folder (if not already in setup)
+  - rebuild
+  - reset font cache
 
 ```
 fc-cache -f -v
@@ -101,6 +74,16 @@ for n in $(seq 1 $#); do
 done
 ```
 
+Raspi
+
+Build image
 nix build .#nixosConfigurations.raspi.config.system.build.sdImage
 
-sudo dd if=nixos-sd-image-23.05pre482417.9c7cc804254-aarch64-linux.img of=/dev/sdX
+copy img to SD card (can also use rpi-imager)
+sudo dd if=nixos-sd-image-23.05pre482417.9c7cc804254-aarch64-linux.img of=/dev/sdX r
+
+backup sd card
+sudo dd if=/dev/sdX of=raspi.img bs=4096 conv=fsync status=progress
+
+deploy remotely (might need to also git pull from nix-configs to update symlinks)
+nix-rebuild switch --target-host raspi --build-host localhost --use-remote-sudo --flake .#raspi
