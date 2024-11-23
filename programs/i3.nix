@@ -64,10 +64,6 @@ in
                 command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets";
                 notification = false;
               }
-              {
-                command = "caffeine";
-                notification = false;
-              }
             ]
             ++ lib.optional cfg.wifi.enable {
               command = "nm-applet";

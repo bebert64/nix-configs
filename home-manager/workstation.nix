@@ -48,7 +48,6 @@ in
         packages =
           (with pkgs; [
             arandr # GUI to configure screens positions (need to kill autorandr)
-            caffeine-ng # to prevent going to sleep when watching videos
             chromium
             evince # pdf reader
             fusee-launcher
@@ -86,6 +85,7 @@ in
 
       services = {
         playerctld.enable = true;
+        caffeine.enable = true;
       };
 
       by-db-pkgs = {
