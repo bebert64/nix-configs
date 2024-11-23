@@ -30,7 +30,8 @@
         cn = "code $HOME/${cfg.nixConfigsRepo}";
         cs = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main";
         cso = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/operations/Service";
-        wke1 = "i3-msg workspace \"\\\" \\\"\"";
+        wke1 = "i3-msg workspace 11:󰸉";
+        wke2 = "i3-msg workspace 12:󰸉";
         de = "yt-dlp -f 720p_HD";
       };
       history = {
