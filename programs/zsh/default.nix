@@ -8,7 +8,7 @@
     mainCodingRepo = {
       path = mkOption {
         type = types.str;
-        default = "$HOME/code";
+        default = "code";
       };
       workspaceDir = mkOption {
         type = types.str;
@@ -25,9 +25,13 @@
     {
       enable = true;
       shellAliases = {
-        "c" = "code .";
-        "wke1" = "i3-msg workspace \"\\\" \\\"\"";
-        "de" = "yt-dlp -f 720p_HD";
+        c = "code .";
+        cc = "code $HOME/${cfg.mainCodingRepo.path}";
+        cn = "code $HOME/${cfg.nixConfigsRepo}";
+        cs = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main";
+        cso = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/operations/Service";
+        wke1 = "i3-msg workspace \"\\\" \\\"\"";
+        de = "yt-dlp -f 720p_HD";
       };
       history = {
         size = 200000;
@@ -65,9 +69,9 @@
         }
 
         # Code/cargo commands
-        compdef '_files -W "${cfg.mainCodingRepo.path}" -/' cdr
+        compdef '_files -W "$HOME/${cfg.mainCodingRepo.path}" -/' cdr
         cdr() {
-          cd "${cfg.mainCodingRepo.path}/$@"
+          cd "$HOME/${cfg.mainCodingRepo.path}/$@"
         }
         tfw() {
           cdr ${cfg.mainCodingRepo.workspaceDir}
