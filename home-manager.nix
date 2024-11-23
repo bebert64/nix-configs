@@ -13,7 +13,7 @@ in
   imports = [
     ./programs
     ./scripts.nix
-    ./fonts.nix
+    ./fonts
     by-db.module
   ];
 
