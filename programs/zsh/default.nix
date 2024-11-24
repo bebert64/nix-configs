@@ -56,6 +56,11 @@
           sudo nix-collect-garbage -d
           sudo nixos-rebuild switch --flake .#
         }
+        update-raspi() {
+          cd ~/${cfg.nixConfigsRepo}
+          git pull
+          nixos-rebuild switch --target-host raspi --build-host localhost --use-remote-sudo --flake .#raspi
+        }
         upgrade() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
