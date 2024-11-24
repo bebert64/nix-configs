@@ -22,13 +22,14 @@
   };
 
   outputs =
-    { nixpkgs
-    , home-manager
-    , by-db
-    , stockly-computers
-    , sops-nix
-    , vscode-server
-    , ...
+    {
+      nixpkgs,
+      home-manager,
+      by-db,
+      stockly-computers,
+      sops-nix,
+      vscode-server,
+      ...
     }:
     {
       nixosConfigurations = {
@@ -55,7 +56,13 @@
         raspi = nixpkgs.lib.nixosSystem {
           modules = [ ./raspi/configuration.nix ];
           specialArgs = {
-            inherit home-manager by-db sops-nix vscode-server nixpkgs;
+            inherit
+              home-manager
+              by-db
+              sops-nix
+              vscode-server
+              nixpkgs
+              ;
           };
         };
       };
