@@ -50,12 +50,14 @@ in
           # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         };
       };
+      
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
       };
 
       nixpkgs.config.allowUnfree = true; # Necessary for unrar
+
       # This value determines the Home Manager release that your configuration is
       # compatible with. This helps avoid breakage when a new Home Manager release
       # introduces backwards incompatible changes.
@@ -64,6 +66,5 @@ in
       # want to update the value, then make sure to first check the Home Manager
       # release notes.
       home.stateVersion = "23.05"; # Please read the comment before changing.
-
     };
 }
