@@ -94,7 +94,7 @@ in
   home-manager.users.${config.by-db.user.name} = {
     programs.zsh.shellAliases = {
       mnas = "sudo mount-nas";
-      umnas = "sudo unmount-mnas";
+      umnas = "sudo unmount-nas";
     };
     home.activation = {
       symlinkMountDirNas = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
