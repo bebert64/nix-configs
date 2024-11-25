@@ -3,18 +3,22 @@
     "by-db": {
       "inputs": {
         "naersk": "naersk",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "stockly-computers",
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1732031926,
-        "narHash": "sha256-USKzFt2rQIRgLzBeeiTmo09dUAIiaONaasi3qzdvzrc=",
-        "ref": "refs/heads/main",
-        "rev": "d8e92b1565c02217287e2d6c8676db8edef8fc5e",
-        "revCount": 81,
+        "lastModified": 1732534272,
+        "narHash": "sha256-4u07/oj6kaQICpDThh99mDM0VJzGfA0EW0aBmuKd46U=",
+        "ref": "nix-shortcuts",
+        "rev": "034e465020024490bd0df10f45a86bdd0296d647",
+        "revCount": 88,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
       "original": {
+        "ref": "nix-shortcuts",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       }
@@ -148,21 +152,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1730233517,
-        "narHash": "sha256-SXb2AI9CuxOnqD6oUVVFF8jI6R2Qwe9NL2VphU0HNZo=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "37fd70b130b03774cd65c7d27a3d1fa2909365b0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1731763621,
         "narHash": "sha256-ddcX4lQL0X05AYkrkV2LMFgGdRvgap7Ho8kgon3iWZk=",
         "owner": "NixOS",
@@ -177,7 +166,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1728909085,
         "narHash": "sha256-WLxED18lodtQiayIPDE5zwAfkPJSjHJ35UhZ8h3cJUg=",
@@ -208,7 +197,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1732186149,
@@ -227,7 +216,7 @@
     "stockly-computers": {
       "inputs": {
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_4",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "vscode-server": "vscode-server"
       },

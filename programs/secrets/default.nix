@@ -1,8 +1,7 @@
-{
-  sops-nix,
-  pkgs,
-  config,
-  ...
+{ sops-nix
+, pkgs
+, config
+, ...
 }:
 let
   cfg = config.by-db;
@@ -21,6 +20,7 @@ in
       "ffsync/bebert64" = { };
       "ffsync/shortcuts-db" = { };
       "raspi/postgresql/rw" = { };
+      "stash/api-key" = { };
     };
   };
 

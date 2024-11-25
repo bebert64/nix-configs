@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -95,10 +94,10 @@ in
               enable = true;
               commandArgs = "--mode fifty-fifty";
             };
-            ffsync = {
-              username = "bebert64@gmail.com";
-              passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
-            };
+          };
+          ffsync = {
+            username = "bebert64@gmail.com";
+            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
           };
         };
         shortcuts = {
@@ -108,6 +107,7 @@ in
             username = "shortcuts.db@gmail.com";
             passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
           };
+          apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
       };
 
