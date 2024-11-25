@@ -90,14 +90,23 @@ in
 
       by-db-pkgs = {
         wallpapers-manager = {
-          app.enable = true;
           service = {
-            enable = true;
-            commandArgs = "--mode fifty-fifty";
+            change = {
+              enable = true;
+              commandArgs = "--mode fifty-fifty";
+            };
+            ffsync = {
+              username = "bebert64@gmail.com";
+              passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+            };
           };
+        };
+        shortcuts = {
+          app.enable = true;
+          postgres.password = "${config.sops.secrets."raspi/postgresql/rw".path}";
           ffsync = {
-            username = "bebert64";
-            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+            username = "shortcuts.db@gmail.com";
+            passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
           };
         };
       };

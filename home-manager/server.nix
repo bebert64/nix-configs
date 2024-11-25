@@ -20,9 +20,27 @@
         cd $HOME
         git clone git@github.com:bebert64/nix-configs
 
-        # TODO
-        # restore-all
-        # ask for reboot
+        restore-all
+        sudo reboot now
+      '')
+
+      (pkgs.writeScriptBin "restore-all" ''
+        set -euxo pipefail
+
+        restore-stash
+        restore-postgres
+      '')
+
+      (pkgs.writeScriptBin "restore-stash" ''
+        set -euxo pipefail
+
+        sudo rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' /stash
+      '')
+
+      (pkgs.writeScriptBin "restore-postgres" ''
+        set -euxo pipefail
+
+        psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump_20241029.sql.sql
       '')
     ];
     by-db-pkgs = { };

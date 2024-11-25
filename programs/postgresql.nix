@@ -10,10 +10,6 @@
     '';
   };
 
-
-  users.users.postgres = {
-    hashedPassword = "$y$j9T$2SPWxfDGbh85U9jNsQgHL1$ssaNLjhJx1dV5jgvyhBkURJeWTm5iYvF6QZvFIGMPtD";
-  };
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 5432 ];

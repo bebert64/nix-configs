@@ -50,7 +50,7 @@ in
           # ".cargo/config.toml".source = ./assets/cargo_config.toml;
         };
       };
-      
+
       programs = {
         # Let Home Manager install and manage itself.
         home-manager.enable = true;
