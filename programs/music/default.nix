@@ -1,8 +1,7 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 let
   cfg = config.by-db;
@@ -75,7 +74,7 @@ in
 
   xsession.windowManager.i3.config = {
     assigns = {
-      "$ws10" = [ { class = "strawberry"; } ];
+      "$ws10" = [{ class = "strawberry"; }];
     };
 
     keybindings = lib.mkOptionDefault {

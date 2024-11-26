@@ -2,6 +2,7 @@
   "nodes": {
     "by-db": {
       "inputs": {
+        "fenix": "fenix",
         "naersk": "naersk",
         "nixpkgs": [
           "stockly-computers",
@@ -9,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732534272,
-        "narHash": "sha256-4u07/oj6kaQICpDThh99mDM0VJzGfA0EW0aBmuKd46U=",
+        "lastModified": 1732563460,
+        "narHash": "sha256-uQmYFripeOMVv7lrhXfs0iGGWMh+K1yT08ij/G8W0W0=",
         "ref": "nix-shortcuts",
-        "rev": "034e465020024490bd0df10f45a86bdd0296d647",
-        "revCount": 88,
+        "rev": "aa774ff95ed209e7b7c32011ca504235e326ef1d",
+        "revCount": 94,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -21,6 +22,28 @@
         "ref": "nix-shortcuts",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
+      }
+    },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "by-db",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1732429952,
+        "narHash": "sha256-kTXRYkTpvYn4AtYY8OUVpO7h9xNjPAaHxtTuz1N4l9g=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "39603febfbb0b494a368905a5c5c1b13bd6e1e53",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
       }
     },
     "flake-utils": {
@@ -193,6 +216,23 @@
         "sops-nix": "sops-nix",
         "stockly-computers": "stockly-computers",
         "vscode-server": "vscode-server_2"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1732388649,
+        "narHash": "sha256-N6zhzSLdGWUZnyRgCRyOy4Nyz8TkekXgXD2ZhCKAjzE=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "a2bb0149144e0e6330e60abe4683b4e1a7ab3582",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "sops-nix": {

@@ -23,5 +23,5 @@
     ./vdhcoapp.nix
   ];
 
-  home.packages = [ (pkgs.callPackage ./insomnia.nix { }) ];
+  home.packages = [ (pkgs.callPackage ./insomnia.nix { }) (pkgs.callPackage ./ffsync.nix { }) ];
 }
