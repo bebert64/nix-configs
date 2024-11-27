@@ -31,7 +31,7 @@
           wallpapersDir = "/mnt/NAS/Wallpapers";
           services.download = {
             enable = true;
-            runAt = "*-*-* 18:20:00";
+            runAt = "*-*-* 00:00:00";
           };
           ffsync = {
             username = "bebert64@gmail.com";
@@ -42,7 +42,6 @@
 
       services.vscode-server.enable = true;
 
-      # Bootloader.
       boot.loader = {
         # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
         grub.enable = false;
