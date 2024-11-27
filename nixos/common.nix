@@ -77,6 +77,10 @@
           "nix-command"
           "flakes"
         ];
+        # Keep build inputs when using garbage collection
+        extraOptions = ''
+          keep-outputs = true
+        '';
       };
 
       # Set your time zone.

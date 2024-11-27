@@ -7,9 +7,9 @@
     ./modules.nix
   ];
 
-  options.by-db.polybar = with lib; {
-    colors = mkOption {
-      type = types.attrs;
+  options.by-db.polybar = {
+    colors = lib.mkOption {
+      type = lib.types.attrs;
       default = import ./colors.nix;
     };
   };
