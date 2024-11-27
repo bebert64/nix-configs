@@ -1,7 +1,11 @@
-{ pkgs, ... }:
+{ pkgs
+, by-db
+, ...
+}:
 {
   imports = [
     ./common.nix
+    by-db.homeManagerModule.aarch64-linux
     ../programs/server.nix
   ];
 
@@ -43,6 +47,5 @@
         psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump_20241029.sql.sql
       '')
     ];
-    by-db-pkgs = { };
   };
 }

@@ -1,9 +1,7 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, config
+, ...
 }:
 let
   inherit (lib) mkOption types;
@@ -12,7 +10,6 @@ in
 {
   imports = [
     ../programs/common.nix
-    by-db.module
   ];
 
   options.by-db = {

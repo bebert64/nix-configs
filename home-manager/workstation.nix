@@ -1,6 +1,7 @@
 { pkgs
 , lib
 , config
+, by-db
 , ...
 }:
 let
@@ -11,6 +12,7 @@ in
   imports = [
     ./common.nix
     ../programs/workstation.nix
+    by-db.homeManagerModule.x86_64-linux
     ../fonts
   ];
 
@@ -89,7 +91,7 @@ in
 
       by-db-pkgs = {
         wallpapers-manager = {
-          service = {
+          services = {
             change = {
               enable = true;
               commandArgs = "--mode fifty-fifty";
