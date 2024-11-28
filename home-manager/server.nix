@@ -55,7 +55,7 @@
         wallpapersDir = "/mnt/NAS/Wallpapers";
         services.download = {
           enable = true;
-          runAt = "*-*-* 00:00:00";
+          runAt = "*-*-* 14:30:00";
         };
         ffsync = {
           username = "bebert64@gmail.com";
