@@ -1,7 +1,6 @@
 { config
 , vscode-server
 , nixpkgs
-, by-db
 , ...
 }:
 {
@@ -9,7 +8,6 @@
     ./common.nix
     ../programs/server-system.nix
     vscode-server.nixosModules.default
-    by-db.nixosModule.aarch64-linux
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
 
@@ -20,23 +18,11 @@
     {
       sdImage.compressImage = false;
 
+      users.users.${cfg.user.name}.linger = true;
+
       home-manager = {
         users.${cfg.user.name} = {
           imports = [ ../home-manager/server.nix ];
-        };
-      };
-
-      by-db-pkgs = {
-        wallpapers-manager = {
-          wallpapersDir = "/mnt/NAS/Wallpapers";
-          services.download = {
-            enable = true;
-            runAt = "*-*-* 00:00:00";
-          };
-          ffsync = {
-            username = "bebert64@gmail.com";
-            passwordPath = "${config.home-manager.users.${cfg.user.name}.sops.secrets."ffsync/bebert64".path}";
-          };
         };
       };
 

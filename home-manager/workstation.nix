@@ -12,7 +12,7 @@ in
   imports = [
     ./common.nix
     ../programs/workstation.nix
-    by-db.homeManagerModule.x86_64-linux
+    by-db.module.x86_64-linux
     ../fonts
   ];
 

@@ -1,11 +1,12 @@
 { pkgs
 , by-db
+, config
 , ...
 }:
 {
   imports = [
     ./common.nix
-    by-db.homeManagerModule.aarch64-linux
+    by-db.module.aarch64-linux
     ../programs/server.nix
   ];
 
@@ -47,5 +48,20 @@
         psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump_20241029.sql.sql
       '')
     ];
+
+
+    by-db-pkgs = {
+      wallpapers-manager = {
+        wallpapersDir = "/mnt/NAS/Wallpapers";
+        services.download = {
+          enable = true;
+          runAt = "*-*-* 00:00:00";
+        };
+        ffsync = {
+          username = "bebert64@gmail.com";
+          passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+        };
+      };
+    };
   };
 }
