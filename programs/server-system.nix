@@ -1,6 +1,6 @@
 {
   imports = [
-    ./stash
-    ./postgresql.nix
+    ./configs/stash
+    ./configs/postgresql.nix
   ];
 }

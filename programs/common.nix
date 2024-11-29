@@ -1,13 +1,13 @@
 {
   imports = [
-    ./ranger
-    ./secrets
-    ./ssh
-    ./zsh
-    ./btop.nix
-    ./direnv.nix
-    ./git.nix
-    ./vim.nix
-    ./scripts.nix
+    ./configs/ranger
+    ./configs/secrets
+    ./configs/ssh
+    ./configs/zsh
+    ./configs/btop.nix
+    ./configs/direnv.nix
+    ./configs/git.nix
+    ./configs/vim.nix
+    ./configs/scripts.nix
   ];
 }
