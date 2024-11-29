@@ -11,11 +11,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1732876076,
-        "narHash": "sha256-Uhja0+F+kTnUsrd/sUbmaoAkrgjUa+LlV4cTqb8I0bE=",
+        "lastModified": 1732876286,
+        "narHash": "sha256-hChrQo+1Mt9RAmBsVMhsTbP4ZpJYAkhrAmbKYVzcp4g=",
         "ref": "nix-shortcuts",
-        "rev": "458efd236f9f37383035322fb773cc2faf48d0e2",
-        "revCount": 145,
+        "rev": "15bbadb3e6cd21d22086858e14fc4da9ab0ec19a",
+        "revCount": 146,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
