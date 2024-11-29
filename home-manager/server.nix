@@ -1,8 +1,7 @@
-{
-  pkgs,
-  by-db,
-  config,
-  ...
+{ pkgs
+, by-db
+, config
+, ...
 }:
 {
   imports = [
@@ -65,7 +64,7 @@
       shortcuts = {
         service.enable = true;
         postgres = {
-          ip = "localhost";
+          ip = "127.0.0.1";
           password = "${config.sops.secrets."raspi/postgresql/rw".path}";
         };
         ffsync = {
