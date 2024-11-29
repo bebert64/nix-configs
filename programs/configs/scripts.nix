@@ -33,7 +33,7 @@ in
     (writeScriptBin "sync-wallpapers" ''
       set -euxo pipefail
 
-      mnas
+      mount-nas
       rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
       rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
     '')

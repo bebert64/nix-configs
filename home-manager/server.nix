@@ -39,13 +39,13 @@
       (pkgs.writeScriptBin "restore-stash" ''
         set -euxo pipefail
 
-        sudo rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' /stash
+        sudo rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' /stash --exclude "archive"
       '')
 
       (pkgs.writeScriptBin "restore-postgres" ''
         set -euxo pipefail
 
-        psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump_20241029.sql.sql
+        psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump.sql
       '')
     ];
 
