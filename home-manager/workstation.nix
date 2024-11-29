@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, config
-, by-db
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  by-db,
+  ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;

@@ -1,7 +1,8 @@
-{ config
-, vscode-server
-, nixpkgs
-, ...
+{
+  config,
+  vscode-server,
+  nixpkgs,
+  ...
 }:
 {
   imports = [

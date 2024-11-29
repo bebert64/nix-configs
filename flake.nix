@@ -23,13 +23,14 @@
   };
 
   outputs =
-    { nixpkgs
-    , home-manager
-    , by-db
-    , stockly-computers
-    , sops-nix
-    , vscode-server
-    , ...
+    {
+      nixpkgs,
+      home-manager,
+      by-db,
+      stockly-computers,
+      sops-nix,
+      vscode-server,
+      ...
     }:
     {
       nixosConfigurations = {

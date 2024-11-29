@@ -1,16 +1,15 @@
-{ pkgs
-, lib
-, config
-, ...
+{
+  pkgs,
+  lib,
+  config,
+  ...
 }:
 let
   inherit (lib) mkOption types;
   inherit (types) str;
 in
 {
-  imports = [
-    ../programs/common.nix
-  ];
+  imports = [ ../programs/common.nix ];
 
   options.by-db = {
     username = mkOption { type = str; };

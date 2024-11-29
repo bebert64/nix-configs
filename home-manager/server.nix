@@ -1,7 +1,8 @@
-{ pkgs
-, by-db
-, config
-, ...
+{
+  pkgs,
+  by-db,
+  config,
+  ...
 }:
 {
   imports = [
@@ -49,7 +50,6 @@
       '')
     ];
 
-
     by-db-pkgs = {
       wallpapers-manager = {
         wallpapersDir = "/mnt/NAS/Wallpapers";
@@ -61,6 +61,18 @@
           username = "bebert64@gmail.com";
           passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
         };
+      };
+      shortcuts = {
+        service.enable = true;
+        postgres = {
+          ip = "localhost";
+          password = "${config.sops.secrets."raspi/postgresql/rw".path}";
+        };
+        ffsync = {
+          username = "shortcuts.db@gmail.com";
+          passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
+        };
+        apiKey = "${config.sops.secrets."stash/api-key".path}";
       };
     };
   };

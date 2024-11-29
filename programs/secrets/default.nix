@@ -1,7 +1,8 @@
-{ sops-nix
-, pkgs
-, config
-, ...
+{
+  sops-nix,
+  pkgs,
+  config,
+  ...
 }:
 let
   cfg = config.by-db;
