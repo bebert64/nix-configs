@@ -17,7 +17,7 @@ in
         serviceConfig = {
           Type = "exec";
           # ExecStart = "stash --config /stash/config.yml";
-          ExecStart = "/stash/stash --config /stash/config.yml";
+          ExecStart = "/stash/stash";
         };
       };
     };
