@@ -4,13 +4,11 @@
   lib,
   config,
   specialArgs,
-  vscode-server,
   ...
 }:
 {
   imports = [
     home-manager.nixosModules.home-manager
-    vscode-server.nixosModules.default
     ./nas.nix
   ];
 
@@ -45,10 +43,7 @@
 
       home-manager = {
         users.${cfg.user.name} = {
-          imports = [
-            ./home-manager.nix
-            # vscode-server.homeModules.default
-          ];
+          imports = [ ./home-manager.nix ];
           by-db = {
             username = "${cfg.user.name}";
             bluetooth.enable = cfg.bluetooth.enable;
@@ -97,8 +92,6 @@
         };
         # Enable the bluetooth daemon.
         blueman.enable = cfg.bluetooth.enable;
-
-        vscode-server.enable = true;
       };
 
       nix = {
@@ -113,12 +106,6 @@
           "flakes"
         ];
       };
-
-      # qt = {
-      #   enable = true;
-      #   platformTheme = "gnome";
-      #   style = "adwaita-dark";
-      # };
 
       # Set your time zone.
       time.timeZone = lib.mkDefault "Europe/Paris";

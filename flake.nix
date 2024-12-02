@@ -2,12 +2,12 @@
   description = "NixOS and HomeManager configurations";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/";
-    stockly-computers = {
-      url = "git+ssh://git@github.com/Stockly/Computers.git";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
+
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/";
+      nixpkgs.follows = "stockly-computers/nixpkgs";
     };
-    # nixpkgs.follows = "stockly-computers/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,10 +20,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    vscode-server = {
-      url = "github:Ten0/nixos-vscode-server";
-      inputs.nixpkgs.follows = "stockly-computers/nixpkgs";
-    };
 
   };
 
@@ -34,7 +30,6 @@
       by-db,
       stockly-computers,
       sops-nix,
-      vscode-server,
       ...
     }:
     {
@@ -53,16 +48,13 @@
         };
 
         fixe-bureau = nixpkgs.lib.nixosSystem {
-          modules = [
-            ./fixe-bureau/configuration.nix
-          ];
+          modules = [ ./fixe-bureau/configuration.nix ];
           specialArgs = {
             inherit
               home-manager
               by-db
               sops-nix
               stockly-computers
-              vscode-server
               ;
           };
         };
