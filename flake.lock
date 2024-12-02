@@ -8,14 +8,15 @@
         "nixpkgs": [
           "stockly-computers",
           "nixpkgs"
-        ]
+        ],
+        "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1732891411,
-        "narHash": "sha256-i2OVLUVXdlLTLcR3OFRoo/XwUecSIhf8PrnfaVw6Sjc=",
+        "lastModified": 1733157820,
+        "narHash": "sha256-30LZI7QUE3q42gQTsgWKKV1RXsqTeCpNgx/o/n/ec5E=",
         "ref": "nix-shortcuts",
-        "rev": "227d143cce322b9d0d0a26f69573d0ecb59c95d6",
-        "revCount": 155,
+        "rev": "07462d905263936ef389b4e742adb3f64346a5f7",
+        "revCount": 158,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -149,11 +150,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1728790083,
-        "narHash": "sha256-grMdAd4KSU6uPqsfLzA1B/3pb9GtGI9o8qb0qFzEU/Y=",
+        "lastModified": 1733024876,
+        "narHash": "sha256-vy9Q41hBE7Zg0yakF79neVgb3i3PQMSMR7uHPpPywFE=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "5c54c33aa04df5dd4b0984b7eb861d1981009b22",
+        "rev": "6e0b7f81367069589a480b91603a10bcf71f3103",
         "type": "github"
       },
       "original": {
@@ -178,11 +179,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1732014248,
-        "narHash": "sha256-y/MEyuJ5oBWrWAic/14LaIr/u5E0wRVzyYsouYY3W6w=",
+        "lastModified": 1733015953,
+        "narHash": "sha256-t4BBVpwG9B4hLgc6GUBuj3cjU7lP/PJfpTHuSqE+crk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "23e89b7da85c3640bbc2173fe04f4bd114342367",
+        "rev": "ac35b104800bff9028425fec3b6e8a41de2bbfff",
         "type": "github"
       },
       "original": {
@@ -210,16 +211,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1728909085,
-        "narHash": "sha256-WLxED18lodtQiayIPDE5zwAfkPJSjHJ35UhZ8h3cJUg=",
+        "lastModified": 1732981179,
+        "narHash": "sha256-F7thesZPvAMSwjRu0K8uFshTk3ZZSNAsXTIFvXBT+34=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c0b1da36f7c34a7146501f684e9ebdf15d2bebf8",
+        "rev": "62c435d93bf046a5396f3016472e8f7c8e2aed65",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-24.05",
+        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -259,11 +260,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1732575825,
-        "narHash": "sha256-xtt95+c7OUMoqZf4OvA/7AemiH3aVuWHQbErYQoPwFk=",
+        "lastModified": 1733128155,
+        "narHash": "sha256-m6/qwJAJYcidGMEdLqjKzRIjapK4nUfMq7rDCTmZajc=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "3433ea14fbd9e6671d0ff0dd45ed15ee4c156ffa",
+        "rev": "c6134b6fff6bda95a1ac872a2a9d5f32e3c37856",
         "type": "github"
       },
       "original": {
@@ -276,15 +277,14 @@
       "inputs": {
         "nix-index-database": "nix-index-database",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-unstable": "nixpkgs-unstable",
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1732219647,
-        "narHash": "sha256-ZQmzF94HHE7IOPaE4u7JTBBLaxcHYYEkSJDWKTVHe3A=",
+        "lastModified": 1733157076,
+        "narHash": "sha256-ZdbKKPXupa0XZKdD1w5SWeqQ/aGZVatl/DR+MQDFZS4=",
         "ref": "refs/heads/master",
-        "rev": "4377a91d858038390d0c910ed1b051d59469c8a4",
-        "revCount": 133,
+        "rev": "6de7c27cd01f595268e47668ccd0ebe79a17e835",
+        "revCount": 135,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
