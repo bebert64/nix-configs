@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=nix-shortcuts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
@@ -24,13 +24,14 @@
   };
 
   outputs =
-    { nixpkgs
-    , home-manager
-    , by-db
-    , stockly-computers
-    , sops-nix
-    , vscode-server
-    , ...
+    {
+      nixpkgs,
+      home-manager,
+      by-db,
+      stockly-computers,
+      sops-nix,
+      vscode-server,
+      ...
     }:
     {
       nixosConfigurations = {
