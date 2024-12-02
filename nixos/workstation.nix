@@ -54,7 +54,6 @@
 
       hardware = {
         bluetooth.enable = cfg.bluetooth.enable;
-        pulseaudio.enable = lib.mkDefault true;
       };
 
       # Bootloader.
