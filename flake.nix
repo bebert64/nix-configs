@@ -3,7 +3,6 @@
 
   inputs = {
     stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
-
     nixpkgs = {
       url = "github:nixos/nixpkgs/";
       nixpkgs.follows = "stockly-computers/nixpkgs";
@@ -20,7 +19,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
   outputs =
@@ -54,7 +52,6 @@
               home-manager
               by-db
               sops-nix
-              stockly-computers
               ;
           };
         };
