@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
   imports = [
     ./common.nix
@@ -16,12 +15,11 @@
     ./configs/email.nix
     ./configs/firefox.nix
     ./configs/i3.nix
+    ./configs/insomnia.nix
     ./configs/lock.nix
     ./configs/rofi.nix
     ./configs/slack.nix
     ./configs/udiskie.nix
     ./configs/vdhcoapp.nix
   ];
-
-  home.packages = [ (pkgs.callPackage ./configs/insomnia.nix { }) ];
 }

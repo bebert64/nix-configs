@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     by-db = {
-      url = "git+ssh://git@github.com/bebert64";
+      url = "git+ssh://git@github.com/bebert64/perso";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
