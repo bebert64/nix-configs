@@ -3,10 +3,7 @@
 
   inputs = {
     stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/";
-      nixpkgs.follows = "stockly-computers/nixpkgs";
-    };
+    nixpkgs.follows = "stockly-computers/nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";
