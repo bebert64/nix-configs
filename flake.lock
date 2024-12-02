@@ -6,7 +6,6 @@
         "flake-utils": "flake-utils",
         "naersk": "naersk",
         "nixpkgs": [
-          "stockly-computers",
           "nixpkgs"
         ],
         "nixpkgs-unstable": "nixpkgs-unstable"
@@ -193,22 +192,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1731763621,
-        "narHash": "sha256-ddcX4lQL0X05AYkrkV2LMFgGdRvgap7Ho8kgon3iWZk=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c69a9bffbecde46b4b939465422ddc59493d3e4d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1732981179,
         "narHash": "sha256-F7thesZPvAMSwjRu0K8uFshTk3ZZSNAsXTIFvXBT+34=",
         "owner": "nixos",
@@ -255,7 +238,9 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1733128155,
@@ -274,7 +259,7 @@
     "stockly-computers": {
       "inputs": {
         "nix-index-database": "nix-index-database",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "vscode-server": "vscode-server"
       },
       "locked": {
@@ -362,7 +347,6 @@
       "inputs": {
         "flake-utils": "flake-utils_3",
         "nixpkgs": [
-          "stockly-computers",
           "nixpkgs"
         ]
       },
