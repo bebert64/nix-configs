@@ -40,15 +40,6 @@ in
     keyboard-layout = "fr";
   };
 
-  services = {
-    # Enable touchpad support (enabled default in most desktopManager).
-    libinput = {
-      touchpad.naturalScrolling = true;
-      touchpad.middleEmulation = true;
-      touchpad.tapping = true;
-    };
-  };
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

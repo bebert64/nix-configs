@@ -1,9 +1,8 @@
-{
-  pkgs,
-  lib,
-  by-db,
-  config,
-  ...
+{ pkgs
+, lib
+, by-db
+, config
+, ...
 }:
 let
   inherit (lib) mkEnableOption mkOption types;
@@ -13,7 +12,7 @@ in
   imports = [
     ./programs
     ./scripts.nix
-    ./fonts.nix
+    ./fonts
     by-db.module
   ];
 
@@ -54,7 +53,6 @@ in
           (with pkgs; [
             anydesk
             arandr # GUI to configure screens positions (need to kill autorandr)
-            caffeine-ng # to prevent going to sleep when watching videos
             chromium
             evince # pdf reader
             fusee-launcher
@@ -99,7 +97,7 @@ in
 
       services = {
         playerctld.enable = true;
-        # vscode-server.enable = true;
+        caffeine.enable = true;
       };
 
       by-db-pkgs = {
