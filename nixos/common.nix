@@ -1,10 +1,9 @@
-{
-  pkgs,
-  home-manager,
-  lib,
-  config,
-  specialArgs,
-  ...
+{ pkgs
+, home-manager
+, lib
+, config
+, specialArgs
+, ...
 }:
 {
   imports = [
@@ -87,23 +86,6 @@
       # Set your time zone.
       time.timeZone = lib.mkDefault "Europe/Paris";
 
-      # Select internationalisation properties.
-      i18n = {
-        defaultLocale = lib.mkDefault "en_US.utf8";
-
-        extraLocaleSettings = lib.mkDefault {
-          LC_ADDRESS = "fr_FR.utf8";
-          LC_IDENTIFICATION = "fr_FR.utf8";
-          LC_MEASUREMENT = "fr_FR.utf8";
-          LC_MONETARY = "fr_FR.utf8";
-          LC_NAME = "fr_FR.utf8";
-          LC_NUMERIC = "fr_FR.utf8";
-          LC_PAPER = "fr_FR.utf8";
-          LC_TELEPHONE = "fr_FR.utf8";
-          LC_TIME = "fr_FR.utf8";
-        };
-      };
-
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
 
@@ -133,6 +115,30 @@
           wget
         ];
         pathsToLink = [ "/libexec" ];
+      };
+
+      hardware.bluetooth.enable = cfg.bluetooth.enable;
+
+      # Select internationalisation properties.
+      i18n = {
+        defaultLocale = lib.mkDefault "en_US.utf8";
+
+        extraLocaleSettings = lib.mkDefault {
+          LC_ADDRESS = "fr_FR.utf8";
+          LC_IDENTIFICATION = "fr_FR.utf8";
+          LC_MEASUREMENT = "fr_FR.utf8";
+          LC_MONETARY = "fr_FR.utf8";
+          LC_NAME = "fr_FR.utf8";
+          LC_NUMERIC = "fr_FR.utf8";
+          LC_PAPER = "fr_FR.utf8";
+          LC_TELEPHONE = "fr_FR.utf8";
+          LC_TIME = "fr_FR.utf8";
+        };
+      };
+
+      boot.loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
       };
 
       security = {

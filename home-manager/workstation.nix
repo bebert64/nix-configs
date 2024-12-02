@@ -49,11 +49,12 @@ in
 
         packages =
           (with pkgs; [
+            anydesk
             arandr # GUI to configure screens positions (need to kill autorandr)
             chromium
             evince # pdf reader
             fusee-launcher
-            gnome.gnome-keyring
+            gnome-keyring
             inkscape
             microcodeIntel # for increased microprocessor performance
             mcomix
@@ -70,13 +71,6 @@ in
 
         file = {
           ".themes".source = "${pkgs.palenight-theme}/share/themes";
-        };
-
-        pointerCursor = {
-          x11.enable = true;
-          package = pkgs.gnome.adwaita-icon-theme;
-          name = "Adwaita";
-          size = 32;
         };
       };
 
@@ -111,14 +105,6 @@ in
             passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
           };
           apiKey = "${config.sops.secrets."stash/api-key".path}";
-        };
-      };
-
-      gtk = {
-        enable = true;
-        theme = {
-          name = "palenight";
-          package = pkgs.palenight-theme;
         };
       };
 

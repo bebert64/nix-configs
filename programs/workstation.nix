@@ -6,7 +6,7 @@
     ./configs/datagrip
     ./configs/picom
     ./configs/polybar
-    ./configs/qt
+    ./configs/theme
     ./configs/music
     ./configs/terminal
     ./configs/vscode
