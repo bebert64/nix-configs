@@ -16,6 +16,10 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -25,6 +29,7 @@
       by-db,
       stockly-computers,
       sops-nix,
+      vscode-server,
       ...
     }:
     {
@@ -45,19 +50,21 @@
         fixe-bureau = nixpkgs.lib.nixosSystem {
           modules = [ ./fixe-bureau/configuration.nix ];
           specialArgs = {
+            inherit home-manager by-db sops-nix;
+          };
+        };
+
+        raspi = nixpkgs.lib.nixosSystem {
+          modules = [ ./raspi/configuration.nix ];
+          specialArgs = {
             inherit
               home-manager
               by-db
               sops-nix
+              vscode-server
+              nixpkgs
               ;
           };
-        };
-      };
-
-      homeConfigurations = {
-        raspi = home-manager.lib.homeManagerConfiguration rec {
-          pkgs = import nixpkgs { system = "aarch64-linux"; };
-          modules = [ (import ./raspi/home_raspi.nix { inherit pkgs; }) ];
         };
       };
     };
