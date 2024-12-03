@@ -38,7 +38,7 @@ in
         ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
       };
       Install = {
-        WantedBy = [ "multi-user.target" ];
+        WantedBy = [ "default.target" ];
       };
     };
   };
