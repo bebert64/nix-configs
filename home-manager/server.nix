@@ -17,7 +17,6 @@
         set -euxo pipefail
 
         sudo mount-nas
-        sudo chmod +x /stash/stash
         cp /mnt/NAS/Backup/raspi/id_ed25519 $HOME/.ssh
         cp /mnt/NAS/Backup/raspi/id_ed25519.pub $HOME/.ssh
         cd $HOME

@@ -29,7 +29,6 @@ in
           [
             nixd
             nixfmt-rfc-style
-            nixpkgs-fmt
             nodejs
             nodePackages.npm
             nodePackages.pnpm
@@ -42,9 +41,6 @@ in
             zip
           ]
         );
-        file = {
-          # ".cargo/config.toml".source = ./assets/cargo_config.toml;
-        };
       };
 
       programs = {
