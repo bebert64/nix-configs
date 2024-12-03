@@ -34,12 +34,6 @@
         restore-postgres
       '')
 
-      (pkgs.writeScriptBin "restore-stash" ''
-        set -euxo pipefail
-
-        sudo rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' /stash --exclude "archive"
-      '')
-
       (pkgs.writeScriptBin "restore-postgres" ''
         set -euxo pipefail
 

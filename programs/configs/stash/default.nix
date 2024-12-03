@@ -2,6 +2,7 @@
 # so that the schema is compatible with my current db.
 { pkgs, config, ... }:
 let
+  stashDir = "${config.home.homeDirectory}/.config/stash";
   nixConfigsRepo = "${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}";
   stash = pkgs.callPackage ./package.nix { };
 in
@@ -9,13 +10,19 @@ in
   home = {
     packages = [
       stash
+
+      (pkgs.writeScriptBin "restore-stash" ''
+        set -euxo pipefail
+
+        sudo rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' ${stashDir}/ --exclude "archive"
+      '')
     ];
 
     activation = {
       symlinkStashConfig = ''
-        mkdir -p ${config.home.homeDirectory}/.config/stash/
-        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.home.homeDirectory}/.config/stash/
-        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.home.homeDirectory}/.config/stash/
+        mkdir -p ${stashDir}/
+        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${stashDir}/
+        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${stashDir}/
       '';
     };
   };
@@ -29,7 +36,7 @@ in
       };
       Service = {
         Type = "exec";
-        ExecStart = "${stash}/bin/stash --config ${config.home.homeDirectory}/.config/stash/config.yml";
+        ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml";
       };
     };
   };
