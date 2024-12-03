@@ -29,6 +29,15 @@
 
       services.vscode-server.enable = true;
 
+      networking.firewall = {
+        enable = true;
+        allowedTCPPorts = [
+          80
+          443
+          9999
+        ];
+      };
+
       boot.loader = {
         # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
         grub.enable = false;

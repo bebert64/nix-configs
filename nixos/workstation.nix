@@ -1,15 +1,10 @@
 {
   pkgs,
-  lib,
   config,
   ...
 }:
 {
   imports = [ ./common.nix ];
-
-  options.by-db = with lib; {
-    bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
-  };
 
   config =
     let

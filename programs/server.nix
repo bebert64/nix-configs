@@ -1,1 +1,6 @@
-{ imports = [ ./common.nix ]; }
+{
+  imports = [
+    ./common.nix
+    ./configs/stash
+  ];
+}

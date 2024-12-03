@@ -2,41 +2,37 @@
 # so that the schema is compatible with my current db.
 { pkgs, config, ... }:
 let
-  hmCfg = config.home-manager.users.${config.by-db.user.name};
-  nixConfigsRepo = "${hmCfg.home.homeDirectory}/${hmCfg.by-db.nixConfigsRepo}";
+  nixConfigsRepo = "${config.homeDirectory}/${config.by-db.nixConfigsRepo}";
+  stash = pkgs.callPackage ./package.nix { };
 in
 {
-  # environment.systemPackages = [ pkgs.stash ];
+  home = {
+    packages = [
+      stash
+    ];
 
-  systemd = {
-    services = {
-      stash = {
-        enable = true;
-        description = "Stash server";
-        wantedBy = [ "multi-user.target" ];
-        serviceConfig = {
+    activationScript = {
+      symlinkStashConfig = ''
+        mkdir -p ${config.homDirectory}/.config/stash/
+        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.homDirectory}/.config/stash/
+        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.homDirectory}/.config/stash/
+      '';
+    };
+
+    systemd = {
+      enable = true;
+      services.stash = {
+        Unit = {
+          Description = "Stash server";
+        };
+        Install = {
+          WantedBy = [ "multi-user.target" ];
+        };
+        Service = {
           Type = "exec";
-          # ExecStart = "stash --config /stash/config.yml";
-          ExecStart = "/stash/stash";
+          ExecStart = "${stash}/bin/stash --config ${config.homDirectory}/.config/stash/config.yml";
         };
       };
     };
-  };
-
-  system.activationScripts = {
-    symlingStashConfig = ''
-      ${pkgs.coreutils}/bin/mkdir -p /stash
-      ${pkgs.coreutils}/bin/ln -sf ${nixConfigsRepo}/programs/stash/config.yml /stash/
-      ${pkgs.coreutils}/bin/ln -sf ${nixConfigsRepo}/programs/stash/scrapers /stash/
-    '';
-  };
-
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [
-      80
-      443
-      9999
-    ];
   };
 }
