@@ -18,20 +18,20 @@ in
         ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.home.homeDirectory}/.config/stash/
       '';
     };
+  };
 
-    systemd = {
-      enable = true;
-      services.stash = {
-        Unit = {
-          Description = "Stash server";
-        };
-        Install = {
-          WantedBy = [ "multi-user.target" ];
-        };
-        Service = {
-          Type = "exec";
-          ExecStart = "${stash}/bin/stash --config ${config.home.homeDirectory}/.config/stash/config.yml";
-        };
+  systemd = {
+    enable = true;
+    services.stash = {
+      Unit = {
+        Description = "Stash server";
+      };
+      Install = {
+        WantedBy = [ "multi-user.target" ];
+      };
+      Service = {
+        Type = "exec";
+        ExecStart = "${stash}/bin/stash --config ${config.home.homeDirectory}/.config/stash/config.yml";
       };
     };
   };
