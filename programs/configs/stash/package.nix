@@ -7,7 +7,7 @@ let
   version = "0.27.2";
   sources = {
     url = "https://github.com/stashapp/stash/releases/download/v${version}/stash-linux-arm64v8";
-    hash = "sha256-Rb4x6iKx6T9NPuWWDbNaz+35XPzLqZzSm0psv+k2Gw4=";
+    hash = "sha256-LRnG2CloYKyMVetVjHQ52vxg8h4bF5eK1gmBIHEeaDU=";
   };
 in
 stdenv.mkDerivation (finalAttrs: {
