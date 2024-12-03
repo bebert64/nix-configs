@@ -20,9 +20,9 @@ in
     };
   };
 
-  systemd = {
+  systemd.user = {
+    enable = true;
     services.stash = {
-      enable = true;
       Unit = {
         Description = "Stash server";
       };
