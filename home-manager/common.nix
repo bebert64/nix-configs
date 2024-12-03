@@ -9,8 +9,6 @@ let
   inherit (types) str;
 in
 {
-  imports = [ ../programs/common.nix ];
-
   options.by-db = {
     username = mkOption { type = str; };
   };
