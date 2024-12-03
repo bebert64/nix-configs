@@ -138,11 +138,6 @@
         };
       };
 
-      boot.loader = {
-        systemd-boot.enable = true;
-        efi.canTouchEfiVariables = true;
-      };
-
       security = {
         polkit.enable = true;
         pam.services.lightdm.enableGnomeKeyring = true;
