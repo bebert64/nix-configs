@@ -13,9 +13,9 @@ in
 
     activationScript = {
       symlinkStashConfig = ''
-        mkdir -p ${config.homDirectory}/.config/stash/
-        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.homDirectory}/.config/stash/
-        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.homDirectory}/.config/stash/
+        mkdir -p ${config.homeDirectory}/.config/stash/
+        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.homeDirectory}/.config/stash/
+        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.homeDirectory}/.config/stash/
       '';
     };
 
@@ -30,7 +30,7 @@ in
         };
         Service = {
           Type = "exec";
-          ExecStart = "${stash}/bin/stash --config ${config.homDirectory}/.config/stash/config.yml";
+          ExecStart = "${stash}/bin/stash --config ${config.homeDirectory}/.config/stash/config.yml";
         };
       };
     };
