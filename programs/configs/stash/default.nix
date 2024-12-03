@@ -25,8 +25,6 @@ in
     services.stash = {
       Unit = {
         Description = "Stash server";
-      };
-      Install = {
         WantedBy = [ "multi-user.target" ];
       };
       Service = {
