@@ -11,7 +11,7 @@ in
       stash
     ];
 
-    activationScript = {
+    activation = {
       symlinkStashConfig = ''
         mkdir -p ${config.home.homeDirectory}/.config/stash/
         ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.home.homeDirectory}/.config/stash/
