@@ -32,9 +32,9 @@
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [
-          80
-          443
-          9999
+          80 # http
+          443 # https
+          9999 # stash
         ];
       };
 
