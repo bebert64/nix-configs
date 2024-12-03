@@ -21,8 +21,8 @@ in
     activation = {
       symlinkStashConfig = ''
         mkdir -p ${stashDir}/
-        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${stashDir}/
-        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${stashDir}/
+        ln -sf ${nixConfigsRepo}/programs/configs/stash/config.yml ${stashDir}/
+        ln -sf ${nixConfigsRepo}/programs/configs/stash/scrapers ${stashDir}/
       '';
     };
   };
@@ -35,7 +35,7 @@ in
       };
       Service = {
         Type = "exec";
-        ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml";
+        ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
       };
       Install = {
         WantedBy = [ "multi-user.target" ];
