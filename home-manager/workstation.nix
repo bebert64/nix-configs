@@ -68,10 +68,6 @@ in
               networkmanagerapplet
             ]
           );
-
-        file = {
-          ".themes".source = "${pkgs.palenight-theme}/share/themes";
-        };
       };
 
       programs = {

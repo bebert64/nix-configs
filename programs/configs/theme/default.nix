@@ -9,6 +9,7 @@
 
     file = {
       ".config/qt5ct/qt5ct.conf".source = ./qt5ct.conf;
+      # ".themes".source = "${pkgs.palenight-theme}/share/themes";
     };
 
     pointerCursor = {
