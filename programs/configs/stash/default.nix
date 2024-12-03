@@ -2,7 +2,7 @@
 # so that the schema is compatible with my current db.
 { pkgs, config, ... }:
 let
-  nixConfigsRepo = "${config.homeDirectory}/${config.by-db.nixConfigsRepo}";
+  nixConfigsRepo = "${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}";
   stash = pkgs.callPackage ./package.nix { };
 in
 {
@@ -13,9 +13,9 @@ in
 
     activationScript = {
       symlinkStashConfig = ''
-        mkdir -p ${config.homeDirectory}/.config/stash/
-        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.homeDirectory}/.config/stash/
-        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.homeDirectory}/.config/stash/
+        mkdir -p ${config.home.homeDirectory}/.config/stash/
+        ln -sf ${nixConfigsRepo}/programs/stash/config.yml ${config.home.homeDirectory}/.config/stash/
+        ln -sf ${nixConfigsRepo}/programs/stash/scrapers ${config.home.homeDirectory}/.config/stash/
       '';
     };
 
@@ -30,7 +30,7 @@ in
         };
         Service = {
           Type = "exec";
-          ExecStart = "${stash}/bin/stash --config ${config.homeDirectory}/.config/stash/config.yml";
+          ExecStart = "${stash}/bin/stash --config ${config.home.homeDirectory}/.config/stash/config.yml";
         };
       };
     };
