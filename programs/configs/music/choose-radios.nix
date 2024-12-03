@@ -22,6 +22,7 @@ in
         done
 
         strawberry --play-playlist Radios &
+        sleep 1
         strawberry --play-track $1 &
       }
 
