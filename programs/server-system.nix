@@ -1,5 +1,0 @@
-{
-  imports = [
-    ./configs/postgresql.nix
-  ];
-}

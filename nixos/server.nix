@@ -7,7 +7,7 @@
 {
   imports = [
     ./common.nix
-    ../programs/server-system.nix
+    ../programs/configs/postgresql.nix
     vscode-server.nixosModules.default
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
@@ -21,11 +21,7 @@
 
       users.users.${cfg.user.name}.linger = true;
 
-      home-manager = {
-        users.${cfg.user.name} = {
-          imports = [ ../home-manager/server.nix ];
-        };
-      };
+      home-manager.users.${cfg.user.name}.imports = [ ../home-manager/server.nix ];
 
       services.vscode-server.enable = true;
 
@@ -45,6 +41,6 @@
         generic-extlinux-compatible.enable = true;
       };
 
-      nix.settings.trusted-users = [ "@wheel" ];
+      nix.settings.trusted-users = [ "${cfg.user.name}" ];
     };
 }

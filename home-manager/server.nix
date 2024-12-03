@@ -33,12 +33,6 @@
         restore-stash
         restore-postgres
       '')
-
-      (pkgs.writeScriptBin "restore-postgres" ''
-        set -euxo pipefail
-
-        psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump.sql
-      '')
     ];
 
     by-db-pkgs = {
