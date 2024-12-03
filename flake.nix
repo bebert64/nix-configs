@@ -62,6 +62,7 @@
               by-db
               sops-nix
               vscode-server
+              nixpkgs
               ;
           };
         };
