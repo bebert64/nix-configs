@@ -32,11 +32,13 @@ in
     services.stash = {
       Unit = {
         Description = "Stash server";
-        WantedBy = [ "multi-user.target" ];
       };
       Service = {
         Type = "exec";
         ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml";
+      };
+      Install = {
+        WantedBy = [ "multi-user.target" ];
       };
     };
   };
