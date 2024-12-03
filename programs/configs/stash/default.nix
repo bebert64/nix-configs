@@ -2,7 +2,7 @@
 # so that the schema is compatible with my current db.
 { pkgs, config, ... }:
 let
-  stashDir = "${config.home.homeDirectory}/.config/stash";
+  stashDir = "${config.home.homeDirectory}/.stash";
   nixConfigsRepo = "${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}";
   stash = pkgs.callPackage ./package.nix { };
 in
@@ -10,7 +10,6 @@ in
   home = {
     packages = [
       stash
-
       (pkgs.writeScriptBin "restore-stash" ''
         set -euxo pipefail
 
