@@ -35,4 +35,6 @@ in
       };
     };
   };
+
+  nixpkgs.config.allowUnsupportedSystem = true;
 }
