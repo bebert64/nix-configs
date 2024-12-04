@@ -12,6 +12,7 @@
     ./configs/autorandr.nix
     ./configs/avidemux.nix
     ./configs/calculator.nix
+    ./configs/calendar.nix
     ./configs/email.nix
     ./configs/firefox.nix
     ./configs/i3.nix
