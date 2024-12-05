@@ -1,7 +1,7 @@
 {
   imports = [
     ./common.nix
-    ./configs/qbittorrent.nix
+    ./configs/qbittorrent
     ./configs/stash
   ];
 }
