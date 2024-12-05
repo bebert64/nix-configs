@@ -1,11 +1,19 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   hooks-postswitch = bars: profile-name: ''
     echo "${bars}" > $HOME/.config/polybar/bars
-    systemctl --user restart polybar
     systemctl --user restart wallpapers-manager
+    systemctl --user restart polybar
     echo "${profile-name}" > $HOME/.config/autorandr/current
   '';
+  autorandr-force = "${pkgs.writeScriptBin "autorandr-force" ''
+    echo "" > $HOME/.config/autorandr/current && autorandr -c
+  ''}/bin/autorandr-force";
 in
 {
   programs.autorandr = {
@@ -14,8 +22,6 @@ in
       cmd = ''
         if [[ $(cat $HOME/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
           pkill autorandr
-          systemctl --user restart polybar
-          systemctl --user restart wallpapers-manager
         fi
       '';
     };
@@ -88,10 +94,24 @@ in
     };
   };
 
-  xsession.windowManager.i3.config.startup = [
+  xsession.windowManager.i3.config =
+    let
+      modifier = config.xsession.windowManager.i3.config.modifier;
+    in
     {
-      command = "${pkgs.srandrd}/bin/srandrd -n autorandr -c";
-      notification = false;
-    }
-  ];
+      keybindings = lib.mkOptionDefault {
+        "${modifier}+Shift+r" = "exec ${autorandr-force}";
+      };
+      startup = [
+        # Force refresh at boot, in case the config stored on disk is not the one currently applied
+        {
+          command = "${autorandr-force}";
+          notification = false;
+        }
+        {
+          command = "sleep 5 && ${pkgs.srandrd}/bin/srandrd -n autorandr -c";
+          notification = false;
+        }
+      ];
+    };
 }
