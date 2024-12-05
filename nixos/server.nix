@@ -29,6 +29,7 @@
         allowedTCPPorts = [
           80 # http
           443 # https
+          8080 # qbittorrent
           9999 # stash
         ];
       };
