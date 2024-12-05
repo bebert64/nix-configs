@@ -1,12 +1,30 @@
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
-  hooks-postswitch = bars: ''
+  hooks-postswitch = bars: profile-name: ''
     echo "${bars}" > $HOME/.config/polybar/bars
+    systemctl --user restart wallpapers-manager
     systemctl --user restart polybar
+    echo "${profile-name}" > $HOME/.config/autorandr/current
   '';
+  autorandr-force = "${pkgs.writeScriptBin "autorandr-force" ''
+    echo "" > $HOME/.config/autorandr/current && autorandr -c
+  ''}/bin/autorandr-force";
 in
 {
   programs.autorandr = {
     enable = true;
+    hooks.preswitch = {
+      cmd = ''
+        if [[ $(cat $HOME/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
+          pkill autorandr
+        fi
+      '';
+    };
     profiles = {
       stockly-romainc = {
         fingerprint = {
@@ -22,7 +40,7 @@ in
             rate = "120.00";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-on";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-on" "stockly-romainc";
       };
       stockly-romainc-bureau = {
         fingerprint = {
@@ -46,7 +64,7 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau";
       };
       fixe-bureau = {
         fingerprint = {
@@ -71,16 +89,29 @@ in
             rate = "59.96";
           };
         };
-        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2";
+        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2" "fixe-bureau";
       };
     };
   };
 
-  xsession.windowManager.i3.config.startup = [
+  xsession.windowManager.i3.config =
+    let
+      modifier = config.xsession.windowManager.i3.config.modifier;
+    in
     {
-      command = "autorandr --change";
-      notification = false;
-      always = true;
-    }
-  ];
+      keybindings = lib.mkOptionDefault {
+        "${modifier}+Shift+r" = "exec ${autorandr-force}";
+      };
+      startup = [
+        # Force refresh at boot, in case the config stored on disk is not the one currently applied
+        {
+          command = "${autorandr-force}";
+          notification = false;
+        }
+        {
+          command = "sleep 5 && ${pkgs.srandrd}/bin/srandrd -n autorandr -c";
+          notification = false;
+        }
+      ];
+    };
 }
