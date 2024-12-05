@@ -22,6 +22,6 @@
   };
 
   home.activation.symlinkQbittorrentConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ln -sf ${config.homeDirectory}/${config.by-db.nixConfigsRepo}/programs/configs/qbittorrent/qBittorrent.conf ${config.homeDirectory}/.config/qBittorrent/qbittorrent.conf
+    ln -sf ${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}/programs/configs/qbittorrent/qBittorrent.conf ${config.home.homeDirectory}/.config/qBittorrent/qbittorrent.conf
   '';
 }
