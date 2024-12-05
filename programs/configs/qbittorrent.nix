@@ -2,7 +2,7 @@
 {
   systemd.user = {
     enable = true;
-    services.stash = {
+    services.qbittorrent = {
       Unit = {
         Description = "QBittorrent server";
       };
