@@ -1,12 +1,24 @@
+{ pkgs, ... }:
 let
-  hooks-postswitch = bars: ''
+  hooks-postswitch = bars: profile-name: ''
     echo "${bars}" > $HOME/.config/polybar/bars
     systemctl --user restart polybar
+    systemctl --user restart wallpapers-manager
+    echo "${profile-name}" > $HOME/.config/autorandr/current
   '';
 in
 {
   programs.autorandr = {
     enable = true;
+    hooks.preswitch = {
+      cmd = ''
+        if [[ $(cat $HOME/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
+          pkill autorandr
+          systemctl --user restart polybar
+          systemctl --user restart wallpapers-manager
+        fi
+      '';
+    };
     profiles = {
       stockly-romainc = {
         fingerprint = {
@@ -22,7 +34,7 @@ in
             rate = "120.00";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-on";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-on" "stockly-romainc";
       };
       stockly-romainc-bureau = {
         fingerprint = {
@@ -46,7 +58,7 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau";
       };
       fixe-bureau = {
         fingerprint = {
@@ -71,16 +83,15 @@ in
             rate = "59.96";
           };
         };
-        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2";
+        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2" "fixe-bureau";
       };
     };
   };
 
   xsession.windowManager.i3.config.startup = [
     {
-      command = "autorandr --change";
+      command = "${pkgs.srandrd}/bin/srandrd -n autorandr -c";
       notification = false;
-      always = true;
     }
   ];
 }
