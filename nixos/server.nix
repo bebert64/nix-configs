@@ -7,7 +7,7 @@
 {
   imports = [
     ./common.nix
-    ../programs/configs/postgresql.nix
+    ../programs/server-global.nix
     vscode-server.nixosModules.default
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
@@ -45,66 +45,12 @@
         generic-extlinux-compatible.enable = true;
       };
 
-      services.nginx.enable = true;
-      services.nginx.virtualHosts."torrent.capucina.house" = {
+      services.nginx.virtualHosts."es.capucina.house" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          proxyPass = "http://127.0.0.1:8080";
-          extraConfig = ''
-            proxy_http_version 1.1;
-            # headers recognized by qBittorrent
-            proxy_set_header   Host               $proxy_host;
-            proxy_set_header   X-Forwarded-For    $proxy_add_x_forwarded_for;
-            proxy_set_header   X-Forwarded-Host   $http_host;
-            proxy_set_header   X-Forwarded-Proto  $scheme;
-          '';
-          # "proxy_http_version 1.1;"
-          # # headers recognized by qBittorrent
-          # + "proxy_set_header   Host               $proxy_host;"
-          # + "proxy_set_header   X-Forwarded-For    $proxy_add_x_forwarded_for;"
-          # + "proxy_set_header   X-Forwarded-Host   $http_host;"
-          # + "proxy_set_header   X-Forwarded-Proto  $scheme;";
+          root = "/var/www/capucina.house/escapucina";
         };
-
-      };
-      services.nginx.virtualHosts."stash.capucina.house" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://127.0.0.1:9999";
-          extraConfig = ''
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_read_timeout 60000s;
-          '';
-        };
-      };
-      services.nginx.virtualHosts."freebox.capucina.house" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          proxyPass = "http://192.168.1.254";
-          # extraConfig = ''
-          #   proxy_http_version 1.1;
-          #   proxy_set_header Upgrade $http_upgrade;
-          #   proxy_set_header Connection "upgrade";
-          #   proxy_set_header Host $host;
-          #   proxy_set_header X-Real-IP $remote_addr;
-          #   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          #   proxy_set_header X-Forwarded-Proto $scheme;
-          #   proxy_read_timeout 60000s;
-          # '';
-        };
-      };
-      security.acme = {
-        acceptTerms = true;
-        defaults.email = "bebert64@gmail.com";
       };
     };
 }
