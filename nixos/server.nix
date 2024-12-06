@@ -47,7 +47,6 @@
 
       services.nginx.enable = true;
       services.nginx.virtualHosts."torrent.capucina.house" = {
-        addSSL = true;
         enableACME = true;
         forceSSL = true;
         locations."/" = {
