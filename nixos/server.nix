@@ -2,12 +2,14 @@
   config,
   vscode-server,
   nixpkgs,
+  by-db,
   ...
 }:
 {
   imports = [
     ./common.nix
     ../programs/server-global.nix
+    by-db.module.aarch64-linux
     vscode-server.nixosModules.default
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
@@ -21,6 +23,8 @@
       users.users.${cfg.user.name}.linger = true;
 
       home-manager.users.${cfg.user.name}.imports = [ ../home-manager/server.nix ];
+
+      by-db-packages.escapucina.enable = true;
 
       services.vscode-server.enable = true;
 
@@ -36,6 +40,7 @@
 
       # Necessary for remote installation, using --use-remote-sudo
       nix.settings.trusted-users = [ "${cfg.user.name}" ];
+
       sdImage.compressImage = false;
 
       boot.loader = {
@@ -43,14 +48,6 @@
         grub.enable = false;
         # Enables the generation of /boot/extlinux/extlinux.conf
         generic-extlinux-compatible.enable = true;
-      };
-
-      services.nginx.virtualHosts."es.capucina.house" = {
-        enableACME = true;
-        forceSSL = true;
-        locations."/" = {
-          root = "/var/www/capucina.house/escapucina";
-        };
       };
     };
 }
