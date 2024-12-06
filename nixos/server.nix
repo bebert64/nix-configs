@@ -45,4 +45,24 @@
         generic-extlinux-compatible.enable = true;
       };
     };
+
+  services.nginx.enable = true;
+  services.nginx.virtualHosts."torrent.capucina.house" = {
+    addSSL = true;
+    enableACME = true;
+    locations."/" = {
+      proxyPass = "http://127.0.0.1:8080";
+      #   extraConfig =
+      #     # required when the target is also TLS server with multiple hosts
+      #     "proxy_ssl_server_name on;"
+      #     +
+      #       # required when the server wants to use HTTP Authentication
+      #       "proxy_pass_header Authorization;";
+    };
+
+  };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "bebert64@gmail.com";
+  };
 }
