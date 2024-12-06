@@ -51,12 +51,13 @@
         enableACME = true;
         locations."/" = {
           proxyPass = "http://127.0.0.1:8080";
-          #   extraConfig =
-          #     # required when the target is also TLS server with multiple hosts
-          #     "proxy_ssl_server_name on;"
-          #     +
-          #       # required when the server wants to use HTTP Authentication
-          #       "proxy_pass_header Authorization;";
+          extraConfig =
+            "proxy_http_version 1.1;"
+            # headers recognized by qBittorrent
+            + "proxy_set_header   Host               $proxy_host;"
+            + "proxy_set_header   X-Forwarded-For    $proxy_add_x_forwarded_for;"
+            + "proxy_set_header   X-Forwarded-Host   $http_host;"
+            + "proxy_set_header   X-Forwarded-Proto  $scheme;";
         };
 
       };
