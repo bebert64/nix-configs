@@ -49,6 +49,7 @@
       services.nginx.virtualHosts."torrent.capucina.house" = {
         addSSL = true;
         enableACME = true;
+        forceSSL = true;
         locations."/" = {
           proxyPass = "http://127.0.0.1:8080";
           extraConfig =
