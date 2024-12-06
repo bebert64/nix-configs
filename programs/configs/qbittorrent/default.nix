@@ -1,14 +1,14 @@
 {
   pkgs,
-  lib,
   config,
+  home-manager,
   ...
 }:
 let
-  cfgUser = config.homeManager.${config.by-db.user.name};
+  cfgUser = config.home-manager.users.${config.by-db.user.name};
 in
 {
-  cfgUser = {
+  home-manager.users.${config.by-db.user.name} = {
     systemd.user = {
       enable = true;
       services.qbittorrent = {
@@ -25,12 +25,12 @@ in
       };
     };
 
-    home.activation.symlinkQbittorrentConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    home.activation.symlinkQbittorrentConfig = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ln -sf ${cfgUser.home.homeDirectory}/${cfgUser.by-db.nixConfigsRepo}/programs/configs/qbittorrent/qBittorrent.conf ${cfgUser.home.homeDirectory}/.config/qBittorrent/qBittorrent.conf
     '';
   };
 
-  config.services.nginx.virtualHosts."torrent.capucina.house" = {
+  services.nginx.virtualHosts."torrent.capucina.house" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {

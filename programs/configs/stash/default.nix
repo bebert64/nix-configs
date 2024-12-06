@@ -1,14 +1,19 @@
 # Waiting for stash version from nixpkgs to catch up with the installed version
 # so that the schema is compatible with my current db.
-{ pkgs, config, ... }:
+{
+  pkgs,
+  config,
+  home-manager,
+  ...
+}:
 let
-  cfgUser = config.homeManager.${config.by-db.user.name};
+  cfgUser = config.home-manager.users.${config.by-db.user.name};
   stashDir = "${cfgUser.home.homeDirectory}/.stash";
   nixConfigsRepo = "${cfgUser.home.homeDirectory}/${cfgUser.by-db.nixConfigsRepo}";
   stash = pkgs.callPackage ./package.nix { };
 in
 {
-  cfgUser = {
+  home-manager.users.${config.by-db.user.name} = {
     home = {
       packages = [
         stash
@@ -20,7 +25,7 @@ in
       ];
 
       activation = {
-        symlinkStashConfig = ''
+        symlinkStashConfig = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           mkdir -p ${stashDir}/
           ln -sf ${nixConfigsRepo}/programs/configs/stash/config.yml ${stashDir}/
           ln -sf ${nixConfigsRepo}/programs/configs/stash/scrapers ${stashDir}/
@@ -43,11 +48,9 @@ in
         };
       };
     };
-
-    nixpkgs.config.allowUnsupportedSystem = true;
   };
 
-  config.services.nginx.virtualHosts."stash.capucina.house" = {
+  services.nginx.virtualHosts."stash.capucina.house" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -64,4 +67,6 @@ in
       '';
     };
   };
+
+  nixpkgs.config.allowUnsupportedSystem = true;
 }
