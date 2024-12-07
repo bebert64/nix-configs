@@ -24,8 +24,6 @@
 
       home-manager.users.${cfg.user.name}.imports = [ ../home-manager/server.nix ];
 
-      by-db-packages.escapucina.enable = true;
-
       services.vscode-server.enable = true;
 
       networking.firewall = {

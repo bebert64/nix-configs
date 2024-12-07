@@ -16,7 +16,7 @@
 16516||10|T|G
 342552||-9223372036854775808|C|G
 342552||16386|C|G</Grants>
-      <IntrospectionStateNumber>290802229</IntrospectionStateNumber>
+      <IntrospectionStateNumber>290850022</IntrospectionStateNumber>
       <ServerVersion>16.4</ServerVersion>
       <StartupTime>1731668789</StartupTime>
       <TimeZones>true ACDT
@@ -818,7 +818,7 @@ false Zulu
 16410||166807|U|G
 16410||186944|U|G
 16410||395789|U|G</Grants>
-      <IntrospectionStateNumber>290802229</IntrospectionStateNumber>
+      <IntrospectionStateNumber>290850022</IntrospectionStateNumber>
       <ObjectId>16401</ObjectId>
       <OwnerName>master</OwnerName>
     </database>
@@ -8865,8 +8865,8 @@ stats_fetch_consistency=snapshot</Config>
 508740||16398|D|G
 508740||16398|w|G
 508740||186944|w|G</Grants>
-      <IntrospectionStateNumber>290802229</IntrospectionStateNumber>
-      <LastIntrospectionLocalTimestamp>2024-12-06.15:12:31</LastIntrospectionLocalTimestamp>
+      <IntrospectionStateNumber>290850022</IntrospectionStateNumber>
+      <LastIntrospectionLocalTimestamp>2024-12-06.16:16:13</LastIntrospectionLocalTimestamp>
       <ObjectId>16410</ObjectId>
       <StateNumber>290436155</StateNumber>
       <OwnerName>master</OwnerName>
@@ -53501,7 +53501,7 @@ reason_details</ColNames>
       <Events>IU</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17520</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16579</CallRoutineId>
     </trigger>
     <trigger id="7911" parent="1834" name="purchase_refunds__fully_refunded_with_refused_cancellation">
@@ -53509,7 +53509,7 @@ reason_details</ColNames>
       <Deferrable>1</Deferrable>
       <Events>IU</Events>
       <ObjectId>17522</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16580</CallRoutineId>
     </trigger>
     <trigger id="7912" parent="1834" name="tg_purchase_refunds__doesnt_exceed_total_refund">
@@ -53518,7 +53518,7 @@ reason_details</ColNames>
       <Events>IU</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17593</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16468</CallRoutineId>
     </trigger>
     <check id="7913" parent="1835" name="purchase_refunds_price_et_history_previous_value_check">
@@ -54182,13 +54182,13 @@ default</CollationNames>
       <Deferrable>1</Deferrable>
       <Events>IU</Events>
       <ObjectId>17532</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16583</CallRoutineId>
     </trigger>
     <trigger id="8008" parent="1838" name="purchases__no_dd_and_cancellation_check">
       <Events>IU</Events>
       <ObjectId>17534</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16586</CallRoutineId>
     </trigger>
     <trigger id="8009" parent="1838" name="p__no_cancellation_decision_on_not_submitted_purchases__insert">
@@ -54197,7 +54197,7 @@ default</CollationNames>
       <Events>I</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17480</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16585</CallRoutineId>
     </trigger>
     <trigger id="8010" parent="1838" name="purchases__acceptable_loss_flag_is_coherent__insert">
@@ -54207,7 +54207,7 @@ default</CollationNames>
       <Events>I</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17524</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16581</CallRoutineId>
     </trigger>
     <trigger id="8011" parent="1838" name="purchases__supplier_consistent_with_pcs_submission__insert">
@@ -54216,13 +54216,13 @@ default</CollationNames>
       <Deferrable>1</Deferrable>
       <Events>I</Events>
       <ObjectId>17535</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16589</CallRoutineId>
     </trigger>
     <trigger id="8012" parent="1838" name="set_updated_at">
       <Events>U</Events>
       <ObjectId>17561</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <Turn>before-row</Turn>
       <CallRoutineId>16455</CallRoutineId>
     </trigger>
@@ -54233,7 +54233,7 @@ default</CollationNames>
       <Events>U</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17482</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16585</CallRoutineId>
     </trigger>
     <trigger id="8014" parent="1838" name="purchases__acceptable_loss_flag_is_coherent_update">
@@ -54243,7 +54243,7 @@ default</CollationNames>
       <Events>U</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17526</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16581</CallRoutineId>
     </trigger>
     <trigger id="8015" parent="1838" name="purchases__check_coherent_demander_stocks_item_id__update">
@@ -54253,7 +54253,7 @@ default</CollationNames>
       <Events>U</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17528</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16475</CallRoutineId>
     </trigger>
     <trigger id="8016" parent="1838" name="purchases__check_is_in_incoherent_refund_state">
@@ -54263,7 +54263,7 @@ default</CollationNames>
       <Events>U</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17530</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16582</CallRoutineId>
     </trigger>
     <trigger id="8017" parent="1838" name="purchases__supplier_consistent_with_pcs_submission__update">
@@ -54272,26 +54272,26 @@ default</CollationNames>
       <Deferrable>1</Deferrable>
       <Events>U</Events>
       <ObjectId>17537</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16589</CallRoutineId>
     </trigger>
     <trigger id="8018" parent="1838" name="purchases_price_et_update__update_destock_operation_total_price">
       <ColumnIndices>79</ColumnIndices>
       <Events>U</Events>
       <ObjectId>508765</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>508764</CallRoutineId>
     </trigger>
     <trigger id="8019" parent="1838" name="save_purchases_non_promo_public_price_et_history">
       <Events>U</Events>
       <ObjectId>17548</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16587</CallRoutineId>
     </trigger>
     <trigger id="8020" parent="1838" name="save_purchases_public_price_et_history">
       <Events>U</Events>
       <ObjectId>17549</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16588</CallRoutineId>
     </trigger>
     <trigger id="8021" parent="1838" name="tg_purchases__sum_of_refunds_doesnt_exceeds_price">
@@ -54301,7 +54301,7 @@ default</CollationNames>
       <Events>U</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17595</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16469</CallRoutineId>
     </trigger>
     <check id="8022" parent="1839" name="purchases_auto_ask_return_labels_by_api_b_previous_reason_check">
@@ -55346,7 +55346,7 @@ flagged_as_erroneous_at</ColNames>
       <Events>IU</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17512</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16571</CallRoutineId>
     </trigger>
     <check id="8170" parent="1852" name="purchases_shipping_refunds_price_et_histor_previous_value_check">
@@ -55688,7 +55688,7 @@ flagged_as_erroneous_at</ColNames>
       <Events>IU</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17504</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16591</CallRoutineId>
     </trigger>
     <trigger id="8218" parent="1854" name="pship__sum_of_pship_refunds_exceeds_pship_price_et">
@@ -55697,7 +55697,7 @@ flagged_as_erroneous_at</ColNames>
       <Events>IU</Events>
       <InitiallyDeferred>1</InitiallyDeferred>
       <ObjectId>17510</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16570</CallRoutineId>
     </trigger>
     <trigger id="8219" parent="1854" name="pship__pcs_supplier_consistent_with_pcs_submission_supplier_i">
@@ -55705,7 +55705,7 @@ flagged_as_erroneous_at</ColNames>
       <Deferrable>1</Deferrable>
       <Events>I</Events>
       <ObjectId>17506</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16564</CallRoutineId>
     </trigger>
     <trigger id="8220" parent="1854" name="pship__pcs_supplier_consistent_with_pcs_submission_supplier_u">
@@ -55714,7 +55714,7 @@ flagged_as_erroneous_at</ColNames>
       <Deferrable>1</Deferrable>
       <Events>U</Events>
       <ObjectId>17508</ObjectId>
-      <StateNumber>289388511</StateNumber>
+      <StateNumber>290839976</StateNumber>
       <CallRoutineId>16564</CallRoutineId>
     </trigger>
     <check id="8221" parent="1855" name="purchases_shippings_paid_at_history_change_reason_check">
