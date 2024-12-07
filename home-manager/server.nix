@@ -8,7 +8,7 @@
   imports = [
     ./common.nix
     by-db.module.aarch64-linux
-    ../programs/server.nix
+    ../programs/server-user.nix
   ];
 
   config = {
