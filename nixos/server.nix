@@ -2,14 +2,12 @@
   config,
   vscode-server,
   nixpkgs,
-  by-db,
   ...
 }:
 {
   imports = [
     ./common.nix
     ../programs/server-global.nix
-    by-db.module.aarch64-linux
     vscode-server.nixosModules.default
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];

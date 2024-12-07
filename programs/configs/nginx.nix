@@ -1,11 +1,17 @@
 {
   services.nginx = {
     enable = true;
+
     virtualHosts = {
       "freebox.capucina.house" = {
         enableACME = true;
         forceSSL = true;
         locations."/".proxyPass = "http://192.168.1.254";
+      };
+      "nas.capucina.house" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/".proxyPass = "http://192.168.1.3:5000";
       };
       "es.capucina.house" = {
         enableACME = true;

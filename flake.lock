@@ -11,16 +11,15 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1733501013,
-        "narHash": "sha256-t79CMkxg8Eyeafck/yZFoH6YTYYnDx1vW8xHRUfzp5s=",
-        "ref": "escapucina",
-        "rev": "1d03325917b5020a9db508f1f5875a479eef71dc",
-        "revCount": 87,
+        "lastModified": 1733386034,
+        "narHash": "sha256-Kazo2dN0FyM8on3Icy7jo8v+bt23wkj0ZUdyrFpI8jk=",
+        "ref": "refs/heads/main",
+        "rev": "97738eb6004ed41ca41114b4a6cfefc4995a7e3c",
+        "revCount": 84,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
       "original": {
-        "ref": "escapucina",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       }
