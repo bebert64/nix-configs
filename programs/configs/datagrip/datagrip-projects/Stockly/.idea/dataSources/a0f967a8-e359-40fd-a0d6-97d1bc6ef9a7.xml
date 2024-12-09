@@ -12912,21 +12912,21 @@ stats_fetch_consistency=snapshot</Config>
       <OwnerName>rdsadmin</OwnerName>
     </routine>
     <routine id="1020" parent="276" name="is_partition_of">
-      <ArgumentsDefinition>name, name, name, name, text</ArgumentsDefinition>
-      <ObjectId>17444</ObjectId>
-      <ResultsDefinition>text</ResultsDefinition>
-      <Rows>0.0</Rows>
-      <SourceTextLength>46</SourceTextLength>
-      <StateNumber>45998</StateNumber>
-      <LanguageName>sql</LanguageName>
-      <OwnerName>rdsadmin</OwnerName>
-    </routine>
-    <routine id="1021" parent="276" name="is_partition_of">
       <ArgumentsDefinition>name, name, text</ArgumentsDefinition>
       <ObjectId>17446</ObjectId>
       <ResultsDefinition>text</ResultsDefinition>
       <Rows>0.0</Rows>
       <SourceTextLength>38</SourceTextLength>
+      <StateNumber>45998</StateNumber>
+      <LanguageName>sql</LanguageName>
+      <OwnerName>rdsadmin</OwnerName>
+    </routine>
+    <routine id="1021" parent="276" name="is_partition_of">
+      <ArgumentsDefinition>name, name, name, name, text</ArgumentsDefinition>
+      <ObjectId>17444</ObjectId>
+      <ResultsDefinition>text</ResultsDefinition>
+      <Rows>0.0</Rows>
+      <SourceTextLength>46</SourceTextLength>
       <StateNumber>45998</StateNumber>
       <LanguageName>sql</LanguageName>
       <OwnerName>rdsadmin</OwnerName>
@@ -27249,30 +27249,30 @@ stats_fetch_consistency=snapshot</Config>
     </argument>
     <argument id="4091" parent="1020">
       <Position>3</Position>
-      <StoredType>name|0s</StoredType>
-    </argument>
-    <argument id="4092" parent="1020">
-      <Position>4</Position>
-      <StoredType>name|0s</StoredType>
-    </argument>
-    <argument id="4093" parent="1020">
-      <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </argument>
-    <argument id="4094" parent="1021">
+    <argument id="4092" parent="1021">
       <ArgumentDirection>R</ArgumentDirection>
       <StoredType>text|0s</StoredType>
     </argument>
-    <argument id="4095" parent="1021">
+    <argument id="4093" parent="1021">
       <Position>1</Position>
       <StoredType>name|0s</StoredType>
     </argument>
-    <argument id="4096" parent="1021">
+    <argument id="4094" parent="1021">
       <Position>2</Position>
       <StoredType>name|0s</StoredType>
     </argument>
-    <argument id="4097" parent="1021">
+    <argument id="4095" parent="1021">
       <Position>3</Position>
+      <StoredType>name|0s</StoredType>
+    </argument>
+    <argument id="4096" parent="1021">
+      <Position>4</Position>
+      <StoredType>name|0s</StoredType>
+    </argument>
+    <argument id="4097" parent="1021">
+      <Position>5</Position>
       <StoredType>text|0s</StoredType>
     </argument>
     <argument id="4098" parent="1022">
