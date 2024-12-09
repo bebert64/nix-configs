@@ -3,7 +3,7 @@ blobs_path: /home/romain/.stash/data
 blobs_storage: FILESYSTEM
 calculate_md5: false
 create_image_clip_from_videos: false
-dangerous_allow_public_without_auth: "false"
+dangerous_allow_public_without_auth: false
 database: /home/romain/.stash/stash-go.sqlite
 defaults:
     auto_tag_task:
@@ -140,6 +140,7 @@ no_proxy: localhost,127.0.0.1,192.168.0.0/16,10.0.0.0/8,172.16.0.0/12
 nobrowser: true
 notifications_enabled: true
 parallel_tasks: 1
+password: $2a$04$nWntEqxZzDhoEvr5Bvlla.eqSI7rKzYgferr3a7ESDw1JSH6MFTZe
 plugins:
     package_sources:
         - localpath: community
@@ -257,5 +258,6 @@ ui:
         setTags: true
         showMales: true
         tagOperation: merge
+username: shortcuts.db@gmail.com
 video_file_naming_algorithm: OSHASH
 write_image_thumbnails: true

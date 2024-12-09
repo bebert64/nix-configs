@@ -1,7 +1,8 @@
 {
   imports = [
-    ./common.nix
     ./configs/qbittorrent
     ./configs/stash
+    ./configs/nginx.nix
+    ./configs/postgresql.nix
   ];
 }
