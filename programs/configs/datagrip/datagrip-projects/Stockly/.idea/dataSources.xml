@@ -92,5 +92,12 @@
       <jdbc-url>jdbc:postgresql://scd-prod-integrations-cdiscount-apiconnector-pg-1716501170515.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="MASTER:Auths" uuid="e0fe97ff-ce0a-4df5-9545-74560703709f">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-auths-postgres-1631868573895.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
