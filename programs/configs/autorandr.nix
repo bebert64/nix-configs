@@ -90,7 +90,7 @@ in
             rate = "60.01";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau-2";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-off eDP-1-tray-on-on-hdmi" "stockly-romainc-bureau-2";
       };
       fixe-bureau = {
         fingerprint = {

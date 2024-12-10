@@ -134,7 +134,7 @@
         "module/playerctl-mini" = {
           "inherit" = "player-ctl";
           exec = "${displayTitle}";
-          label = "%output:0:90%";
+          label = "%output:0:85%";
         };
 
         # ; #######################
