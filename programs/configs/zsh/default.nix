@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   options.by-db = with lib; {
     nixConfigsRepo = mkOption {
@@ -108,6 +113,8 @@
 
         path+="$HOME/.cargo/bin"
         eval "$(direnv hook zsh)"
+
+        ${pkgs.fastfetch}/bin/fastfetch
       '';
       plugins = [
         {
