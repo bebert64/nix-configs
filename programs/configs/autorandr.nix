@@ -1,12 +1,30 @@
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
-  hooks-postswitch = bars: ''
+  hooks-postswitch = bars: profile-name: ''
     echo "${bars}" > $HOME/.config/polybar/bars
+    systemctl --user restart wallpapers-manager
     systemctl --user restart polybar
+    echo "${profile-name}" > $HOME/.config/autorandr/current
   '';
+  autorandr-force = "${pkgs.writeScriptBin "autorandr-force" ''
+    echo "" > $HOME/.config/autorandr/current && autorandr -c
+  ''}/bin/autorandr-force";
 in
 {
   programs.autorandr = {
     enable = true;
+    hooks.preswitch = {
+      cmd = ''
+        if [[ $(cat $HOME/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
+          pkill autorandr
+        fi
+      '';
+    };
     profiles = {
       stockly-romainc = {
         fingerprint = {
@@ -22,7 +40,7 @@ in
             rate = "120.00";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-on";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-on" "stockly-romainc";
       };
       stockly-romainc-bureau = {
         fingerprint = {
@@ -46,7 +64,33 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery";
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau";
+      };
+      stockly-romainc-bureau-2 = {
+        fingerprint = {
+          HDMI-1 = "00ffffffffffff00410c56c1b10000002b1f0103803c22782abe95ae5045a7260f5054bfef00d1c0b30095008180814081c001010101023a801871382d40582c450056502100001e2a4480a0703827403020350056502100001a000000fc0050484c2032373356370a202020000000fd00324c1e5311000a202020202020018902031ef14b101f051404130312021101230907078301000065030c0010008c0ad08a20e02d10103e9600565021000018011d007251d01e206e28550056502100001e8c0ad08a20e02d10103e96005650210000188c0ad090204031200c4055005650210000180000000000000000000000000000000000000000000000000011";
+          eDP-1 = "00ffffffffffff000daee71500000000211a0104a52213780228659759548e271e505400000001010101010101010101010101010101b43b804a713834405036680058c110000018000000fe004e3135364843412d4541420a20000000fe00434d4e0a202020202020202020000000fe004e3135364843412d4541420a2000b2";
+        };
+        config = {
+          HDMI-1 = {
+            enable = true;
+            crtc = 1;
+            mode = "1920x1080";
+            position = "0x0";
+            primary = false;
+            rate = "60.00";
+          };
+
+          eDP-1 = {
+            enable = true;
+            crtc = 0;
+            mode = "1920x1080";
+            position = "1920x0";
+            primary = true;
+            rate = "60.01";
+          };
+        };
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-off eDP-1-tray-on-on-hdmi" "stockly-romainc-bureau-2";
       };
       fixe-bureau = {
         fingerprint = {
@@ -71,16 +115,29 @@ in
             rate = "59.96";
           };
         };
-        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2";
+        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2" "fixe-bureau";
       };
     };
   };
 
-  xsession.windowManager.i3.config.startup = [
+  xsession.windowManager.i3.config =
+    let
+      modifier = config.xsession.windowManager.i3.config.modifier;
+    in
     {
-      command = "autorandr --change";
-      notification = false;
-      always = true;
-    }
-  ];
+      keybindings = lib.mkOptionDefault {
+        "${modifier}+Shift+r" = "exec ${autorandr-force}";
+      };
+      startup = [
+        # Force refresh at boot, in case the config stored on disk is not the one currently applied
+        {
+          command = "${autorandr-force}";
+          notification = false;
+        }
+        {
+          command = "sleep 5 && ${pkgs.srandrd}/bin/srandrd -n autorandr -c";
+          notification = false;
+        }
+      ];
+    };
 }

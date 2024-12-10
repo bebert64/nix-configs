@@ -17,18 +17,23 @@ in
   };
 
   home-manager = {
-    users.${user.name}.by-db = {
-      wifi.enable = true;
-      nixConfigsRepo = "nix-config";
-      isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
-      setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
-      setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
-      screens = {
-        primary = "eDP-1";
-        secondary = "HDMI-1";
+    users.${user.name} = {
+      by-db = {
+        wifi.enable = true;
+        nixConfigsRepo = "nix-config";
+        isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
+        setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
+        setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
+        screens = {
+          primary = "eDP-1";
+          secondary = "HDMI-1";
+        };
+      };
+      by-db-pkgs.save-autorandr-config = {
+        enable = true;
+        default-bars = "eDP-1-tray-off HDMI-1-battery";
       };
     };
-
   };
 
   # Configuration options that are not standard NixOS, but were defined by Stockly

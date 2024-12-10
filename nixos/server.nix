@@ -7,7 +7,7 @@
 {
   imports = [
     ./common.nix
-    ../programs/configs/postgresql.nix
+    ../programs/server-global.nix
     vscode-server.nixosModules.default
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
@@ -29,12 +29,14 @@
         allowedTCPPorts = [
           80 # http
           443 # https
+          8080 # qbittorrent
           9999 # stash
         ];
       };
 
       # Necessary for remote installation, using --use-remote-sudo
       nix.settings.trusted-users = [ "${cfg.user.name}" ];
+
       sdImage.compressImage = false;
 
       boot.loader = {
