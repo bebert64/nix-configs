@@ -28,7 +28,6 @@
           port = 5432;
         };
       }
-
       {
         # Operations
         bind.port = 1824;
@@ -37,7 +36,6 @@
           port = 1824;
         };
       }
-
       {
         # Stocks
         bind.port = 1825;
@@ -46,7 +44,6 @@
           port = 1825;
         };
       }
-
       {
         # Auth (not sure why there is two, launch and check someday could be cool)
         bind.port = 1826;
@@ -55,7 +52,6 @@
           port = 1826;
         };
       }
-
       {
         # Auth (not sure why there is two, launch and check someday could be cool)
         bind.port = 1827;
@@ -64,7 +60,6 @@
           port = 1827;
         };
       }
-
       {
         # Backoffice Service
         bind.port = 1828;
@@ -73,7 +68,6 @@
           port = 1828;
         };
       }
-
       {
         # Backoffice Service HTTP (not sure why there is two, launch and check someday could be cool)
         bind.port = 1829;
@@ -82,7 +76,6 @@
           port = 1829;
         };
       }
-
       {
         # Backoffice Service HTTP (not sure why there is two, launch and check someday could be cool)
         bind.port = 51016;
@@ -91,7 +84,6 @@
           port = 51016;
         };
       }
-
       {
         # Shipments
         bind.port = 1830;
@@ -100,7 +92,6 @@
           port = 1830;
         };
       }
-
       {
         # Repackages
         bind.port = 1832;
@@ -109,7 +100,6 @@
           port = 1832;
         };
       }
-
       {
         # Invoices
         bind.port = 4006;
@@ -118,7 +108,6 @@
           port = 4006;
         };
       }
-
       {
         # Files
         bind.port = 1834;
