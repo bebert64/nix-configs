@@ -11,11 +11,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1733840665,
-        "narHash": "sha256-jiu584cJ1Fg0mJlM85bypqVPoYV5PeaLkLh3zLmjg90=",
+        "lastModified": 1733906533,
+        "narHash": "sha256-ginC/O2aXxxRLfOh+xO6XLFnOjxGCzh0RCGOoN2TSsE=",
         "ref": "refs/heads/main",
-        "rev": "7945628e958fecd9464e95ed81000e051e195f60",
-        "revCount": 87,
+        "rev": "da2a76fd86beedfca46052a46c190a234a3b4d83",
+        "revCount": 93,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -107,11 +107,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733769654,
-        "narHash": "sha256-aVvYDt8eitZVF6fdOrSoIzYRkQ5Gh6kfRvqkiaDRLL0=",
+        "lastModified": 1733951607,
+        "narHash": "sha256-CN6q6iCzxI1gkNyk4xLdwaMKi10r7n+aJkRzWj8PXwQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e952e94955dcc6fa2120c1430789fc41363f5237",
+        "rev": "6e5b2d9e8014b5572e3367937a329e7053458d34",
         "type": "github"
       },
       "original": {
@@ -242,11 +242,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733785344,
-        "narHash": "sha256-pm4cfEcPXripE36PYCl0A2Tu5ruwHEvTee+HzNk+SQE=",
+        "lastModified": 1733965552,
+        "narHash": "sha256-GZ4YtqkfyTjJFVCub5yAFWsHknG1nS/zfk7MuHht4Fs=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "a80af8929781b5fe92ddb8ae52e9027fae780d2a",
+        "rev": "2d73fc6ac4eba4b9a83d3cb8275096fbb7ab4004",
         "type": "github"
       },
       "original": {
