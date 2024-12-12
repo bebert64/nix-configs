@@ -7,6 +7,16 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  open-remote = "${pkgs.writeScriptBin "open-remote" ''
+    selection=$(
+      grep -P "^Host ([^*]+)$" $HOME/.ssh/config | \
+      sed 's/Host //' | \
+      tr ' ' '\n' | \
+      sort -u | \
+      rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+    )
+    sshr $selection
+  ''}/bin/open-remote";
 in
 {
   home = {
@@ -32,6 +42,7 @@ in
   xsession.windowManager.i3.config = {
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
+      "${modifier}+Shift+r" = "workspace $ws7; exec ${open-remote}";
     };
   };
 }

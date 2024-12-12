@@ -152,7 +152,7 @@ in
     in
     {
       keybindings = lib.mkOptionDefault {
-        "${modifier}+Shift+r" = "exec ${autorandr-force}";
+        "${modifier}+Shift+a" = "exec ${autorandr-force}";
       };
       startup = [
         # Force refresh at boot, in case the config stored on disk is not the one currently applied
