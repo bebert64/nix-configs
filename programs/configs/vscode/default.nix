@@ -36,7 +36,7 @@ in
     };
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
-      "${modifier}+Control+Shift+v" = "workspace $ws3; exec ${open-remote}";
+      "${modifier}+Shift+v" = "workspace $ws3; exec ${open-remote}";
     };
   };
 }
