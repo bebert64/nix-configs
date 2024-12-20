@@ -10,7 +10,7 @@ let
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $HOME 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -matching fuzzy -disable-history -dmenu -show-icons -no-custom -p ""
     )
     code $HOME/$selection
   ''}/bin/open-local";
@@ -18,7 +18,7 @@ let
     selection=$(
       ssh cerberus "nix run \"nixpkgs#fd\" -- --base-directory ./Stockly/Main --type dir" 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -matching fuzzy -disable-history -dmenu -show-icons -no-custom -p ""
     )
     code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
   ''}/bin/open-remote";

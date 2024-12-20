@@ -13,7 +13,7 @@ let
       sed 's/Host //' | \
       tr ' ' '\n' | \
       sort -u | \
-      rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -matching fuzzy -disable-history -dmenu -show-icons -no-custom -p ""
     )
     sshr $selection
   ''}/bin/open-remote";

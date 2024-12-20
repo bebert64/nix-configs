@@ -9,6 +9,39 @@ let
   modifier = config.xsession.windowManager.i3.config.modifier;
   music_mode = "Music";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
+  open-dir = "${pkgs.writeScriptBin "open-dir" ''
+    base_dir=$HOME/mnt/NAS/Musique
+    selection=$(
+      ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
+      sort -u | \
+      rofi -matching fuzzy -disable-history -dmenu -show-icons -no-custom -p ""
+    )
+    if [[ ! $selection ]]; then
+        exit 0
+    fi
+    playlist_title=$(echo $selection | sed 's/.$//' | sed 's/\// - /g')
+
+    psg() {
+      ps aux | grep $1 | grep -v grep
+    }
+    echo "is launched : $(psg strawberry)" > /home/romain/tmp
+    IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+
+    if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
+      strawberry &
+    fi
+
+    while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
+      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
+      sleep 0.5
+    done
+
+    strawberry -c "$playlist_title" "$base_dir/$selection" &
+    sleep 0.5
+    strawberry --play-playlist "$playlist_title" &
+    sleep 0.5
+    strawberry --play-track 0 &
+  ''}/bin/open-dir";
   inherit (import ./scripts.nix { inherit cfg pkgs; })
     playerctl-move
     playerctl-restart-or-previous
@@ -102,6 +135,7 @@ in
         "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
         "l" = "workspace $ws10, exec strawberry, mode default";
         "r" = "exec choose-radios, mode default";
+        "d" = "exec ${open-dir}, mode default";
         "${modifier}+m" = "mode default";
         "h" = "exec ${set-headphones}, mode default";
         "p" = "exec ${set-speaker}, mode default";
