@@ -34,8 +34,13 @@
       <user-name>master</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="database" qname="@">
-            <node kind="schema" qname="@" />
+          <node negative="1">
+            <node kind="database">
+              <name qname="@" />
+              <name qname="shortcuts_prod" />
+              <node kind="schema" qname="@" />
+            </node>
+            <node kind="database" qname="shortcuts_dev" />
           </node>
         </introspection-scope>
       </schema-mapping>
