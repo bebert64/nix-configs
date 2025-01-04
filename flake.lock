@@ -11,11 +11,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1733906533,
-        "narHash": "sha256-ginC/O2aXxxRLfOh+xO6XLFnOjxGCzh0RCGOoN2TSsE=",
+        "lastModified": 1735931388,
+        "narHash": "sha256-EwDzs9/n0TzwIKqOqxrhGqNfT2tgpa/OX8qvTRRs9ZM=",
         "ref": "refs/heads/main",
-        "rev": "da2a76fd86beedfca46052a46c190a234a3b4d83",
-        "revCount": 93,
+        "rev": "bb3fe8dbba2b3efe16beb72e0a4930eb6e74fb54",
+        "revCount": 94,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -107,11 +107,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735774425,
-        "narHash": "sha256-C73gLFnEh8ZI0uDijUgCDWCd21T6I6tsaWgIBHcfAXg=",
+        "lastModified": 1735979091,
+        "narHash": "sha256-WpFjt6+8UD81EP386c269ZTqpEmlGJgcPw+OB4b7EBs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "5f6aa268e419d053c3d5025da740e390b12ac936",
+        "rev": "11ab08541e61ac3bbf2ab27229f68622629401df",
         "type": "github"
       },
       "original": {
