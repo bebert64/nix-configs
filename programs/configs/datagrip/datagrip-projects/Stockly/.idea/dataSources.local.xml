@@ -17,7 +17,6 @@
               <name qname="romain-dev-EnvService" />
               <name qname="romain-dev-Files" />
               <name qname="romain-dev-integrations__tradeinn__ApiConnector" />
-              <name qname="romain-dev-Operations" />
               <name qname="romain-dev-Repackages" />
               <name qname="romain-dev-SearchIngestion" />
               <name qname="romain-dev-Shipments" />
@@ -26,7 +25,9 @@
               <name qname="romain-dev-TaskTracker" />
               <name qname="romain-dev-TechTasks" />
             </node>
-            <node kind="database" qname="romain-dev-Invoices">
+            <node kind="database">
+              <name qname="romain-dev-Invoices" />
+              <name qname="romain-dev-Operations" />
               <node kind="schema" qname="@" />
             </node>
           </node>
@@ -54,15 +55,42 @@
       </schema-mapping>
     </data-source>
     <data-source name="PROD:Shipments" uuid="fc210f63-fd43-46da-bfe8-1da4b1f22a5c">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
-      <schema-mapping />
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>rw</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
     <data-source name="PROD:Stocks" uuid="1670b746-37df-4894-ac65-4d63765d52f7">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
-      <schema-mapping />
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>rw</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
     <data-source name="MASTER:PROD:Stocks" uuid="774ac305-f485-4152-a421-b924c4630034">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>master</user-name>
       <schema-mapping />
     </data-source>
     <data-source name="PROD[REPLICA]:Stocks" uuid="77d1b19a-bbff-4dfb-af4e-c9f336e58092">
@@ -189,6 +217,21 @@
             <node kind="database" qname="main">
               <node kind="schema" qname="@" />
             </node>
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="PROD[REPLICA-2]:Operations" uuid="f42cb11f-fbdf-4a3f-8e29-03d458c54f49">
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>ro</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
           </node>
         </introspection-scope>
       </schema-mapping>
