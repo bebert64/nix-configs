@@ -106,5 +106,12 @@
       <jdbc-url>jdbc:postgresql://scd-prod-backoffice-postgres-1641406516228.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="PROD[REPLICA-2]:Operations" uuid="f42cb11f-fbdf-4a3f-8e29-03d458c54f49">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-operations-postgres-1588878330974-r2.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
