@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="DB-243.21565.204">
+  <component name="dataSourceStorageLocal" created-in="DB-243.22562.115">
     <data-source name="LOCAL:romain-dev" uuid="7a2d74de-4808-4075-a78f-4b39fae69914">
       <database-info product="PostgreSQL" version="17.1" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="17.1" exact-driver-version="42.7">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>romain</user-name>
       <schema-mapping>
         <introspection-scope>
           <node negative="1">
@@ -17,7 +19,6 @@
               <name qname="romain-dev-EnvService" />
               <name qname="romain-dev-Files" />
               <name qname="romain-dev-integrations__tradeinn__ApiConnector" />
-              <name qname="romain-dev-Operations" />
               <name qname="romain-dev-Repackages" />
               <name qname="romain-dev-SearchIngestion" />
               <name qname="romain-dev-Shipments" />
@@ -26,7 +27,9 @@
               <name qname="romain-dev-TaskTracker" />
               <name qname="romain-dev-TechTasks" />
             </node>
-            <node kind="database" qname="romain-dev-Invoices">
+            <node kind="database">
+              <name qname="romain-dev-Invoices" />
+              <name qname="romain-dev-Operations" />
               <node kind="schema" qname="@" />
             </node>
           </node>
@@ -35,8 +38,19 @@
       </schema-mapping>
     </data-source>
     <data-source name="PROD[REPLICA]:Operations" uuid="c4d5b297-8c4c-48ed-8866-880241e3ceae">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
-      <schema-mapping />
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>ro</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
     <data-source name="PROD:EnvService" uuid="b7072a6a-8027-4643-adac-b386e0a280a5">
       <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
@@ -121,8 +135,19 @@
       </schema-mapping>
     </data-source>
     <data-source name="PROD:Files" uuid="6cfba2a9-61ab-4e5c-98bb-44332a17fce2">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
-      <schema-mapping />
+      <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>rw</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="database" qname="@">
+            <node kind="schema" qname="@" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
     </data-source>
     <data-source name="MASTER:PROD:ConsumerBackoffice" uuid="a0f967a8-e359-40fd-a0d6-97d1bc6ef9a7">
       <database-info product="PostgreSQL" version="16.4" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="16.4" exact-driver-version="42.7">

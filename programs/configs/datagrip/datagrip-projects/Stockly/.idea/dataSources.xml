@@ -12,7 +12,7 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://scd-prod-operations-postgres-1588878330974-r.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <jdbc-url>jdbc:postgresql://scd-prod-operations-postgres-1588878330974-r2.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="PROD:EnvService" uuid="b7072a6a-8027-4643-adac-b386e0a280a5">
