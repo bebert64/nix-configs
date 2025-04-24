@@ -107,11 +107,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745439012,
-        "narHash": "sha256-TwbdiH28QK7Da2JQTqFHdb+UCJq6QbF2mtf+RxHVzEA=",
+        "lastModified": 1745494811,
+        "narHash": "sha256-YZCh2o9Ua1n9uCvrvi5pRxtuVNml8X2a03qIFfRKpFs=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "d31710fb2cd536b1966fee2af74e99a0816a61a8",
+        "rev": "abfad3d2958c9e6300a883bd443512c55dfeb1be",
         "type": "github"
       },
       "original": {
@@ -284,11 +284,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1745325989,
-        "narHash": "sha256-meYeHI70kFnn1brXiMB/E9LMH6YsBLU8kBiDbzF9pSc=",
+        "lastModified": 1745507866,
+        "narHash": "sha256-XaxWDUGU+JOsqWkQczqT+phMBl0j0YBYtzB6QsWHPgo=",
         "ref": "refs/heads/master",
-        "rev": "1841892503ff83e0c28c39ab03c1623306a50806",
-        "revCount": 177,
+        "rev": "c0766a80a14c059ccd945dd18964a6fa3487abfd",
+        "revCount": 178,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
