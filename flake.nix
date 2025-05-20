@@ -2,8 +2,11 @@
   description = "NixOS and HomeManager configurations";
 
   inputs = {
-    stockly-computers.url = "git+ssh://git@github.com/Stockly/Computers.git";
-    nixpkgs.follows = "stockly-computers/nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    stockly-computers = {
+      url = "git+ssh://git@github.com/Stockly/Computers.git";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/";
       inputs.nixpkgs.follows = "nixpkgs";

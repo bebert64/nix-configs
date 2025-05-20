@@ -49,7 +49,7 @@
       };
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      initExtra = ''
+      initContent = ''
         # Nix updates
         update-dirty() {
           cd ~/${cfg.nixConfigsRepo}

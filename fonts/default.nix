@@ -2,12 +2,8 @@
 {
   config = {
     home.packages = with pkgs; [
-      (nerdfonts.override {
-        fonts = [
-          "FiraCode"
-          "Iosevka"
-        ];
-      })
+      nerd-fonts.fira-code
+      nerd-fonts.iosevka
     ];
     fonts.fontconfig.enable = true;
   };
