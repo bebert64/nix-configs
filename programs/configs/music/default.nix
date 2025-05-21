@@ -72,6 +72,10 @@ in
           name = "Chillhop Music";
           url = "https://streams.fluxfm.de/Chillhop/mp3-128/streams.fluxfm.de/";
         }
+        {
+          name = "Piano Zen";
+          url = "https://stream.radiofrance.fr/francemusiquepianozen/francemusiquepianozen.m3u8?id=radiofranceBose";
+        }
       ];
     };
   };
