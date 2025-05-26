@@ -34,7 +34,7 @@ in
       sops-edit = "EDITOR=vim && cd $HOME/${cfg.nixConfigsRepo}/programs/secrets && sops secrets.yaml";
     };
 
-    initExtra = ''
+    initContent = ''
       compdef '_files -W "${SymlinkPath}" -/' sops-read
       sops-read () {
         PROMPT_EOL_MARK=""
