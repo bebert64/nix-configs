@@ -123,7 +123,7 @@
 
       # Select internationalisation properties.
       i18n = {
-        defaultLocale = lib.mkDefault "en_US.utf8";
+        defaultLocale = lib.mkDefault "en_US.UTF-8";
 
         extraLocaleSettings = lib.mkDefault {
           LC_ADDRESS = "fr_FR.utf8";
