@@ -106,5 +106,19 @@
       <jdbc-url>jdbc:postgresql://scd-prod-backoffice-postgres-1641406516228.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="PROD:Buckets" uuid="5c9ca375-dd7f-42e9-9a81-f4ca9d68afa0">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-buckets-postgres-1748264818174.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="MASTER:Buckets" uuid="b8891ebd-bcf7-4e01-ab9f-598329effb26">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-buckets-postgres-1748264818174.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
