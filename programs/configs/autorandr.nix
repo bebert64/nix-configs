@@ -88,7 +88,7 @@ in
             enable = true;
             crtc = 1;
             mode = "2560x1440";
-            position = "0x0";
+            position = "1920x0";
             primary = false;
             rate = "59.95";
           };
@@ -97,7 +97,7 @@ in
             enable = true;
             crtc = 0;
             mode = "1920x1080";
-            position = "2560x360";
+            position = "0x0";
             primary = true;
             rate = "60.01";
           };
