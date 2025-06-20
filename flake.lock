@@ -246,11 +246,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1750133334,
-        "narHash": "sha256-urV51uWH7fVnhIvsZIELIYalMYsyr2FCalvlRTzqWRw=",
+        "lastModified": 1750259320,
+        "narHash": "sha256-H8J4H2XCIMEJ5g6fZ179QfQvsc2dUqhqfBjC8RAHNRY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "36ab78dab7da2e4e27911007033713bab534187b",
+        "rev": "9ba04bda9249d5d5e5238303c9755de5a49a79c5",
         "type": "github"
       },
       "original": {
@@ -339,11 +339,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1750147703,
-        "narHash": "sha256-S8rjEh9fKgiFR1UosVyxkQ80yGhc7QFXjrqRg4FI65M=",
+        "lastModified": 1750353159,
+        "narHash": "sha256-zqWOVez5w9WGPbCOGxNP0KlxSUEpu95SgEYS4OG5tBE=",
         "ref": "refs/heads/master",
-        "rev": "2c5ec6378cd4421f10cbaceceb3f7518553e7753",
-        "revCount": 194,
+        "rev": "2c776d07335535e629ca3d9b8fe13d9baea4734f",
+        "revCount": 195,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
@@ -406,15 +406,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1711042850,
-        "narHash": "sha256-8PDNi/dgoI2kyM7uSiU4eoLBqUKoA+3TXuz+VWmuCOc=",
-        "owner": "Ten0",
+        "lastModified": 1750353031,
+        "narHash": "sha256-Bx7DOPLhkr8Z60U9Qw4l0OidzHoqLDKQH5rDV5ef59A=",
+        "owner": "nix-community",
         "repo": "nixos-vscode-server",
-        "rev": "b02b3cceaae22fb66c00f03f1aff705e9711956e",
+        "rev": "4ec4859b12129c0436b0a471ed1ea6dd8a317993",
         "type": "github"
       },
       "original": {
-        "owner": "Ten0",
+        "owner": "nix-community",
         "repo": "nixos-vscode-server",
         "type": "github"
       }
@@ -427,11 +427,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1729422940,
-        "narHash": "sha256-DlvJv33ml5UTKgu4b0HauOfFIoDx6QXtbqUF3vWeRCY=",
+        "lastModified": 1750353031,
+        "narHash": "sha256-Bx7DOPLhkr8Z60U9Qw4l0OidzHoqLDKQH5rDV5ef59A=",
         "owner": "nix-community",
         "repo": "nixos-vscode-server",
-        "rev": "8b6db451de46ecf9b4ab3d01ef76e59957ff549f",
+        "rev": "4ec4859b12129c0436b0a471ed1ea6dd8a317993",
         "type": "github"
       },
       "original": {
