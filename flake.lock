@@ -178,11 +178,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1748751003,
-        "narHash": "sha256-i4GZdKAK97S0ZMU3w4fqgEJr0cVywzqjugt2qZPrScs=",
+        "lastModified": 1751170039,
+        "narHash": "sha256-3EKpUmyGmHYA/RuhZjINTZPU+OFWko0eDwazUOW64nw=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "2860bee699248d828c2ed9097a1cd82c2f991b43",
+        "rev": "9c932ae632d6b5150515e5749b198c175d8565db",
         "type": "github"
       },
       "original": {
@@ -246,11 +246,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1750969886,
-        "narHash": "sha256-zW/OFnotiz/ndPFdebpo3X0CrbVNf22n4DjN2vxlb58=",
+        "lastModified": 1751211869,
+        "narHash": "sha256-1Cu92i1KSPbhPCKxoiVG5qnoRiKTgR5CcGSRyLpOd7Y=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a676066377a2fe7457369dd37c31fd2263b662f4",
+        "rev": "b43c397f6c213918d6cfe6e3550abfe79b5d1c51",
         "type": "github"
       },
       "original": {
@@ -295,11 +295,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749004659,
-        "narHash": "sha256-zaZrcC5UwHPGkgfnhTPx5sZfSSnUJdvYHhgex10RadQ=",
+        "lastModified": 1751251399,
+        "narHash": "sha256-y+viCuy/eKKpkX1K2gDvXIJI/yzvy6zA3HObapz9XZ0=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "c52e346aedfa745564599558a096e88f9a5557f9",
+        "rev": "b22d5ee8c60ed1291521f2dde48784edd6bf695b",
         "type": "github"
       },
       "original": {
@@ -339,11 +339,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1750353159,
-        "narHash": "sha256-zqWOVez5w9WGPbCOGxNP0KlxSUEpu95SgEYS4OG5tBE=",
+        "lastModified": 1751290799,
+        "narHash": "sha256-cOkPy/dQvo/JhvTTlze8PGd5/0qXfaRPpqV83EIu7Zs=",
         "ref": "refs/heads/master",
-        "rev": "2c776d07335535e629ca3d9b8fe13d9baea4734f",
-        "revCount": 195,
+        "rev": "5b346e7cb490714109ffb88f20cdf3acfa5996ec",
+        "revCount": 197,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
