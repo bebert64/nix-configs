@@ -197,11 +197,27 @@
         };
       }
       {
-        # Backoffice Front http
+        # Consumer Backoffice Front http
         bind.port = 1242;
         host = {
           address = "localhost";
           port = 1242;
+        };
+      }
+      {
+        # Buckets grpc
+        bind.port = 1248;
+        host = {
+          address = "localhost";
+          port = 1248;
+        };
+      }
+      {
+        # Buckets http
+        bind.port = 1250;
+        host = {
+          address = "localhost";
+          port = 1250;
         };
       }
     ];
