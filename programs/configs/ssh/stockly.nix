@@ -214,10 +214,10 @@
       }
       {
         # Buckets http
-        bind.port = 1250;
+        bind.port = 1251;
         host = {
           address = "localhost";
-          port = 1250;
+          port = 1251;
         };
       }
     ];
