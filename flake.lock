@@ -246,11 +246,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1752866191,
-        "narHash": "sha256-NV4S2Lf2hYmZQ3Qf4t/YyyBaJNuxLPyjzvDma0zPp/M=",
+        "lastModified": 1753115646,
+        "narHash": "sha256-yLuz5cz5Z+sn8DRAfNkrd2Z1cV6DaYO9JMrEz4KZo/c=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f01fe91b0108a7aff99c99f2e9abbc45db0adc2a",
+        "rev": "92c2e04a475523e723c67ef872d8037379073681",
         "type": "github"
       },
       "original": {
@@ -339,11 +339,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1751897904,
-        "narHash": "sha256-a6KllFTDk23OY5dJfunFjvUVgozZ3JHuGsVSu506Wak=",
+        "lastModified": 1753107796,
+        "narHash": "sha256-bHdLofRxgGqPUZBOkAgCb73HroQik5/Z0JY1ZHOib7I=",
         "ref": "refs/heads/master",
-        "rev": "a367f32120ccab1840315a17dba37560d3ad46fb",
-        "revCount": 200,
+        "rev": "851281f0e3e4eaf76a61ec055cbf25880b467a47",
+        "revCount": 201,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
