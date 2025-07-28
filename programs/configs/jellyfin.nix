@@ -11,7 +11,10 @@
   ];
 
   services = {
-    jellyfin.enable = true;
+    jellyfin = {
+      enable = true;
+      user = "romain";
+    };
     nginx.virtualHosts."jellyfin.capucina.net" = {
       enableACME = true;
       forceSSL = true;
