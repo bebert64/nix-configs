@@ -29,11 +29,11 @@ in
 				--add-flags --ffmpeg=${pkgs.jellyfin-ffmpeg}/bin/ffmpeg
 				--add-flags --webdir=${pkgs.jellyfin-web}/share/jellyfin-web
 			";
+            Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
           };
           Install = {
             WantedBy = [ "default.target" ];
           };
-          Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
         };
       };
     };
