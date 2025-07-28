@@ -26,7 +26,7 @@ in
         };
         Service = {
           Type = "exec";
-          ExecStart = "${pkgs.jellyfin}/bin/jellyfin --ffmpeg=${pkgs.jellyfin-ffmpeg}/bin/ffmpeg --webdir=${pkgs.jellyfin-web}/share/jellyfin-web";
+          ExecStart = "${pkgs.jellyfin}/bin/jellyfin";
           Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
         };
         Install = {
