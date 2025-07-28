@@ -29,7 +29,7 @@
           proxy_buffering off;
         '';
       };
-      location."/socket" = {
+      locations."/socket" = {
         proxyPass = "http://$jellyfin:8096";
         extraConfig = ''
           # Proxy Jellyfin Websockets traffic
