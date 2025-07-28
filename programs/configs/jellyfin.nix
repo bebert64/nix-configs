@@ -7,7 +7,7 @@
     pkgs.jellyfin
     pkgs.jellyfin-ffmpeg
     pkgs.jellyfin-web
-    pkgs.youtube-dl
+    pkgs.yt-dlp
   ];
 
   services = {
