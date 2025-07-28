@@ -18,7 +18,7 @@ in
 
       systemd.user = {
         enable = true;
-        services.stash = {
+        services.jellyfin = {
           Unit = {
             Description = "Jellyfin";
           };
