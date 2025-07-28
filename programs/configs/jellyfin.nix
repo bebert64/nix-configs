@@ -3,6 +3,9 @@
   config,
   ...
 }:
+let
+  cfgUser = config.home-manager.users.${config.by-db.user.name};
+in
 {
   environment.systemPackages = [
     pkgs.jellyfin
@@ -15,7 +18,7 @@
     jellyfin = {
       enable = true;
       user = "romain";
-      Environment = "PATH=/run/current-system/sw/bin/:${config.home.homeDirectory}/.nix-profile/bin/";
+      Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
     };
     nginx.virtualHosts."jellyfin.capucina.net" = {
       enableACME = true;
