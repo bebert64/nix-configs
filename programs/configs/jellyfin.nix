@@ -7,19 +7,39 @@ let
   cfgUser = config.home-manager.users.${config.by-db.user.name};
 in
 {
-  environment.systemPackages = [
-    pkgs.jellyfin
-    pkgs.jellyfin-ffmpeg
-    pkgs.jellyfin-web
-    pkgs.yt-dlp
-  ];
+  home-manager.users.${config.by-db.user.name} = {
+    home = {
+      packages = [
+        pkgs.jellyfin
+        pkgs.jellyfin-ffmpeg
+        pkgs.jellyfin-web
+        pkgs.yt-dlp
+      ];
+
+      systemd.user = {
+        enable = true;
+        services.stash = {
+          Unit = {
+            Description = "Jellyfin";
+          };
+          Service = {
+            Type = "exec";
+            ExecStart = "
+				${pkgs.jellyfin}/bin/jellyfin
+				--add-flags --ffmpeg=${pkgs.jellyfin-ffmpeg}/bin/ffmpeg
+				--add-flags --webdir=${pkgs.jellyfin-web}/share/jellyfin-web
+			";
+          };
+          Install = {
+            WantedBy = [ "default.target" ];
+          };
+          Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
+        };
+      };
+    };
+  };
 
   services = {
-    jellyfin = {
-      enable = true;
-      user = "romain";
-      Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
-    };
     nginx.virtualHosts."jellyfin.capucina.net" = {
       enableACME = true;
       forceSSL = true;
