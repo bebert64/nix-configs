@@ -10,7 +10,7 @@ let
   cfgUser = config.home-manager.users.${config.by-db.user.name};
   stashDir = "${cfgUser.home.homeDirectory}/.stash";
   nixConfigsRepo = "${cfgUser.home.homeDirectory}/${cfgUser.by-db.nixConfigsRepo}";
-  stash = pkgs.callPackage ./package.nix { };
+  stash = pkgs.stash;
 in
 {
   home-manager.users.${config.by-db.user.name} = {
