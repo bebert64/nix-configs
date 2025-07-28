@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  home-manager,
   ...
 }:
 let
@@ -15,21 +16,21 @@ in
         pkgs.jellyfin-web
         pkgs.yt-dlp
       ];
+    };
 
-      systemd.user = {
-        enable = true;
-        services.jellyfin = {
-          Unit = {
-            Description = "Jellyfin";
-          };
-          Service = {
-            Type = "exec";
-            ExecStart = "${pkgs.jellyfin}/bin/jellyfin --add-flags --ffmpeg=${pkgs.jellyfin-ffmpeg}/bin/ffmpeg --add-flags --webdir=${pkgs.jellyfin-web}/share/jellyfin-web";
-            Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
-          };
-          Install = {
-            WantedBy = [ "default.target" ];
-          };
+    systemd.user = {
+      enable = true;
+      services.jellyfin = {
+        Unit = {
+          Description = "Jellyfin";
+        };
+        Service = {
+          Type = "exec";
+          ExecStart = "${pkgs.jellyfin}/bin/jellyfin --add-flags --ffmpeg=${pkgs.jellyfin-ffmpeg}/bin/ffmpeg --add-flags --webdir=${pkgs.jellyfin-web}/share/jellyfin-web";
+          Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
+        };
+        Install = {
+          WantedBy = [ "default.target" ];
         };
       };
     };
