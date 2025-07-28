@@ -12,7 +12,7 @@
 
   services = {
     jellyfin.enable = true;
-    nginx.virtualHosts."jellyfin.capucina.house" = {
+    nginx.virtualHosts."jellyfin.capucina.net" = {
       enableACME = true;
       forceSSL = true;
       locations."/" = {
