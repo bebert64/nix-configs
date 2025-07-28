@@ -7,6 +7,7 @@
     pkgs.jellyfin
     pkgs.jellyfin-ffmpeg
     pkgs.jellyfin-web
+    pkgs.yt-dlp
   ];
 
   services = {
