@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
@@ -14,6 +15,7 @@
     jellyfin = {
       enable = true;
       user = "romain";
+      Environment = "PATH=/run/current-system/sw/bin/:${config.home.homeDirectory}/.nix-profile/bin/";
     };
     nginx.virtualHosts."jellyfin.capucina.net" = {
       enableACME = true;
