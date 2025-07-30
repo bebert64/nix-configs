@@ -1,89 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-	<component name="dataSourceStorageLocal" created-in="DB-251.25410.123">
-		<data-source name="strawberry" uuid="0040b7c7-dece-4312-9c74-fa0729453150">
-			<database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
-				<identifier-quote-string>&quot;</identifier-quote-string>
-			</database-info>
-			<case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-			<auth-provider>no-auth</auth-provider>
-			<schema-mapping>
-				<introspection-scope>
-					<node kind="schema" qname="@" />
-				</introspection-scope>
-			</schema-mapping>
-		</data-source>
-		<data-source name="ShortCuts - Legacy" uuid="3e1ffff1-d693-4ec7-bd38-5788d5727d6b">
-			<database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
-				<identifier-quote-string>&quot;</identifier-quote-string>
-			</database-info>
-			<case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-			<auth-provider>no-auth</auth-provider>
-			<schema-mapping>
-				<introspection-scope>
-					<node kind="schema" qname="@" />
-				</introspection-scope>
-			</schema-mapping>
-		</data-source>
-		<data-source name="raspi - master" uuid="6d279d07-dde2-4187-b718-531d2db33972">
-			<database-info product="PostgreSQL" version="15.9" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="15.9" exact-driver-version="42.7">
-				<identifier-quote-string>&quot;</identifier-quote-string>
-			</database-info>
-			<case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
-			<secret-storage>master_key</secret-storage>
-			<user-name>master</user-name>
-			<schema-mapping>
-				<introspection-scope>
-					<node negative="1">
-						<node kind="database">
-							<name qname="@" />
-							<name qname="shortcuts_prod" />
-							<node kind="schema" qname="@" />
+  <component name="dataSourceStorageLocal" created-in="DB-251.25410.123">
+    <data-source name="strawberry" uuid="0040b7c7-dece-4312-9c74-fa0729453150">
+      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="ShortCuts - Legacy" uuid="3e1ffff1-d693-4ec7-bd38-5788d5727d6b">
+      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="raspi - master" uuid="6d279d07-dde2-4187-b718-531d2db33972">
+      <database-info product="PostgreSQL" version="15.9" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="15.9" exact-driver-version="42.7">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>master</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node negative="1">
+            <node kind="database">
+              <name qname="@" />
+              <name qname="shortcuts_prod" />
+              <node kind="schema" qname="@" />
             </node>
-						<node kind="database" qname="shortcuts_dev" />
+            <node kind="database" qname="shortcuts_dev" />
           </node>
-				</introspection-scope>
-			</schema-mapping>
-		</data-source>
-		<data-source name="places.sqlite" uuid="22151e9a-1b6e-48a1-a53b-26fd80820e73">
-			<database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
-				<identifier-quote-string>&quot;</identifier-quote-string>
-			</database-info>
-			<case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-			<auth-provider>no-auth</auth-provider>
-			<schema-mapping>
-				<introspection-scope>
-					<node kind="schema" qname="@" />
-				</introspection-scope>
-			</schema-mapping>
-		</data-source>
-		<data-source name="stash_full_usable.sqlite" uuid="528fa8d3-7091-4c41-8b16-d911a4f8bdc2">
-			<database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
-				<identifier-quote-string>&quot;</identifier-quote-string>
-			</database-info>
-			<case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-			<auth-provider>no-auth</auth-provider>
-			<schema-mapping>
-				<introspection-scope>
-					<node kind="schema" qname="@" />
-				</introspection-scope>
-			</schema-mapping>
-		</data-source>
-		<data-source name="database" uuid="150950b6-5cc6-41bc-b36d-1f667704436f">
-			<database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="H2" />
-			<schema-mapping />
-		</data-source>
-		<data-source name="jellyfin" uuid="6a845b4a-fc28-4ac8-9519-b7ef93928f0d">
-			<database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
-				<identifier-quote-string>&quot;</identifier-quote-string>
-			</database-info>
-			<case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
-			<auth-provider>no-auth</auth-provider>
-			<schema-mapping>
-				<introspection-scope>
-					<node kind="schema" qname="@" />
-				</introspection-scope>
-			</schema-mapping>
-		</data-source>
-	</component>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="places.sqlite" uuid="22151e9a-1b6e-48a1-a53b-26fd80820e73">
+      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="stash_full_usable.sqlite" uuid="528fa8d3-7091-4c41-8b16-d911a4f8bdc2">
+      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="database" uuid="150950b6-5cc6-41bc-b36d-1f667704436f">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="H2" />
+      <schema-mapping />
+    </data-source>
+    <data-source name="jellyfin" uuid="6a845b4a-fc28-4ac8-9519-b7ef93928f0d">
+      <database-info product="SQLite" version="3.45.1" jdbc-version="4.2" driver-name="SQLite JDBC" driver-version="3.45.1.0" dbms="SQLITE" exact-version="3.45.1" exact-driver-version="3.45">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <auth-provider>no-auth</auth-provider>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+  </component>
 </project>
