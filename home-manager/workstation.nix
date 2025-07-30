@@ -101,7 +101,7 @@ in
             passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
           };
           apiKey = "${config.sops.secrets."stash/api-key".path}";
-          stashApiUrl = "https://stash.capucina.net/graphql";
+          stashApiUrl = "https://stash.capucina.house/graphql";
         };
       };
 

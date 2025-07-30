@@ -50,7 +50,7 @@ in
     };
   };
 
-  services.nginx.virtualHosts."stash.capucina.net" = {
+  services.nginx.virtualHosts."stash.capucina.house" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
