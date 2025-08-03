@@ -22,6 +22,7 @@ in
       "ffsync/shortcuts-db" = { };
       "raspi/postgresql/rw" = { };
       "stash/api-key" = { };
+      "jellyfin/api-key" = { };
     };
   };
 
