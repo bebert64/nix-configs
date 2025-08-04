@@ -57,18 +57,18 @@
         };
         apiKey = "${config.sops.secrets."stash/api-key".path}";
       };
-      jellyfin = {
-        service.enable = true;
-        postgres = {
-          ip = "127.0.0.1";
-          password = "${config.sops.secrets."raspi/postgresql/rw".path}";
-        };
-        ffsync = {
-          username = "shortcuts.db@gmail.com";
-          passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
-        };
-        apiKey = "${config.sops.secrets."stash/api-key".path}";
-      };
+      # jellyfin = {
+      #   service.enable = true;
+      #   postgres = {
+      #     ip = "127.0.0.1";
+      #     password = "${config.sops.secrets."raspi/postgresql/rw".path}";
+      #   };
+      #   ffsync = {
+      #     username = "shortcuts.db@gmail.com";
+      #     passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
+      #   };
+      #   apiKey = "${config.sops.secrets."stash/api-key".path}";
+      # };
     };
   };
 }
