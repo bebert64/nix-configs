@@ -22,7 +22,7 @@ in
       "ffsync/shortcuts-db" = { };
       "raspi/postgresql/rw" = { };
       "stash/api-key" = { };
-      "jellyfin/access-token" = { };
+      # "jellyfin/access-token" = { };
     };
   };
 
