@@ -81,16 +81,14 @@ in
       };
 
       by-db-pkgs = {
-        wallpapers-manager = {
-          services = {
-            change = {
-              enable = true;
-              commandArgs = "--mode fifty-fifty";
-            };
-          };
-          ffsync = {
+        guitar-tutorials = {
+          app.enable = true;
+          firefox = {
             username = "bebert64@gmail.com";
             passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+          };
+          jellyfin = {
+            accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           };
         };
         shortcuts = {
@@ -102,14 +100,17 @@ in
           };
           apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
-        jellyfin = {
-          app.enable = true;
-          postgres.password = "${config.sops.secrets."raspi/postgresql/rw".path}";
-          ffsync = {
-            username = "shortcuts.db@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
+        wallpapers-manager = {
+          services = {
+            change = {
+              enable = true;
+              commandArgs = "--mode fifty-fifty";
+            };
           };
-          apiKey = "${config.sops.secrets."stash/api-key".path}";
+          ffsync = {
+            username = "bebert64@gmail.com";
+            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+          };
         };
       };
 
