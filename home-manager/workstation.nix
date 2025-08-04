@@ -102,6 +102,15 @@ in
           };
           apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
+        jellyfin = {
+          app.enable = true;
+          postgres.password = "${config.sops.secrets."raspi/postgresql/rw".path}";
+          ffsync = {
+            username = "shortcuts.db@gmail.com";
+            passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
+          };
+          apiKey = "${config.sops.secrets."stash/api-key".path}";
+        };
       };
 
       xdg = {
