@@ -14,6 +14,9 @@
       home-manager = {
         users.${cfg.user.name} = {
           imports = [ ../home-manager/workstation.nix ];
+          by-db = {
+            bluetooth.enable = cfg.bluetooth.enable;
+          };
         };
       };
 

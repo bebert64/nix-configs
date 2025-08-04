@@ -17,6 +17,7 @@
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
+    bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
   };
 
   config =

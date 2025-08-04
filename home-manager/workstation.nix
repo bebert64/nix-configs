@@ -81,16 +81,16 @@ in
       };
 
       by-db-pkgs = {
-        guitar-tutorials = {
-          app.enable = true;
-          firefox = {
-            username = "bebert64@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
-          };
-          jellyfin = {
-            accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
-          };
-        };
+        # guitar-tutorials = {
+        #   app.enable = true;
+        #   firefox = {
+        #     username = "bebert64@gmail.com";
+        #     passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+        #   };
+        #   jellyfin = {
+        #     accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
+        #   };
+        # };
         shortcuts = {
           app.enable = true;
           postgres.password = "${config.sops.secrets."raspi/postgresql/rw".path}";
