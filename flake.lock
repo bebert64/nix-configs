@@ -11,17 +11,16 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1753878494,
-        "narHash": "sha256-hhKIrH+vpdHBtgyQQ4cEeCP93D2BA0E7Vo+H3aYD7QE=",
-        "ref": "refs/heads/main",
-        "rev": "05d57a92d906e43b3bce256feb3fffa74c1d12f0",
-        "revCount": 92,
+        "lastModified": 1754331782,
+        "narHash": "sha256-YuT5zXmjkjdzHXNFQIg7LA3Y18i/WO3DhUkb7FsDfYM=",
+        "ref": "download-crate-tutorials",
+        "rev": "9bd43fc5ce78923c95343d01170ac050d68a76cb",
+        "revCount": 111,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
       "original": {
         "ref": "download-crate-tutorials",
-        "rev": "b8be444a0ecf596a3572f6419ef1c50c19089935",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       }
@@ -360,11 +359,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752544651,
-        "narHash": "sha256-GllP7cmQu7zLZTs9z0J2gIL42IZHa9CBEXwBY9szT0U=",
+        "lastModified": 1754328224,
+        "narHash": "sha256-glPK8DF329/dXtosV7YSzRlF4n35WDjaVwdOMEoEXHA=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "2c8def626f54708a9c38a5861866660395bb3461",
+        "rev": "49021900e69812ba7ddb9e40f9170218a7eca9f4",
         "type": "github"
       },
       "original": {

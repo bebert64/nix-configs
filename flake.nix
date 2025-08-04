@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso?ref=download-crate-tutorials&rev=b8be444a0ecf596a3572f6419ef1c50c19089935";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=download-crate-tutorials";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {
