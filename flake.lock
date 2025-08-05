@@ -11,11 +11,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1754331782,
-        "narHash": "sha256-YuT5zXmjkjdzHXNFQIg7LA3Y18i/WO3DhUkb7FsDfYM=",
+        "lastModified": 1754337726,
+        "narHash": "sha256-Ugx205GqkLsKwZM0z+OfXreNJyu0haPdnIe/WCmAHRQ=",
         "ref": "download-crate-tutorials",
-        "rev": "9bd43fc5ce78923c95343d01170ac050d68a76cb",
-        "revCount": 111,
+        "rev": "b59bc7e20a90a7800559e95409625d5c49598df7",
+        "revCount": 116,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -273,11 +273,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1754028485,
-        "narHash": "sha256-IiiXB3BDTi6UqzAZcf2S797hWEPCRZOwyNThJIYhUfk=",
+        "lastModified": 1754292888,
+        "narHash": "sha256-1ziydHSiDuSnaiPzCQh1mRFBsM2d2yRX9I+5OPGEmIE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "59e69648d345d6e8fef86158c555730fa12af9de",
+        "rev": "ce01daebf8489ba97bd1609d185ea276efdeb121",
         "type": "github"
       },
       "original": {

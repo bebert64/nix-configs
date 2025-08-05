@@ -8,6 +8,10 @@
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
+  ffsync = {
+    username = "bebert64@gmail.com";
+    passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+  };
 in
 {
   imports = [
@@ -83,10 +87,7 @@ in
       by-db-pkgs = {
         guitar-tutorials = {
           app.enable = true;
-          firefox = {
-            username = "bebert64@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
-          };
+          firefox = ffsync;
           jellyfin = {
             accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           };
@@ -107,10 +108,7 @@ in
               commandArgs = "--mode fifty-fifty";
             };
           };
-          ffsync = {
-            username = "bebert64@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
-          };
+          inherit ffsync;
         };
       };
 
