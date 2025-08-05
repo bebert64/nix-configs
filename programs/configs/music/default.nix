@@ -26,7 +26,7 @@ in
 
   by-db-pkgs = {
     strawberry-radios = {
-      # activationScript.enable = true;
+      activationScript.enable = true;
       radios = [
         {
           name = "FIP";
