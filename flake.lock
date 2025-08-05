@@ -11,11 +11,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1754384626,
-        "narHash": "sha256-Op/U2KgRBGM1phSlq8Gn2pvqc94N0JlEi88fxvWxFD8=",
+        "lastModified": 1754404613,
+        "narHash": "sha256-g/LMAoS2r0MARfTTShb+Z4kQRLA4ZvpCljGTe6VaQCU=",
         "ref": "refs/heads/main",
-        "rev": "c8f75cc51aeac3121fc9f8e123bdd8697e33476c",
-        "revCount": 94,
+        "rev": "87a0b5df9adb1adaec1d6196894dc2c05a27d3c0",
+        "revCount": 95,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -33,11 +33,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1753685071,
-        "narHash": "sha256-hf+A5F4yyCisGPN4SvTpO0EkE0dQsp5gwRtRHUs46oY=",
+        "lastModified": 1754376329,
+        "narHash": "sha256-Uz90O6qpmXQoNV57bf78yNd+nTxOoV5sjF1MibSdqWg=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "b3b3e0da43a02ef1e40f4cfe485af70176e6f2e5",
+        "rev": "ee7cae7d4cd68f7f2e78493a1f62212640db223c",
         "type": "github"
       },
       "original": {
@@ -256,11 +256,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1753549186,
-        "narHash": "sha256-Znl7rzuxKg/Mdm6AhimcKynM7V3YeNDIcLjBuoBcmNs=",
+        "lastModified": 1754214453,
+        "narHash": "sha256-Q/I2xJn/j1wpkGhWkQnm20nShYnG7TI99foDBpXm1SY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "17f6bd177404d6d43017595c5264756764444ab8",
+        "rev": "5b09dc45f24cf32316283e62aec81ffee3c3e376",
         "type": "github"
       },
       "original": {
@@ -299,11 +299,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1753651982,
-        "narHash": "sha256-RzsKuX6BQntFOhvqbstzOtzkOv0lkW4l8SYu6ffTf74=",
+        "lastModified": 1754320527,
+        "narHash": "sha256-5/EHPlvDFb1MPVcnUwpAcc9sHejhDhAj4uloUU4rthk=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "db02cdc7fc8b0e0b9aa1be4110a74620bbac1f98",
+        "rev": "978393bae86212f867e0c43872989e1658f7690f",
         "type": "github"
       },
       "original": {
@@ -382,11 +382,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1754298092,
-        "narHash": "sha256-kxfxNHhKvKWgJpQHDEtwzJIAyn9UHc900FS/yOI9hyA=",
+        "lastModified": 1754400302,
+        "narHash": "sha256-i1IgQLexLcvH4g4HWNKcpVzvIrHE8Tjm3tJEDde7ti0=",
         "ref": "refs/heads/master",
-        "rev": "c648fa2cb6be0bf5178a534c9cc98649c272c6ce",
-        "revCount": 207,
+        "rev": "bfebdfb2490c10dfe87d9a775490e521961ada5a",
+        "revCount": 208,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
