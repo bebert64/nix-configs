@@ -11,16 +11,15 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1754380111,
-        "narHash": "sha256-y1J4Pipw5fiqdjnEuf+wBAiHFLg0kqEVdcdNSC7i9eU=",
-        "ref": "download-crate-tutorials",
-        "rev": "7911881216a5197edb2611a1187c10726694cffe",
-        "revCount": 124,
+        "lastModified": 1754384626,
+        "narHash": "sha256-Op/U2KgRBGM1phSlq8Gn2pvqc94N0JlEi88fxvWxFD8=",
+        "ref": "refs/heads/main",
+        "rev": "c8f75cc51aeac3121fc9f8e123bdd8697e33476c",
+        "revCount": 94,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
       "original": {
-        "ref": "download-crate-tutorials",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       }
