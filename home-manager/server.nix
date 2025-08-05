@@ -57,6 +57,16 @@
         };
         apiKey = "${config.sops.secrets."stash/api-key".path}";
       };
+      guitar-tutorials = {
+        service.enable = true;
+        firefox = {
+          username = "bebert64@gmail.com";
+          passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+        };
+        jellyfin = {
+          accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
+        };
+      };
     };
   };
 }
