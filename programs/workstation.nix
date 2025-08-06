@@ -7,6 +7,7 @@
     ./configs/polybar
     ./configs/theme
     ./configs/music
+    ./configs/sqlfluff
     ./configs/terminal
     ./configs/vscode
     ./configs/autorandr.nix
