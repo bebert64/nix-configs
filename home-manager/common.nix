@@ -25,6 +25,7 @@ in
         packages = (
           with pkgs;
           [
+            p7zip
             nixd
             nixfmt-rfc-style
             nodejs
@@ -34,9 +35,7 @@ in
             rsync
             sshfs
             unrar
-            unzip
             yt-dlp
-            zip
           ]
         );
       };

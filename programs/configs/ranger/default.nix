@@ -17,6 +17,9 @@ let
     )
     sshr $selection
   ''}/bin/open-remote";
+  homeDir = config.home.homeDirectory;
+  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
+  rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
 in
 {
   home = {
@@ -29,8 +32,13 @@ in
     ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p $HOME/.local/share/ranger/
-        sed "s/\$USER/"$USER"/" ${./bookmarks} > $HOME/.local/share/ranger/bookmarks
+        mkdir -p ${homeDir}/.local/share/ranger/
+        sed "s/\$USER/"$USER"/" ${./bookmarks} > ${homeDir}/.local/share/ranger/bookmarks
+      '';
+
+      symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p ${rangerPluginsDir}/
+        ln -sf ${nixConfigsRepo}/programs/configs/ranger/ranger-archives ${rangerPluginsDir}/
       '';
     };
     file = {

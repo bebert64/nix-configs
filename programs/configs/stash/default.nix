@@ -1,5 +1,3 @@
-# Waiting for stash version from nixpkgs to catch up with the installed version
-# so that the schema is compatible with my current db.
 {
   pkgs,
   config,
