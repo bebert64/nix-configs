@@ -32,7 +32,7 @@ in
 
   programs.zsh = {
     shellAliases = {
-      sops-edit = "EDITOR=vim && cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets && sops secrets.yaml";
+      sops-edit = "cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets && sops secrets.yaml && cd -";
     };
 
     initContent = ''
