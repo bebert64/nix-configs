@@ -1,5 +1,6 @@
 {
   imports = [
+    ./configs/dnsmasq.nix
     ./configs/jellyfin.nix
     ./configs/nginx.nix
     ./configs/postgresql.nix
