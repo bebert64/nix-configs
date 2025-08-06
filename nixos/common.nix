@@ -7,6 +7,7 @@
   ...
 }:
 {
+
   imports = [
     home-manager.nixosModules.home-manager
     ../nas.nix
@@ -25,6 +26,7 @@
       cfg = config.by-db;
     in
     {
+
       users = {
         users.${cfg.user.name} = {
           isNormalUser = true;

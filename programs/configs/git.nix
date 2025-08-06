@@ -74,7 +74,7 @@
         pull.rebase = "true";
         core = {
           commentchar = "%";
-          editor = "vim";
+          editor = "neovim";
           ui = "true";
         };
         push.default = "current";

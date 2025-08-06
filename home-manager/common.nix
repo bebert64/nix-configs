@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  nixneovimplugins,
   ...
 }:
 let
@@ -18,6 +19,10 @@ in
       cfg = config.by-db;
     in
     {
+      nixpkgs.overlays = [
+        nixneovimplugins.overlays.default
+      ];
+
       home = {
         username = "${cfg.username}";
         homeDirectory = "/home/${cfg.username}";
