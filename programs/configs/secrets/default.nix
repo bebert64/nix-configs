@@ -22,6 +22,7 @@ in
       "ffsync/shortcuts-db" = { };
       "raspi/postgresql/rw" = { };
       "stash/api-key" = { };
+      "jellyfin/access-token" = { };
     };
   };
 
@@ -31,7 +32,7 @@ in
 
   programs.zsh = {
     shellAliases = {
-      sops-edit = "EDITOR=vim && cd $HOME/${cfg.nixConfigsRepo}/programs/secrets && sops secrets.yaml";
+      sops-edit = "EDITOR=vim && cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets && sops secrets.yaml";
     };
 
     initContent = ''

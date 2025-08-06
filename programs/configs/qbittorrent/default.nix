@@ -30,7 +30,7 @@ in
     '';
   };
 
-  services.nginx.virtualHosts."torrent.capucina.house" = {
+  services.nginx.virtualHosts."torrent.capucina.net" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {

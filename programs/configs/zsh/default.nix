@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -95,17 +94,15 @@
           cargo check 
           cd -
         }
-        cucw() {
+        cccw() {
           cdr ${cfg.mainCodingRepo.workspaceDir}
           cargo clean
-          cargo update
           cargo check
           cd -
         }
-        cutfw() {
+        cctfw() {
           cdr ${cfg.mainCodingRepo.workspaceDir}
           cargo clean
-          cargo update
           cargo test
           cargo fmt -- --config "${formatOptions}"
           cd -
@@ -113,8 +110,6 @@
 
         path+="$HOME/.cargo/bin"
         eval "$(direnv hook zsh)"
-
-        ${pkgs.fastfetch}/bin/fastfetch
       '';
       plugins = [
         {

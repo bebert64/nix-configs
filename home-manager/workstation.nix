@@ -8,6 +8,10 @@
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
+  ffsync = {
+    username = "bebert64@gmail.com";
+    passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+  };
 in
 {
   imports = [
@@ -81,16 +85,11 @@ in
       };
 
       by-db-pkgs = {
-        wallpapers-manager = {
-          services = {
-            change = {
-              enable = true;
-              commandArgs = "--mode fifty-fifty";
-            };
-          };
-          ffsync = {
-            username = "bebert64@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
+        guitar-tutorials = {
+          app.enable = true;
+          firefox = ffsync;
+          jellyfin = {
+            accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           };
         };
         shortcuts = {
@@ -101,7 +100,15 @@ in
             passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
           };
           apiKey = "${config.sops.secrets."stash/api-key".path}";
-          stashApiUrl = "https://stash.capucina.house/graphql";
+        };
+        wallpapers-manager = {
+          services = {
+            change = {
+              enable = true;
+              commandArgs = "--mode fifty-fifty";
+            };
+          };
+          inherit ffsync;
         };
       };
 

@@ -281,5 +281,9 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="MASTER:Backoffice" uuid="b855bd53-484b-4e31-9f4d-17e979ae632d">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
