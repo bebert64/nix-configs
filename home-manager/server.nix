@@ -40,7 +40,7 @@
         services.download = {
           enable = true;
         };
-        ffsync = {
+        firefox.ffsync = {
           username = "bebert64@gmail.com";
           passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
         };
@@ -59,7 +59,7 @@
       };
       guitar-tutorials = {
         service.enable = true;
-        firefox = {
+        firefox.ffsync = {
           username = "bebert64@gmail.com";
           passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
         };

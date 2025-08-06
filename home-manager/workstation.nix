@@ -87,7 +87,7 @@ in
       by-db-pkgs = {
         guitar-tutorials = {
           app.enable = true;
-          firefox = ffsync;
+          firefox = { inherit ffsync; };
           jellyfin = {
             accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           };
@@ -108,7 +108,7 @@ in
               commandArgs = "--mode fifty-fifty";
             };
           };
-          inherit ffsync;
+          firefox = { inherit ffsync; };
         };
       };
 
