@@ -25,7 +25,6 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixneovimplugins.url = "github:NixNeovim/NixNeovimPlugins";
   };
 
   outputs =
@@ -36,7 +35,6 @@
       stockly-computers,
       sops-nix,
       vscode-server,
-      nixneovimplugins,
       ...
     }:
     {
@@ -50,7 +48,6 @@
               home-manager
               by-db
               sops-nix
-              nixneovimplugins
               ;
           };
         };
@@ -58,12 +55,7 @@
         fixe-bureau = nixpkgs.lib.nixosSystem {
           modules = [ ./fixe-bureau/configuration.nix ];
           specialArgs = {
-            inherit
-              home-manager
-              by-db
-              sops-nix
-              nixneovimplugins
-              ;
+            inherit home-manager by-db sops-nix;
           };
         };
 
@@ -76,7 +68,6 @@
               sops-nix
               vscode-server
               nixpkgs
-              nixneovimplugins
               ;
           };
         };
