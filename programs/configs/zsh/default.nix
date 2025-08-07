@@ -37,6 +37,7 @@
         wke1 = "i3-msg workspace 11:󰸉";
         wke2 = "i3-msg workspace 12:󰸉";
         de = "yt-dlp -f 720p_HD";
+        nix-shell = "nix-shell --run zsh";
       };
       history = {
         size = 200000;
