@@ -53,29 +53,29 @@
         # Nix updates
         update-dirty() {
           cd ~/${cfg.nixConfigsRepo}
-          sudo nixos-rebuild switch --flake .#
+          systemd-inhibit sudo nixos-rebuild switch --flake .#
         }
         update() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          sudo nixos-rebuild switch --flake .#
+          systemd-inhibit sudo nixos-rebuild switch --flake .#
         }
         update-clean() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          sudo nix-collect-garbage -d
-          sudo nixos-rebuild switch --flake .#
+          systemd-inhibit sudo nix-collect-garbage -d
+          systemd-inhibit sudo nixos-rebuild switch --flake .#
         }
         update-raspi() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          nixos-rebuild switch --target-host raspi --build-host localhost --use-remote-sudo --flake .#raspi
+          systemd-inhibit nixos-rebuild switch --target-host raspi --build-host localhost --use-remote-sudo --flake .#raspi
         }
         upgrade() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          nix flake update --commit-lock-file
-          sudo nixos-rebuild switch --flake .#
+          systemd-inhibit nix flake update --commit-lock-file
+          systemd-inhibit sudo nixos-rebuild switch --flake .#
           git push
         }
 
