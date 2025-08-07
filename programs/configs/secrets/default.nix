@@ -31,15 +31,18 @@ in
   };
 
   programs.zsh = {
-    shellAliases = {
-      sops-edit = "cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets && sops secrets.yaml && cd -";
-    };
-
     initContent = ''
       compdef '_files -W "${SymlinkPath}" -/' sops-read
+
       sops-read () {
         PROMPT_EOL_MARK=""
         cat ${SymlinkPath}/$1
+      }
+
+      sops-edit () {
+        cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets
+        sops secrets.yaml || true
+        cd -
       }
 
     '';
