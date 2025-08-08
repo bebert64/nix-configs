@@ -69,6 +69,9 @@ in
           proxy_set_header X-Forwarded-Host $http_host;
         '';
       };
+      locations."/tabs/" = {
+        alias = "/mnt/NAS/Guitare/Tabs/";
+      };
     };
 
     meilisearch.enable = true;
