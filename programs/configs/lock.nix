@@ -62,15 +62,16 @@ in
       home.packages = [
         alock
         xidlehook
-
-        (lockScript "lock" killXidlehook)
+        (lockScript "lock" ''
+          ${killXidlehook}
+          xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
+        '')
         (lockScript "lock-wait-sleep" ''
           ${killXidlehook}
           xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
         '')
-
         (lockScript "lock-sleep" "systemctl suspend")
-        (writeScriptBin "wait-sleep-2-hours" ''
+        (writeScriptBin "wait-lock-2-hours" ''
           ${killXidlehook}
           xidlehook --timer ${toString (2 * 60 * 60)} 'lock-wait-sleep' ' ' &
         '')
@@ -96,7 +97,7 @@ in
           ${lockMode} = {
             "--release o" = "exec lock-wait-sleep, mode default";
             "--release d" = "exec lock, mode default";
-            "--release n" = "exec wait-sleep-2-hours, mode default";
+            "--release n" = "exec wait-lock-2-hours, mode default";
             Escape = "mode default";
             Return = "mode default";
           };
