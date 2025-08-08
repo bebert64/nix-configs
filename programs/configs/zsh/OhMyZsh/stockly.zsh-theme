@@ -8,6 +8,7 @@ ZSH_GIT_COLOR="%F{070}"
 ZSH_THEME_GIT_PROMPT_STAGED_COLOR="%F{003}"
 ZSH_THEME_GIT_PROMPT_UNSTAGED_COLOR="%F{039}"
 ZSH_THEME_GIT_PROMPT_STASHED_COLOR="%F{129}"
+ZSH_THEME_NIX_SHELL_COLOR="%F{027}"  # Blue color for nix-shell indicator
 
 if [ "x$OH_MY_ZSH_HG" = "x" ]; then
     OH_MY_ZSH_HG="hg"
@@ -15,6 +16,12 @@ fi
 
 function virtualenv_info() {
   [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+}
+
+function nix_shell_info() {
+  if [[ -n "$IN_NIX_SHELL" ]]; then
+    echo "%F{027}(nix-shell)%{$reset_color%} "
+  fi
 }
 
 function hg_prompt_info() {
@@ -30,6 +37,7 @@ function box_name() {
 }
 
 function prompt_char() {
+  [[ -n "$IN_NIX_SHELL" ]] && echo '❄' && return  # Nix snowflake
   git branch >/dev/null 2>/dev/null && echo '±' && return
   hg root >/dev/null 2>/dev/null && echo '☿' && return
   echo '$'
@@ -49,8 +57,12 @@ function status() {
   [[ -n "$symbols" ]] && echo "${symbols}%{$reset_color%}"
 }
 
-function username() {!
-  echo "$ZSH_THEME_USERNAME_COLOR%n%{$reset_color%}"
+function username() {
+  if [[ -n "$IN_NIX_SHELL" ]]; then
+    echo "$ZSH_THEME_NIX_SHELL_COLOR%n%{$reset_color%}"
+  else
+    echo "$ZSH_THEME_USERNAME_COLOR%n%{$reset_color%}"
+  fi
 }
 function computer() {
   echo "$ZSH_THEME_SEPARATOR_COLOR@$ZSH_THEME_HOSTNAME_COLOR$(box_name)%{$reset_color%}"
@@ -85,7 +97,7 @@ function invite() {
 function build_prompt() {
   RETVAL=$?
   echo "
-$(status)$(username)$(computer)$(location)$(git_infos)
+$(nix_shell_info)$(status)$(username)$(computer)$(location)$(git_infos)
 $(invite)"
 }
 
