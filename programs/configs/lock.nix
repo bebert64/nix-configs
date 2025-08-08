@@ -56,7 +56,7 @@ in
           xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock-wait-sleep' ' ' &
         '';
       killXidlehook = ''pkill xidlehook || echo "xidlehook already killed"'';
-      lockMode = "Lock: l[o]ck and wait for sleep, lock and [d]on't sleep, [n]ever sleep";
+      lockMode = "Lock: l[o]ck, lock [d]on't sleep, [n]ever sleep";
     in
     {
       home.packages = [
