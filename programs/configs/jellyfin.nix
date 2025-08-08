@@ -70,5 +70,7 @@ in
         '';
       };
     };
+
+    meilisearch.enable = true;
   };
 }
