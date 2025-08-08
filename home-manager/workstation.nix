@@ -8,10 +8,6 @@
 let
   inherit (lib) mkEnableOption mkOption types;
   inherit (types) str;
-  ffsync = {
-    username = "bebert64@gmail.com";
-    passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
-  };
 in
 {
   imports = [
@@ -87,18 +83,15 @@ in
       by-db-pkgs = {
         guitar-tutorials = {
           app.enable = true;
-          firefox = { inherit ffsync; };
+          firefox.ffsync = cfg.ffsync.bebert64;
           jellyfin = {
             accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           };
         };
         shortcuts = {
           app.enable = true;
-          postgres.password = "${config.sops.secrets."raspi/postgresql/rw".path}";
-          ffsync = {
-            username = "shortcuts.db@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
-          };
+          postgres = cfg.postgres;
+          ffsync = cfg.ffsync.shortcutsDb;
           apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
         wallpapers-manager = {
@@ -108,7 +101,7 @@ in
               commandArgs = "--mode fifty-fifty";
             };
           };
-          firefox = { inherit ffsync; };
+          firefox.ffsync = cfg.ffsync.bebert64;
         };
       };
 

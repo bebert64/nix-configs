@@ -11,11 +11,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1754568942,
-        "narHash": "sha256-K3FyC0EiSePMrdLQR4nzvYhoK9DnlJ1hd7E26Cp1NFY=",
+        "lastModified": 1754663397,
+        "narHash": "sha256-Roj/bahT+naF86tn8K5YtilpdqrjjaeH74Qdwp3SZtk=",
         "ref": "refs/heads/main",
-        "rev": "1cc9d92f2dc3b4ffd7a93bb8779f10b04bc1a218",
-        "revCount": 98,
+        "rev": "37f7ee74981bfaf1548f7def84fc59f2ea467ff3",
+        "revCount": 100,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
