@@ -91,7 +91,7 @@ in
         };
         modes = {
           ${cfg.i3.exitMode} = {
-            "--release s" = "exec lock-sleep";
+            "--release s" = "exec lock-sleep, mode default";
           };
 
           ${lockMode} = {
