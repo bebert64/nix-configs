@@ -116,7 +116,14 @@
           ntfs3g
           wget
         ];
+
         pathsToLink = [ "/libexec" ];
+
+        # Hide direnv diff when entering a directory
+        etc."direnv/direnv.toml".text = ''
+          [global]
+          hide_env_diff = true
+        '';
       };
 
       hardware.bluetooth.enable = cfg.bluetooth.enable;
