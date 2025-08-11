@@ -91,8 +91,8 @@ in
         shortcuts = {
           app.enable = true;
           postgres = cfg.postgres;
-          ffsync = cfg.ffsync.shortcutsDb;
-          apiKey = "${config.sops.secrets."stash/api-key".path}";
+          firefox.ffsync = cfg.ffsync.shortcutsDb;
+          stashApiConfig.apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
         wallpapers-manager = {
           services = {
