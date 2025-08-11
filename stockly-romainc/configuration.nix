@@ -21,9 +21,9 @@ in
       by-db = {
         wifi.enable = true;
         nixConfigsRepo = "nix-config";
-        isHeadphonesOnCommand = "pactl list sinks | grep \"Active Port.*Headphones\"";
-        setHeadphonesCommand = "set-sink-port 56 '[Out] Headphones'";
-        setSpeakerCommand = "set-sink-port 56 '[Out] Speaker'";
+        isHeadphonesOnCommand = "pactl info | grep \"Default Sink.*Headphones\"";
+        setHeadphonesCommand = "set-card-profile 'alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic' 'HiFi (HDMI1, HDMI2, HDMI3, Headphones, Mic1, Mic2)'";
+        setSpeakerCommand = "set-card-profile 'alsa_card.pci-0000_00_1f.3-platform-skl_hda_dsp_generic' 'HiFi (HDMI1, HDMI2, HDMI3, Mic1, Mic2, Speaker)'";
         screens = {
           primary = "eDP-1";
           secondary = "HDMI-1";

@@ -7,7 +7,7 @@
     ./configs/btop.nix
     ./configs/direnv.nix
     ./configs/git.nix
-    ./configs/vim.nix
+    ./configs/neovim.nix
     ./configs/scripts.nix
   ];
 }

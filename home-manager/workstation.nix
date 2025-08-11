@@ -81,6 +81,19 @@ in
       };
 
       by-db-pkgs = {
+        guitar-tutorials = {
+          app.enable = true;
+          firefox.ffsync = cfg.ffsync.bebert64;
+          jellyfin = {
+            accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
+          };
+        };
+        shortcuts = {
+          app.enable = true;
+          postgres = cfg.postgres;
+          firefox.ffsync = cfg.ffsync.shortcutsDb;
+          stashApiConfig.apiKey = "${config.sops.secrets."stash/api-key".path}";
+        };
         wallpapers-manager = {
           services = {
             change = {
@@ -88,20 +101,7 @@ in
               commandArgs = "--mode fifty-fifty";
             };
           };
-          ffsync = {
-            username = "bebert64@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/bebert64".path}";
-          };
-        };
-        shortcuts = {
-          app.enable = true;
-          postgres.password = "${config.sops.secrets."raspi/postgresql/rw".path}";
-          ffsync = {
-            username = "shortcuts.db@gmail.com";
-            passwordPath = "${config.sops.secrets."ffsync/shortcuts-db".path}";
-          };
-          apiKey = "${config.sops.secrets."stash/api-key".path}";
-          stashApiUrl = "https://stash.capucina.house/graphql";
+          firefox.ffsync = cfg.ffsync.bebert64;
         };
       };
 

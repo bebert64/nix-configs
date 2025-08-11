@@ -29,6 +29,7 @@ in
       MENU="$(echo -en \
       'FIP\0icon\x1f${./icons/fip.png}
       FIP Jazz\0icon\x1f${./icons/fip-jazz.png}
+      Piano Zen\0icon\x1f${./icons/piano-zen.jpg}
       FIP Rock\0icon\x1f${./icons/fip-rock.jpg}
       FIP Groove\0icon\x1f${./icons/fip-groove.jpg}
       FIP Reggae\0icon\x1f${./icons/fip-reggae.jpg}
@@ -52,6 +53,7 @@ in
         "Radio Nova") play_radio 8 ;;
         "Radio Swiss Classic") play_radio 9 ;;
         "Chillhop Music") play_radio 10 ;;
+        "Piano Zen") play_radio 11 ;;
       esac
     '')
   ];

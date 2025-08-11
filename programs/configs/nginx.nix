@@ -3,26 +3,26 @@
     enable = true;
 
     virtualHosts = {
-      "capucina.house" = {
+      "capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          root = "/var/www/capucina.house/home";
+          root = "/var/www/capucina.net/home";
         };
       };
-      "es.capucina.house" = {
+      "es.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
-          root = "/var/www/capucina.house/escapucina";
+          root = "/var/www/capucina.net/escapucina";
         };
       };
-      "freebox.capucina.house" = {
+      "freebox.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/".proxyPass = "http://192.168.1.254";
       };
-      "nas.capucina.house" = {
+      "nas.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/".proxyPass = "http://192.168.1.3:5000";

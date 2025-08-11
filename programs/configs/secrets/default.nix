@@ -22,6 +22,7 @@ in
       "ffsync/shortcuts-db" = { };
       "raspi/postgresql/rw" = { };
       "stash/api-key" = { };
+      "jellyfin/access-token" = { };
     };
   };
 
@@ -30,15 +31,18 @@ in
   };
 
   programs.zsh = {
-    shellAliases = {
-      sops-edit = "EDITOR=vim && cd $HOME/${cfg.nixConfigsRepo}/programs/secrets && sops secrets.yaml";
-    };
-
-    initExtra = ''
+    initContent = ''
       compdef '_files -W "${SymlinkPath}" -/' sops-read
+
       sops-read () {
         PROMPT_EOL_MARK=""
         cat ${SymlinkPath}/$1
+      }
+
+      sops-edit () {
+        cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets
+        sops secrets.yaml || true
+        cd -
       }
 
     '';

@@ -57,22 +57,25 @@ in
             "${modifier}+Shift+e" = "mode \"${exitMode}\"";
           };
 
-          startup =
-            [
-              # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
-              {
-                command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets";
-                notification = false;
-              }
-            ]
-            ++ lib.optional cfg.wifi.enable {
-              command = "nm-applet";
+          startup = [
+            {
+              command = "i3-msg workspace $ws1;";
               notification = false;
             }
-            ++ lib.optional cfg.bluetooth.enable {
-              command = "blueman-applet";
+            # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
+            {
+              command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets";
               notification = false;
-            };
+            }
+          ]
+          ++ lib.optional cfg.wifi.enable {
+            command = "nm-applet";
+            notification = false;
+          }
+          ++ lib.optional cfg.bluetooth.enable {
+            command = "blueman-applet";
+            notification = false;
+          };
 
           window = {
             titlebar = false;
@@ -91,8 +94,6 @@ in
 
           # Needed to keep i3bar from being displayed
           bars = [ ];
-
-          defaultWorkspace = "$ws1";
 
           gaps = {
             inner = 4;

@@ -29,91 +29,195 @@
         };
       }
       {
-        # Operations
-        bind.port = 1824;
+        # Auth grpc
+        bind.port = 1226;
         host = {
           address = "localhost";
-          port = 1824;
+          port = 1226;
         };
       }
       {
-        # Stocks
-        bind.port = 1825;
+        # Auth http
+        bind.port = 1227;
         host = {
           address = "localhost";
-          port = 1825;
+          port = 1227;
         };
       }
       {
-        # Auth (not sure why there is two, launch and check someday could be cool)
-        bind.port = 1826;
+        # Files grpc
+        bind.port = 1234;
         host = {
           address = "localhost";
-          port = 1826;
+          port = 1234;
         };
       }
       {
-        # Auth (not sure why there is two, launch and check someday could be cool)
-        bind.port = 1827;
+        # Files http
+        bind.port = 1235;
         host = {
           address = "localhost";
-          port = 1827;
+          port = 1235;
         };
       }
       {
-        # Backoffice Service
-        bind.port = 1828;
+        # Mock API Connector grpc
+        bind.port = 1236;
         host = {
           address = "localhost";
-          port = 1828;
+          port = 1236;
         };
       }
       {
-        # Backoffice Service HTTP (not sure why there is two, launch and check someday could be cool)
-        bind.port = 1829;
+        # Repackages grpc
+        bind.port = 1232;
         host = {
           address = "localhost";
-          port = 1829;
+          port = 1232;
         };
       }
       {
-        # Backoffice Service HTTP (not sure why there is two, launch and check someday could be cool)
-        bind.port = 51016;
+        # Repackages http
+        bind.port = 1233;
         host = {
           address = "localhost";
-          port = 51016;
+          port = 1233;
         };
       }
       {
-        # Shipments
-        bind.port = 1830;
+        # Shipments grpc
+        bind.port = 1230;
         host = {
           address = "localhost";
-          port = 1830;
+          port = 1230;
         };
       }
       {
-        # Repackages
-        bind.port = 1832;
+        # Shipments http
+        bind.port = 1231;
         host = {
           address = "localhost";
-          port = 1832;
+          port = 1231;
         };
       }
       {
-        # Invoices
-        bind.port = 4006;
+        # Stocks grpc
+        bind.port = 1225;
         host = {
           address = "localhost";
-          port = 4006;
+          port = 1225;
         };
       }
       {
-        # Files
-        bind.port = 1834;
+        # Invoices grpc
+        bind.port = 1237;
         host = {
           address = "localhost";
-          port = 1834;
+          port = 1237;
+        };
+      }
+      {
+        # Invoices http
+        bind.port = 1249;
+        host = {
+          address = "localhost";
+          port = 1249;
+        };
+      }
+      {
+        # Operations grpc
+        bind.port = 1224;
+        host = {
+          address = "localhost";
+          port = 1224;
+        };
+      }
+      {
+        # Meilisearch http
+        bind.port = 1245;
+        host = {
+          address = "localhost";
+          port = 1245;
+        };
+      }
+      {
+        # Search Auths grpc
+        bind.port = 1243;
+        host = {
+          address = "localhost";
+          port = 1243;
+        };
+      }
+      {
+        # Search Ingestion
+        bind.port = 1244;
+        host = {
+          address = "localhost";
+          port = 1244;
+        };
+      }
+      {
+        # Backoffice Service grpc
+        bind.port = 1228;
+        host = {
+          address = "localhost";
+          port = 1228;
+        };
+      }
+      {
+        # Backoffice Service http
+        bind.port = 1229;
+        host = {
+          address = "localhost";
+          port = 1229;
+        };
+      }
+      {
+        # Backoffice Front http
+        bind.port = 1241;
+        host = {
+          address = "localhost";
+          port = 1241;
+        };
+      }
+      {
+        # Consumer Backoffice Service grpc
+        bind.port = 1238;
+        host = {
+          address = "localhost";
+          port = 1238;
+        };
+      }
+      {
+        # Consumer Backoffice Service http
+        bind.port = 1239;
+        host = {
+          address = "localhost";
+          port = 1239;
+        };
+      }
+      {
+        # Consumer Backoffice Front http
+        bind.port = 1242;
+        host = {
+          address = "localhost";
+          port = 1242;
+        };
+      }
+      {
+        # Buckets grpc
+        bind.port = 1248;
+        host = {
+          address = "localhost";
+          port = 1248;
+        };
+      }
+      {
+        # Buckets http
+        bind.port = 1251;
+        host = {
+          address = "localhost";
+          port = 1251;
         };
       }
     ];

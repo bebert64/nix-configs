@@ -1,5 +1,3 @@
-# Waiting for stash version from nixpkgs to catch up with the installed version
-# so that the schema is compatible with my current db.
 {
   pkgs,
   config,
@@ -10,7 +8,7 @@ let
   cfgUser = config.home-manager.users.${config.by-db.user.name};
   stashDir = "${cfgUser.home.homeDirectory}/.stash";
   nixConfigsRepo = "${cfgUser.home.homeDirectory}/${cfgUser.by-db.nixConfigsRepo}";
-  stash = pkgs.callPackage ./package.nix { };
+  stash = pkgs.stash;
 in
 {
   home-manager.users.${config.by-db.user.name} = {
@@ -50,7 +48,7 @@ in
     };
   };
 
-  services.nginx.virtualHosts."stash.capucina.house" = {
+  services.nginx.virtualHosts."stash.capucina.net" = {
     enableACME = true;
     forceSSL = true;
     locations."/" = {

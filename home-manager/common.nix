@@ -11,6 +11,38 @@ in
 {
   options.by-db = {
     username = mkOption { type = str; };
+    ffsync = {
+      bebert64 = {
+        username = mkOption {
+          type = str;
+          default = "bebert64@gmail.com";
+        };
+        passwordPath = mkOption {
+          type = str;
+          default = "${config.sops.secrets."ffsync/bebert64".path}";
+        };
+      };
+      shortcutsDb = {
+        username = mkOption {
+          type = str;
+          default = "shortcuts.db@gmail.com";
+        };
+        passwordPath = mkOption {
+          type = str;
+          default = "${config.sops.secrets."ffsync/shortcuts-db".path}";
+        };
+      };
+    };
+    postgres = {
+      ip = mkOption {
+        type = str;
+        default = "capucina.net";
+      };
+      passwordPath = mkOption {
+        type = str;
+        default = "${config.sops.secrets."raspi/postgresql/rw".path}";
+      };
+    };
   };
 
   config =
@@ -25,6 +57,7 @@ in
         packages = (
           with pkgs;
           [
+            p7zip
             nixd
             nixfmt-rfc-style
             nodejs
@@ -34,9 +67,7 @@ in
             rsync
             sshfs
             unrar
-            unzip
             yt-dlp
-            zip
           ]
         );
       };
