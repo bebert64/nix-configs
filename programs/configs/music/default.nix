@@ -82,7 +82,7 @@ in
 
   xsession.windowManager.i3.config = {
     assigns = {
-      "$ws10" = [ { class = "strawberry"; } ];
+      "$ws10" = [ { class = "Strawberry"; } ];
     };
 
     keybindings = lib.mkOptionDefault {
