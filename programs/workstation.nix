@@ -3,6 +3,7 @@
     ./common.nix
     ./configs/conky
     ./configs/datagrip
+    ./configs/ferdium
     ./configs/picom
     ./configs/polybar
     ./configs/theme
@@ -13,7 +14,6 @@
     ./configs/autorandr.nix
     ./configs/avidemux.nix
     ./configs/calculator.nix
-    ./configs/email.nix
     ./configs/firefox.nix
     ./configs/i3.nix
     ./configs/insomnia.nix
