@@ -25,6 +25,7 @@ in
       activation = {
         symlinkStashConfig = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           mkdir -p ${stashDir}/
+
           ln -sf ${nixConfigsRepo}/programs/configs/stash/scrapers ${stashDir}/
         '';
       };
