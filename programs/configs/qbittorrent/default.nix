@@ -24,10 +24,6 @@ in
         };
       };
     };
-
-    home.activation.symlinkQbittorrentConfig = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ln -sf ${cfgUser.home.homeDirectory}/${cfgUser.by-db.nixConfigsRepo}/programs/configs/qbittorrent/qBittorrent.conf ${cfgUser.home.homeDirectory}/.config/qBittorrent/qBittorrent.conf
-    '';
   };
 
   services.nginx.virtualHosts."torrent.capucina.net" = {
