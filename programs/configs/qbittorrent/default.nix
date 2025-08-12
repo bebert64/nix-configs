@@ -1,12 +1,8 @@
 {
   pkgs,
   config,
-  home-manager,
   ...
 }:
-let
-  cfgUser = config.home-manager.users.${config.by-db.user.name};
-in
 {
   home-manager.users.${config.by-db.user.name} = {
     systemd.user = {
