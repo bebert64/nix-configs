@@ -1,0 +1,60 @@
+name: The Bro Network
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - thebronetwork.com
+    scraper: sceneScraper
+
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - https://thebronetwork.com/models
+    scraper: performerScraper
+    
+    
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title:
+        selector: //div[@class="gallery_info spacer"]/h1
+      Performers:
+        Name: //div[@class="gallery_info spacer"]//span[@class="tour_update_models"]/a
+      Tags:
+        Name: //a[@class="tagsVideoPage"]
+      Details:
+        selector: //p[@id="textDesc"]
+      Image:
+        selector: //video-js[@id="trailervid"]/@poster
+      Date:
+        selector: //span[@class='availdate'][1]
+        postProcess:
+          - parseDate: Jan 02, 2006
+      Studio:
+        Name:
+          fixed: The Bro Network
+          
+  performerScraper:
+    performer:
+      Name: //div[@class="heroTitle"]//h1/text()
+      Gender:
+        fixed: Male
+      HairColor:
+        selector: //span[contains(text(),"Hair color")]/following-sibling::text()
+      EyeColor:
+        selector: //span[contains(text(),"Eye color")]/following-sibling::text()
+      Height:
+        selector: //span[contains(text(),"Height:")]/following-sibling::text()
+        postProcess:
+          - feetToCm: true
+      Circumcised:  
+        selector: //span[contains(text(),"Cock:")]/following-sibling::text()
+      PenisLength:
+        selector: //span[contains(text(),"Cock Size:")]/following-sibling::text()
+        postProcess:
+          - replace:
+              - regex: ^
+                with: "0'"
+          - feetToCm: true
+      Image: //div[@class="model_picture"]/img/@src
+
+# Last Updated July 2, 2025

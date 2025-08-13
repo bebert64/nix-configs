@@ -1,0 +1,13 @@
+name: JacquieEtMicaelTV
+
+sceneByURL:
+  - action: script
+    url:
+      - jacquieetmicheltv.net/en/content
+      - jacquieetmicheltv.net/fr/content
+    script:
+      - python3
+      - JacquieEtMichelTV.py
+      - scene-by-url
+
+# Last Updated March 9, 2025

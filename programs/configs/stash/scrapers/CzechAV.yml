@@ -1,0 +1,77 @@
+name: CzechAV
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - creativeporn.com/
+      - czechamateurs.com/
+      - czechbangbus.com/
+      - czechbitch.com/
+      - czechcabins.com/
+      - czechcasting.com/
+      - czechcouples.com/
+      - czechestrogenolit.com/
+      - czechexperiment.com/
+      - czechfantasy.com/
+      - czechfirstvideo.com/
+      - czechgangbang.com/
+      - czechgardenparty.com/
+      - czechgayamateurs.com/
+      - czechgaycasting.com/
+      - czechgaycouples.com/
+      - czechgayfantasy.com/
+      - czechgaymassage.com/
+      - czechgaysolarium.com/
+      - czechharem.com/
+      - czechhomeorgy.com/
+      - czechlesbians.com/
+      - czechmassage.com/
+      - czechmegaswingers.com/
+      - czechorgasm.com/
+      - czechparties.com/
+      - czechpawnshop.com/
+      - czechpool.com/
+      - czechsauna.com/
+      - czechsnooper.com/
+      - czechsolarium.com/
+      - czechspy.com/
+      - czechstreets.com/
+      - czechsupermodels.com/
+      - czechtaxi.com/
+      - czechwifeswap.com/
+      - gayhorrorporn.com/
+      - horrorporn.com/
+      - lifepornstories.com/
+      - monstercockgang.com/
+      - movieporn.com/
+      - perversefamily.com/
+      - powerfetish.com/
+      - redneckjohn.com/
+      - unusualpeople.com/
+      - unrealporn.com/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //h1/span
+      Code:
+        selector: //h1/div/span
+        postProcess:
+          - replace:
+              - regex: .+?(\d+)$
+                with: $1
+      Details: //div[contains(@class,'detail-description--longer')]/p
+      Tags:
+        Name: //li[@class="tag ellipsis no-shrink"]/a/span/text()
+      Performers:
+        Name: //span[contains(., "Featuring:")]/following-sibling::a
+      Studio:
+        Name: //img[contains(@class, "logo")]/@alt
+      Image: //video/@poster
+      Date:
+        selector: //script[@type="application/ld+json"]
+        postProcess:
+          - replace:
+              - regex: .+(?:"uploadDate":\s*")([^T]+).+
+                with: $1
+          - parseDate: 2006-01-02
+# Last Updated July 29, 2025

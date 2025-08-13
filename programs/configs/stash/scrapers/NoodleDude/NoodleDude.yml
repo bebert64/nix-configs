@@ -1,0 +1,20 @@
+name: "NoodleDude"
+# requires: py_common
+
+sceneByURL:
+  - url:
+      - noodledude.io/videos
+    action: script
+    script:
+      - python
+      - NoodleDude.py
+      - scene-by-url
+performerByURL:
+  - url:
+      - noodledude.io/creators
+    action: script
+    script:
+      - python
+      - NoodleDude.py
+      - performer-by-url
+# Last Updated November 01, 2024

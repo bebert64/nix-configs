@@ -19,7 +19,7 @@ sceneByFragment:
     #   SLR_{stufio:[^_]+}_{title:[^_]+}_{res:\d+p}_{code:\d+}_{vrtype}.{ext}
     #     vrtype: stuff we do not care about but could contain '_'
     filename:
-      - regex: (?i)^SLR_.+_\d+p_(\d+)_.*$
+      - regex: (?i)^SLR_.+(?:_\d+p)?_(\d+)_.*$
         with: $1
       - regex: .*\.[^\.]+$ # if no id is found in the filename
         with: # clear the filename so that it doesn't leak
@@ -40,29 +40,35 @@ xPathScrapers:
                 with: "–"
       Date: //time/@datetime
       Details:
-        selector: //div[@data-qa="scene-about-tab-text"]/text()[last()]
+        selector: //div[@data-qa="scene-about-tab-text"]/text()
         postProcess:
           - replace:
               - regex: '^\.\s*'
                 with:
+        concat: "\n"
       Tags:
-        Name: //meta[@property="video:tag"]/@content|//ul[@data-qa="scene-specs-list"]/li/span/text()
+        Name: >-
+          //meta[@property="video:tag"]/@content
+          |
+          //a[@data-qa="scene-tags-list-item-link"]/text()
       Performers:
-        Name: //meta[@property="video:actor"]/@content
+        Name: //a[contains(@data-qa, "scene-model-list-item-name")]/text()
       Studio:
         Name:
           selector: //a[contains(@href,"/studios/")]/div[last()]/text()
           postProcess:
             - map:
                 DDFNetworkVR: "DDF Network VR"
+                KinkyGirlsBerlin: "Kinky Girls Berlin"
                 LethalHardcoreVR: "Lethal Hardcore VR"
-                LustReality: "Lust Reality"
+                LittleCapriceVR: "Little Caprice Dreams Virtual Reality"
+                LustReality: "LustReality"
                 POVcentralVR: "POV Central"
-                RealHotVR: "Real Hot VR"
+                RealHotVR: "RealHotVR"
                 SinsVR: "XSinsVR"
                 VirtualXPorn: "Virtual X Porn"
                 WankitnowVR: "Wank It Now VR"
-      Image: //div[contains(@class,"splash-screen")]/img/@src
+      Image: //div[@id="webvr"]//img/@src
       URL: &sceneUrl //link[@rel="canonical"]/@href
       Code:
         selector: *sceneUrl
@@ -70,4 +76,4 @@ xPathScrapers:
           - replace:
               - regex: '^(.+)-(\d+)/?$'
                 with: $2
-# Last Updated December 21, 2022
+# Last Updated May 22, 2025
