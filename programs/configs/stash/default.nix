@@ -13,11 +13,7 @@ in
     home = {
       packages = [
         stash
-        (pkgs.writeScriptBin "restore-stash" ''
-          set -euxo pipefail
-
-          rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' ${stashDir}/ --exclude "archive"
-        '')
+        pkgs.ffmpeg
       ];
 
       file = {
@@ -34,6 +30,7 @@ in
         Service = {
           Type = "exec";
           ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
+          Environment = "PATH=/run/current-system/sw/bin/:${config.home.homeDirectory}/.nix-profile/bin/";
         };
         Install = {
           WantedBy = [ "default.target" ];
