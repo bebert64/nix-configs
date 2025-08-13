@@ -3,14 +3,10 @@
   home = {
     packages = with pkgs; [
       gtk-engine-murrine
-      libsForQt5.qt5ct
-      libsForQt5.qtstyleplugins
+      kdePackages.qt6gtk2 # Used by qt6 app to load gtk theme
+      libsForQt5.qt5ct # Used by caffeine to load gtk theme
+      libsForQt5.qtstyleplugins # Used by qt5 app to load gtk theme
     ];
-
-    file = {
-      ".config/qt5ct/qt5ct.conf".source = ./qt5ct.conf;
-      # ".themes".source = "${pkgs.palenight-theme}/share/themes";
-    };
 
     pointerCursor = {
       x11.enable = true;
@@ -20,7 +16,7 @@
     };
 
     sessionVariables = {
-      QT_QPA_PLATFORMTHEME = "qt5ct";
+      QT_QPA_PLATFORMTHEME = "gtk2";
     };
   };
 
