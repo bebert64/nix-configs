@@ -6,9 +6,11 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  homeDir = config.home.homeDirectory;
+  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
   open-local = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
-      ${pkgs.fd}/bin/fd . --type dir --base-directory $HOME 2>/dev/null | \
+      list-crate-dirs ${homeDir}/code Cargo.toml $HOME 2>/dev/null | \
       sort -u | \
       rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
     )
@@ -16,7 +18,7 @@ let
   ''}/bin/open-local";
   open-remote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      ssh cerberus "nix run \"nixpkgs#fd\" -- --base-directory ./Stockly/Main --type dir" 2>/dev/null | \
+      ssh cerberus "list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
       sort -u | \
       rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
     )
@@ -32,6 +34,7 @@ in
     file = {
       ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
+    by-db-packages.list-crate-dirs.enable = true;
   };
 
   xsession.windowManager.i3.config = {
@@ -41,6 +44,7 @@ in
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
       "${modifier}+Shift+v" = "workspace $ws3; exec ${open-remote}";
+      "${modifier}+Control+n" = "workspace $ws3; exec code ${nixConfigsRepo}";
     };
   };
 }
