@@ -12,20 +12,24 @@ let
     selection=$(
       list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p ""
     )
-    if [[ $selection ]]; then
-      code $HOME/$selection
+    if [[ $selection = "code" ]]; then
+      code $HOME/code
+    elif [[ $selection ]]; then
+      code $HOME/code/$selection
     fi
   ''}/bin/open-local";
   open-remote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      ssh cerberus "list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
+      ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p ""
     )
-    if [[ $selection ]]; then
-      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
+    if [[ $selection = "Main" ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
+    elif [[ $selection ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
     fi
   ''}/bin/open-remote";
 in
