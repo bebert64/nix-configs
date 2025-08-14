@@ -10,11 +10,13 @@ let
   nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
   open-local = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
-      list-crate-dirs ${homeDir}/code Cargo.toml $HOME 2>/dev/null | \
+      list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
       sort -u | \
       rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
     )
-    code $HOME/$selection
+    if [[ $selection ]]; then
+      code $HOME/$selection
+    fi
   ''}/bin/open-local";
   open-remote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
@@ -22,7 +24,9 @@ let
       sort -u | \
       rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
     )
-    code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
+    if [[ $selection ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
+    fi
   ''}/bin/open-remote";
 in
 {
