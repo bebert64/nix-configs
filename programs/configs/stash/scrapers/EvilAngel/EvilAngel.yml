@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=../../validator/scraper.schema.json
+# requires: AlgoliaAPI
+name: "EvilAngel"
+sceneByURL:
+  - action: script
+    url:
+      - analacrobats.com/en/video/
+      - evilangel.com/en/video/
+      - latexplaytime.com/en/video/
+      - jonnidarkkoxxx.com/en/video/
+      - pansexualx.com/en/video/
+      - pantypops.com/en/video/
+      - povblowjobs.com/en/video/
+      - strapattackers.com/en/video/
+      - tittycreampies.com/en/video/
+      - transgressivexxx.com/en/video/
+      - transsexualangel.com/en/video/
+      - tsfactor.com/en/video/
+    script:
+      - python
+      - EvilAngel.py
+      - evilangel
+      - scene-by-url
+movieByURL:
+  - action: script
+    url:
+      - evilangel.com/en/movie/
+      - pansexualx.com/en/movie/
+      - transgressivexxx.com/en/movie/
+      - tsfactor.com/en/movie/
+    script:
+      - python
+      - EvilAngel.py
+      - evilangel
+      - movie-by-url
+sceneByFragment:
+  action: script
+  script:
+    - python
+    - EvilAngel.py
+    - evilangel
+    - scene-by-fragment
+sceneByName:
+  action: script
+  script:
+    - python
+    - EvilAngel.py
+    - evilangel
+    - scene-by-name
+sceneByQueryFragment:
+  action: script
+  script:
+    - python
+    - EvilAngel.py
+    - evilangel
+    - scene-by-query-fragment
+galleryByFragment:
+  action: script
+  script:
+    - python
+    - EvilAngel.py
+    - evilangel
+    - gallery-by-fragment
+galleryByURL:
+  - action: script
+    url:
+      - evilangel.com/en/photo/
+      - evilangel.com/en/video/
+      - latexplaytime.com/en/photo/
+      - pansexualx.com/en/photo/
+      - transgressivexxx.com/en/photo/
+      - tsfactor.com/en/photo/
+    script:
+      - python
+      - EvilAngel.py
+      - evilangel
+      - gallery-by-url
+performerByURL:
+  - action: script
+    url:
+      - evilangel.com/en/pornstar/
+    script:
+      - python
+      - EvilAngel.py
+      - performer-by-url
+performerByName:
+  action: script
+  script:
+    - python
+    - EvilAngel.py
+    - evilangel
+    - performer-by-name
+performerByFragment:
+  action: script
+  script:
+    - python
+    - EvilAngel.py
+    - evilangel
+    - performer-by-fragment
+# Last Updated June 3, 2025

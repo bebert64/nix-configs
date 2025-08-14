@@ -17,52 +17,62 @@ performerByURL:
 xPathScrapers:
   sceneScraper:
     scene:
-      Title: &title //title
-      Date: &date
-        selector: //time/@datetime
+      Title: &title
+        selector: //title
         postProcess:
-          - parseDate: 2006-01-02
+          - replace:
+              - regex: \s-\sWeAreHairy\.com$
+                with:
+      Date: &date
+        selector: //h6/span[last()]
+        postProcess:
+          - parseDate: Jan 2, 2006
       Details: &details //meta[@name="description"]/@content
       Tags: &tags
-        Name: //div[@class="tagline"]//a
+        Name: //a[@class="_skip_popup"]/text()
       Image:
-         selector: //meta[@itemprop="thumbnailUrl"]/@content
-         postProcess:
-           - replace:
-                - regex: \/\/(.*)
-                  with: https://$1
+        selector: //meta[@name="twitter:image"]/@content
       Performers: &performers
-        Name: //div[@class="meet"]//a
-      Director: //h3[contains(text(),"Shot by")]/following-sibling::p
+        Name: //h6//a[contains(@href,'/models') and @title != '']
+      Director: &director //p[span[contains(text(),"Shot by")]]/a
       Studio: &studio
-          Name:
-            fixed: We Are Hairy
+        Name:
+          fixed: We Are Hairy
   galleryScraper:
     gallery:
       Title: *title
-      Date: *date 
+      Date: *date
       Studio: *studio
       Performers: *performers
       Tags: *tags
       Details: *details
+      Photographer: *director
   performerScraper:
     performer:
-      Name: //span/span[@itemprop="name"]/text()
+      Name:
+        # Home » Models » Namey Performerson
+        selector: //h6
+        postProcess:
+          - replace:
+              - regex: .*»\s+
+                with: ""
+              # Namey Performerson
       Gender:
         fixed: Female
-# Uncomment to scrape performer image
-#      Image:
-#        selector: //div[@class="lhs"]/img/@src
+      Image: (//div[@class="container"]//img)[1]/@src
       Height:
-        selector: //p[@id="height_both"]/text()
+        selector: (//span[contains(., "Height:")]/following::span)[1]
         postProcess:
           - replace:
-            - regex: .*(\d{3}) cm
-              with: $1
+              - regex: \s+.*$
+                with: ""
+          - feetToCm: true
       Weight:
-        selector: //p[@id="weight_both"]/text()
+        selector: (//span[contains(., "Weight:")]/following::span)[1]
         postProcess:
           - replace:
-            - regex: .*(\d{2,}) kg
-              with: $1
-# Last Updated July 27, 2023
+              - regex: \s+.*$
+                with: ""
+          - lbToKg: true
+      Measurements: (//span[contains(., "Bust Size:")]/following::span)[1]
+# Last Updated May 9, 2024

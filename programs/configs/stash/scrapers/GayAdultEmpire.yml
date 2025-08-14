@@ -9,96 +9,147 @@ movieByURL:
 sceneByURL:
   - action: scrapeXPath
     url:
+      - gaydvdempire.com/clip/
+      - gayempire.com/clip/
+    scraper: clipScraper
+  - action: scrapeXPath
+    url:
       - gaydvdempire.com
       - gayempire.com
     scraper: sceneScraper
 sceneByName:
   action: scrapeXPath
-  # if needed replace `dvd` with `vod`
-  queryURL: https://www.gaydvdempire.com/dvd/search?q={}
+  # if needed replace `vod` with `dvd`
+  queryURL: https://www.gaydvdempire.com/vod/search?q={}
   scraper: sceneSearch
 sceneByQueryFragment:
   action: scrapeXPath
   queryURL: "{url}"
   scraper: sceneScraper
 
-
 xPathScrapers:
   sceneSearch:
     scene:
-      Title:
-        selector: //div[@class="item-title"]/a/@*[local-name()="href" or local-name()="title"]
-        concat: "|"
-        postProcess:
-          - replace:
-            - regex: '/(\d+)/[^|]+\|([^|]+)'
-              with: "$2 ($1)"
-        split: "|"
+      Title: //a[@class="boxcover"]/img/@title
       URL:
-        selector: //div[@id="content"]//div[@class="item-title"]/a/@href
+        selector: //a[@class="boxcover"]/@href
         postProcess:
           - replace:
               - regex: ^
-                with: "https://www.gaydvdempire.com"
-      Image:
-        selector: //a[@class="boxcover"]/img/@data-src
+                with: https://www.gaydvdempire.com
+      Image: //a[@class="boxcover"]/img/@src
 
   movieScraper:
     movie:
-      Name: //h1/text()
-      Director: //a[@label="Director"]/text()
+      Name: &name //h1/text()
+      Director: &director //a[@label="Director"]/text()
       Duration:
         selector: //small[contains(text(), "Length")]/following-sibling::text()
         postProcess:
           - replace:
-            - regex: " hrs. "
-              with: ":"
-            - regex: " mins."
-              with: ":00"
-      Date:
+              - regex: " hrs. "
+                with: ":"
+              - regex: " mins."
+                with: ":00"
+      Date: &date
         selector: //small[contains(text(), "Released")]/following-sibling::text()
         postProcess:
           - parseDate: Jan 02 2006
-      Synopsis:
+      Synopsis: &details
         selector: //h4[contains(@class,"synopsis")]//text()
         concat: " "
-      Studio:
+      Studio: &studio
         Name: //a[@label="Studio"]/text()
-      FrontImage: //a[@id="front-cover"]/@data-href
+      FrontImage: &image //a[@id="front-cover"]/@data-href
       BackImage: //a[@id="back-cover"]/@href
-      # Rating is not yet implemented in the UX
-      # Rating:
-      #   selector: //span[@class='rating-stars-avg']/text()
-      #   postProcess:
-      #     - replace:
-      #       - regex: (\d).+
-      #         with: $1
-      URL: //meta[@name='og:url']/@content
+      URL: &url //meta[@name='og:url']/@content
+
   sceneScraper:
     scene:
-      Title: //h1/text()
-      Details:
-        selector: //h4[contains(@class,"synopsis")]//text()
-        concat: " "
-      Date:
-        selector: //small[contains(text(), "Released")]/following-sibling::text()
-        postProcess:
-          - parseDate: Jan 02 2006
-      Image: //a[@id="front-cover"]/@data-href
-      Studio:
-        Name: //a[@label="Studio"]/text()
+      Title: *name
+      Director: *director
+      Details: *details
+      Date: *date
+      Image: *image
+      Studio: *studio
       Movies:
-        Name: //h1/text()
-        URL: //link[@rel="canonical"]/@href
+        Name: *name
+        URL: *url
       Tags:
-        Name: //div[h2[contains(.,'Categories')]]//a[@label="Category"]/text()
+        Name: //div[h2[contains(.,'Categories')]]//a[@label="Category"]
       Performers:
-        Name: //a[@label="Performer"]//text()
+        Name: //a[@label="Performer"]
         URL:
           selector: //a[@label="Performer"]/@href
           postProcess:
             - replace:
                 - regex: ^
                   with: "https://www.gaydvdempire.com"
-      URL: //meta[@name='og:url']/@content
-# Last Updated July 17, 2022
+      URL: *url
+
+  clipScraper:
+    scene:
+      Title:
+        selector: //h1[contains(@class, "clip-page__detail__title__primary")]/text() | //a[@label="Studio" and preceding-sibling::text()[normalize-space(.)="from"]]
+        concat: __SEP__
+        postProcess:
+          - replace:
+              # If there's no "proper title" we can include the movie name
+              - regex: (Scene \d+)__SEP__(.*)
+                with: $1, $2
+              # If the previous regex didn't match we can strip out the movie name: it will be scraped as a Movie below
+              - regex: (.*)__SEP__.*
+                with: $1
+      Studio:
+        Name: //a[@label="Studio" and preceding-sibling::text()[normalize-space(.)="by"]]
+      Movies:
+        Name: //a[@label="Studio" and preceding-sibling::text()[normalize-space(.)="from"]]
+        URL:
+          selector: //a[@label="Studio" and preceding-sibling::text()[normalize-space(.)="from"]]/@href
+          postProcess:
+            - replace:
+                - regex: ^
+                  with: https://www.gaydvdempire.com
+      Performers:
+        Name: //a[@label="Clip Performer"]
+        URL:
+          selector: //a[@label="Clip Performer"]/@href
+          postProcess:
+            - replace:
+                - regex: ^
+                  with: "https://www.gaydvdempire.com"
+      Image:
+        selector: (//*[@data-tid]/@data-tid)[1] | //a[@id="front-cover"]/img/@src
+        concat: __SEP__
+        postProcess:
+          - replace:
+              - regex: (\d+).*/([^/]*\d+)[^/\d]*$
+                with: https://imgs1cdn.adultempire.com/backdrop/6000/$2%5f$1/scene-1.jpg
+driver:
+  cookies:
+    - CookieURL: "https://www.gaydvdempire.com"
+      Cookies:
+        - Name: "ageConfirmed"
+          Domain: "www.gaydvdempire.com"
+          Value: "true"
+          Path: "/"
+    - CookieURL: "https://www.gayempire.com"
+      Cookies:
+        - Name: "ageConfirmed"
+          Domain: "www.gayempire.com"
+          Value: "true"
+          Path: "/"
+        # replace with your account etoken
+    - CookieURL: "https://www.gaydvdempire.com"
+      Cookies:
+        - Name: "etoken"
+          Domain: "www.gaydvdempire.com"
+          Value: "" # replace with your account etoken
+          Path: "/"
+    - CookieURL: "https://www.gayempire.com"
+      Cookies:
+        - Name: "etoken"
+          Domain: "www.gayempire.com"
+          Value: "" # replace with your account etoken
+          Path: "/"
+# Last Updated April 14, 2025

@@ -1,0 +1,52 @@
+# requires: AlgoliaAPI
+name: Biphoria
+sceneByURL:
+  - action: script
+    url:
+      - biphoria.com/en/video
+    script:
+      - python
+      - ../AlgoliaAPI/AlgoliaAPI.py
+      - biphoria
+      - scene-by-url
+sceneByFragment:
+    action: script
+    script:
+      - python
+      - ../AlgoliaAPI/AlgoliaAPI.py
+      - biphoria
+      - scene-by-fragment
+sceneByName:
+    action: script
+    script:
+      - python
+      - ../AlgoliaAPI/AlgoliaAPI.py
+      - biphoria
+      - scene-by-name
+sceneByQueryFragment:
+    action: script
+    script:
+      - python
+      - ../AlgoliaAPI/AlgoliaAPI.py
+      - biphoria
+      - scene-by-query-fragment
+galleryByURL:
+  - action: script
+    url:
+      - biphoria.com/en/photo/
+    script:
+      - python
+      - ../AlgoliaAPI/AlgoliaAPI.py
+      - biphoria
+      - gallery-by-url
+movieByURL:
+  - action: script
+    url:
+      - biphoria.com/en/movie/
+    script:
+      - python
+      - ../AlgoliaAPI/AlgoliaAPI.py
+      - biphoria
+      - movie-by-url
+# Last Updated January 30, 2025
+

@@ -71,7 +71,7 @@ xPathScrapers:
         Name: $commonRoot//span[@data-test="link_span_Studio"]
       Director: $commonRoot//span[@data-test="link_span_Director"]
       Date:
-        selector: //div[contains(concat(' ',normalize-space(@class),' '),' mid-content-pr-past-date ')]
+        selector: //div[contains(concat(' ',normalize-space(@class),' '),' uploaded-date ')]/text()
         postProcess:
           - replace:
             - regex: .+?(\w+\s\d{1,2},\s\d{4}).+
@@ -118,8 +118,8 @@ xPathScrapers:
         selector: //h1
         postProcess:
           - replace:
-              - regex: \sBio\s*$
-                with: ""
+              - regex: (.+)\sidentifies.+
+                with: $1
       URL: //link[@rel="alternate" and @hreflang="x-default"]/@href
       Twitter: //form//a[contains(@href,'twitter.com/')]/@href
       Instagram: //form//a[contains(@href,'instagram.com/')]/@href
@@ -144,7 +144,9 @@ xPathScrapers:
       Height:
         selector: //span[text()='Height:']/following-sibling::span/a
         postProcess:
-          - feetToCm: true
+          - replace:
+            - regex: \scm
+              with: ""
           - map:
               Unknown: ""
       Measurements:
@@ -182,7 +184,11 @@ xPathScrapers:
       Image:
         selector: //div[contains(@class,'image-container')]//a/img/@src
       Gender:
-        fixed: "Female"
+        selector: //h1/*[1]/*[1]/text()
+        postProcess:
+          - replace:
+            - regex: ".+ identifies as (.+)"
+              with: "$1"
       #Details: //div[@data-test="biography"]
       DeathDate:
         selector: //div[contains(text(),'Passed away on')]
@@ -196,8 +202,7 @@ xPathScrapers:
         selector: //span[@data-test="link_span_weight"]
         postProcess:
           - replace:
-            - regex: \slbs
+            - regex: \skg
               with: ""
-          - lbToKg: true
 
-# Last Updated January 19, 2023
+# Last Updated June 22, 2025

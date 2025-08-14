@@ -59,7 +59,7 @@ xPathScrapers:
         selector: //span[contains(text(),"Released")]/following-sibling::text()
         postProcess:
           - parseDate: 01/2006
-      Image: //strong[contains(text(),"Large Front")]/parent::a/@href
+      Image: //a[contains(@href, "large_front_image")]/@href
       Studio:
         Name: //span[@itemprop="brand"]/text()
       Movies:
@@ -70,4 +70,7 @@ xPathScrapers:
       Tags:
         Name: //span[text()="Category:"]/following-sibling::a
 
-# Last Updated September 07, 2020
+driver:
+  useCDP: true
+  clicks:
+    - xpath: //a[contains(text(), "ENTER")]

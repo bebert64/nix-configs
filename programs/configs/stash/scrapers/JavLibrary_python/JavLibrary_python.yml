@@ -1,0 +1,30 @@
+name: "JavLibrary Python"
+# requires: py_common
+
+sceneByFragment:
+  action: script
+  script:
+    - python
+    - JavLibrary_python.py
+sceneByName:
+  action: script
+  script:
+    - python
+    - JavLibrary_python.py
+    - searchName
+sceneByQueryFragment:
+  action: script
+  script:
+    - python
+    - JavLibrary_python.py
+    - validSearch
+sceneByURL:
+  - action: script
+    url:
+      - www.javlibrary.com/
+      - javlibrary.com/
+    script:
+      - python
+      - JavLibrary_python.py
+      - validSearch
+# Last Updated March 4, 2025

@@ -1,0 +1,30 @@
+name: Iwara
+# requires: py_common
+
+sceneByURL:
+  - url:
+      - iwara.tv/video/
+    action: script
+    script:
+      - python
+      - Iwara.py
+      - scene-by-url
+sceneByName:
+  action: script
+  script:
+    - python
+    - Iwara.py
+    - scene-by-name
+sceneByQueryFragment:
+  action: script
+  script:
+    - python
+    - Iwara.py
+    - scene-by-url
+sceneByFragment:
+  action: script
+  script:
+    - python
+    - Iwara.py
+    - scene-by-fragment
+# Last Updated December 15, 2024

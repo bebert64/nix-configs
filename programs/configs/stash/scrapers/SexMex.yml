@@ -1,38 +1,91 @@
-name: "SexMex"
+name: SexMex
 
 sceneByURL: &byUrl
   - action: scrapeXPath
     url:
-      - sexmex.xxx
-    scraper: sceneScraper
+      - exposedlatinas.com/tour/updates
+      - sexmex.xxx/tour/updates
+      - transqueens.com/tour/updates
+    scraper: sexmex
+sceneByName:
+  action: scrapeXPath
+  queryURL: "https://sexmex.xxx/tour/search.php?query={}"
+  scraper: search
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sexmex
+
 galleryByURL: *byUrl
 
 xPathScrapers:
-  sceneScraper:
+  search:
+    common:
+      $scene: //div[@data-setid]
     scene:
-      Title: &title //div[@class="panel-body"]/h4//text()
+      Title: $scene//h5
+      URL: $scene//h5/a/@href
+      Date:
+        selector: $scene/p[contains(@class, "scene-date")]
+        postProcess:
+          - parseDate: 01/02/2006
+      Image: $scene//img/@src
+  sexmex:
+    scene:
+      Title: &title
+        selector: &titleSel //div[@class="panel-body"]/h4
+        postProcess:
+          - replace:
+              - regex: ([^.]*)\s\..*
+                with: $1
+      URL: &url
+        selector: //base/@href | //option[@selected]/@value
+        concat: "/"
+        postProcess:
+          - replace:
+              - regex: tour/+tour
+                with: tour
+      # This uses the site search to find the scene so it
+      # will sometimes produce false positives
+      Code: &code
+        selector: *titleSel
+        postProcess:
+          - replace:
+              - regex: \s+
+                with: "+"
+              - regex: "&"
+                with: "%26"
+              - regex: ^
+                with: "https://sexmex.xxx/tour/search.php?query="
+          - subScraper:
+              selector: //div[@data-setid][1]/@data-setid
       Details: &details //div[@class="panel-body"]/p[not(@class)]
       Tags: &tags
-        Name: 
+        Name:
           selector: //meta[@name="keywords"]/@content
           split: ","
       Performers: &performers
         Name: //div[@class="panel-body"]/p[@class="cptn-model"]/a//text()
       Studio: &studio
         Name:
-          fixed: Sex Mex
-      Image: 
+          selector: //base/@href
+          postProcess:
+            - map:
+                https://exposedlatinas.com/tour/: Exposed Latinas
+                https://sexmex.xxx/tour/: Sex Mex
+                https://transqueens.com/tour/: Trans Queens
+      Image:
         selector: //video/@poster
         postProcess:
           - replace:
               - regex: cover.jpg$
                 with: 1.jpg
-      
+
     gallery:
       Title: *title
+      Code: *code
       Details: *details
       Tags: *tags
       Performers: *performers
       Studio: *studio
-
-# Last Updated February 14, 2022
+# Last Updated January 18, 2025

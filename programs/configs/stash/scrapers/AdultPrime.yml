@@ -1,90 +1,110 @@
-# The search by name does not return images by default. To get images you will need to uncomment the driver section at the end of this file.
-# Each click you uncomment will load another 4 images, however the search will be much slower, so it's disabled by default.
 name: "AdultPrime"
 sceneByName:
   action: scrapeXPath
   queryURL: "https://adultprime.com/studios/search?q={}"
-  scraper: sceneSearch
+  scraper: searchMainSite
 
 sceneByQueryFragment:
   action: scrapeXPath
   queryURL: "{url}"
-  scraper: sceneScraper
+  scraper: mainSite
 
 sceneByURL:
   - action: scrapeXPath
     url:
-      - adultprime.com/studios/video/
-    scraper: sceneScraper
+      - adultprime.com/studios/video
+    scraper: mainSite
+  - action: scrapeXPath
+    url:
+      - adult-prime.com/video.php
+    scraper: secondarySite
 
 xPathScrapers:
-  sceneSearch:
+  searchMainSite:
     common:
-      $scenes: //ul[@id='studio-videos-container']
+      $scenes: //ul[@id="studio-videos-container"]
     scene:
-      Title:
-        selector: $scenes//span[contains(@class, 'description-title')]/text()
+      Title: $scenes//span[contains(@class, "description-title")]
       Date:
-        selector: $scenes//span[@class='description-releasedate']/text()
+        selector: $scenes//span[@class="description-releasedate"]
         postProcess:
           - parseDate: Jan 02, 2006
       URL:
-        selector: $scenes//a[@class='absolute']/@href
+        selector: $scenes//a[@class="absolute"]/@href
         postProcess:
           - replace:
-            - regex: "^.signup.galleryId."
-              with: "https://adultprime.com/studios/video/"
-      Image:
-        selector: $scenes//div[contains(@class, 'ap-slider-img')]/@style
-        postProcess:
-          - replace:
-              - regex: .+url\("(.+)"\).+
-                with: $1
+              - regex: ^
+                with: https://adultprime.com
+      Image: $scenes//div[contains(@class, 'ap-slider-img')]/@data-src
 
-  sceneScraper:
+  mainSite:
+    common:
+      $scene: //div[@class="update-info-container"]
     scene:
-      Title: //h2[contains(@class,"update-info-title")]/text()
+      Title: //span[@class="active-crumb"]
       Date:
-        selector: //p[@class="update-info-line regular"][1]/b[1]/text()
+        selector: //div[@id="theatre-row"]//span[@class="description-releasedate"]/text()
         postProcess:
-          - parseDate: 02.01.2006
-      Details:
-        selector: //p[contains(@class,"ap-limited-description-text")]
+          - parseDate: 02-01-2006
+      URL: &url //link[@rel="canonical"]/@href
+      Details: &details
+        selector: //p[contains(@class, "ap-limited-description-text")]
+        postProcess:
+          - replace:
+              # Hack to get multiple paragraphs: whenever we find a punctuation mark
+              # immediately followed by a word character that means xpath.nodeText has
+              # concatenated two paragraphs so we insert two newlines to fix that
+              - regex: '([?!.])(\w)'
+                with: "$1\n\n$2"
       Image:
-        selector: //div[contains(@class, "video-wrapper")]//div[starts-with(@style,"background-image:") and not(contains(@style,"player-placeholder.gif"))]/@style
+        selector: //div[@id="theatre-row"]//video/@poster | //div[@id="theatre-row"]//div[contains(@class, "video-wrapper")]//div[contains(@style,"background-image:") and not(contains(@style,"player-placeholder.gif"))]/@style
         postProcess:
           - replace:
-              - regex: .+url\((.+)\).+
+              # Sometimes they put the URL in quotes, sometimes they just don't
+              # https://regex101.com/r/fszqAQ/3
+              - regex: .+url\(\"?(.+)\"?\).+
                 with: $1
-      URL:
-        selector: //a[contains(@href, "/signup?galleryId")][1]/@href
-        postProcess:
-          - replace:
-            - regex: .*=
-              with: "https://adultprime.com/studios/video/"
       Code:
-        selector: //div[@class="keys"]/@title
+        selector: *url
         postProcess:
           - replace:
-            - regex: .+/(\d+)$
-              with: $1
-      Studio: 
-        Name: //p[contains(@class,"update-info-line")]/b/a[contains(@href,"/studio/")]/text()
+              - regex: .+?(\d+)$
+                with: $1
+      Performers:
+        Name: $scene//b[contains(.,"Performer")]/following-sibling::a
+      Studio:
+        Name: $scene//b[contains(.,"Studio")]/a | $scene//b[contains(.,"Studio")]/following-sibling::a
       Tags:
         Name:
-          selector: //p[contains(@class,"update-info-line regular")][contains(b,"Niches:")]/text()
-          split: ", "
-      Performers:
-        Name: //p[@class="update-info-line regular"]/a[contains(@href, "/signup?")]/text()
-#driver:
-#  useCDP: true
-#  headers:
-#    - Key: User-Agent
-#      Value: stash/1.0.0
-#  clicks:
-#    - xpath: //ul[@id='studio-videos-container']/following-sibling::div[1]/a[@class="lSNext"]
-#      sleep: 1
-#    - xpath: //ul[@id='studio-videos-container']/following-sibling::div[1]/a[@class="lSNext"]
-#      sleep: 1
+          selector: $scene//b[contains(.,"Niches")]/following-sibling::a
 
-# Last Updated November 17, 2022
+  secondarySite:
+    common:
+      $scene: //div[@class="content-wrapper"]/div[@class="content-wrapper"]
+    scene:
+      Title: $scene//h1
+      Date: ($scene//i[contains(@class, "fa-calendar")]/following-sibling::b)[1]
+      # Secondary site has no canonical URLs so we construct one for the main site
+      URL:
+        selector: $scene//div[contains(@class, "update-info-site")]/a/@href
+        postProcess:
+          - replace:
+              - regex: .+?(\d+)$
+                with: https://adultprime.com/studios/video?id=$1
+      Details: *details
+      Image: $scene//div[@data-image]/@data-image
+      Studio:
+        Name:
+          selector: //meta[@name="Keywords"]/@content
+          postProcess:
+            - replace: # get the last keyword in a list
+                - regex: ^.*,\s*
+                  with: ""
+      Performers:
+        Name:
+          selector: $scene//b[contains(.,"Performer")]/following-sibling::text()
+          split: ", "
+      Tags:
+        Name:
+          selector: $scene//b[contains(.,"Niche")]/following-sibling::text()
+          split: ", "

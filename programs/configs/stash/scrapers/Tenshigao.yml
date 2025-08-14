@@ -9,8 +9,18 @@ performerByURL:
     url:
       - tenshigao.com
     scraper: performerScraper
+sceneByName:
+  action: scrapeXPath
+  queryURL: https://tenshigao.com/?s={}
+  scraper: sceneSearch
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
 xPathScrapers:
   sceneScraper:
+    common: 
+      $model: //div[@class="model-thumb"]
     scene:
       Title:
         selector: //span[@class="mroundedthumbs"]//@alt
@@ -22,12 +32,17 @@ xPathScrapers:
                 with: "$1"
           - parseDate: January 02, 2006
       Performers:
-        Name: //h5/a
-        URL: //h5/a/@href
+        Name: $model//h5
+        URL: $model//h5/a/@href
       Tags:
         Name: //div[@class="cat"]/a
       Details:
-        selector: //h1[@class="none"]
+        selector: //p[span[@class="readmore"]]
+        postProcess:
+          - replace:
+              - regex: ... Read More
+                with:
+      URL: //link[@rel="canonical"]/@href
       Image:
         selector: //video[@id="videohtml5tour"]/@poster
         postProcess:
@@ -97,16 +112,19 @@ xPathScrapers:
                 with: $1
               - regex: None
                 with:
-      Details: concat(string(//div[@class="intro"]//p//text()), string(//div[@class="intro"]//p//span[@class="readmore"]//text()))
+      Details: 
+        selector: //p[span[@class="readmore"]] | //div[@class="intro"]/p
+        postProcess:
+          - replace:
+              - regex: ... Read More
+                with:
       Piercings:
         selector: $profile[contains(strong, "Piercings:")]//text()
         postProcess:
           - replace:
               - regex: .*Piercings:\s*(.*)\s*$
                 with: $1
-              - regex: None
-                with:
-              - regex: No Piercings
+              - regex: None|^No$|No Piercing.*
                 with:
       Tattoos:
         selector: $profile[contains(strong, "Tattoo:")]//text()
@@ -114,18 +132,22 @@ xPathScrapers:
           - replace:
               - regex: .*Tattoo:\s*(.*)\s*$
                 with: $1
-              - regex: None
+              - regex: None|^No$|No Tattoo.*
                 with:
       HairColor:
         selector: $profile[contains(strong, "Hair color:")]//text()
         postProcess:
           - replace:
-              - regex: .*Hair Color:?\s*(.*)\s*$
-                with: $1
-              - regex: .*Hair color:?\s*(.*)\s*$
+              - regex: (?i).*hair color:?\s*(.*)\s*$
                 with: $1
               - regex: None
                 with:
+      Country:
+        fixed: Japan
+      Ethnicity:
+        fixed: Asian
+      Gender:
+        fixed: Female
       URL: //link[@rel="canonical"][1]/@href
       Image:
         selector: //img[@class="smallroundedthumbs"]/@src
@@ -135,4 +157,14 @@ xPathScrapers:
                 with: https://
               - regex: 160x160
                 with: 500x500
-# Last Updated August 19, 2023
+  sceneSearch:
+    common:
+      $videos: //div[@class="thumb"]/a
+    scene:
+      Title: $videos/@title 
+      URL: $videos/@href
+      Image: $videos/img/@src
+      Studio:
+        Name:
+          fixed: Tenshigao
+# Last Updated November 07, 2023

@@ -1,0 +1,38 @@
+name: BornToBeBound
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - https://borntobebound.com/updates/
+    scraper: sceneScraper
+xPathScrapers:
+  sceneScraper:
+    scene:
+      Title: //h2[@class="art-PostHeader"]/a
+      Code: //input[@name="comment_post_ID"]/@value
+      # either last p (first ones are run time)
+      # or in slidingproduct (p=10032)
+      Details:
+        selector: //div[@class="art-PostContent"]/p[starts-with(., "run time")]/following-sibling::p
+        concat: "\n\n"
+      Date:
+        selector: //div[@class="art-PostMetadataHeader"]/div[contains(@class,"art-metadata-icons")]
+        postProcess:
+          - replace:
+              - regex: (st|nd|rd|th),
+                with: ""
+          - parseDate: January 2 2006
+      Studio:
+        Name:
+          fixed: Born to be Bound
+      Image:
+        selector: (//div[@id="gallery-1"]//img/@src)[1]
+        postProcess:
+          - replace:
+              - regex: -150x150
+                with: ""
+      # tags includes mix of performers and content tags
+      # p=60260 vs p=10032
+      Performers:
+        Name: //a[@rel="tag"]
+      Tags:
+        Name: //a[@rel="tag"]

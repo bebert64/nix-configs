@@ -2,7 +2,6 @@ name: VNAGirls
 sceneByURL:
   - action: scrapeXPath
     url:
-      - alexlegend.com
       - angelinacastrolive.com
       - bestoftealconrad.com
       - blownbyrone.com
@@ -38,13 +37,14 @@ sceneByURL:
       - sophiedeelive.com
       - sunnylanelive.com
       - vickyathome.com
+      - wydesyde.com
     scraper: sceneScraper
 xPathScrapers:
   sceneScraper:
     scene:
       Performers:
         Name:
-          selector: //div[@class='customcontent']/h3/text()
+          selector: //div[@class='customcontent']/h3
           postProcess: &pp
             - replace:
                 - regex: \x{0020}|\x{00A0} # unicode SP, NBSP
@@ -52,10 +52,8 @@ xPathScrapers:
                 - regex: '\s*,\s*'
                   with: ","
           split: ","
-      Title:
-        selector: //div[@class='customcontent']/h1/text()
-      Details:
-        selector: //div[@class='customcontent']/div[1]/text()|//div[@class='customcontent']/h2/text()
+      Title: //div[@class='customcontent']/h1
+      Details: //div[@class='customcontent']/div[1]/text()|//div[@class='customcontent']/h2
       Tags:
         Name:
           selector: //div[@class='customcontent']/h4/text()
@@ -73,6 +71,9 @@ xPathScrapers:
         concat: "|"
         postProcess:
           - replace:
+              # If there's no image we can't construct a valid URL so we clear the result
+              - regex: "^[^|]+$"
+                with: ""
               - regex: .*\s(\w+\.(?i)com)\s.+\|(.+)
                 with: https://www.$1/$2
       Date:
@@ -82,4 +83,4 @@ xPathScrapers:
               - regex: (\d+)(st|nd|rd|th)
                 with: "$1"
           - parseDate: January 2 2006
-# Last Updated March 25, 2022
+# Last Updated September 06, 2024
