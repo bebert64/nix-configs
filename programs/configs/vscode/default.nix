@@ -34,8 +34,9 @@ in
     file = {
       ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
-    by-db-pkgs.list-crate-dirs.enable = true;
   };
+
+  by-db-pkgs.list-crate-dirs.enable = true;
 
   xsession.windowManager.i3.config = {
     assigns = {
