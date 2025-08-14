@@ -11,15 +11,16 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1755010872,
-        "narHash": "sha256-9tGnUKKYjPV7aRK4iKnGHcmJ265Clx+oSQC0J/G6GaA=",
-        "ref": "refs/heads/main",
-        "rev": "3148123da5f9f58125524f13c99895eb87adcb95",
-        "revCount": 106,
+        "lastModified": 1755152916,
+        "narHash": "sha256-Uj8LAcTNZL2MO+iIhgda8ISJes44AuxEfNm+IatJANg=",
+        "ref": "list-crates-dir",
+        "rev": "eeb36161d60680298967044ef35eec847428736a",
+        "revCount": 114,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
       "original": {
+        "ref": "list-crates-dir",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       }

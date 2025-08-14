@@ -22,7 +22,7 @@ let
       sort -u | \
       rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
     )
-    code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
+    code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
   ''}/bin/open-remote";
 in
 {
@@ -34,7 +34,7 @@ in
     file = {
       ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
-    by-db-packages.list-crate-dirs.enable = true;
+    by-db-pkgs.list-crate-dirs.enable = true;
   };
 
   xsession.windowManager.i3.config = {
