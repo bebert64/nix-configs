@@ -46,6 +46,11 @@
         };
       };
 
+      nix.settings = {
+        cores = cfg.nix-cores;
+        max-jobs = cfg.nix-max-jobs;
+      };
+
       programs = {
         dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;
@@ -79,6 +84,11 @@
       };
 
       systemd = {
+        services.nix-daemon.serviceConfig = {
+          MemoryHigh = "7G";
+          MemoryMax = "8G";
+        };
+
         user.services.polkit-gnome-authentication-agent-1 = {
           description = "polkit-gnome-authentication-agent-1";
           wantedBy = [ "graphical-session.target" ];
