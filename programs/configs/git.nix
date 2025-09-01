@@ -34,6 +34,7 @@
         c = "commit";
         ca = "commit --amend";
         cap = "!git commit --amend && git push -u --force-with-lease";
+        clb = "!git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done;";
         co = "checkout";
         com = "!git checkout ${cfg.mainOrMaster}";
         cop = "!git commit && git push -u";

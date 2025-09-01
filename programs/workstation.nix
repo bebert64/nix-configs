@@ -6,7 +6,6 @@
     ./configs/ferdium
     ./configs/picom
     ./configs/polybar
-    ./configs/theme
     ./configs/music
     ./configs/sqlfluff
     ./configs/terminal
@@ -20,6 +19,7 @@
     ./configs/lock.nix
     ./configs/rofi.nix
     ./configs/slack.nix
+    ./configs/theme.nix
     ./configs/udiskie.nix
     ./configs/vdhcoapp.nix
   ];

@@ -6,21 +6,31 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  homeDir = config.home.homeDirectory;
+  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
   open-local = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
-      ${pkgs.fd}/bin/fd . --type dir --base-directory $HOME 2>/dev/null | \
+      list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
       sort -u | \
-      rofi -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
     )
-    code $HOME/$selection
+    if [[ $selection = "code" ]]; then
+      code $HOME/code
+    elif [[ $selection ]]; then
+      code $HOME/code/$selection
+    fi
   ''}/bin/open-local";
   open-remote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      ssh cerberus "nix run \"nixpkgs#fd\" -- --base-directory ./Stockly/Main --type dir" 2>/dev/null | \
+      ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
       sort -u | \
-      rofi -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 30%;}'
     )
-    code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
+    if [[ $selection = "Main" ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
+    elif [[ $selection ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
+    fi
   ''}/bin/open-remote";
 in
 {
@@ -34,6 +44,8 @@ in
     };
   };
 
+  by-db-pkgs.list-crate-dirs.enable = true;
+
   xsession.windowManager.i3.config = {
     assigns = {
       "$ws3" = [ { class = "Code"; } ];
@@ -41,6 +53,7 @@ in
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
       "${modifier}+Shift+v" = "workspace $ws3; exec ${open-remote}";
+      "${modifier}+Control+n" = "workspace $ws3; exec code ${nixConfigsRepo}";
     };
   };
 }
