@@ -1,3 +1,3 @@
 # Backup / restore data
 
-While ferdium is running, go to http://localhost:46569/transfer
+From ferdium, go to Help / Import-Export configuration data
