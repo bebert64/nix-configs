@@ -154,8 +154,6 @@
         earlyoom = {
           enable = true; # Enable earlyoom to kill processes when memory is low
           extraArgs = [
-            "--ignore"
-            "'nixos-rebuild'"
             "--prefer"
             "'^(ferdium|firefox)$'"
           ];
