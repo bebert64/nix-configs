@@ -79,6 +79,11 @@
       };
 
       systemd = {
+        services.nix-daemon.serviceConfig = {
+          MemoryHigh = "7G";
+          MemoryMax = "8G";
+        };
+
         user.services.polkit-gnome-authentication-agent-1 = {
           description = "polkit-gnome-authentication-agent-1";
           wantedBy = [ "graphical-session.target" ];

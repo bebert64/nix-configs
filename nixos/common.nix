@@ -153,6 +153,8 @@
       services = {
         earlyoom = {
           enable = true; # Enable earlyoom to kill processes when memory is low
+          freeSwapThreshold = 5;
+          freeMemThreshold = 5;
           extraArgs = [
             "--prefer"
             "'^(ferdium|firefox)$'"
