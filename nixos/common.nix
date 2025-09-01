@@ -18,6 +18,8 @@
       description = mkOption { type = types.str; };
     };
     bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
+    nix-cores = mkOption { type = types.number; };
+    nix-max-jobs = mkOption { type = types.number; };
   };
 
   config =
