@@ -8,6 +8,7 @@
         "127.0.0.1"
         "192.168.1.2"
       ];
+      interface = "end0";
       domain-needed = true;
       bogus-priv = true;
       filterwin2k = true;
