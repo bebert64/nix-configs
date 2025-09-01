@@ -47,8 +47,8 @@
       };
 
       nix.settings = {
-        cores = 2;
-        max-jobs = 1;
+        cores = cfg.nix-cores;
+        max-jobs = cfg.nix-max-jobs;
       };
 
       programs = {

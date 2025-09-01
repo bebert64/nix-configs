@@ -11,6 +11,8 @@ in
   by-db.user = {
     name = "romain";
     description = "Romain";
+    nix-cores = 2;
+    nix-max-jobs = 1;
   };
 
   home-manager.users.${user.name} = {
