@@ -119,6 +119,11 @@
           cd -
         }
 
+        # Wake on LAN fixe-bureau
+        wol-fixe-bureau() {
+          ssh raspi "wol D4:3D:7E:D8:C3:95"
+        }
+
         path+="$HOME/.cargo/bin"
         eval "$(direnv hook zsh)"
       '';
