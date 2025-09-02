@@ -39,7 +39,7 @@ in
   };
 
   networking = {
-    interfaces.enp3s0.wakeOnLan.enable = true;
+    interfaces.wlp0s20f3.wakeOnLan.enable = true;
   };
 
   # Configuration options that are not standard NixOS, but were defined by Stockly
