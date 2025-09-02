@@ -69,7 +69,8 @@
         update-raspi() {
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          systemd-inhibit nixos-rebuild switch --target-host raspi --build-host localhost --use-remote-sudo --flake .#raspi
+          systemd-inhibit nixos-rebuild build --flake .#raspi
+          systemd-inhibit nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi
         }
         upgrade() {
           cd ~/${cfg.nixConfigsRepo}
