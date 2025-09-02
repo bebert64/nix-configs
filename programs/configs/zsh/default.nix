@@ -78,6 +78,16 @@
           systemd-inhibit sudo nixos-rebuild switch --flake .#
           git push
         }
+        upgrade-full() {
+          cdr && nix flake update
+          cdr nix/dev && nix flake update
+          cargo check && cdr && git add . && git commit -m "Update flake inputs" && git push
+          cd ~/${cfg.nixConfigsRepo}
+          git pull
+          systemd-inhibit nix flake update --commit-lock-file
+          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          git push
+        }
 
         # Code/cargo commands
         compdef '_files -W "$HOME/${cfg.mainCodingRepo.path}" -/' cdr
