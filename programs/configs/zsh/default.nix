@@ -97,8 +97,8 @@
         }
         tfw() {
           cdr ${cfg.mainCodingRepo.workspaceDir}
-          cargo test
           cargo fmt -- --config "${formatOptions}"
+          cargo test
           cd -
         }
         ccw() {
