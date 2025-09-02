@@ -38,6 +38,10 @@ in
     };
   };
 
+  networking = {
+    interfaces.enp3s0.wakeOnLan.enable = true;
+  };
+
   # Configuration options that are not standard NixOS, but were defined by Stockly
   stockly = {
     acer-quanta-webcam-fix = true;

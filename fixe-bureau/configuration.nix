@@ -33,10 +33,6 @@ in
 
   networking = {
     hostName = "fixe-bureau";
-
     interfaces.enp3s0.wakeOnLan.enable = true;
-    #   extraHosts = ''
-    #    127.0.0.1 mafreebox.freebox.fr
-    #  '';
   };
 }
