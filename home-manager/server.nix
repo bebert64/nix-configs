@@ -25,7 +25,7 @@
       by-db-pkgs = {
         backup = {
           app.enable = true;
-          stashApp.database.stashApiConfig.apiKey = "${config.sops.secrets."stash/api-key".path}";
+          stashApp.database.apiConfig.apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
 
         guitar-tutorials = {
