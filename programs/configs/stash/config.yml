@@ -180,6 +180,37 @@ stash_boxes:
       name: stash_db
 theme_color: '#202b33'
 ui:
+    defaultFilters:
+        scenes:
+            find_filter:
+                direction: DESC
+                page: "1"
+                per_page: "40"
+                q: ""
+                sort: created_at
+            mode: SCENES
+            object_filter: {}
+            ui_options:
+                display_mode: "0"
+                zoom_index: "1"
+        tags:
+            find_filter:
+                direction: ASC
+                page: "1"
+                per_page: "120"
+                q: ""
+                sort: name
+            mode: TAGS
+            object_filter:
+                parents:
+                    modifier: IS_NULL
+                    value:
+                        depth: "0"
+                        excluded: []
+                        items: []
+            ui_options:
+                display_mode: "0"
+                zoom_index: "0"
     frontPageContent:
         - __typename: CustomFilter
           direction: DESC
@@ -241,23 +272,31 @@ ui:
         excludedStudioFields:
             - name
         fingerprintQueue:
-            https://stashdb.org/graphql:
-                - "6939"
-                - "6940"
-                - "6932"
-                - "6933"
-                - "6930"
-                - "6928"
-                - "6927"
-                - "6924"
-                - "6925"
-                - "6873"
+            https://stashdb.org/graphql: []
         markSceneAsOrganizedOnSave: false
         mode: auto
         setCoverImage: true
         setTags: true
         showMales: true
         tagOperation: merge
+    taskDefaults:
+        cleanGenerated:
+            blobFiles: true
+            dryRun: false
+            imageThumbnails: true
+            markers: true
+            screenshots: true
+            sprites: true
+            transcodes: true
+        scan:
+            rescan: false
+            scanGenerateClipPreviews: false
+            scanGenerateCovers: true
+            scanGenerateImagePreviews: false
+            scanGeneratePhashes: true
+            scanGeneratePreviews: true
+            scanGenerateSprites: false
+            scanGenerateThumbnails: false
 username: shortcuts.db@gmail.com
 video_file_naming_algorithm: OSHASH
 write_image_thumbnails: true
