@@ -30,7 +30,7 @@ in
         Service = {
           Type = "exec";
           ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
-          Environment = "PATH=/run/current-system/sw/bin/:${config.home.homeDirectory}/.nix-profile/bin/";
+          Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
         };
         Install = {
           WantedBy = [ "default.target" ];
