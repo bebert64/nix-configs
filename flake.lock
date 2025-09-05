@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1757012385,
-        "narHash": "sha256-PK5bArjl3yb1gFvt0n0EQx3lspzht0oicuX3pR+H4Sc=",
+        "lastModified": 1757060783,
+        "narHash": "sha256-ftK5NOOF+IZBJRSzMO8hpQeLacg3sa47t2vnVN/N5DI=",
         "ref": "backup",
-        "rev": "2b3a1c28fdf7017483644a03c61c66cbd679956b",
-        "revCount": 159,
+        "rev": "d9d42494632e099004f8da066998e9b566f87c9f",
+        "revCount": 164,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
