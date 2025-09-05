@@ -38,6 +38,7 @@
         wke2 = "i3-msg workspace 12:󰸉";
         de = "yt-dlp -f 720p_HD";
         nix-shell = "nix-shell --run zsh";
+        cargo2nix = "cdr && cargo2nix -ol && cd -";
       };
       history = {
         size = 200000;
