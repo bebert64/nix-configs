@@ -1,0 +1,81 @@
+# requires: AlgoliaAPI
+name: GenderX Films
+sceneByURL:
+  - action: script
+    url:
+      - genderxfilms.com/en/video
+    script:
+      - python
+      - GenderXFilms.py
+      - genderxfilms
+      - scene-by-url
+sceneByFragment:
+    action: script
+    script:
+      - python
+      - GenderXFilms.py
+      - genderxfilms
+      - scene-by-fragment
+sceneByName:
+    action: script
+    script:
+      - python
+      - GenderXFilms.py
+      - genderxfilms
+      - scene-by-name
+sceneByQueryFragment:
+    action: script
+    script:
+      - python
+      - GenderXFilms.py
+      - genderxfilms
+      - scene-by-query-fragment
+galleryByFragment:
+  action: script
+  script:
+    - python
+    - GenderXFilms.py
+    - genderxfilms
+    - gallery-by-fragment
+galleryByURL:
+  - action: script
+    url:
+      - genderxfilms.com/en/photo/
+      - genderxfilms.com/en/video/
+    script:
+      - python
+      - GenderXFilms.py
+      - genderxfilms
+      - gallery-by-url
+movieByURL:
+  - action: script
+    url:
+      - genderxfilms.com/en/movie/
+    script:
+      - python
+      - GenderXFilms.py
+      - genderxfilms
+      - movie-by-url
+performerByURL:
+  - action: script
+    url:
+      - evilangel.com/en/pornstar/
+    script:
+      - python
+      - GenderXFilms.py
+      - performer-by-url
+performerByName:
+  action: script
+  script:
+    - python
+    - GenderXFilms.py
+    - genderxfilms
+    - performer-by-name
+performerByFragment:
+  action: script
+  script:
+    - python
+    - GenderXFilms.py
+    - genderxfilms
+    - performer-by-fragment
+# Last Updated January 30, 2025

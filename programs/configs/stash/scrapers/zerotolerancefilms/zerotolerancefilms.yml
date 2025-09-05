@@ -1,0 +1,58 @@
+# requires: AlgoliaAPI
+name: ZeroToleranceFilms
+sceneByURL:
+  - action: script
+    url:
+      - 3rddegreefilms.com/en/video/
+      - addicted2girls.com/en/video/
+      - diabolic.com/en/video/
+      - zerotolerancefilms.com/en/video/
+    script:
+      - python
+      - zerotolerancefilms.py
+      - zerotolerancefilms
+      - scene-by-url
+sceneByFragment:
+  action: script
+  script:
+    - python
+    - zerotolerancefilms.py
+    - zerotolerancefilms
+    - scene-by-fragment
+sceneByName:
+  action: script
+  script:
+    - python
+    - zerotolerancefilms.py
+    - zerotolerancefilms
+    - scene-by-name
+sceneByQueryFragment:
+  action: script
+  script:
+    - python
+    - zerotolerancefilms.py
+    - zerotolerancefilms
+    - scene-by-query-fragment
+movieByURL:
+  - action: script
+    url:
+      - 3rddegreefilms.com/en/movie/
+      - diabolic.com/en/movie/
+      - zerotolerancefilms.com/en/movie/
+    script:
+      - python
+      - zerotolerancefilms.py
+      - zerotolerancefilms
+      - movie-by-url
+galleryByURL:
+  - action: script
+    url:
+      - 3rddegreefilms.com/en/photo/
+      - addicted2girls.com/en/photo/
+      - zerotolerancefilms.com/en/photo/
+    script:
+      - python
+      - zerotolerancefilms.py
+      - zerotolerancefilms
+      - gallery-by-url
+# Last Updated January 30, 2025

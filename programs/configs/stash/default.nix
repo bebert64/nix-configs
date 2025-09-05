@@ -1,13 +1,11 @@
 {
   pkgs,
   config,
-  home-manager,
   ...
 }:
 let
   cfgUser = config.home-manager.users.${config.by-db.user.name};
   stashDir = "${cfgUser.home.homeDirectory}/.stash";
-  nixConfigsRepo = "${cfgUser.home.homeDirectory}/${cfgUser.by-db.nixConfigsRepo}";
   stash = pkgs.stash;
 in
 {
@@ -15,19 +13,11 @@ in
     home = {
       packages = [
         stash
-        (pkgs.writeScriptBin "restore-stash" ''
-          set -euxo pipefail
-
-          rsync -aP '/mnt/NAS/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_bkp/' ${stashDir}/ --exclude "archive"
-        '')
+        pkgs.ffmpeg
       ];
 
-      activation = {
-        symlinkStashConfig = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          mkdir -p ${stashDir}/
-          ln -sf ${nixConfigsRepo}/programs/configs/stash/config.yml ${stashDir}/
-          ln -sf ${nixConfigsRepo}/programs/configs/stash/scrapers ${stashDir}/
-        '';
+      file = {
+        "${stashDir}/scrapers".source = ./scrapers;
       };
     };
 
@@ -40,6 +30,7 @@ in
         Service = {
           Type = "exec";
           ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
+          Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
         };
         Install = {
           WantedBy = [ "default.target" ];

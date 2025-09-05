@@ -1,10 +1,20 @@
-name: LucasEntertainment
+name: Lucas Entertainment
 sceneByURL:
   - action: scrapeXPath
     url:
+      - lucasentertainment.com/movies/
       - lucasentertainment.com/scenes/
+      - lucasentertainment.com/tour/movies/
       - lucasentertainment.com/tour/scenes/
     scraper: sceneScraper
+sceneByName:
+  action: scrapeXPath
+  queryURL: https://lucasentertainment.com/find/{}
+  scraper: search
+sceneByQueryFragment:
+  action: scrapeXPath
+  queryURL: "{url}"
+  scraper: sceneScraper
 movieByURL:
   - action: scrapeXPath
     url:
@@ -17,8 +27,28 @@ performerByURL:
       - lucasentertainment.com/models/
       - lucasentertainment.com/tour/models/
     scraper: performerScraper
-
+performerByName:
+  action: scrapeXPath
+  queryURL: https://lucasentertainment.com/find/{}
+  scraper: search
 xPathScrapers:
+  search:
+    common:
+      $scene: //div[@class="scenes-panel"]//a[@class="scene-box"]
+      $performer: //div[@class="model-panel" and not(.//div[contains(@class, "movie-item")])]//a[@class="scene-box"]
+    scene:
+      Title: $scene/@title
+      URL: $scene/@href
+      Image: $scene/img/@data-original
+      Date:
+        selector: $scene//h6
+        postProcess:
+          - parseDate: "01.02.06"
+      Details: $scene//p
+    performer:
+      Name: $performer/@title
+      URL: $performer/@href
+      Image: $performer/img/@data-original
   sceneScraper:
     common:
       $performer: //strong[text() = "Performers:"]/following-sibling::a
@@ -31,18 +61,14 @@ xPathScrapers:
               - regex: (^[a-zA-Z]+\s[0-9]+)[a-z]+(\s[0-9]+$)
                 with: $1$2
           - parseDate: January 2 2006
+          - parseDate: Jan 2, 2006
       Performers:
         Name: $performer/text()
         URL: $performer/@href
       Details: &detailsAttr
         selector: //div[@class="container"]//p[@class="plain-link"]/following-sibling::p/text()
         concat: "\n\n"
-      Image:
-        selector: //script[contains(text(), "image:")]/text()
-        postProcess:
-          - replace:
-              - regex: "^.*image: '([^']+)'.*$"
-                with: $1
+      Image: //meta[@name='twitter:image']/@content
       Studio: &studioAttr
         Name:
           fixed: Lucas Entertainment
@@ -73,16 +99,16 @@ xPathScrapers:
       Name: *titleSel
       Gender:
         fixed: Male
-      Measurements:
+      PenisLength:
         selector: //strong[text() = "Dick Size:"]/following-sibling::text()[1]
         postProcess:
           - replace:
-              - regex: (^.*$)
-                with: 0'$1
+              - regex: ^
+                with: 0'
           - feetToCm: true
       Height:
         selector: //strong[text() = "Height:"]/following-sibling::text()[1]
         postProcess:
           - feetToCm: true
       Image: //div[@class="col-sm-5 col-md-5 col-lg-4 model-main-photo"]/img/@data-original
-# Last Updated January 07, 2023
+# Last Updated July 15, 2025

@@ -1,0 +1,11 @@
+# requires: py_common
+name: AuntJudys
+sceneByURL:
+  - action: script
+    url:
+      - auntjudys.com
+      - auntjudysxxx.com
+    script:
+      - python
+      - AuntJudys.py
+      - scene-by-url

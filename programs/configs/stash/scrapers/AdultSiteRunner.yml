@@ -1,25 +1,42 @@
-name: Raunchy Bastards
+name: AdultSiteRunner
+performerByURL:
+  - action: scrapeXPath
+    scraper: performerScraper
+    url:
+      - blackboyaddictionz.com/profile/
+      - blacksondaddies.com/profile/
+      - boundjocks.com/profile/
+      - boyshalfwayhouse.com/profile/
+      - coltstudiogroup.com/profile/
+      - hotoldermale.com/profile/
+      - monstercub.com/profile/
+      - myfirstdaddy.com/profile/
+      - older4me.com/profile/
+      - playdaddy.com/profile/
+      - raunchybastards.com/profile/
+      - stockydudes.com/profile/
+      - toplatindaddies.com/profile/
 sceneByURL:
   - action: scrapeXPath
     url:
-      - boundjocks.com/scene/
-      - boyshalfwayhouse.com/scene/
-      - coltstudiogroup.com/scene/
       - daddycarl.com/scene/
-      - hotoldermale.com/scene/
-      - monstercub.com/scene/
       - naturalbornbreeders.com/scene/
-      - older4me.com/scene/
-      - raunchybastards.com/scene/
-      - stockydudes.com/scene/
-      - toplatindaddies.com/scene/
     scraper: oldStyleSite
   - action: scrapeXPath
     url:
       - blackboyaddictionz.com/scene/
       - blacksondaddies.com/scene/
+      - boundjocks.com/scene/
+      - boyshalfwayhouse.com/scene/
+      - coltstudiogroup.com/scene/
+      - hotoldermale.com/scene/
+      - monstercub.com/scene/
       - myfirstdaddy.com/scene/
+      - older4me.com/scene/
       - playdaddy.com/scene/
+      - raunchybastards.com/scene/
+      - stockydudes.com/scene/
+      - toplatindaddies.com/scene/
     scraper: newStyleSite
 xPathScrapers:
   oldStyleSite:
@@ -35,12 +52,14 @@ xPathScrapers:
                 with: $1
       Date:
         selector: $scene//span[contains(@class, "sceneDetails")]
-        postProcess:
+        postProcess: &ppDate
           - replace:
-              # https://regex101.com/r/rsjbb6/1
-              - regex: ^(\w{3}\s*\d{1,2},\s*\d{4}).*?$
-                with: $1
-          - parseDate: Jan 2,2006
+              - regex: ^Details:\s*
+                with: ""
+              # https://regex101.com/r/rsjbb6/3
+              - regex: ^(\w{3}\s*\d{1,2}),\s*(\d{4}).*?$
+                with: $1, $2
+          - parseDate: Jan 2, 2006
       # All of this can be replaced once scrapers get access to the URL they are scraping
       Studio:
         Name:
@@ -100,7 +119,7 @@ xPathScrapers:
     common:
       $details: //div[contains(@class, "container_styled_1")]
     scene:
-      Title: //h2[@class="main_title"]
+      Title: //h2[contains(@class, "sectionMainTitle")]
       Code:
         selector: //link[@rel="canonical"]/@href
         postProcess:
@@ -126,14 +145,42 @@ xPathScrapers:
         concat: "\n\n"
       Date:
         selector: ($details//h5[contains(text(), "Details")]/text())[1]
-        postProcess:
-          - replace:
-              # https://regex101.com/r/rsjbb6/1
-              - regex: ^Details:\s+(\w{3}\s*\d{1,2},\s*\d{4}).*?$
-                with: $1
-          - parseDate: Jan 2,2006
+        postProcess: *ppDate
       Image:
         selector: //meta[@property="og:image"]/@content
       Tags:
         Name: $details//h5[contains(., "Categories")]/a/text()
-# Last Updated September 08, 2023
+  performerScraper:
+    common:
+      $modelProfile: //div[@class="modelProfileSidebar"]
+    performer:
+      Name: //div[@class="main_title"]/h3/text()
+      Gender:
+        fixed: Male
+      Height:
+        selector: $modelProfile/div/ul/li[contains(text(),"Height")]/strong/text()
+        postProcess:
+          - feetToCm: true
+      Weight:
+        selector: $modelProfile/div/ul/li[contains(text(),"Weight")]/strong/text()
+        postProcess:
+          - replace:
+              - regex: " pounds$"
+                with: ""
+          - lbToKg: true
+      PenisLength:
+        selector: $modelProfile/div/ul/li[contains(text(),"Dick size")]/strong/text()
+        postProcess:
+          - replace:
+              - regex: (\d+)(\.(\d+) inches)
+                with: "0.$1$2"
+          - feetToCm: true
+      Circumcised:
+        selector: $modelProfile/div/ul/li[contains(text(),"Cut")]/strong/text()
+      Tags:
+        Name: $modelProfile/div/ul/li[5]/strong/text() |
+          $modelProfile//a[@class="tagsRnd"]/text()
+      Image: $modelProfile//div[@class="profile"]//img[contains(@class,"img-responsive")]
+      Twitter: //a[contains(@href,"twitter.com")]/@href
+      Details: $modelProfile//div[@class="main_title"]/p[not(@class)]/text()
+# Last Updated November 16, 2024
