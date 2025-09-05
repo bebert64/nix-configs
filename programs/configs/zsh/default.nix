@@ -127,8 +127,13 @@
         }
 
         # Other
+        psg() {
+          ps aux | grep $1 | grep -v psg | grep -v grep
+        }
+        run() {
+          nix run "nixpkgs#$1" -- "''${@:2}"
+        }
         sync-wallpapers() {
-          set -euxo pipefail
           rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
           rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
         }
