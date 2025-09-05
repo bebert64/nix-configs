@@ -31,11 +31,9 @@
 
         # Nix aliases
         nix-shell = "nix-shell --run zsh";
-        nix-switch = "sudo systemd-inhibit nixos-rebuild switch --flake .#";
         update = "run-in-nix-repo nix-switch";
         update-dirty = "run-in-nix-repo-dirty nix-switch";
         update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
-        upgrade-nix = "run-in-nix-repo 'nix flake update --commit-lock-file && nix-switch' && git push";
         update-raspi = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'";
 
         # Cargo aliases
@@ -74,6 +72,10 @@
         }
 
         # Upgrades
+        nix-switch() {
+          # Defined as a function rather than an alias to allow being called from other functions
+          sudo systemd-inhibit nixos-rebuild switch --flake .#
+        };
         upgrade-code() {
           orig_dir="$(pwd)"
           cdr
@@ -93,7 +95,13 @@
           fi
           cd "$orig_dir"
         }
+        upgrade-nix() {
+          # Defined as a function rather than an alias to allow being called from other functions
+          run-in-nix-repo 'nix flake update --commit-lock-file && nix-switch'
+          git push
+        }
         upgrade-full() {
+          setopt aliases
           upgrade-code || return 1
           upgrade-nix
         }
