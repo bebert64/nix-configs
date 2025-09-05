@@ -26,11 +26,11 @@
       shellAliases = {
         wke1 = "i3-msg workspace 11:󰸉";
         wke2 = "i3-msg workspace 12:󰸉";
-        nix-shell = "nix-shell --run zsh";
         cargo2nix = "cdr && cargo2nix -ol && cd -";
         wol-fixe-bureau = "ssh raspi \"wol D4:3D:7E:D8:C3:95\"";
 
         # Nix aliases
+        nix-shell = "nix-shell --run zsh";
         nix-switch = "sudo systemd-inhibit nixos-rebuild switch --flake .#";
         update = "run-in-nix-repo nix-switch";
         update-dirty = "run-in-nix-repo-dirty nix-switch";
