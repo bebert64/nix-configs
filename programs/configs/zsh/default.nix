@@ -31,11 +31,12 @@
         wol-fixe-bureau = "ssh raspi \"wol D4:3D:7E:D8:C3:95\"";
 
         # Nix aliases
-        update-dirty = "run-in-nix-repo-dirty systemd-inhibit sudo nixos-rebuild switch --flake .#";
-        update = "run-in-nix-repo systemd-inhibit sudo nixos-rebuild switch --flake .#";
-        update-clean = "run-in-nix-repo systemd-inhibit sudo bash -c 'nix-collect-garbage -d && nixos-rebuild switch --flake .#'";
+        nix-switch = "sudo systemd-inhibit nixos-rebuild switch --flake .#";
+        update = "run-in-nix-repo nix-switch";
+        update-dirty = "run-in-nix-repo-dirty nix-switch";
+        update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
+        upgrade-nix = "run-in-nix-repo 'nix flake update --commit-lock-file && nix-switch'";
         update-raspi = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'";
-        upgrade-nix = "run-in-nix-repo systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'";
 
         # Cargo aliases
         tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
@@ -55,21 +56,21 @@
       syntaxHighlighting.enable = true;
       initContent = ''
         # Helpers
-        run-in-repo() {
-          local dir="$1"
-          shift
-          cd "$dir"
-          "$@"
+        run-in-nix-repo() {
+          cd ~/${cfg.nixConfigsRepo}
+          git pull || return 1
+          (eval "$*")
           cd -
         }
-        run-in-nix-repo() {
-          run-in-repo ~/${cfg.nixConfigsRepo} '(git pull || return 1) && "$@"'
-        }
         run-in-nix-repo-dirty() {
-          run-in-repo ~/${cfg.nixConfigsRepo} "$@"
+          cd ~/${cfg.nixConfigsRepo}
+          (eval "$*")
+          cd -
         }
         run-in-code-repo() {
-          run-in-repo ~/${cfg.mainCodingRepo} "$@"
+          cd ~/${cfg.mainCodingRepo}
+          (eval "$*")
+          cd -
         }
 
         # Upgrades
