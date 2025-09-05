@@ -9,16 +9,11 @@
       type = types.str;
       default = "nix-configs";
     };
-    mainCodingRepo = {
-      path = mkOption {
-        type = types.str;
-        default = "code";
-      };
-      workspaceDir = mkOption {
-        type = types.str;
-        default = ".";
-      };
+    mainCodingRepo = mkOption {
+      type = types.str;
+      default = "code";
     };
+
   };
 
   config.programs.zsh =
@@ -29,16 +24,25 @@
     {
       enable = true;
       shellAliases = {
-        c = "code .";
-        cc = "code $HOME/${cfg.mainCodingRepo.path}";
-        cn = "code $HOME/${cfg.nixConfigsRepo}";
-        cs = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main";
-        cso = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/operations/Service";
         wke1 = "i3-msg workspace 11:󰸉";
         wke2 = "i3-msg workspace 12:󰸉";
-        de = "yt-dlp -f 720p_HD";
-        nix-shell = "nix-shell --run zsh";
         cargo2nix = "cdr && cargo2nix -ol && cd -";
+        wol-fixe-bureau = "ssh raspi \"wol D4:3D:7E:D8:C3:95\"";
+
+        # Nix aliases
+        nix-shell = "nix-shell --run zsh";
+        nix-switch = "sudo systemd-inhibit nixos-rebuild switch --flake .#";
+        update = "run-in-nix-repo nix-switch";
+        update-dirty = "run-in-nix-repo-dirty nix-switch";
+        update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
+        upgrade-nix = "run-in-nix-repo 'nix flake update --commit-lock-file && nix-switch' && git push";
+        update-raspi = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'";
+
+        # Cargo aliases
+        tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
+        ccw = "run-in-code-repo 'cargo check'";
+        cccw = "run-in-code-repo 'cargo clean && cargo check'";
+        cctfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'";
       };
       history = {
         size = 200000;
@@ -51,79 +55,65 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       initContent = ''
-        # Nix updates
-        update-dirty() {
+        # Helpers
+        run-in-nix-repo() {
           cd ~/${cfg.nixConfigsRepo}
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          git pull || return 1
+          (eval "$*")
+          cd -
         }
-        update() {
+        run-in-nix-repo-dirty() {
           cd ~/${cfg.nixConfigsRepo}
-          git pull
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          (eval "$*")
+          cd -
         }
-        update-clean() {
-          cd ~/${cfg.nixConfigsRepo}
-          git pull
-          systemd-inhibit sudo nix-collect-garbage -d
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+        run-in-code-repo() {
+          cd ~/${cfg.mainCodingRepo}
+          (eval "$*")
+          cd -
         }
-        update-raspi() {
-          cd ~/${cfg.nixConfigsRepo}
-          git pull
-          systemd-inhibit nixos-rebuild build --flake .#raspi
-          systemd-inhibit nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi
-        }
-        upgrade() {
-          cd ~/${cfg.nixConfigsRepo}
-          git pull
-          systemd-inhibit nix flake update --commit-lock-file
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
-          git push
+
+        # Upgrades
+        upgrade-code() {
+          orig_dir="$(pwd)"
+          cdr
+          git pull || return 1
+          cdr nix/dev
+          nix flake update
+          cdr
+          nix flake update
+          if cargo check; then
+            git add .
+            git commit -m "Update flake inputs"
+            git push
+          else
+            git reset --hard
+            cd "$orig_dir"
+            return 1
+          fi
+          cd "$orig_dir"
         }
         upgrade-full() {
-          cdr && nix flake update
-          cdr nix/dev && nix flake update
-          cargo check && cdr && git add . && git commit -m "Update flake inputs" && git push
-          cd ~/${cfg.nixConfigsRepo}
-          git pull
-          systemd-inhibit nix flake update --commit-lock-file
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
-          git push
+          upgrade-code || return 1
+          upgrade-nix
         }
 
-        # Code/cargo commands
-        compdef '_files -W "$HOME/${cfg.mainCodingRepo.path}" -/' cdr
+        # Cdr and completion
+        compdef '_files -W "$HOME/${cfg.mainCodingRepo}" -/' cdr
         cdr() {
-          cd "$HOME/${cfg.mainCodingRepo.path}/$@"
-        }
-        tfw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
-          cargo fmt -- --config "${formatOptions}"
-          cargo test
-          cd -
-        }
-        ccw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
-          cargo check 
-          cd -
-        }
-        cccw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
-          cargo clean
-          cargo check
-          cd -
-        }
-        cctfw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
-          cargo clean
-          cargo test
-          cargo fmt -- --config "${formatOptions}"
-          cd -
+          cd "$HOME/${cfg.mainCodingRepo}/$@"
         }
 
-        # Wake on LAN fixe-bureau
-        wol-fixe-bureau() {
-          ssh raspi "wol D4:3D:7E:D8:C3:95"
+        # Other
+        psg() {
+          ps aux | grep $1 | grep -v psg | grep -v grep
+        }
+        run() {
+          nix run "nixpkgs#$1" -- "''${@:2}"
+        }
+        sync-wallpapers() {
+          rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
+          rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
         }
 
         path+="$HOME/.cargo/bin"
