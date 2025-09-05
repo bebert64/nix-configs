@@ -26,7 +26,7 @@
       </schema-mapping>
     </data-source>
     <data-source name="raspi - master" uuid="6d279d07-dde2-4187-b718-531d2db33972">
-      <database-info product="PostgreSQL" version="15.9" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="15.9" exact-driver-version="42.7">
+      <database-info product="PostgreSQL" version="15.14" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="15.14" exact-driver-version="42.7">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
@@ -34,13 +34,12 @@
       <user-name>master</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node negative="1">
-            <node kind="database">
-              <name qname="@" />
-              <name qname="shortcuts_prod" />
-              <node kind="schema" qname="@" />
-            </node>
-            <node kind="database" qname="shortcuts_dev" />
+          <node kind="database">
+            <name qname="@" />
+            <name qname="shortcuts_dev" />
+            <name qname="shortcuts_prod" />
+            <name qname="yuzit_dev" />
+            <node kind="schema" qname="@" />
           </node>
         </introspection-scope>
       </schema-mapping>
