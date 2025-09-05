@@ -38,10 +38,10 @@
         upgrade-nix = "run-in-nix-repo systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'";
 
         # Cargo aliases
-        tfw = "run-in-code-repo cargo fmt -- --config \"${formatOptions}\" && cargo test";
-        ccw = "run-in-code-repo cargo check";
-        cccw = "run-in-code-repo cargo clean && cargo check";
-        cctfw = "run-in-code-repo cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test";
+        tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
+        ccw = "run-in-code-repo 'cargo check'";
+        cccw = "run-in-code-repo 'cargo clean && cargo check'";
+        cctfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'";
       };
       history = {
         size = 200000;
@@ -59,7 +59,6 @@
           local dir="$1"
           shift
           cd "$dir"
-          git pull || return 1
           "$@"
           cd -
         }
