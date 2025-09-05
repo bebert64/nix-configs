@@ -9,16 +9,11 @@
       type = types.str;
       default = "nix-configs";
     };
-    mainCodingRepo = {
-      path = mkOption {
-        type = types.str;
-        default = "code";
-      };
-      workspaceDir = mkOption {
-        type = types.str;
-        default = ".";
-      };
+    mainCodingRepo = mkOption {
+      type = types.str;
+      default = "code";
     };
+
   };
 
   config.programs.zsh =
@@ -61,26 +56,24 @@
           cd -
         }
         update-clean() {
-          set -euxo pipefail
+          # set -euxo
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          systemd-inhibit (sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake .#)
+          systemd-inhibit sudo bash -c 'nix-collect-garbage -d && nixos-rebuild switch --flake .#'
           cd -
         }
         update-raspi() {
           set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          systemd-inhibit nixos-rebuild build --flake .#raspi
-          systemd-inhibit nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi
+          systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'
           cd -
         }
         upgrade() {
           set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          systemd-inhibit nix flake update --commit-lock-file
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'
           git push
           cd -
         }
@@ -91,38 +84,37 @@
           cargo check && cdr && git add . && git commit -m "Update flake inputs" && git push
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          systemd-inhibit nix flake update --commit-lock-file
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'
           git push
         }
 
         # Code/cargo commands
-        compdef '_files -W "$HOME/${cfg.mainCodingRepo.path}" -/' cdr
+        compdef '_files -W "$HOME/${cfg.mainCodingRepo}" -/' cdr
         cdr() {
-          cd "$HOME/${cfg.mainCodingRepo.path}/$@"
+          cd "$HOME/${cfg.mainCodingRepo}/$@"
         }
         tfw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
+          cdr
           cargo fmt -- --config "${formatOptions}"
           cargo test
           cd -
         }
         ccw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
+          cdr
           cargo check 
           cd -
         }
         cccw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
+          cdr
           cargo clean
           cargo check
           cd -
         }
         cctfw() {
-          cdr ${cfg.mainCodingRepo.workspaceDir}
+          cdr
+          cargo fmt -- --config "${formatOptions}"
           cargo clean
           cargo test
-          cargo fmt -- --config "${formatOptions}"
           cd -
         }
 
