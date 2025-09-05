@@ -29,16 +29,11 @@
     {
       enable = true;
       shellAliases = {
-        c = "code .";
-        cc = "code $HOME/${cfg.mainCodingRepo.path}";
-        cn = "code $HOME/${cfg.nixConfigsRepo}";
-        cs = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main";
-        cso = "code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/operations/Service";
         wke1 = "i3-msg workspace 11:󰸉";
         wke2 = "i3-msg workspace 12:󰸉";
-        de = "yt-dlp -f 720p_HD";
         nix-shell = "nix-shell --run zsh";
         cargo2nix = "cdr && cargo2nix -ol && cd -";
+        wol-fixe-bureau = "ssh raspi \"wol D4:3D:7E:D8:C3:95\"";
       };
       history = {
         size = 200000;
@@ -53,34 +48,44 @@
       initContent = ''
         # Nix updates
         update-dirty() {
+          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           systemd-inhibit sudo nixos-rebuild switch --flake .#
+          cd -
         }
         update() {
+          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           git pull
           systemd-inhibit sudo nixos-rebuild switch --flake .#
+          cd -
         }
         update-clean() {
+          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           git pull
-          systemd-inhibit sudo nix-collect-garbage -d
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          systemd-inhibit (sudo nix-collect-garbage -d && sudo nixos-rebuild switch --flake .#)
+          cd -
         }
         update-raspi() {
+          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           git pull
           systemd-inhibit nixos-rebuild build --flake .#raspi
           systemd-inhibit nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi
+          cd -
         }
         upgrade() {
+          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           git pull
           systemd-inhibit nix flake update --commit-lock-file
           systemd-inhibit sudo nixos-rebuild switch --flake .#
           git push
+          cd -
         }
         upgrade-full() {
+          set -euxo pipefail
           cdr && nix flake update
           cdr nix/dev && nix flake update
           cargo check && cdr && git add . && git commit -m "Update flake inputs" && git push
@@ -121,9 +126,11 @@
           cd -
         }
 
-        # Wake on LAN fixe-bureau
-        wol-fixe-bureau() {
-          ssh raspi "wol D4:3D:7E:D8:C3:95"
+        # Other
+        sync-wallpapers() {
+          set -euxo pipefail
+          rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
+          rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
         }
 
         path+="$HOME/.cargo/bin"

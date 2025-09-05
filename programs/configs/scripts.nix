@@ -16,27 +16,6 @@ in
 
       nix run "nixpkgs#$1" -- "''${@:2}"
     '')
-
-    (writeScriptBin "sshr" ''
-      set -euo pipefail
-
-      REMOTE=$1
-
-      case $REMOTE in
-        "cerberus") CMD="nix run \"nixpkgs#ranger\"";;
-        *) CMD="ranger";;
-      esac
-
-      tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
-    '')
-
-    (writeScriptBin "sync-wallpapers" ''
-      set -euxo pipefail
-
-      mount-nas
-      rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
-      rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
-    '')
   ];
 
 }
