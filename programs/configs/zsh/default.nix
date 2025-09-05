@@ -29,6 +29,19 @@
         nix-shell = "nix-shell --run zsh";
         cargo2nix = "cdr && cargo2nix -ol && cd -";
         wol-fixe-bureau = "ssh raspi \"wol D4:3D:7E:D8:C3:95\"";
+
+        # Nix aliases
+        update-dirty = "run-in-nix-repo-dirty systemd-inhibit sudo nixos-rebuild switch --flake .#";
+        update = "run-in-nix-repo systemd-inhibit sudo nixos-rebuild switch --flake .#";
+        update-clean = "run-in-nix-repo systemd-inhibit sudo bash -c 'nix-collect-garbage -d && nixos-rebuild switch --flake .#'";
+        update-raspi = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'";
+        upgrade-nix = "run-in-nix-repo systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'";
+
+        # Cargo aliases
+        tfw = "run-in-code-repo cargo fmt -- --config \"${formatOptions}\" && cargo test";
+        ccw = "run-in-code-repo cargo check";
+        cccw = "run-in-code-repo cargo clean && cargo check";
+        cctfw = "run-in-code-repo cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test";
       };
       history = {
         size = 200000;
@@ -41,37 +54,26 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       initContent = ''
-        # Nix updates
-        update-dirty() {
-          cd ~/${cfg.nixConfigsRepo}
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
-          cd -
-        }
-        update() {
-          cd ~/${cfg.nixConfigsRepo}
+        # Helpers
+        run-in-repo() {
+          local dir="$1"
+          shift
+          cd "$dir"
           git pull || return 1
-          systemd-inhibit sudo nixos-rebuild switch --flake .#
+          "$@"
           cd -
         }
-        update-clean() {
-          cd ~/${cfg.nixConfigsRepo}
-          git pull || return 1
-          systemd-inhibit sudo bash -c 'nix-collect-garbage -d && nixos-rebuild switch --flake .#'
-          cd -
+        run-in-nix-repo() {
+          run-in-repo ~/${cfg.nixConfigsRepo} '(git pull || return 1) && "$@"'
         }
-        update-raspi() {
-          cd ~/${cfg.nixConfigsRepo}
-          git pull || return 1
-          systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'
-          cd -
+        run-in-nix-repo-dirty() {
+          run-in-repo ~/${cfg.nixConfigsRepo} "$@"
         }
-        upgrade-nix() {
-          cd ~/${cfg.nixConfigsRepo}
-          git pull || return 1
-          systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'
-          git push
-          cd -
+        run-in-code-repo() {
+          run-in-repo ~/${cfg.mainCodingRepo} "$@"
         }
+
+        # Upgrades
         upgrade-code() {
           orig_dir="$(pwd)"
           cdr
@@ -96,34 +98,10 @@
           upgrade-nix
         }
 
-        # Code/cargo commands
+        # Cdr and completion
         compdef '_files -W "$HOME/${cfg.mainCodingRepo}" -/' cdr
         cdr() {
           cd "$HOME/${cfg.mainCodingRepo}/$@"
-        }
-        tfw() {
-          cdr
-          cargo fmt -- --config "${formatOptions}"
-          cargo test
-          cd -
-        }
-        ccw() {
-          cdr
-          cargo check 
-          cd -
-        }
-        cccw() {
-          cdr
-          cargo clean
-          cargo check
-          cd -
-        }
-        cctfw() {
-          cdr
-          cargo fmt -- --config "${formatOptions}"
-          cargo clean
-          cargo test
-          cd -
         }
 
         # Other
