@@ -43,49 +43,57 @@
       initContent = ''
         # Nix updates
         update-dirty() {
-          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
           systemd-inhibit sudo nixos-rebuild switch --flake .#
           cd -
         }
         update() {
-          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
-          git pull
+          git pull || return 1
           systemd-inhibit sudo nixos-rebuild switch --flake .#
           cd -
         }
         update-clean() {
-          # set -euxo
           cd ~/${cfg.nixConfigsRepo}
-          git pull
+          git pull || return 1
           systemd-inhibit sudo bash -c 'nix-collect-garbage -d && nixos-rebuild switch --flake .#'
           cd -
         }
         update-raspi() {
-          set -euxo pipefail
           cd ~/${cfg.nixConfigsRepo}
-          git pull
+          git pull || return 1
           systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'
           cd -
         }
-        upgrade() {
-          set -euxo pipefail
+        upgrade-nix() {
           cd ~/${cfg.nixConfigsRepo}
-          git pull
+          git pull || return 1
           systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'
           git push
           cd -
         }
+        upgrade-code() {
+          orig_dir="$(pwd)"
+          cdr
+          git pull || return 1
+          cdr nix/dev
+          nix flake update
+          cdr
+          nix flake update
+          if cargo check; then
+            git add .
+            git commit -m "Update flake inputs"
+            git push
+          else
+            git reset --hard
+            cd "$orig_dir"
+            return 1
+          fi
+          cd "$orig_dir"
+        }
         upgrade-full() {
-          set -euxo pipefail
-          cdr && nix flake update
-          cdr nix/dev && nix flake update
-          cargo check && cdr && git add . && git commit -m "Update flake inputs" && git push
-          cd ~/${cfg.nixConfigsRepo}
-          git pull
-          systemd-inhibit 'nix flake update --commit-lock-file && sudo nixos-rebuild switch --flake .#'
-          git push
+          upgrade-code || return 1
+          upgrade-nix
         }
 
         # Code/cargo commands
