@@ -27,7 +27,6 @@
         wke1 = "i3-msg workspace 11:󰸉";
         wke2 = "i3-msg workspace 12:󰸉";
         cargo2nix = "cdr && cargo2nix -ol && cd -";
-        wol-fixe-bureau = "ssh raspi \"wol D4:3D:7E:D8:C3:95\"";
 
         # Nix aliases
         nix-shell = "nix-shell --run zsh";
@@ -122,6 +121,14 @@
         sync-wallpapers() {
           rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
           rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
+        }
+        wsshfb() {
+          ssh raspi "wol D4:3D:7E:D8:C3:95"
+          while ssh raspi "! ping -c1 192.168.1.4 &> /dev/null"; do
+            echo "fixe-bureau is not responding"
+            sleep 1
+          done
+          ssh fixe-bureau -t "xset -display :0.0 dpms force off; DISPLAY=:0.0 nohup alock -cursor blank &; zsh -i"
         }
 
         path+="$HOME/.cargo/bin"
