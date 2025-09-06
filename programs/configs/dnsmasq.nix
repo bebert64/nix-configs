@@ -14,4 +14,12 @@
       # filterwin2k = true;
     };
   };
+
+  networking.firewall.interfaces.end0 = {
+    allowedTCPPorts = [ 53 ];
+    allowedUDPPorts = [
+      53
+      67
+    ];
+  };
 }
