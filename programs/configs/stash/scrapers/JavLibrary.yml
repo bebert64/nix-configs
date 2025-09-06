@@ -40,6 +40,7 @@ xPathScrapers:
     scene:
       Title:
         selector: //div[@class="videos"]/div/a/@title[not(contains(.,"(Blu-ray"))]|//div[@id="video_id"]/table/tbody/tr/td[@class="text"]/text()
+      Code: //div[@id="video_id"]/table/tbody/tr/td[@class="text"]/text()
       # Using URL to still get a URL with sceneByFragment if a duplicate exist.
       URL:
         selector: //div[@class="videos"]/div/a/@title[not(contains(.,"(Blu-ray"))]/../@href|//meta[@property="og:url"]/@content
@@ -57,6 +58,8 @@ xPathScrapers:
           - replace:
             - regex: ^(.*? ){1}
               with:
+      Director:
+        selector: //div[@id="video_director"]/table/tbody/tr/td[@class="text"]/span/a/text()
       Tags:
         Name: //div[@id="video_genres"]/table/tbody/tr/td[@class="text"]/span/a
       Performers:
@@ -99,4 +102,4 @@ xPathScrapers:
             - regex: ^
               with: "https:"
 
-# Last Updated September 14, 2021
+# Last Updated August 26, 2024

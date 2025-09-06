@@ -12,7 +12,10 @@ in
 
   xsession.windowManager.i3.config = {
     assigns = {
-      "$ws5" = [ { class = "ferdium"; } ];
+      "$ws5" = [
+        { class = "ferdium"; }
+        { class = "Ferdium"; }
+      ];
     };
     keybindings = lib.mkOptionDefault { "${modifier}+Control+t" = "workspace $ws5; exec ferdium"; };
   };

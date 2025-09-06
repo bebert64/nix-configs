@@ -18,6 +18,8 @@
       description = mkOption { type = types.str; };
     };
     bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
+    nix-cores = mkOption { type = types.number; };
+    nix-max-jobs = mkOption { type = types.number; };
   };
 
   config =
@@ -153,9 +155,9 @@
       services = {
         earlyoom = {
           enable = true; # Enable earlyoom to kill processes when memory is low
+          freeSwapThreshold = 5;
+          freeMemThreshold = 5;
           extraArgs = [
-            "--ignore"
-            "'nixos-rebuild'"
             "--prefer"
             "'^(ferdium|firefox)$'"
           ];

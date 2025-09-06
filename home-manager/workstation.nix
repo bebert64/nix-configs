@@ -53,6 +53,7 @@ in
             arandr # GUI to configure screens positions (need to kill autorandr)
             chromium
             evince # pdf reader
+            filezilla
             fusee-launcher
             gnome-keyring
             inkscape

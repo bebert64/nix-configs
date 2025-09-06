@@ -2,7 +2,7 @@ name: Cruel Girlfriend
 sceneByURL:
   - action: scrapeXPath
     url:
-      - cruelgf.com/
+      - cruelgf.com/Clip.php
     scraper: sceneScraper
 xPathScrapers:
   sceneScraper:
@@ -13,27 +13,53 @@ xPathScrapers:
         selector: $script
         postProcess:
           - replace:
-              - regex: '.+"name": "[^-]+-\s*([^"]+)".+'
+              - regex: '.+"name":\s*"([^"]+)".+'
                 with: $1
+          - javascript: &decodeHTML |
+              if (value) {
+                return value.replace(
+                /&amp;|&lt;|&gt;|&#0?39;|&quot;/g,
+                tag =>
+                  ({
+                    '&amp;': '&',
+                    '&lt;': '<',
+                    '&gt;': '>',
+                    '&#39;': "'",
+                    '&#039;': "'",
+                    '&quot;': '"'
+                    }[tag] || tag)
+                ).replace(/<br\s*\/?>/gi, '\n');
+              }
+              return value
       Date:
+        selector: //comment()[contains(., 'CLIP DATE')]/following-sibling::text()
+        postProcess:
+          - replace:
+              - regex: 'Added:\s*'
+                with: ""
+          - parseDate: 02-01-2006
+      Performers:
+        Name:
+          selector: //title
+          postProcess:
+            - replace:
+                - regex: .+Featuring\s*([^|]+)\s\|.+
+                  with: $1
+                - regex: (?i)\s+(?:and|&)\s+
+                  with: __SEP__
+          split: __SEP__
+      Details:
         selector: $script
         postProcess:
           - replace:
-              - regex: '.+"uploadDate": "([^T]+)T.+'
+              - regex: '.+"description":\s*"([^"]+)".+'
                 with: $1
-          - parseDate: 2006-01-02
-      Performers:
-        Name:
-          selector: //div[contains(@id,"Lg6T7ciE57Q018g38Ndnn9")]/@id
-          postProcess:
-            - replace:
-                - regex: Lg6T7ciE57Q018g38Ndnn9
-                  with:
-            - replace:
-                - regex: "([a-z])([A-Z])"
-                  with: "$1 $2"
-      Details:
-        selector: //div[@class="info-box-white"]//h3[not(img)]
+          - javascript: *decodeHTML
+          - replace:
+              - regex: <[^>]+>|\s*...$
+                with: ""
+        split: __SEP__
+        concat: \n\n
       Tags:
         Name: //div[@class='info-box-white']/h3[contains(.,"Added:")]/a
       Image:

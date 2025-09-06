@@ -1,16 +1,15 @@
 # yaml-language-server: $schema=../validator/scraper.schema.json
-
-name: "VirtualRealPorn"
+name: VirtualRealPorn
 
 sceneByURL:
   - action: scrapeXPath
     url: &urlSel
-      - virtualrealamateurporn.com
-      - virtualrealgay.com
-      - virtualrealjapan.com
-      - virtualrealpassion.com
-      - virtualrealporn.com
-      - virtualrealtrans.com
+      - virtualrealamateurporn.com/vr-amateur-porn-video/
+      - virtualrealjapan.com/vr-japanese-video/
+      - virtualrealpassion.com/vr-female-pov-porn-video/
+      - virtualrealporn.com/vr-porn-video/
+      - virtualrealgay.com/vr-gay-porn-video/
+      - virtualrealtrans.com/vr-trans-porn-video
     scraper: sceneScraper
 
 sceneByFragment:
@@ -42,32 +41,49 @@ movieByURL:
     url: *urlSel
     scraper: movieScraper
 
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - virtualrealgay.com/vr-models/
+      - virtualrealpassion.com/vr-models/
+      - virtualrealporn.com/vr-models/
+      - virtualrealtrans.com/vr-models/
+    scraper: performerScraper
+
 xPathScrapers:
   sceneScraper:
     scene:
       Title: &titleDef
-        selector: //h1[@class="titleVideo"]/text()
+        selector: //div[@class="header_video"]//h1
         postProcess:
           - replace:
               - regex: VR [\s\w]+? video$
                 with: ""
       Date: &dateAttr
-        selector: //div[@class="video-date"]/span
+        selector: //script[@type="application/ld+json"]/text()
         postProcess:
-          - parseDate: Jan 2, 2006
+          - replace:
+              - regex: .*"datePublished"\s*:\s*"([^"T]+).*
+                with: $1
       Details: &detailsSel
-        selector: //div[@class="g-cols onlydesktop"]//text()
-        concat: " "
+        selector: //div[@class="description_container"]/p
+        concat: "\n\n"
       Tags:
-        Name: //div[@class="metaHolder"]//a/span/text()
-      Performers:
         Name:
-          selector: //h1[@class="titleVideo"]/following-sibling::p
+          selector: >-
+            //div[@class="metaHolder"]//a/span/text()
+            |
+            //script[@type="application/ld+json" and not(@class="yoast-schema-graph")]/text()
+          concat: ", "
           postProcess:
             - replace:
-                - regex: \s&\s
-                  with: ", "
+                - regex: \{.*\"keywords\"\s*:\s*\"([^\"]+)\".*
+                  with: $1
+                - regex: "[Vv][Rr] ?[Pp]orn"
+                  with: Virtual Reality
           split: ", "
+      Performers:
+        Name: //div[@class="performers_section"]//div[@class="model-box"]/a/img/@alt
       Studio:
         Name: &studioName
           selector: //meta[@property="og:site_name"]/@content
@@ -76,9 +92,15 @@ xPathScrapers:
                 - regex: \.com
                   with: ""
             - map:
-                VirtualRealAmateurPorn: "VirtualRealAmateur"
+                VirtualRealAmateurPorn: VirtualRealAmateur
       Image: &imageSel //meta[@property="og:image"]/@content
-      URL: //link[@rel="canonical"]/@href
+      URL: //link[@rel="alternate" and @hreflang="x-default"]/@href
+      Code:
+        selector: //link[@rel="shortlink"]/@href
+        postProcess:
+          - replace:
+              - regex: ^https://.*/\?p=
+                with:
       # Movies:
       #   Name:
       #     selector: //meta[@property="og:site_name"]/@content|//h1[@class="titleVideo"]
@@ -96,4 +118,51 @@ xPathScrapers:
         Name: *studioName
       Synopsis: *detailsSel
       FrontImage: *imageSel
-# Last Updated November 25, 2022
+  performerScraper:
+    performer:
+      Name:
+        selector: //div[@class="head_model"]//h1/text()
+        postProcess:
+          - replace:
+              - regex: \s+$
+                with: ""
+      Gender:
+        selector: //section[@id="about"]//tr/th[text()="Gender"]//following-sibling::td/text()
+        postProcess:
+          - map:
+              Female Trans: transgender_female
+      Twitter:
+        selector: //div[@id="social"]//a[contains(@class, "twitter")]/@href
+        postProcess:
+          - replace:
+              - regex: twitter.com
+                with: x.com
+      Instagram: //div[@id="social"]//a[contains(@class, "instagram")]/@href
+      Birthdate:
+        selector: //section[@id="about"]//tr/th[text()="Date of birth"]//following-sibling::td/text()
+        postProcess:
+          - parseDate: 02/01/2006
+      Country: //section[@id="about"]//tr/th[text()="Country"]//following-sibling::td/text()
+      HairColor: //section[@id="about"]//tr/th[text()="Hair color"]//following-sibling::td/text()
+      EyeColor: //section[@id="about"]//tr/th[text()="Eyes color"]//following-sibling::td/text()
+      Measurements:
+        selector: //section[@id="about"]//tr/th[text()="Bust"]//following-sibling::td/text()|//section[@id="about"]//tr/th[text()="Waist"]//following-sibling::td/text()|//section[@id="about"]//tr/th[text()="Hips"]//following-sibling::td/text()
+        concat: "-"
+        postProcess:
+          - javascript: |
+              // convert from metric to imperial
+              if (value && value.length) {
+                const cmPerInch = 2.54
+                let measurements = value.split('-')
+                // fix waist and hips swapped (this is a rare occurrence)
+                if (measurements[1] > measurements[2]) {
+                  measurements = [measurements[0], measurements[2], measurements[1]]
+                }
+                return measurements.map(m => Math.round(m / cmPerInch)).join('-')
+              }
+              return value
+      Image: //div[@class="feature_img_model"]/img/@src
+# sites now have age-checking and geoblocking, so we can use CDP (with VPN/proxy) to bypass it
+driver:
+  useCDP: false
+# Last Updated August 26, 2025

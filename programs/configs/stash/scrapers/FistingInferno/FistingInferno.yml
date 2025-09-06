@@ -1,0 +1,42 @@
+# requires: Algolia
+name: "FistingInferno"
+sceneByURL:
+  - action: script
+    url:
+      - fistinginferno.com/en/video/
+      - fistingcentral.com/en/video/
+    script:
+      - python
+      - ../Algolia/Algolia.py
+      - fistinginferno
+sceneByFragment:
+  action: script
+  script:
+    - python
+    - ../Algolia/Algolia.py
+    - fistinginferno
+sceneByName:
+  action: script
+  script:
+    - python
+    - ../Algolia/Algolia.py
+    - fistinginferno
+    - searchName
+sceneByQueryFragment:
+  action: script
+  script:
+    - python
+    - ../Algolia/Algolia.py
+    - fistinginferno
+    - validName
+galleryByURL:
+  - action: script
+    url:
+      - fistinginferno.com/en/photo/
+      - fistingcentral.com/en/photo/
+    script:
+      - python
+      - ../Algolia/Algolia.py
+      - fistinginferno
+      - gallery
+# Last Updated August 13, 2025
