@@ -128,7 +128,7 @@
             echo "fixe-bureau is not responding"
             sleep 1
           done
-          ssh fixe-bureau -t "xset -display :0.0 dpms force off; DISPLAY=:0.0 nohup alock -bg none -cursor blank &; zsh -i"
+          ssh fixe-bureau -t "xset -display :0.0 dpms force off; DISPLAY=:0.0 nohup alock -cursor blank &; zsh -i"
         }
 
         path+="$HOME/.cargo/bin"
