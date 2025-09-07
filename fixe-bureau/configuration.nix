@@ -15,6 +15,7 @@ in
     };
     nix-cores = 2;
     nix-max-jobs = 1;
+    nix-high-ram = "7G";
     nix-max-ram = "8G";
   };
 

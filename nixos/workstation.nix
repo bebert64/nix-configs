@@ -96,8 +96,8 @@
 
       systemd = {
         services.nix-daemon.serviceConfig = {
-          MemoryHigh = "7G";
-          MemoryMax = "8G";
+          MemoryHigh = cfg.nix-high-ram;
+          MemoryMax = cfg.nix-max-ram;
         };
 
         user.services.polkit-gnome-authentication-agent-1 = {
