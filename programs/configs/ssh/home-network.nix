@@ -13,6 +13,13 @@
     port = 2223;
   };
 
+  fixe-salon = {
+    host = "fixe-salon";
+    hostname = "88.160.246.99";
+    user = "romain";
+    port = 2225;
+  };
+
   stockly-romainc = {
     host = "stockly-romainc stockly-romainc-ext";
     hostname = "88.160.246.99";
