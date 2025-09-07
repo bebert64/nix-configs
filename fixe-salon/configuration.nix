@@ -13,9 +13,9 @@ in
       name = "romain";
       description = "Romain";
     };
-    nix-cores = 2;
-    nix-max-jobs = 1;
-    nix-max-ram = "8G";
+    nix-cores = 4;
+    nix-max-jobs = 2;
+    nix-max-ram = "24G";
   };
 
   home-manager.users.${user.name} = {
@@ -23,8 +23,7 @@ in
       minutes-before-lock = 5;
       minutes-from-lock-to-sleep = 15;
       screens = {
-        primary = "HDMI-1";
-        secondary = "HDMI-2";
+        primary = "HDMI-0";
       };
       isHeadphonesOnCommand = "pactl get-default-sink | grep alsa_output.pci-0000_00_1b.0.analog-stereo";
       setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
@@ -33,7 +32,7 @@ in
   };
 
   networking = {
-    hostName = "fixe-bureau";
-    interfaces.enp3s0.wakeOnLan.enable = true;
+    hostName = "fixe-salon";
+    interfaces.enp12s0.wakeOnLan.enable = true;
   };
 }

@@ -16,6 +16,7 @@ in
     bluetooth.enable = true;
     nix-cores = 4;
     nix-max-jobs = 2;
+    nix-max-ram = "8G";
   };
 
   home-manager = {
