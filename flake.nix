@@ -58,6 +58,13 @@
           };
         };
 
+        fixe-salon = nixpkgs.lib.nixosSystem {
+          modules = [ ./fixe-salon/configuration.nix ];
+          specialArgs = {
+            inherit home-manager by-db sops-nix;
+          };
+        };
+
         raspi = nixpkgs.lib.nixosSystem {
           modules = [ ./raspi/configuration.nix ];
           specialArgs = {
