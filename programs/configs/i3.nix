@@ -115,7 +115,7 @@ in
           set $ws11 "11:󰸉"
           workspace $ws11 output ${cfg.screens.primary}
           set $ws12 "12:󰸉"
-          workspace $ws12 output ${(cfg.screens.secondary or "")}
+          workspace $ws12 output ${cfg.screens.secondary}
         '';
       };
     };
