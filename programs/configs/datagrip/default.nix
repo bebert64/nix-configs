@@ -7,6 +7,7 @@
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
   homeDir = config.home.homeDirectory;
+  datagripProjectsDir = "${homeDir}/datagrip-projects";
   nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
 in
 {
@@ -14,10 +15,12 @@ in
     packages = [ (import ./jetbrains.nix { inherit lib pkgs; }).datagrip ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.xml ${homeDir}/datagrip-projects/perso/.idea/dataSources.xml
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.local.xml ${homeDir}/datagrip-projects/perso/.idea/dataSources.local.xml
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.xml ${homeDir}/datagrip-projects/Stockly/.idea/dataSources.xml
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.local.xml ${homeDir}/datagrip-projects/Stockly/.idea/dataSources.local.xml
+        mkdir -p ${datagripProjectsDir}/perso/.idea
+        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.xml ${datagripProjectsDir}/perso/.idea/dataSources.xml
+        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.local.xml ${datagripProjectsDir}/perso/.idea/dataSources.local.xml
+        mkdir -p ${datagripProjectsDir}/Stockly/.idea
+        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.xml
+        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.local.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.local.xml
       '';
     };
   };
@@ -26,6 +29,16 @@ in
     assigns = {
       "$ws6" = [ { class = "jetbrains-datagrip"; } ];
     };
-    keybindings = lib.mkOptionDefault { "${modifier}+Control+d" = "workspace $ws6; exec datagrip"; };
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+d" = "workspace $ws6; exec ${pkgs.writeScriptBin "open-datagrip-project" ''
+        project=$(
+          ls -1 ${datagripProjectsDir} | \
+          rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 30%;}'
+        )
+        if [[ $project ]]; then
+          datagrip ${datagripProjectsDir}/$project
+        fi
+      ''}/bin/open-datagrip-project";
+    };
   };
 }
