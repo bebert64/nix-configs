@@ -1,5 +1,6 @@
 {
   config,
+  home-manager,
   vscode-server,
   ...
 }:
@@ -36,64 +37,23 @@ in
       setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
       setSpeakerCommand = "set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2";
     };
-  };
 
+    activation = {
+      symlinkAutoFixVsCodeServerService = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p ${homeDirectory}/.config/systemd/user/
+        ln -sf /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ${homeDirectory}/.config/systemd/user/
+      '';
+    };
+  };
   services.vscode-server = {
     enable = true;
     installPath = [
-      "$HOME/.vscode-server"
-      "$HOME/.vscode-server-oss"
-      "$HOME/.vscode-server-insiders"
-      "$HOME/.cursor-server"
+      "${homeDirectory}/.vscode-server"
+      "${homeDirectory}/.vscode-server-oss"
+      "${homeDirectory}/.vscode-server-insiders"
+      "${homeDirectory}/.cursor-server"
     ];
   };
-
-  # systemd.tmpfiles.settings =
-  # let
-  #   createFile = (
-  #     { path, file }:
-  #      {
-  #       # Create the directory so that it has the appropriate permissions if it doesn't already exist
-  #       # Otherwise the directive below creating the symlink would have that owned by root
-  #       name = "${homeDirectory}/${path}";
-  #       value = file user.name;
-  #     }
-  #   );
-  #   # homeDirectory = (
-  #   #   path:
-  #   #   createFile {
-  #   #     inherit path;
-  #   #     file = (
-  #   #       username: {
-  #   #         "d" = {
-  #   #           user = username;
-  #   #           group = "users";
-  #   #           mode = "0755";
-  #   #         };
-  #   #       }
-  #   #     );
-  #   #   }
-  #   # );
-  # in
-  # {
-  #   # We need to create each of the folders before the next file otherwise parents get owned by root
-  #   # "80-setup-config-folder-for-all-users" = homeDirectory ".config";
-  #   # "81-setup-systemd-folder-for-all-users" = homeDirectory ".config/systemd";
-  #   # "82-setup-systemd-user-folder-for-all-users" = homeDirectory ".config/systemd/user";
-  #   "83-enable-auto-fix-vscode-server-service-for-all-users" = createFile {
-  #     path = ".config/systemd/user/auto-fix-vscode-server.service";
-  #     file = (
-  #       username: {
-  #         "L+" = {
-  #           user = username;
-  #           group = "users";
-  #           # This path is made available by `services.vscode-server.enable = true;`
-  #           argument = "/run/current-system/etc/systemd/user/auto-fix-vscode-server.service";
-  #         };
-  #       }
-  #     );
-  #   };
-  # };
 
   networking = {
     hostName = "salon";
