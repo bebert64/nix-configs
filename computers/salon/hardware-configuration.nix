@@ -16,11 +16,13 @@
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
-    loader.grub = {
-      enable = true;
-      devices = [ "nodev" ];
-      efiSupport = true;
-      useOSProber = true;
+    loader = lib.makeForce { 
+      grub = {
+        enable = true;
+        devices = [ "nodev" ];
+        efiSupport = true;
+        useOSProber = true;
+      };
     };
   };
 
