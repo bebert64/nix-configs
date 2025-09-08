@@ -61,7 +61,7 @@ in
           HDMI-2 = {
             enable = true;
             crtc = 0;
-            mode = "1680x1050";
+            mode = "1920x1080";
             position = "0x0";
             primary = true;
             rate = "59.95";
