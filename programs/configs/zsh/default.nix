@@ -130,7 +130,6 @@
           esac
           tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
         }
-
         wsshfb() {
           ssh raspi "wol D4:3D:7E:D8:C3:95"
           while ssh raspi "! ping -c1 192.168.1.4 &> /dev/null"; do
