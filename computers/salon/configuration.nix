@@ -61,5 +61,7 @@ in
         "${homeDirectory}/.cursor-server"
       ];
     };
+
+    services.xserver.displayManager.lightdm.greeters.mini.enable;
   };
 }
