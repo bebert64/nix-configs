@@ -63,7 +63,23 @@ in
     };
 
   };
-    services.xserver.displayManager.lightdm.greeters.gtk = {
-      extraConfig = "display-setup-script=xrandr -s 1920x1080";
-    };
+    # services.xserver.displayManager.lightdm.greeters.gtk = {
+    #   extraConfig = "display-setup-script=xrandr -s 1920x1080";
+    # };
+
+    environment.etc."lightdm/lightdm.conf".text = lib.mkForce ''
+      [LightDM]
+      greeter-user = lightdm
+      greeters-directory = /nix/store/bmj7d50dgyxd7wxfidyiicv2747j51a2-lightdm-gtk-greeter-xgreeters
+
+      sessions-directory = /nix/store/9qa19mamnmkf5q6109gg3g2d3d8sn3yj-desktops/share/xsessions:/nix/store/9qa19mamnmkf5q6109gg3g2d3d8sn3yj-desktops/share/wayland-sessions
+
+
+      [Seat:*]
+      display-setup-script=xrandr -s 1920x1080
+      xserver-command = /nix/store/6021yqkixw1g630cb138nnpi238w8jc7-xserver-wrapper
+      session-wrapper = /nix/store/ic8hnkzm4zdjk9jp7gvl7ymj8kxqgwmp-xsession-wrapper
+      greeter-session = lightdm-gtk-greeter
+  '';
+
 }
