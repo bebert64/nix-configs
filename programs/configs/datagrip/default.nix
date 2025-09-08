@@ -14,8 +14,10 @@ in
     packages = [ (import ./jetbrains.nix { inherit lib pkgs; }).datagrip ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p ${homeDir}/datagrip-projects/perso/.idea
         ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.xml ${homeDir}/datagrip-projects/perso/.idea/dataSources.xml
         ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.local.xml ${homeDir}/datagrip-projects/perso/.idea/dataSources.local.xml
+        mkdir -p ${homeDir}/datagrip-projects/Stockly/.idea
         ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.xml ${homeDir}/datagrip-projects/Stockly/.idea/dataSources.xml
         ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.local.xml ${homeDir}/datagrip-projects/Stockly/.idea/dataSources.local.xml
       '';
