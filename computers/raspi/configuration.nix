@@ -1,6 +1,6 @@
 {
   imports = [
-    ../..nixos/server.nix
+    ../../nixos/server.nix
     ./hardware-configuration.nix
   ];
 
