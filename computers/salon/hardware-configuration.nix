@@ -16,7 +16,7 @@
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
-    loader = lib.makeForce { 
+    loader = lib.mkForce { 
       grub = {
         enable = true;
         devices = [ "nodev" ];
