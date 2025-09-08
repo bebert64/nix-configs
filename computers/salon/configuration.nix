@@ -45,18 +45,23 @@ in
       '';
     };
   };
-  services.vscode-server = {
-    enable = true;
-    installPath = [
-      "${homeDirectory}/.vscode-server"
-      "${homeDirectory}/.vscode-server-oss"
-      "${homeDirectory}/.vscode-server-insiders"
-      "${homeDirectory}/.cursor-server"
-    ];
-  };
 
   networking = {
     hostName = "salon";
     interfaces.enp12s0.wakeOnLan.enable = true;
+  };
+  
+  services = {
+    vscode-server = {
+      enable = true;
+      installPath = [
+        "${homeDirectory}/.vscode-server"
+        "${homeDirectory}/.vscode-server-oss"
+        "${homeDirectory}/.vscode-server-insiders"
+        "${homeDirectory}/.cursor-server"
+      ];
+    };
+
+    xserver.dpi = 180;
   };
 }
