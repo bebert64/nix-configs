@@ -62,6 +62,6 @@ in
       ];
     };
 
-    services.xserver.displayManager.lightdm.greeters.mini.enable;
+    services.xserver.displayManager.lightdm.greeters.mini.enable = true;
   };
 }
