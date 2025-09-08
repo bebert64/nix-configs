@@ -61,7 +61,12 @@
         salon = nixpkgs.lib.nixosSystem {
           modules = [ ./computers/salon/configuration.nix ];
           specialArgs = {
-            inherit home-manager by-db sops-nix;
+            inherit
+              home-manager
+              by-db
+              sops-nix
+              vscode-server
+              ;
           };
         };
 
