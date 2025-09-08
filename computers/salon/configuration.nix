@@ -61,7 +61,5 @@ in
         "${homeDirectory}/.cursor-server"
       ];
     };
-
-    # xserver.dpi = 180;
   };
 }
