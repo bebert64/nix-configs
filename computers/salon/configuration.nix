@@ -1,6 +1,7 @@
 {
   config,
   home-manager,
+  lib,
   vscode-server,
   ...
 }:
