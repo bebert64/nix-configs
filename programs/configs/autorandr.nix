@@ -65,7 +65,7 @@ in
             position = "0x0";
             primary = true;
             rate = "59.95";
-            # dpi = 
+            dpi = 180;
           };
         };
         hooks.postswitch = hooks-postswitch "HDMI-2" "salon";
