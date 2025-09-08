@@ -51,15 +51,15 @@
           };
         };
 
-        fixe-bureau = nixpkgs.lib.nixosSystem {
-          modules = [ ./fixe-bureau/configuration.nix ];
+        bureau = nixpkgs.lib.nixosSystem {
+          modules = [ ./computers/bureau/configuration.nix ];
           specialArgs = {
             inherit home-manager by-db sops-nix;
           };
         };
 
-        fixe-salon = nixpkgs.lib.nixosSystem {
-          modules = [ ./fixe-salon/configuration.nix ];
+        salon = nixpkgs.lib.nixosSystem {
+          modules = [ ./computers/salon/configuration.nix ];
           specialArgs = {
             inherit home-manager by-db sops-nix;
           };

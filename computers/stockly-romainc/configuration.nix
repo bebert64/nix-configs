@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ../nixos/workstation.nix
+    ../../nixos/workstation.nix
     ./hardware-configuration.nix
   ];
 

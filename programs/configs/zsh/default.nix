@@ -125,10 +125,10 @@
         wsshfb() {
           ssh raspi "wol D4:3D:7E:D8:C3:95"
           while ssh raspi "! ping -c1 192.168.1.4 &> /dev/null"; do
-            echo "fixe-bureau is not responding"
+            echo "bureau is not responding"
             sleep 1
           done
-          ssh fixe-bureau -t "xset -display :0.0 dpms force off; DISPLAY=:0.0 nohup alock -cursor blank &; zsh -i"
+          ssh bureau -t "xset -display :0.0 dpms force off; DISPLAY=:0.0 nohup alock -cursor blank &; zsh -i"
         }
 
         path+="$HOME/.cargo/bin"

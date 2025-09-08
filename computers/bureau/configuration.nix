@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    ../nixos/workstation.nix
+    ../../nixos/workstation.nix
     ./hardware-configuration.nix
   ];
 
@@ -34,7 +34,7 @@ in
   };
 
   networking = {
-    hostName = "fixe-bureau";
+    hostName = "bureau";
     interfaces.enp3s0.wakeOnLan.enable = true;
   };
 }
