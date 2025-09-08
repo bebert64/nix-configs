@@ -38,7 +38,7 @@ in
       setSpeakerCommand = "set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2";
     };
 
-    activation = {
+    home.activation = {
       symlinkAutoFixVsCodeServerService = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${homeDirectory}/.config/systemd/user/
         ln -sf /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ${homeDirectory}/.config/systemd/user/
