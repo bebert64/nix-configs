@@ -63,5 +63,7 @@ in
     };
 
   };
-    services.xserver.displayManager.lightdm.greeters.mini.enable = true;
+    services.xserver.displayManager.lightdm.greeters.gtk = {
+      extraConfig = "display-setup-script=xrandr -s 1920x1080";
+    };
 }
