@@ -62,6 +62,6 @@ in
       ];
     };
 
-    xserver.dpi = 180;
+    # xserver.dpi = 180;
   };
 }
