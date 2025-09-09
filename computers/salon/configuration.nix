@@ -1,7 +1,6 @@
 {
   config,
   home-manager,
-  lib,
   vscode-server,
   ...
 }:
@@ -51,7 +50,7 @@ in
     hostName = "salon";
     interfaces.enp12s0.wakeOnLan.enable = true;
   };
-  
+
   services = {
     vscode-server = {
       enable = true;
@@ -64,9 +63,9 @@ in
     };
 
   };
-    # services.xserver.displayManager.lightdm.greeters.gtk = {
-    #   extraConfig = "display-setup-script=xrandr -s 1920x1080";
-    # };
+  # services.xserver.displayManager.lightdm.greeters.gtk = {
+  #   extraConfig = "display-setup-script=xrandr -s 1920x1080";
+  # };
 
   #   environment.etc."lightdm/lightdm.conf".text = lib.mkForce ''
   #     [LightDM]
@@ -74,7 +73,6 @@ in
   #     greeters-directory = /nix/store/bmj7d50dgyxd7wxfidyiicv2747j51a2-lightdm-gtk-greeter-xgreeters
 
   #     sessions-directory = /nix/store/9qa19mamnmkf5q6109gg3g2d3d8sn3yj-desktops/share/xsessions:/nix/store/9qa19mamnmkf5q6109gg3g2d3d8sn3yj-desktops/share/wayland-sessions
-
 
   #     [Seat:*]
   #     display-setup-script=xrandr -s 1920x1080
