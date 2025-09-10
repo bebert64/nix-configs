@@ -98,7 +98,7 @@
     "fontBold": false,
     "fontComboBox": "DejaVu Sans",
     "fontItalic": false,
-    "fontSize": 55,
+    "fontSize": 40,
     "formatList": [
     ],
     "framedroppingDecoderMode": 1,
@@ -366,7 +366,7 @@
     "subsColorValue": "FFFFFF",
     "subsMarginX": 0,
     "subsMarginY": 0,
-    "subsRelativeToVideoFrame": true,
+    "subsRelativeToVideoFrame": false,
     "subsShadowColorValue": "000000",
     "subtitlePlacementX": 1,
     "subtitlePlacementY": 2,
