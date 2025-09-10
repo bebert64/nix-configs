@@ -20,7 +20,7 @@ let
       code $HOME/code/$selection
     fi
   ''}/bin/open-local";
-  open-remote = "${pkgs.writeScriptBin "open-remote" ''
+  open-cerberus = "${pkgs.writeScriptBin "open-cerberus" ''
     selection=$(
       ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
       sort -u | \
@@ -31,7 +31,19 @@ let
     elif [[ $selection ]]; then
       code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
     fi
-  ''}/bin/open-remote";
+  ''}/bin/open-cerberus";
+  open-salon = "${pkgs.writeScriptBin "open-salon" ''
+    selection=$(
+      ssh salon "list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
+      sort -u | \
+      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
+    )
+    if [[ $selection = "code" ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/code
+    elif [[ $selection ]]; then
+      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/code/$selection
+    fi
+  ''}/bin/open-salon";
 in
 {
   home = {
@@ -52,7 +64,8 @@ in
     };
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
-      "${modifier}+Shift+v" = "workspace $ws3; exec ${open-remote}";
+      "${modifier}+Shift+v" = "workspace $ws3; exec ${open-cerberus}";
+      "${modifier}+Alt+v" = "workspace $ws3; exec ${open-salon}";
       "${modifier}+Control+n" = "workspace $ws3; exec code ${nixConfigsRepo}";
     };
   };
