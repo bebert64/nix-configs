@@ -61,6 +61,7 @@ in
             microcodeIntel # for increased microprocessor performance
             mcomix
             pavucontrol # pulse audio volume controle
+            vlc
           ])
           ++ lib.optionals cfg.wifi.enable (
             with pkgs;
