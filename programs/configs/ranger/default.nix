@@ -7,6 +7,14 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  sshr = "${pkgs.writeScriptBin "sshr" ''
+    REMOTE=$1
+    case $REMOTE in
+      "cerberus") CMD="nix run \"nixpkgs#ranger\"";;
+      *) CMD="ranger";;
+    esac
+    tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
+  ''}/bin/sshr";
   open-remote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
       grep -P "^Host ([^*]+)$" $HOME/.ssh/config | \
@@ -15,7 +23,7 @@ let
       sort -u | \
       rofi -sort -sorting-method fzf -disable-history -dmenu -show-icons -no-custom -p ""
     )
-    sshr $selection
+    ${sshr} $selection
   ''}/bin/open-remote";
   homeDir = config.home.homeDirectory;
   nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
