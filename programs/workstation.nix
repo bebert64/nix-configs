@@ -4,6 +4,7 @@
     ./configs/conky
     ./configs/datagrip
     ./configs/ferdium
+    ./configs/mpc-qt
     ./configs/picom
     ./configs/polybar
     ./configs/music
