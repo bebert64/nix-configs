@@ -60,8 +60,8 @@ in
             inkscape
             microcodeIntel # for increased microprocessor performance
             mcomix
+            mpc-qt
             pavucontrol # pulse audio volume controle
-            vlc
           ])
           ++ lib.optionals cfg.wifi.enable (
             with pkgs;
