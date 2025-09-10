@@ -34,14 +34,14 @@ let
   ''}/bin/open-cerberus";
   open-salon = "${pkgs.writeScriptBin "open-salon" ''
     selection=$(
-      ssh salon "list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
+      ssh salon "list-crate-dirs /home/romain/code Cargo.toml" 2>/dev/null | \
       sort -u | \
       rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
-      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/code
+      code --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code
     elif [[ $selection ]]; then
-      code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/code/$selection
+      code --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code/$selection
     fi
   ''}/bin/open-salon";
 in
