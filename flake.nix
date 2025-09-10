@@ -40,7 +40,7 @@
       nixosConfigurations = {
         stockly-romainc = stockly-computers.personalComputers.stocklyNixosSystem {
           hostname = "stockly-romainc";
-          configuration = ./stockly-romainc/configuration.nix;
+          configuration = ./computers/stockly-romainc/configuration.nix;
           specialArgs = {
             inherit
               stockly-computers
@@ -51,15 +51,27 @@
           };
         };
 
-        fixe-bureau = nixpkgs.lib.nixosSystem {
-          modules = [ ./fixe-bureau/configuration.nix ];
+        bureau = nixpkgs.lib.nixosSystem {
+          modules = [ ./computers/bureau/configuration.nix ];
           specialArgs = {
             inherit home-manager by-db sops-nix;
           };
         };
 
+        salon = nixpkgs.lib.nixosSystem {
+          modules = [ ./computers/salon/configuration.nix ];
+          specialArgs = {
+            inherit
+              home-manager
+              by-db
+              sops-nix
+              vscode-server
+              ;
+          };
+        };
+
         raspi = nixpkgs.lib.nixosSystem {
-          modules = [ ./raspi/configuration.nix ];
+          modules = [ ./computers/raspi/configuration.nix ];
           specialArgs = {
             inherit
               home-manager

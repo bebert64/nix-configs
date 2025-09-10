@@ -27,6 +27,7 @@ in
       };
       secondary = mkOption {
         type = str;
+        default = "";
         description = "The secondary screen";
       };
     };

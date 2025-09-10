@@ -13,10 +13,6 @@
     {
       # Bootloader.
       boot = {
-        loader = {
-          systemd-boot.enable = true;
-          efi.canTouchEfiVariables = true;
-        };
         # Used to cross-compile for the Raspberry Pi
         binfmt.emulatedSystems = [ "aarch64-linux" ];
       };
@@ -96,8 +92,8 @@
 
       systemd = {
         services.nix-daemon.serviceConfig = {
-          MemoryHigh = "7G";
-          MemoryMax = "8G";
+          MemoryHigh = cfg.nix-high-ram;
+          MemoryMax = cfg.nix-max-ram;
         };
 
         user.services.polkit-gnome-authentication-agent-1 = {
