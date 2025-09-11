@@ -14,7 +14,7 @@ let
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
       sort -u | \
-      rofi -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -i -disable-history -dmenu -show-icons -no-custom -p ""
     )
     if [[ ! $selection ]]; then
         exit 0
@@ -24,7 +24,6 @@ let
     psg() {
       ps aux | grep $1 | grep -v grep
     }
-    echo "is launched : $(psg strawberry)" > /home/romain/tmp
     IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
 
     if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
@@ -37,9 +36,9 @@ let
     done
 
     strawberry -c "$playlist_title" "$base_dir/$selection" &
-    sleep 0.5
+    sleep 1
     strawberry --play-playlist "$playlist_title" &
-    sleep 0.5
+    sleep 1
     strawberry --play-track 0 &
   ''}/bin/open-dir";
   inherit (import ./scripts.nix { inherit cfg pkgs; })

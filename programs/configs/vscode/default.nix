@@ -12,7 +12,7 @@ let
     selection=$(
       list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
       sort -u | \
-      rofi fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
+      rofi -i -dmenu -no-custom -l 30 -theme-str 'window {width: 20%;}' -p ""
     )
     if [[ $selection = "code" ]]; then
       code $HOME/code
