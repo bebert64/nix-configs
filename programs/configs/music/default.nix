@@ -14,7 +14,7 @@ let
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
       sort -u | \
-      rofi -i -disable-history -dmenu -show-icons -no-custom -p ""
+      rofi -i -show-icons -no-custom -p "" -l 30 -theme-str 'window {width: 20%;}' 
     )
     if [[ ! $selection ]]; then
         exit 0
