@@ -1,6 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, 
+  config,... }:
 let
   inherit (pkgs) writeScriptBin;
+  rofi = config.rofi.defaultCmd;
 in
 {
   home.packages = [
@@ -39,7 +41,7 @@ in
       Radio Nova\0icon\x1f${./icons/nova.jpg}
       Radio Swiss Classic\0icon\x1f${./icons/radio-swiss-classic.png}
       Chillhop Music\0icon\x1f${./icons/chillhop.jpg}' \
-      | rofi -dmenu -show-icons -i -p 'Radio')"
+      | ${rofi}
 
       case "$MENU" in
         FIP) play_radio 0 ;;

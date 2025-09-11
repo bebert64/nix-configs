@@ -7,6 +7,7 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  rofi = config.rofi.defaultCmd;
   sshr = "${pkgs.writeScriptBin "sshr" ''
     REMOTE=$1
     case $REMOTE in
@@ -22,7 +23,7 @@ let
       tr ' ' '\n' | \
       sort -u | \
       grep -v "$(hostname)" | \
-      rofi -i -dmenu -no-custom -p ""
+      ${rofi}
     )
     ${sshr} $selection
   ''}/bin/open-remote";

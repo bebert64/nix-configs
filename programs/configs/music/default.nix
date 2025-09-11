@@ -7,6 +7,7 @@
 let
   cfg = config.by-db;
   modifier = config.xsession.windowManager.i3.config.modifier;
+  rofi = config.rofi.defaultCmd;
   music_mode = "Music";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   open-dir = "${pkgs.writeScriptBin "open-dir" ''
@@ -14,7 +15,7 @@ let
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
       sort -u | \
-      rofi -i -show-icons -no-custom -p "" -l 30 -theme-str 'window {width: 20%;}' 
+      ${rofi} -l 30 -theme-str 'window {width: 20%;}'
     )
     if [[ ! $selection ]]; then
         exit 0
