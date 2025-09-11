@@ -10,8 +10,10 @@ in
 {
   home.packages = [
     (writeScriptBin "choose-radios" ''
+
+      play_radio() {
         strawberry --play-playlist Radios &
-        sleep 1
+        sleep 2
         strawberry --play-track $1 &
       }
 
