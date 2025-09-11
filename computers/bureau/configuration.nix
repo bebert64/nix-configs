@@ -21,8 +21,7 @@ in
 
   home-manager.users.${user.name} = {
     by-db = {
-      minutes-before-lock = 5;
-      minutes-from-lock-to-sleep = 15;
+      minutes-from-lock-to-sleep = 17;
       screens = {
         primary = "HDMI-1";
         secondary = "HDMI-2";

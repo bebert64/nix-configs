@@ -53,10 +53,10 @@ in
           i3-msg workspace "$wk2"
           systemctl --user restart polybar
           pkill xidlehook || echo "xidlehook already killed"
-          xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock-wait-sleep' ' ' &
+          xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock' ' ' &
         '';
       killXidlehook = ''pkill xidlehook || echo "xidlehook already killed"'';
-      lockMode = "Lock: l[o]ck, lock [d]on't sleep, [n]ever sleep";
+      lockMode = "Lock: l[o]ck, [d]on't sleep";
     in
     {
       home.packages = [
@@ -64,16 +64,11 @@ in
         xidlehook
         (lockScript "lock" ''
           ${killXidlehook}
-          xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
-        '')
-        (lockScript "lock-wait-sleep" ''
-          ${killXidlehook}
           xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
         '')
         (lockScript "lock-sleep" "systemctl suspend")
-        (writeScriptBin "wait-lock-2-hours" ''
+        (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
-          xidlehook --timer ${toString (2 * 60 * 60)} 'lock-wait-sleep' ' ' &
         '')
       ];
 
@@ -95,9 +90,8 @@ in
           };
 
           ${lockMode} = {
-            "--release o" = "exec lock-wait-sleep, mode default";
-            "--release d" = "exec lock, mode default";
-            "--release n" = "exec wait-lock-2-hours, mode default";
+            "--release ${modifier}+o" = "exec lock, mode default";
+            "--release d" = "exec lock-dont-sleep, mode default";
             Escape = "mode default";
             Return = "mode default";
           };
