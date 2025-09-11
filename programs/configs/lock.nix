@@ -69,6 +69,7 @@ in
         (lockScript "lock-sleep" "systemctl suspend")
         (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
+          xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
         '')
       ];
 
