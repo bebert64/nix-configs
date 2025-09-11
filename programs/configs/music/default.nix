@@ -14,6 +14,7 @@ let
     base_dir=$HOME/mnt/NAS/Musique
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
+      grep -v "@eaDir"| \
       sort -u | \
       ${rofi} -l 30 -theme-str 'window {width: 20%;}'
     )
