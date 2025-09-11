@@ -9,7 +9,7 @@ let
   inherit (cfg) setHeadphonesCommand setSpeakerCommand;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
-  music_mode = "Music";
+  music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   open-dir = "${pkgs.writeScriptBin "open-dir" ''
     base_dir=$HOME/mnt/NAS/Musique
@@ -125,6 +125,8 @@ in
         "l" = "workspace $ws10, exec strawberry, mode default";
         "r" = "exec choose-radios, mode default";
         "d" = "exec ${open-dir}, mode default";
+        # Allows to restart strawberry after it has crashed
+        "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
         "${modifier}+m" = "mode default";
         "h" = "exec pactl ${setHeadphonesCommand}, mode default";
         "p" = "exec pactl ${setSpeakerCommand}, mode default";
