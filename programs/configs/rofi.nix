@@ -4,7 +4,7 @@ let
   inherit (types) str;
   inherit (config.lib.formats.rasi) mkLiteral;
 in
-{ 
+{
   options.rofi = {
     defaultCmd = mkOption {
       type = str;
