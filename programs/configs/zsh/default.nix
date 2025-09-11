@@ -128,7 +128,7 @@
             echo "bureau is not responding"
             sleep 1
           done
-          ssh bureau -t "xset -display :0.0 dpms force off; DISPLAY=:0.0 nohup alock -cursor blank &; zsh -i"
+          ssh bureau -t "xset -display :0.0 dpms force off; zsh -i"
         }
 
         path+="$HOME/.cargo/bin"
