@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.by-db;
+  inherit (cfg) setHeadphonesCommand setSpeakerCommand;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music";
@@ -18,36 +19,19 @@ let
       sort -u | \
       ${rofi} -l 30 -theme-str 'window {width: 20%;}'
     )
+
     if [[ ! $selection ]]; then
         exit 0
     fi
     playlist_title=$(echo $selection | sed 's/.$//' | sed 's/\// - /g')
 
-    psg() {
-      ps aux | grep $1 | grep -v grep
-    }
-    IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-
-    if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
-      strawberry &
-    fi
-
-    while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
-      IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-      sleep 0.5
-    done
-
     strawberry -c "$playlist_title" "$base_dir/$selection" &
-    sleep 1
+    sleep 2
     strawberry --play-playlist "$playlist_title" &
-    sleep 1
-    strawberry --play-track 0 &
   ''}/bin/open-dir";
-  inherit (import ./scripts.nix { inherit cfg pkgs; })
+  inherit (import ./scripts.nix { inherit pkgs; })
     playerctl-move
     playerctl-restart-or-previous
-    set-headphones
-    set-speaker
     ;
 in
 {
@@ -142,8 +126,8 @@ in
         "r" = "exec choose-radios, mode default";
         "d" = "exec ${open-dir}, mode default";
         "${modifier}+m" = "mode default";
-        "h" = "exec ${set-headphones}, mode default";
-        "p" = "exec ${set-speaker}, mode default";
+        "h" = "exec pactl ${setHeadphonesCommand}, mode default";
+        "p" = "exec pactl ${setSpeakerCommand}, mode default";
         "Escape" = "mode default";
       };
     };

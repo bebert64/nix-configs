@@ -1,5 +1,8 @@
-{ pkgs, 
-  config,... }:
+{
+  pkgs,
+  config,
+  ...
+}:
 let
   inherit (pkgs) writeScriptBin;
   rofi = config.rofi.defaultCmd;
@@ -7,22 +10,6 @@ in
 {
   home.packages = [
     (writeScriptBin "choose-radios" ''
-      psg() {
-        ps aux | grep $1 | grep -v grep
-      }
-
-      play_radio() {
-        IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-
-        if [[ ! $IS_STRAWBERRY_LAUNCHED ]]; then
-            strawberry &
-        fi
-
-        while [[ ! $IS_STRAWBERRY_LAUNCHED ]]; do
-            IS_STRAWBERRY_LAUNCHED=$(psg strawberry)
-            sleep 1
-        done
-
         strawberry --play-playlist Radios &
         sleep 1
         strawberry --play-track $1 &
@@ -41,7 +28,7 @@ in
       Radio Nova\0icon\x1f${./icons/nova.jpg}
       Radio Swiss Classic\0icon\x1f${./icons/radio-swiss-classic.png}
       Chillhop Music\0icon\x1f${./icons/chillhop.jpg}' \
-      | ${rofi}
+      | ${rofi})"
 
       case "$MENU" in
         FIP) play_radio 0 ;;
