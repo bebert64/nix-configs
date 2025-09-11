@@ -2,14 +2,9 @@
   cerberus = {
     host = "cerberus";
     hostname = "cerberus.stockly.tech";
-  };
-  cerberus-local = {
-    host = "cerberus-local";
-    hostname = "192.168.1.12";
-  };
-  cerberus-common = {
-    host = "cerberus cerberus-local";
     port = 24;
+    # Cerberus local IP, for refence
+    # hostname = "192.168.1.12";
   };
   charybdis = {
     host = "charybdis";
@@ -17,7 +12,7 @@
     port = 23;
   };
   common-stockly = {
-    host = "cerberus cerberus-local charybdis";
+    host = "cerberus charybdis";
     user = "romain";
     localForwards = [
       {

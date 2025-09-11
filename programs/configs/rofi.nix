@@ -138,5 +138,5 @@ in
       };
   };
 
-  xsession.windowManager.i3.config.menu = "\"rofi -modi drun#window#run -show drun -show-icons\"";
+  xsession.windowManager.i3.config.menu = "\"rofi -show drun -show-icons\"";
 }

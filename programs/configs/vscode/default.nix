@@ -12,7 +12,7 @@ let
     selection=$(
       list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
       sort -u | \
-      rofi -i -dmenu -no-custom -l 30 -theme-str 'window {width: 20%;}' -p ""
+      rofi -i -dmenu -no-custom -theme-str 'window {width: 20%;}' -p ""
     )
     if [[ $selection = "code" ]]; then
       code $HOME/code
@@ -24,7 +24,7 @@ let
     selection=$(
       ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
       sort -u | \
-      rofi fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 30%;}'
+      rofi -i -dmenu -no-custom -p "" -theme-str 'window {width: 30%;}'
     )
     if [[ $selection = "Main" ]]; then
       code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
@@ -36,7 +36,7 @@ let
     selection=$(
       ssh salon "list-crate-dirs /home/romain/code Cargo.toml" 2>/dev/null | \
       sort -u | \
-      rofi fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
+      rofi -i -dmenu -no-custom -p "" -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
       code --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code

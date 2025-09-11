@@ -33,7 +33,7 @@ in
       "${modifier}+Control+d" = "workspace $ws6; exec ${pkgs.writeScriptBin "open-datagrip-project" ''
         project=$(
           ls -1 ${datagripProjectsDir} | \
-          rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 30%;}'
+          rofi -i -dmenu -no-custom -p ""
         )
         if [[ $project ]]; then
           datagrip ${datagripProjectsDir}/$project

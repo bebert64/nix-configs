@@ -21,7 +21,8 @@ let
       sed 's/Host //' | \
       tr ' ' '\n' | \
       sort -u | \
-      rofi -disable-history -dmenu -show-icons -no-custom -p ""
+      grep -v "$(hostname)" | \
+      rofi -i -dmenu -no-custom -p ""
     )
     ${sshr} $selection
   ''}/bin/open-remote";
