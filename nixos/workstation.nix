@@ -52,17 +52,6 @@
         light.enable = true;
       };
 
-      security.pam.services.sshd.text = pkgs.lib.mkDefault (
-        pkgs.lib.mkAfter ''
-          session     optional    pam_exec.so ${pkgs.writeScriptBin "sleep-on-ssh-logout" ''
-            #!/usr/bin/env bash
-            if [ "$PAM_TYPE" = "close_session" ] && [[ -z $(who -a | grep pts | grep "(") ]]; then
-              systemctl suspend
-            fi
-          ''}/bin/sleep-on-ssh-logout
-        ''
-      );
-
       services = {
         # X11 Configuration
         xserver = {
