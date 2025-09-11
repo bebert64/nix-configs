@@ -96,8 +96,7 @@
         }
         upgrade-nix() {
           # Defined as a function rather than an alias to allow being called from other functions
-          run-in-nix-repo 'nix flake update --commit-lock-file && nix-switch'
-          git push
+          run-in-nix-repo 'nix flake update --commit-lock-file && git push && nix-switch'
         }
         upgrade-full() {
           setopt aliases
