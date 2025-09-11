@@ -1,0 +1,43 @@
+name: InTheCrack
+sceneByURL:
+  - action: scrapeJson
+    url:
+      - inthecrack.com/Collection/
+      # Some of their links are lowercase for some reason
+      - inthecrack.com/collection/
+    queryURLReplace:
+      url:
+        - regex: .+?(\d+)
+          with: https://api.inthecrack.com/Collection/$1
+    queryURL: "{url}"
+    scraper: inTheCrack
+jsonScrapers:
+  inTheCrack:
+    scene:
+      Title:
+        selector: "[id,title]"
+        concat: " "
+      Code: id
+      Date: clips.0.releaseDate
+      Details:
+        selector: '{shootLocation,description,clips.#.title,"descriptions":clips.#.description}'
+        postProcess:
+          - javascript: |
+              const {shootLocation, description, title, descriptions} = JSON.parse(value)
+              // Some collections have a primary description so we include
+              // that between the shoot Location and the clip descriptions
+              const maybeDescription = description ? description + "\n\n" : ""
+              return `Shoot Location: ${shootLocation}\n\n` + maybeDescription + title.map((sub, i) => `${sub}\n${descriptions[i]}`).join('\n\n');
+      Performers:
+        Name:
+          selector: title
+          split: " & "
+      Studio:
+        Name:
+          fixed: InTheCrack
+      Image:
+        selector: id
+        postProcess:
+          - replace:
+              - regex: (.+)
+                with: https://api.inthecrack.com/FileStore/images/posters/collections/$1.jpg

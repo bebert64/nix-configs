@@ -2,28 +2,58 @@ name: GASM
 sceneByURL:
   - action: scrapeXPath
     url:
-      - gasm.com
+      - gasm.com/post/details/
     scraper: sceneScraper
+movieByURL:
+  - action: scrapeXPath
+    url:
+      - gasm.com/dvd/
+      - gasm.com/movies/
+    scraper: movieScraper
 xPathScrapers:
   sceneScraper:
+    common:
+      $details: //div[@class="post_details_main"]
+      $dvd: //div[@class="post_item dvd"]
     scene:
-      Title:
-        selector: //div[@class="gqText"]/span[@class="gqTitle"]
+      Title: $details/h1[@class="post_title"]/span
+      Date:
+        selector: $details/h3[@class="post_date"]/span
+        postProcess:
+          - parseDate: Jan 02, 2006
       Performers:
-        Name: //div[@class="gqOwner"]/a
+        Name: $details/a[@class="tags"][starts-with(@href, '/models/')]
       Tags:
-        Name: //div[@class="content tag"]/a
-      Details:
-        selector: //span[@class="gqDescription"]/text()
-        concat: "\n\n"
+        Name: $details/a[@class="tags" and starts-with(@href, '/search?s=')]
+      Details: $details/h2[@class="post_description"]
+      Movies:
+        Name: $dvd/h1/a
+        FrontImage: $dvd/div[@class="post_image"]/a/img[@class="item_cover"]/@src
+        URL:
+          selector: $dvd/h1/a/@href
+          postProcess:
+            - replace:
+                - regex: ^
+                  with: https://www.gasm.com
+      # Image is not accessible from the /post page
+      Studio:
+        Name: $details/a[@class="tags" and starts-with(@href, '/studio/profile/')]
+  movieScraper:
+    common:
+      $details: //div[@class="post_details"]/div[@class="post_details_main"]
+      $postdate: //div[@class="post_details"]/div[@class="post_details_main"]/h3[@class="post_date"]
+    movie:
+      Name: $details/h1[@class="post_title"]/span
+      Duration:
+        selector: $postdate/span[2]/text()
         postProcess:
           - replace:
-              - regex: '^Part\sof\s*\n+'
+              - regex: '^\| '
                 with:
-      Movies:
-        Name: //span[@class="gqDescription"]/a[@class="gqTitle"]
-      Image: //meta[@property="og:image"]/@content
-      Studio:
-        Name:
-          selector: //span[@class="gqOwner"]//a
-# Last Updated May 13, 2021
+      Date:
+        selector: $postdate/span[1]
+        postProcess:
+          - parseDate: Jan 2, 2006
+      Synopsis: $details/h2[@class="post_description"]
+      FrontImage: //div[@class="post_details"]/div[@class="post_details_left"]/img[@class="item_cover"]/@src
+# Last Updated 2024-08-12

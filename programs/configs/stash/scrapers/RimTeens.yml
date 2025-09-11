@@ -1,0 +1,43 @@
+name: RimTeens
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - rimteens.com/members/
+      - rimteens.com/xtras/
+    scraper: rimteens
+performerByURL:
+  - action: scrapeXPath
+    url:
+      - rimteens.com/model/
+    scraper: rimteens
+xPathScrapers:
+  rimteens:
+    common:
+      $scene: //article[not(ancestor::aside)]
+    scene:
+      Title: //h1[not(ancestor::aside)]
+      Date:
+        selector: //time[not(ancestor::aside)]/@datetime
+        postProcess:
+          - parseDate: 2006-01-02T15:04:05-07:00
+      Details: //div[@itemprop="articleBody" and not(ancestor::aside)]
+      Image: //meta[@itemprop="url"]/@content
+      Studio:
+        Name:
+          selector: //a[contains(@class, "entry-category") and not(ancestor::aside)]
+          postProcess:
+            - replace:
+                - regex: MEMBERS
+                  with: RimTeens
+      Performers:
+        Name: //h2[not(ancestor::aside)]/a/span
+      Tags:
+        Name: //a[contains(@class, "entry-tag")]
+    performer:
+      Name: //h1[contains(@class, "page-title")]
+      Details: //p[contains(@class, "archive-description")]
+      Image: //span[not(ancestor::aside) and contains(@class, "avatar")]/img/@data-src
+      Birthdate: //div[contains(@class, "birthdate-section")]/p
+      EyeColor: //div[contains(@class, "eyes-section")]/p
+      HairColor: //div[contains(@class, "hair-section")]/p
+      Height: //div[contains(@class, "height-section")]/p

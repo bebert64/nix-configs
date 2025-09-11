@@ -1,1 +1,1 @@
-stockly-romainc/configuration.nix
+computers/stockly-romainc/configuration.nix

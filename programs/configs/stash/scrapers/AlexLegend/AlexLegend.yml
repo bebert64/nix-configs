@@ -1,0 +1,43 @@
+name: AlexLegend
+
+sceneByURL:
+  - action: scrapeXPath
+    url:
+      - alexlegend.com/video/
+    scraper: sceneScraper
+
+xPathScrapers:
+  sceneScraper:
+    common:
+      $sceneWrapper: //section[contains(concat(" ", normalize-space(@class), " "), " content-sec ")]
+    scene:
+      Title: $sceneWrapper//div[contains(concat(" ", normalize-space(@class), " "), " content-title ")]/h1
+      Code:
+        selector: /html/head/link[@rel="canonical"]/@href
+        postProcess:
+          - replace:
+            - regex: .+-(\d+)\..+
+              with: $1
+      Details: $sceneWrapper//div[contains(concat(" ", normalize-space(@class), " "), " content-desc ")][2]
+      Date:
+        selector: $sceneWrapper//div[contains(concat(" ", normalize-space(@class), " "), " content-date ")]/div[contains(concat(" ", normalize-space(@class), " "), " label ")]
+        postProcess:
+          - parseDate: 02.01.2006
+      Image:
+        # use code to construct homepage_thumb since it is higher res
+        selector: /html/head/link[@rel="canonical"]/@href
+        postProcess:
+          - replace:
+            - regex: .+-(\d+)\..+
+              with: https://alexlegend.com/media/misc/homepage_thumbs/$1.jpg
+      Studio:
+        Name:
+          fixed: AlexLegend
+      Tags:
+        Name:
+          selector: $sceneWrapper//div[contains(concat(" ", normalize-space(@class), " "), " content-tags ")]/a
+      Performers:
+        Name:
+          selector: $sceneWrapper//div[contains(concat(" ", normalize-space(@class), " "), " main__models ")]/a[@title]
+
+# Last Updated June 11, 2025

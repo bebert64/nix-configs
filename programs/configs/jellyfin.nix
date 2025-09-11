@@ -11,7 +11,7 @@ in
     home = {
       packages = [
         pkgs.jellyfin
-        pkgs.jellyfin-ffmpeg
+        pkgs.ffmpeg
         pkgs.jellyfin-web
         pkgs.yt-dlp
       ];

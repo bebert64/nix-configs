@@ -1,0 +1,42 @@
+# requires: AlgoliaAPI
+name: "Gangbang Creampie"
+sceneByURL:
+  - action: script
+    url:
+      - gangbangcreampie.com/en/video
+    script:
+      - python
+      - GangBangCreampie.py
+      - gangbangcreampie
+      - scene-by-url
+sceneByFragment:
+    action: script
+    script:
+      - python
+      - GangBangCreampie.py
+      - gangbangcreampie
+      - scene-by-fragment
+sceneByName:
+    action: script
+    script:
+      - python
+      - GangBangCreampie.py
+      - gangbangcreampie
+      - scene-by-name
+sceneByQueryFragment:
+    action: script
+    script:
+      - python
+      - GangBangCreampie.py
+      - gangbangcreampie
+      - scene-by-query-fragment
+galleryByURL:
+  - action: script
+    url:
+      - gangbangcreampie.com/en/photo/
+    script:
+      - python
+      - GangBangCreampie.py
+      - gangbangcreampie
+      - gallery-by-url
+# Last Updated January 30, 2025

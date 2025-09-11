@@ -6,11 +6,18 @@
     port = 2222;
   };
 
-  fixe-bureau = {
-    host = "fixe-bureau";
+  bureau = {
+    host = "bureau";
     hostname = "88.160.246.99";
     user = "romain";
     port = 2223;
+  };
+
+  salon = {
+    host = "salon";
+    hostname = "88.160.246.99";
+    user = "romain";
+    port = 2225;
   };
 
   stockly-romainc = {

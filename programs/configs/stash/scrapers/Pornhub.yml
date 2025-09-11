@@ -7,11 +7,13 @@ performerByURL:
   - action: scrapeXPath
     url:
       - pornhub.com
+      - pornhub.org
     scraper: performerScraper
 sceneByURL:
   - action: scrapeXPath
     url:
       - pornhub.com/view_video.php?viewkey=
+      - pornhub.org/view_video.php?viewkey=
     scraper: sceneScraper
 sceneByFragment:
   action: scrapeXPath
@@ -37,18 +39,19 @@ xPathScrapers:
   sceneSearch:
     common:
       $searchItem: //ul[contains(@class, "search-video-thumbs") and not(@id="bottomVideos")]
-      $searchThumb: //ul[contains(@class, "search-video-thumbs") and not(@id="bottomVideos")]//div[contains(@class, "thumbnail-info-wrapper")]/span[@class="title"]/a
+      $searchThumb: //ul[contains(@class, "search-video-thumbs") and not(@id="bottomVideos")]//div[contains(@class, "thumbnail-info-wrapper")]
 
     scene:
-      Title: $searchThumb/text()
+      Title: $searchThumb//span[@class="title"]/a
       URL:
-        selector: $searchThumb/@href
+        selector: $searchThumb//span[@class="title"]/a/@href
         postProcess:
           - replace:
               - regex: ^
                 with: "https://www.pornhub.com"
-      Image:
-        selector: $searchItem//div[contains(@class, "phimage")]//img/@data-thumb_url
+      Image: $searchItem//div[contains(@class, "phimage")]//img/@data-mediumthumb
+      Studio:
+        Name: $searchThumb//div[contains(@class, "usernameWrap")]/a[matches(@href, "/(channels|model|pornstar)/")]
   performerSearch:
     performer:
       Name: //div[@class="wrap"]/div[@class="thumbnail-info-wrapper"]/a[@class="title"]/text()
@@ -112,45 +115,46 @@ xPathScrapers:
       Image: //div[@class="thumbImage"]/img/@src|//img[@id="getAvatar"]/@src
   sceneScraper:
     common:
-      $datablob: //script[contains(., 'videodata')]/text()
+      $datablob: //script[contains(., 'VideoObject')]/text()
+      $videowrap: //div[@class="video-wrapper"]
+      $videoDetails: //div[contains(@class,"video-detailed-info")]
+      # Check that the button does not appear inside a "From:" div because then you'll get the studio
+      # as a performer if it's an affiliate channel, for example https://www.pornhub.com/view_video.php?viewkey=67e19227400d2
+      $studioButton: //div[contains(@class,"video-actions-tabs")]//span[not(ancestor::div[@class="from"])][contains(concat(" ",normalize-space(@class)," ")," usernameBadgesWrapper ")]//a
+      # datalayer for unlisted-proof videos #2385
+      $dataLayer: //script[@type="text/javascript"][contains(.,'window.dataLayer.push')]
     scene:
-      Title: //meta[@property="og:title"]/@content
-      URL: //meta[@property="og:url"]/@content
-      Date:
-        selector: $datablob
+      Title:
+        selector: //h1
         postProcess:
           - replace:
-              - regex: .+(?:'video_date_published'\s*:\s*')([^']+).+
+              # This scraper can be misused and end up pulling its information
+              # from https://www.pornhub.com/view_video.php?viewkey=
+              # that is, a page without a proper Pornhub scene code:
+              # this will make it return an empty result instead of an erroneous title
+              - regex: ^Recently Featured Porn Videos$
+                with: ""
+      URL: //meta[@property="og:url"]/@content
+      Date:
+        selector: $dataLayer
+        postProcess:
+          - replace:
+              - regex: .*(?:'video_date_published'\s*:\s*')(\d+)'.+
                 with: $1
           - parseDate: "20060102"
+      Code:
+        selector: //meta[@property="og:url"]/@content
+        postProcess:
+          - replace:
+              - regex: '.+?(\=)'
+                with:
       Tags:
-        Name:
-          selector: $datablob
-          postProcess:
-            - replace:
-                - regex: .+(?:'categories_in_video'\s*:\s*')([^']+).+
-                  with: $1
-          split: ","
+        Name: $videoDetails//a[@data-label="category"] | $videoDetails//a[@data-label="tag"]
       Performers:
-        Name:
-          selector: $datablob
-          postProcess:
-            - replace:
-                - regex: .+(?:'pornstars_in_video'\s*:\s*')([^']+).+
-                  with: $1
-                - regex: ^No$ # Hardcoded value representing lack of performers
-                  with: ""
-          split: ","
-          
-      Image:
-        selector: //meta[@property="og:image"]/@content
+        Name: $videoDetails//a[@data-label="pornstar"] | $studioButton
+      Image: //meta[@property="og:image"]/@content
       Studio:
-        Name:
-          selector: $datablob
-          postProcess:
-            - replace:
-                - regex: .+(?:'video_uploader_name'\s*:\s*')([^']+).+
-                  with: $1
+        Name: $videoDetails//a[@data-label="channel"] | $studioButton
 
 driver:
   cookies:
@@ -160,4 +164,4 @@ driver:
           Domain: ".pornhub.com"
           Value: "1"
           Path: "/"
-# Last Updated August 05, 2023
+# Last Updated June 11, 2025

@@ -2,56 +2,36 @@ name: "GammaEntertainment"
 sceneByURL:
   - action: scrapeXPath
     url:
-      - 1000facials.com/en/scene/
-      - activeduty.com/en/video/
       - alettaoceanempire.com/en/video/
-      - analacrobats.com/en/video/
       - ashleyfires.com/
       - bigfatcreampie.com/
-      - blowpass.com/en/video/
       - bskow.com/en/video/
       - bushybushy.com/
       - buttman.com/
       - cumshotoasis.com/
       - currycreampie.com/
-      - devilsfilmparodies.com/
-      - devilsgangbangs.com/
       - devonlee.com/
       - dylanryder.com/
-      - falconstudios.com/en/video/
-      - familycreep.com/
-      - fistingcentral.com/
       - gapingangels.com/
       - girlsandstuds.com/
       - grannyghetto.com/
-      - immorallive.com/en/video/
       - jaysinxxx.com/
-      - jonnidarkkoxxx.com/
       - lanesisters.com/
       - lesbianfactor.com/
       - lexingtonsteele.com/
       - maledigital.com/en/video/
       - maskurbate.com/en/video/
-      - mommyblowsbest.com/en/scene/
       - motherfuckerxxx.com/
       - myteenoasis.com/
-      - onlyteenblowjobs.com/en/scene/
       - openlife.com/
-      - pantypops.com/
-      - povblowjobs.com/
       - povthis.com/
       - silverstonedvd.com/
       - silviasaint.com/
       - squirtalicious.com/
       - squirtinglesbian.com/en/video/
       - squirtingorgies.com/en/scene/
-      - strapattackers.com/
       - sunnyleone.com/
-      - throated.com/en/video/
-      - tittycreampies.com/
-      - transsexualangel.com/en/video/
       - transsexualroadtrip.com/
-      - whiteghetto.com/
     scraper: sceneScraper
 
 performerByURL:
@@ -59,16 +39,7 @@ performerByURL:
     url:
       - activeduty.com/en/pornstar/
       - assholefever.com/en/pornstar/
-      - evilangel.com/en/pornstar/
     scraper: performerScraper
-
-movieByURL:
-  - action: scrapeXPath
-    url:
-      - darkx.com/en/movie/
-      - hardx.com/en/movie/
-      - xempire.com/en/movie/
-    scraper: movieScraper
 
 xPathScrapers:
   sceneScraper:
@@ -137,32 +108,26 @@ xPathScrapers:
                 - regex: \.com$
                   with: ""
             - map:
-                1000facials: 1000 Facials
                 activeduty: Active Duty
                 alettaoceanempire: Aletta Ocean Empire
                 allblackx: All Black X
                 analacrobats: Anal Acrobats
                 ashleyfires: Ashley Fires
                 bigfatcreampie: Big Fat Cream Pie
-                blowpass: Blowpass
                 bskow: BsKow
                 bushybushy: Bushy Bushy
                 buttman: Buttman
                 cumshotoasis: Cumshot Oasis
                 currycreampie: Curry Creampie
                 darkx: DarkX
-                devilsfilmparodies: Devil's Film Parodies
-                devilsgangbangs: Devil's Gangbangs
                 devonlee: Devon Lee
                 dylanryder: Dylan Ryder
                 eroticax: EroticaX
                 evilangel: Evil Angel
                 familycreep: Family Creep
-                fistingcentral: Fisting Central
                 gapingangels: Gaping Angels
                 girlsandstuds: Girls And Studs
                 grannyghetto: Granny Ghetto
-                immorallive: Immoral Live
                 jaysinxxx: Jay Sin XXX
                 jonnidarkkoxxx: Jonni Darkko XXX
                 lanesisters: Lane Sisters
@@ -171,10 +136,8 @@ xPathScrapers:
                 lexingtonsteele: Lexington Steele
                 maledigital: Male Digital
                 maskurbate: Maskurbate
-                mommyblowsbest: Mommy Blows Best
                 motherfuckerxxx: Mother Fucker XXX
                 myteenoasis: My Teen Oasis
-                onlyteenblowjobs: Only Teen Blowjobs
                 openlife: Open Life
                 outofthefamily: Out Of The Family
                 pantypops: Panty Pops
@@ -187,11 +150,9 @@ xPathScrapers:
                 squirtingorgies: Squirting Orgies
                 strapattackers: Strap Attackers
                 sunnyleone: Sunny Leone
-                throated: Throated
                 tittycreampies: Titty Creampies
                 transsexualangel: Transsexual Angel
                 transsexualroadtrip: Transsexual Roadtrip
-                whiteghetto: White Ghetto
                 xempire: XEmpire
 
   performerScraper:
@@ -213,4 +174,4 @@ xPathScrapers:
         Name: //a[contains(@class, 'GA_Id_headerLogo')]/span[@class='linkMainCaption']/text()
       FrontImage: //a[@class='frontCoverImg']/@href
       BackImage: //a[@class='backCoverImg']/@href
-# Last Updated January 13, 2023
+# Last Updated August 13, 2025

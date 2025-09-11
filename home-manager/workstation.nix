@@ -27,6 +27,7 @@ in
       };
       secondary = mkOption {
         type = str;
+        default = "";
         description = "The secondary screen";
       };
     };
@@ -53,6 +54,7 @@ in
             arandr # GUI to configure screens positions (need to kill autorandr)
             chromium
             evince # pdf reader
+            filezilla
             fusee-launcher
             gnome-keyring
             inkscape

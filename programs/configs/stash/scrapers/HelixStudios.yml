@@ -15,6 +15,12 @@ sceneByQueryFragment:
   queryURL: "{url}"
   scraper: sceneScraper
 
+movieByURL:
+  - action: scrapeXPath
+    url:
+      - helixstudios.com/movie/
+    scraper: groupScraper
+
 performerByURL:
   - action: scrapeXPath
     url:
@@ -48,17 +54,13 @@ xPathScrapers:
       $info: //div[@class="text"]
     scene:
       Title:
-        selector: //title/text()
-        postProcess:
-          - replace:
-              - regex: \s*- Helix Studios.*$
-                with:
+        selector: //div[@class="video-info"]/span[1]/text()
       Date:
         selector: //div[@class="info-items"]/span[@class="info-item date"]/text()
         postProcess:
           - parseDate: January 2, 2006
       Details:
-        selector: //div[contains(@class, "description-content")]/p/text()
+        selector: //div[contains(@class, "description-content")]/p[node()]
         concat: "#LINEBREAK#"
         postProcess:
           - replace:
@@ -76,22 +78,38 @@ xPathScrapers:
         selector: //video/@poster
         postProcess:
           - replace:
-              - regex: 960w
-                with: 1500w
+              - regex: 'img/960w/'
+                with:
+          - replace:
+              - regex: '.jpg'
+                with: '_1920.jpg'
       Director:
         selector: //span[contains(@class, "info-item director")]/text()
       Code:
-        selector: //*[@id="titleImage"]/@src
+        selector: //video/@poster|//div[@class="video-player-disabled"]/img/@src
         postProcess:
           - replace:
               - regex: ^.*\/\s*
                 with:
           - replace:
-              - regex: \_1600.*$
+              - regex: '.jpg'
                 with:
       Studio:
         Name:
-          fixed: Helix
+          selector: //span[contains(@class, "studio-name")]/text()
+
+  groupScraper:
+    movie:
+      Duration:
+        selector: //span.info-item.duration/text()
+        postProcess:
+          - replace:
+            - regex: " min$"
+              with: ":00"
+      FrontImage: //img[@id="frontCover"]/@src
+      BackImage: //img[@id="backCover"]/@src
+      Name: //h1/text()
+      Synopsis: /html/head/meta[@name="Description"]/@content
 
   performerSearch:
     common:
@@ -107,23 +125,28 @@ xPathScrapers:
 
   performerScraper:
     performer:
-      Name: //div[contains(@class, "top")]/h1/text()
+      Name: //div[contains(@class, "section-box model-bio")]/h1/text()
       Gender:
         fixed: Male
       Height:
         selector: //span[text()="Height"]/following-sibling::text()
         postProcess:
           - feetToCm: true
-      Measurements:
+      PenisLength:
         selector: //span[text()="Cock"]/following-sibling::text()
         postProcess:
           - replace:
-              - regex: ^
-                with: "0'"
-          - replace:
-              - regex: inch*
-                with: "''"
+              - regex: (\d+) inches (Cut|Uncut)
+                with: "0.$1"
           - feetToCm: true
+      Circumcised:
+        selector: //span[text()="Cock"]/following-sibling::text()
+        postProcess:
+          - replace:
+              - regex: (\d+) inches (Cut|Uncut)
+                with: "$2"
+      Tags:
+        Name: //span[text()="Position"]/following-sibling::text()
       Weight:
         selector: //span[text()="Weight"]/following-sibling::text()
         postProcess:
@@ -144,4 +167,4 @@ xPathScrapers:
           - replace:
               - regex: $
                 with: " "
-# Last Updated February 20, 2023
+# Last Updated Feb 08, 2025
