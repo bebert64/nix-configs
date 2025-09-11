@@ -8,11 +8,12 @@ let
   modifier = config.xsession.windowManager.i3.config.modifier;
   homeDir = config.home.homeDirectory;
   nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
+  rofi = config.rofi.defaultCmd;
   open-local = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
       list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
+      ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
       code $HOME/code
@@ -24,7 +25,7 @@ let
     selection=$(
       ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 30%;}'
+      ${rofi} -theme-str 'window {width: 30%;}'
     )
     if [[ $selection = "Main" ]]; then
       code --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
@@ -36,7 +37,7 @@ let
     selection=$(
       ssh salon "list-crate-dirs /home/romain/code Cargo.toml" 2>/dev/null | \
       sort -u | \
-      rofi -sort -sorting-method fzf -i -disable-history -dmenu -show-icons -no-custom -p "" -theme-str 'window {width: 20%;}'
+      ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
       code --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code

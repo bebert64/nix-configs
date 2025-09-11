@@ -6,14 +6,32 @@
 }:
 let
   cfg = config.by-db;
+  inherit (cfg) setHeadphonesCommand setSpeakerCommand;
   modifier = config.xsession.windowManager.i3.config.modifier;
-  music_mode = "Music";
+  rofi = config.rofi.defaultCmd;
+  music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
-  inherit (import ./scripts.nix { inherit cfg pkgs; })
+  open-dir = "${pkgs.writeScriptBin "open-dir" ''
+    base_dir=$HOME/mnt/NAS/Musique
+    selection=$(
+      ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
+      grep -v "@eaDir"| \
+      sort -u | \
+      ${rofi} -l 30 -theme-str 'window {width: 20%;}'
+    )
+
+    if [[ ! $selection ]]; then
+        exit 0
+    fi
+    playlist_title=$(echo $selection | sed 's/.$//' | sed 's/\// - /g')
+
+    strawberry -c "$playlist_title" "$base_dir/$selection" &
+    sleep 2
+    strawberry --play-playlist "$playlist_title" &
+  ''}/bin/open-dir";
+  inherit (import ./scripts.nix { inherit pkgs; })
     playerctl-move
     playerctl-restart-or-previous
-    set-headphones
-    set-speaker
     ;
 in
 {
@@ -106,9 +124,12 @@ in
         "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
         "l" = "workspace $ws10, exec strawberry, mode default";
         "r" = "exec choose-radios, mode default";
+        "d" = "exec ${open-dir}, mode default";
+        # Allows to restart strawberry after it has crashed
+        "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
         "${modifier}+m" = "mode default";
-        "h" = "exec ${set-headphones}, mode default";
-        "p" = "exec ${set-speaker}, mode default";
+        "h" = "exec pactl ${setHeadphonesCommand}, mode default";
+        "p" = "exec pactl ${setSpeakerCommand}, mode default";
         "Escape" = "mode default";
       };
     };

@@ -1,6 +1,5 @@
-{ cfg, pkgs }:
+{ pkgs }:
 let
-  inherit (cfg) setHeadphonesCommand setSpeakerCommand;
   inherit (pkgs) writeScriptBin;
   playerctl = "${pkgs.playerctl}/bin/playerctl";
 in
@@ -28,12 +27,4 @@ in
         fi;;
     esac
   ''}/bin/playerctl-restart-or-previous";
-
-  set-headphones = "${writeScriptBin "set-headphones" ''
-    pactl ${setHeadphonesCommand}
-  ''}/bin/set-headphones";
-
-  set-speaker = "${writeScriptBin "set-speaker" ''
-    pactl ${setSpeakerCommand}
-  ''}/bin/set-speaker";
 }
