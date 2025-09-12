@@ -65,6 +65,7 @@ in
             nodePackages.pnpm
             polkit_gnome
             rsync
+            screen
             sshfs
             unrar
             yt-dlp
