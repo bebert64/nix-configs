@@ -112,6 +112,32 @@ in
         };
         hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau";
       };
+      stockly-bureau-1 = {
+        fingerprint = {
+          HDMI-1 = "00ffffffffffff0005e30127213f0300141f0103803c22782a8671a355539d250d5054bfef00d1c0b30095008180814081c001010101565e00a0a0a029503020350055502100001e000000ff00474e584d354841323132373639000000fc005132375031420a202020202020000000fd00324c1e631e000a20202020202001c902031ef14b101f051404130312021101230907078301000065030c001000023a801871382d40582c450055502100001e011d007251d01e206e28550055502100001e8c0ad08a20e02d10103e96005550210000188c0ad090204031200c405500555021000018f03c00d051a0355060883a0055502100001c00000000000000f7";
+          eDP-1 = "00ffffffffffff000daee71500000000211a0104a52213780228659759548e271e505400000001010101010101010101010101010101b43b804a713834405036680058c110000018000000fe004e3135364843412d4541420a20000000fe00434d4e0a202020202020202020000000fe004e3135364843412d4541420a2000b2";
+        };
+        config = {
+          eDP-1 = {
+            enable = true;
+            crtc = 0;
+            mode = "1920x1080";
+            position = "0x0";
+            primary = true;
+            rate = "60.01";
+          };
+
+          HDMI-1 = {
+            enable = true;
+            crtc = 1;
+            mode = "2560x1440";
+            position = "1920x0";
+            primary = false;
+            rate = "59.95";
+          };
+        };
+        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-bureau-1";
+      };
     };
   };
 
