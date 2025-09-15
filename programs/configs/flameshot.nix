@@ -10,13 +10,12 @@ let
   rofi = config.rofi.defaultCmd;
   rofi-screenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
     selection="$(
-      echo -en \
-      Gui to clipboard
-      Gui to file
-      Fullscreen to clipboard
-      Fullscreen to file
-      | ${rofi}
-    )"
+    echo -en \
+    'Gui to clipboard
+    Gui to file
+    Fullscreen to clipboard
+    Fullscreen to file' \
+    | ${rofi} )"
 
     case "$selection" in
       "Gui to clipboard")
