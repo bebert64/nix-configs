@@ -12,8 +12,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso";
-      # url = "git+ssh://git@github.com/bebert64/perso?ref=branch_name";
+      # url = "git+ssh://git@github.com/bebert64/perso";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=ffmpeg_helpers";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sops-nix = {

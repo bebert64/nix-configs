@@ -83,12 +83,15 @@ in
       };
 
       by-db-pkgs = {
+        compress-all-videos-in-dir = {
+          enable = true;
+          jellyfin.accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
+          stash.apiKey = "${config.sops.secrets."stash/api-key".path}";
+        };
         guitar-tutorials = {
           app.enable = true;
           firefox.ffsync = cfg.ffsync.bebert64;
-          jellyfin = {
-            accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
-          };
+          jellyfin.accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
         };
         shortcuts = {
           app.enable = true;
