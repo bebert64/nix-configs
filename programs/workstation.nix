@@ -15,6 +15,7 @@
     ./configs/avidemux.nix
     ./configs/calculator.nix
     ./configs/firefox.nix
+    ./configs/flameshot.nix
     ./configs/i3.nix
     ./configs/insomnia.nix
     ./configs/lock.nix

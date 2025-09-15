@@ -9,8 +9,7 @@ let
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   rofi-screenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
-    selection="$(
-    echo -en \
+    selection="$(echo -en \
     'Gui to clipboard
     Gui to file
     Fullscreen to clipboard
