@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1758036999,
-        "narHash": "sha256-zPKyK/C7b85EiLe/WsSQI+2tI1Q09BAmGxDPKj3VAE4=",
+        "lastModified": 1758037820,
+        "narHash": "sha256-b8TgyXW/uvcGuRIr4Irm5iPBKrG3AywNljBW7874zFo=",
         "ref": "refs/heads/main",
-        "rev": "9594a7e7d0e0056311453e08c79a724270ee5bce",
-        "revCount": 125,
+        "rev": "da6027622bce33b09935776a74ed339be116d226",
+        "revCount": 126,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -238,13 +238,13 @@
       "locked": {
         "lastModified": 1757810152,
         "narHash": "sha256-Vp9K5ol6h0J90jG7Rm4RWZsCB3x7v5VPx588TQ1dkfs=",
-        "owner": "NixOS",
+        "owner": "nixos",
         "repo": "nixpkgs",
         "rev": "9a094440e02a699be5c57453a092a8baf569bdad",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "nixos",
         "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
@@ -268,11 +268,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757039615,
-        "narHash": "sha256-qm53+EUFfzyF8F0MEscHGqf9tx462GV3/zUZrn9wiQU=",
+        "lastModified": 1757989933,
+        "narHash": "sha256-9cpKYWWPCFhgwQTww8S94rTXgg8Q8ydFv9fXM6I8xQM=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "4486e04adbb4b0e39f593767f2c36e2211003d01",
+        "rev": "8249aa3442fb9b45e615a35f39eca2fe5510d7c3",
         "type": "github"
       },
       "original": {
