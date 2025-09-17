@@ -80,6 +80,11 @@ in
       services = {
         playerctld.enable = true;
         caffeine.enable = true;
+        ollama = lib.mkIf cfg.generativeAi.enable {
+          enable = true;
+          # loadModels = [ "llama3.2:3b" "deepseek-r1:1.5b"];
+          acceleration = "cuda";
+        };
       };
 
       by-db-pkgs = {
