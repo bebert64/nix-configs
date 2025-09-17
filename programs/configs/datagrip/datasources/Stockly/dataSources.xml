@@ -134,5 +134,12 @@
       <jdbc-url>jdbc:postgresql://scd-prod-invoices-postgres-1630554317138.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="PROD:SupplyMessages" uuid="12e50126-fa74-4b86-bfac-ed8b09b95438">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://scd-prod-supplymessages-postgres-1750955047999.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
