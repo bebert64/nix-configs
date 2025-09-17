@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  by-db,
   ...
 }:
 {
@@ -18,6 +19,7 @@
     let
       cfg = config.by-db;
       colors = cfg.polybar.colors;
+      musicTitle = "${by-db.packages.x86_64-linux.music-title}/bin/music-title";
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
@@ -127,7 +129,7 @@
 
         "module/playerctl-full" = {
           "inherit" = "player-ctl";
-          exec = "${displayTitle}";
+          exec = "${musicTitle}";
           label = "Don Beberto's      •      %output%";
         };
 
