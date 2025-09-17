@@ -61,6 +61,7 @@ in
         "${homeDirectory}/.cursor-server"
       ];
     };
-
   };
+
+  nixpkgs.config.allowUnfree = true;
 }
