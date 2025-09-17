@@ -111,27 +111,36 @@ in
       "${modifier}+m" = "mode \"${music_mode}\"";
     };
 
-    modes = {
-      ${music_mode} = {
-        "${modifier}+Left" = " exec ${playerctl-restart-or-previous}";
-        "${modifier}+Right" = "exec ${playerctl} next";
-        "Left" = "exec ${playerctl-move} - 10";
-        "Right" = "exec ${playerctl-move} + 10";
-        "Up" = "exec ${playerctl} volume 0.1+";
-        "Down" = "exec ${playerctl} volume 0.1-";
-        "space" = "exec ${playerctl} play-pause, mode default";
-        "s" = "exec ${playerctl} stop, mode default";
-        "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
-        "l" = "workspace $ws10, exec strawberry, mode default";
-        "r" = "exec choose-radios, mode default";
-        "d" = "exec ${open-dir}, mode default";
-        # Allows to restart strawberry after it has crashed
-        "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
-        "${modifier}+m" = "mode default";
-        "h" = "exec pactl ${setHeadphonesCommand}, mode default";
-        "p" = "exec pactl ${setSpeakerCommand}, mode default";
-        "Escape" = "mode default";
+    modes =
+      let
+        # We define small scripts because if the command contains commas, i3-msg doesn't parse it correctly
+        pactl_cmd =
+          cmd: cmdName:
+          "${pkgs.writeScriptBin "${cmdName}" ''
+            pactl ${cmd}
+          ''}/bin/${cmdName}";
+      in
+      {
+        ${music_mode} = {
+          "${modifier}+Left" = " exec ${playerctl-restart-or-previous}";
+          "${modifier}+Right" = "exec ${playerctl} next";
+          "Left" = "exec ${playerctl-move} - 10";
+          "Right" = "exec ${playerctl-move} + 10";
+          "Up" = "exec ${playerctl} volume 0.1+";
+          "Down" = "exec ${playerctl} volume 0.1-";
+          "space" = "exec ${playerctl} play-pause, mode default";
+          "s" = "exec ${playerctl} stop, mode default";
+          "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
+          "l" = "workspace $ws10, exec strawberry, mode default";
+          "r" = "exec choose-radios, mode default";
+          "d" = "exec ${open-dir}, mode default";
+          # Allows to restart strawberry after it has crashed
+          "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
+          "${modifier}+m" = "mode default";
+          "h" = "exec ${pactl_cmd setHeadphonesCommand "set-headphones-command"}, mode default";
+          "p" = "exec ${pactl_cmd setSpeakerCommand "set-speaker-command"}, mode default";
+          "Escape" = "mode default";
+        };
       };
-    };
   };
 }
