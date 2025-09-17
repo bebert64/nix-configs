@@ -19,7 +19,7 @@ in
 
   options.by-db = {
     bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
-    wifi.enable = mkEnableOption "Whether or not to install network manager";
+    generativeAi.enable = mkEnableOption "Whether to install generative AI tools";
     screens = {
       primary = mkOption {
         type = str;
@@ -39,6 +39,7 @@ in
       type = str;
       description = "Command to redirect the sound output to speaker";
     };
+    wifi.enable = mkEnableOption "Whether or not to install network manager";
   };
 
   config =
