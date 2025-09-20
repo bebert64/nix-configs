@@ -2,6 +2,7 @@
   config,
   pkgs,
   lib,
+  by-db,
   ...
 }:
 {
@@ -21,19 +22,11 @@
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
+            by-db.packages.x86_64-linux.music-title
             pkgs.playerctl
-            pkgs.gnugrep
-            pkgs.coreutils
           ]
         }
-
-        title=$(playerctl metadata 2> /dev/null | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3-)
-        artist=$(playerctl metadata 2> /dev/null | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3-)
-        if [[ $artist ]]; then
-          title_display="$artist - $title"
-        else
-          title_display=$title
-        fi
+        title_display=$(music-title 2> /dev/null)
 
         status=$(playerctl status 2> /dev/null)
         if [[ $status == "Playing" ]]; then
@@ -61,6 +54,10 @@
       '';
     in
     {
+      by-db-pkgs.music-title = {
+        enable = true;
+        radioFrance.apiKeyFile = "${config.sops.secrets."radio-france/api-key".path}";
+      };
       services.polybar.settings = {
         "module/i3" = {
           type = "internal/i3";
