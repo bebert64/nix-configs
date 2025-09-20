@@ -20,33 +20,6 @@
       cfg = config.by-db;
       colors = cfg.polybar.colors;
       musicTitle = "${by-db.packages.x86_64-linux.music-title}/bin/music-title";
-      displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
-        PATH=${
-          lib.makeBinPath [
-            pkgs.playerctl
-            pkgs.gnugrep
-            pkgs.coreutils
-          ]
-        }
-
-        title=$(playerctl metadata 2> /dev/null | grep xesam:title | tr -s ' ' | cut -d ' ' -f 3-)
-        artist=$(playerctl metadata 2> /dev/null | grep xesam:artist | tr -s ' ' | cut -d ' ' -f 3-)
-        if [[ $artist ]]; then
-          title_display="$artist - $title"
-        else
-          title_display=$title
-        fi
-
-        status=$(playerctl status 2> /dev/null)
-        if [[ $status == "Playing" ]]; then
-          prefix=" "
-        else
-          prefix="󰝛 "
-        fi
-
-        echo "%{T2}$prefix %{T-}  $title_display"
-      ''}/bin/playerctl-display-title";
-
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
         PATH=${
           lib.makeBinPath [
@@ -135,7 +108,7 @@
 
         "module/playerctl-mini" = {
           "inherit" = "player-ctl";
-          exec = "${displayTitle}";
+          exec = "${musicTitle}";
           label = "%output:0:85%";
         };
 
