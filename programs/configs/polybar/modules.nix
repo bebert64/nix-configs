@@ -20,12 +20,13 @@
       cfg = config.by-db;
       colors = cfg.polybar.colors;
       musicTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
-                PATH=${
+        PATH=${
           lib.makeBinPath [
+            by-db.packages.x86_64-linux.music-title
             pkgs.playerctl
           ]
         }
-        ${by-db.packages.x86_64-linux.music-title}/bin/music-title
+        music-title
       ''}/bin/playerctl-display-title";
 
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
@@ -44,6 +45,7 @@
       '';
     in
     {
+      by-db-pkgs.music-title = { enable = true; radioFrance.apiKeyFile = "${config.sops.secrets."radio-france/api-key".path}";};
       services.polybar.settings = {
         "module/i3" = {
           type = "internal/i3";
