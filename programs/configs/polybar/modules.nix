@@ -26,7 +26,16 @@
             pkgs.playerctl
           ]
         }
-        music-title
+        title_display=$(music-title 2> /dev/null)
+        
+        status=$(playerctl status 2> /dev/null)
+        if [[ $status == "Playing" ]]; then
+          prefix=" "
+        else
+          prefix="󰝛 "
+        fi
+
+        echo "$prefix   $title_display"
       ''}/bin/playerctl-display-title";
 
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
