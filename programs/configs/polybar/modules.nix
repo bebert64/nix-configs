@@ -19,7 +19,7 @@
     let
       cfg = config.by-db;
       colors = cfg.polybar.colors;
-      musicTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
+      displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
             by-db.packages.x86_64-linux.music-title
@@ -27,7 +27,7 @@
           ]
         }
         title_display=$(music-title 2> /dev/null)
-        
+
         status=$(playerctl status 2> /dev/null)
         if [[ $status == "Playing" ]]; then
           prefix=" "
@@ -35,7 +35,7 @@
           prefix="󰝛 "
         fi
 
-        echo "$prefix   $title_display"
+        echo "%{T2}$prefix %{T-}  $title_display"
       ''}/bin/playerctl-display-title";
 
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
@@ -54,7 +54,10 @@
       '';
     in
     {
-      by-db-pkgs.music-title = { enable = true; radioFrance.apiKeyFile = "${config.sops.secrets."radio-france/api-key".path}";};
+      by-db-pkgs.music-title = {
+        enable = true;
+        radioFrance.apiKeyFile = "${config.sops.secrets."radio-france/api-key".path}";
+      };
       services.polybar.settings = {
         "module/i3" = {
           type = "internal/i3";
@@ -121,13 +124,13 @@
 
         "module/playerctl-full" = {
           "inherit" = "player-ctl";
-          exec = "${musicTitle}";
+          exec = "${displayTitle}";
           label = "Don Beberto's      •      %output%";
         };
 
         "module/playerctl-mini" = {
           "inherit" = "player-ctl";
-          exec = "${musicTitle}";
+          exec = "${displayTitle}";
           label = "%output:0:85%";
         };
 
