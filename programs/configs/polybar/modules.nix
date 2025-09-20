@@ -19,7 +19,15 @@
     let
       cfg = config.by-db;
       colors = cfg.polybar.colors;
-      musicTitle = "${by-db.packages.x86_64-linux.music-title}/bin/music-title";
+      musicTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
+                PATH=${
+          lib.makeBinPath [
+            pkgs.playerctl
+          ]
+        }
+        ${by-db.packages.x86_64-linux.music-title}/bin/music-title
+      ''}/bin/playerctl-display-title";
+
       headphonesOrSpeakerIcon = pkgs.writeScriptBin "headphones-or-speaker-icon" ''
         PATH=${
           lib.makeBinPath [
