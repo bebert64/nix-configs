@@ -82,7 +82,7 @@ in
       };
 
       by-db-pkgs = {
-        compress-all-videos-in-directory = {
+        compress-videos = {
           enable = true;
           jellyfin.accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           stash.apiKey = "${config.sops.secrets."stash/api-key".path}";

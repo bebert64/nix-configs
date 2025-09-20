@@ -23,6 +23,7 @@ in
       "raspi/postgresql/rw" = { };
       "stash/api-key" = { };
       "jellyfin/access-token" = { };
+      "radio-france/api-key" = { };
     };
   };
 
