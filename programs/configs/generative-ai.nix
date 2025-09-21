@@ -13,6 +13,6 @@
         acceleration = "cuda";
       };
     };
-    packages = [ nixai.packages.${pkgs.system}.default ];
+    home.packages = [ nixai.packages.${pkgs.system}.default ];
   };
 }
