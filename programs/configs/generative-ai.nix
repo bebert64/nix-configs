@@ -5,11 +5,8 @@
   lib,
   ...
 }:
-let
-  cfg = config.home-manager.users.${config.by-db.user.name};
-in
 {
-  config = lib.mkIf cfg.generativeAi.enable {
+  config = lib.mkIf config.by-db.generativeAi.enable {
     home.packages = [ nix-ai.packages.${pkgs.system}.default ];
     services = {
       ollama = {
