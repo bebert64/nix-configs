@@ -1,5 +1,7 @@
 {
   config,
+  nixai,
+  pkgs,
   lib,
   ...
 }:
@@ -10,10 +12,7 @@
         enable = true;
         acceleration = "cuda";
       };
-      nixai = {
-        enable = true;
-        mcp.enable = true;
-      };
     };
+    packages = [ nixai.packages.${pkgs.system}.default ];
   };
 }

@@ -3,7 +3,6 @@
   lib,
   config,
   by-db,
-  nixai,
   ...
 }:
 let
@@ -16,7 +15,6 @@ in
     ../programs/workstation.nix
     ../fonts
     by-db.module.x86_64-linux
-    nixai.homeManagerModules.default
   ];
 
   options.by-db = {
