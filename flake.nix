@@ -24,6 +24,10 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-ai = {
+      url = "github:olafkfreund/nix-ai-help";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -34,6 +38,7 @@
       stockly-computers,
       sops-nix,
       vscode-server,
+      nix-ai,
       ...
     }:
     {
@@ -66,6 +71,7 @@
               by-db
               sops-nix
               vscode-server
+              nix-ai
               ;
           };
         };
