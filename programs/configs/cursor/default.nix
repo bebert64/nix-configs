@@ -59,15 +59,15 @@ in
 
   # by-db-pkgs.list-crate-dirs.enable = true;
 
-  # xsession.windowManager.i3.config = {
-  #   # assigns = {
-  #   #   "$ws3" = [ { class = "Code"; } ];
-  #   # };
-  #   # keybindings = lib.mkOptionDefault {
-  #   #   "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
-  #   #   "${modifier}+Shift+v" = "workspace $ws3; exec ${open-cerberus}";
-  #   #   "${modifier}+Mod1+v" = "workspace $ws3; exec ${open-salon}";
-  #   #   "${modifier}+Control+n" = "workspace $ws3; exec code ${nixConfigsRepo}";
-  #   # };
-  # };
+  xsession.windowManager.i3.config = {
+    assigns = {
+      "$ws3" = [ { class = "Cursor"; } ];
+    };
+    #   # keybindings = lib.mkOptionDefault {
+    #   #   "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
+    #   #   "${modifier}+Shift+v" = "workspace $ws3; exec ${open-cerberus}";
+    #   #   "${modifier}+Mod1+v" = "workspace $ws3; exec ${open-salon}";
+    #   #   "${modifier}+Control+n" = "workspace $ws3; exec code ${nixConfigsRepo}";
+    #   # };
+  };
 }
