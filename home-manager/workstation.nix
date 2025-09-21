@@ -16,8 +16,8 @@ in
     ../programs/workstation.nix
     ../fonts
     by-db.module.x86_64-linux
-  ]
-  ++ lib.optionals config.by-db.generativeAi.enable [ nix-ai.homeManagerModules.default ];
+    nix-ai.homeManagerModules.default
+  ];
 
   options.by-db = {
     bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
