@@ -1,11 +1,12 @@
 {
   pkgs,
+  config,
   nix-ai,
   lib,
   ...
 }:
 let
-  cfg = 2;
+  cfg = config.home-manager.users.${config.by-db.user.name};
 in
 {
   config = lib.mkIf cfg.generativeAi.enable {
