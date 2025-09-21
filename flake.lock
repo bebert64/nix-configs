@@ -208,27 +208,6 @@
         "type": "github"
       }
     },
-    "nix-ai": {
-      "inputs": {
-        "flake-utils": "flake-utils_3",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1755942173,
-        "narHash": "sha256-wSjUhxwartHibNyGrVudc0Zmsv/qgUTL6rBeETl4UTE=",
-        "owner": "olafkfreund",
-        "repo": "nix-ai-help",
-        "rev": "056c3ddc1601b1a8c4d6b1d5cf0ba2d35b8206ee",
-        "type": "github"
-      },
-      "original": {
-        "owner": "olafkfreund",
-        "repo": "nix-ai-help",
-        "type": "github"
-      }
-    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -273,6 +252,27 @@
         "type": "github"
       }
     },
+    "nixai": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1755942173,
+        "narHash": "sha256-wSjUhxwartHibNyGrVudc0Zmsv/qgUTL6rBeETl4UTE=",
+        "owner": "olafkfreund",
+        "repo": "nix-ai-help",
+        "rev": "056c3ddc1601b1a8c4d6b1d5cf0ba2d35b8206ee",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olafkfreund",
+        "repo": "nix-ai-help",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1758346548,
@@ -293,7 +293,7 @@
       "inputs": {
         "by-db": "by-db",
         "home-manager": "home-manager",
-        "nix-ai": "nix-ai",
+        "nixai": "nixai",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix",
         "stockly-computers": "stockly-computers",
