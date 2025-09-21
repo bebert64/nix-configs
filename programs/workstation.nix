@@ -2,6 +2,7 @@
   imports = [
     ./common.nix
     ./configs/conky
+    ./configs/cursor
     ./configs/datagrip
     ./configs/ferdium
     ./configs/mpc-qt
