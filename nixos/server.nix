@@ -8,6 +8,12 @@
   imports = [
     ./common.nix
     ../programs/server-global.nix
+    ../programs/dnsmasq.nix
+    ../programs/jellyfin.nix
+    ../programs/nginx.nix
+    ../programs/postgresql.nix
+    ../programs/qbittorrent
+    ../programs/stash
     vscode-server.nixosModules.default
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
