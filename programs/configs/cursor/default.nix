@@ -28,7 +28,7 @@ let
       ${rofi} -theme-str 'window {width: 30%;}'
     )
     if [[ $selection = "Main" ]]; then
-      cocursorde --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
+      cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
     elif [[ $selection ]]; then
       cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
     fi
@@ -50,14 +50,13 @@ in
   home = {
     packages = with pkgs; [
       code-cursor
-      # polkit # polkit is the utility used by vscode to save as sudo
     ];
     file = {
       ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
   };
 
-  # by-db-pkgs.list-crate-dirs.enable = true;
+  by-db-pkgs.list-crate-dirs.enable = true;
 
   xsession.windowManager.i3.config = {
     assigns = {
