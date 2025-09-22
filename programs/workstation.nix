@@ -2,6 +2,7 @@
   imports = [
     ./common.nix
     ./configs/conky
+    ./configs/cursor
     ./configs/datagrip
     ./configs/ferdium
     ./configs/mpc-qt
@@ -10,7 +11,6 @@
     ./configs/music
     ./configs/sqlfluff
     ./configs/terminal
-    ./configs/vscode
     ./configs/autorandr.nix
     ./configs/avidemux.nix
     ./configs/calculator.nix
