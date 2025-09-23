@@ -16,12 +16,12 @@ in
     packages = [ (import ./jetbrains.nix { inherit lib pkgs; }).datagrip ];
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${datagripProjectsDir}/perso/.idea
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.xml ${datagripProjectsDir}/Perso/.idea/dataSources.xml
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/perso/dataSources.local.xml ${datagripProjectsDir}/Perso/.idea/dataSources.local.xml
+        mkdir -p ${datagripProjectsDir}/Perso/.idea
+        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/perso/dataSources.xml ${datagripProjectsDir}/Perso/.idea/dataSources.xml
+        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/perso/dataSources.local.xml ${datagripProjectsDir}/Perso/.idea/dataSources.local.xml
         mkdir -p ${datagripProjectsDir}/Stockly/.idea
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.xml
-        ln -sf ${nixConfigsRepo}/programs/configs/datagrip/datasources/Stockly/dataSources.local.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.local.xml
+        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/stockly/dataSources.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.xml
+        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/stockly/dataSources.local.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.local.xml
       '';
     };
   };
