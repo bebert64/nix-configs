@@ -12,29 +12,29 @@ in
 {
   imports = [
     ./common.nix
+    ../programs/autorandr
+    ../programs/avidemux
+    ../programs/calculator
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
     ../programs/ferdium
+    ../programs/firefox
+    ../programs/flameshot
+    ../programs/i3
+    ../programs/insomnia
+    ../programs/lock
     ../programs/mpc-qt
+    ../programs/music
     ../programs/picom
     ../programs/polybar
-    ../programs/music
+    ../programs/rofi
+    ../programs/slack
     ../programs/sqlfluff
     ../programs/terminal
-    ../programs/autorandr.nix
-    ../programs/avidemux.nix
-    ../programs/calculator.nix
-    ../programs/firefox.nix
-    ../programs/flameshot.nix
-    ../programs/i3.nix
-    ../programs/insomnia.nix
-    ../programs/lock.nix
-    ../programs/rofi.nix
-    ../programs/slack.nix
-    ../programs/theme.nix
-    ../programs/udiskie.nix
-    ../programs/vdhcoapp.nix
+    ../programs/theme
+    ../programs/udiskie
+    ../programs/vdhcoapp
     by-db.module.x86_64-linux
     ../fonts
   ];

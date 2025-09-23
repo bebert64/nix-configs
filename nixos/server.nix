@@ -7,11 +7,10 @@
 {
   imports = [
     ./common.nix
-    ../programs/server-global.nix
-    ../programs/dnsmasq.nix
-    ../programs/jellyfin.nix
-    ../programs/nginx.nix
-    ../programs/postgresql.nix
+    ../programs/dnsmasq
+    ../programs/jellyfin
+    ../programs/nginx
+    ../programs/postgresql
     ../programs/qbittorrent
     ../programs/stash
     vscode-server.nixosModules.default
