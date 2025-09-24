@@ -95,5 +95,13 @@
           right = "right8 battery right7 filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1";
         };
       };
+
+      "bar/eDP-1-tray-off-on-hdmi1" = {
+        "inherit" = "EDP";
+        monitor = "HDMI-1";
+        modules = {
+          right = "right8 battery right7 filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1";
+        };
+      };
     };
 }
