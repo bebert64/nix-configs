@@ -148,6 +148,6 @@ in
         };
     };
 
-    xsession.windowManager.i3.config.menu = "\"rofi -show drun -show-icons\"";
+    xsession.windowManager.i3.config.menu = "\"/home/user/nix-config/test.sh\"";
   };
 }
