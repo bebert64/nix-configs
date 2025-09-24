@@ -78,20 +78,6 @@
       <jdbc-url>jdbc:postgresql://scd-prod-files-postgres-1690064165597.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="MASTER:PROD:ConsumerBackoffice" uuid="a0f967a8-e359-40fd-a0d6-97d1bc6ef9a7">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://scd-prod-consumerbackoffice-postgres-1711028372613.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="MASTER:PROD:CDiscount" uuid="15a12ea6-c73f-4b69-836d-b34b29b356c9">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://scd-prod-integrations-cdiscount-apiconnector-pg-1716501170515.cxba23br5clr.eu-west-1.rds.amazonaws.com:5432/main</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="MASTER:Auths" uuid="e0fe97ff-ce0a-4df5-9545-74560703709f">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
