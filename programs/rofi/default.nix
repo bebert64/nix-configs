@@ -1,8 +1,16 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkOption types;
   inherit (types) str;
   inherit (config.lib.formats.rasi) mkLiteral;
+  open-rofi-in-dedicated-workspace = "${pkgs.writeScriptBin "open-rofi-in-dedicated-workspace" ''
+    i3-msg "workspace 9:󱓞; exec rofi -show drun -show-icons"
+  ''}/bin/open-rofi-in-dedicated-workspace";
 in
 {
   options.rofi = {
@@ -148,6 +156,6 @@ in
         };
     };
 
-    xsession.windowManager.i3.config.menu = "\"rofi -show drun -show-icons\"";
+    xsession.windowManager.i3.config.menu = "\"${open-rofi-in-dedicated-workspace}\"";
   };
 }

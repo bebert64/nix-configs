@@ -1,5 +1,11 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
+  modifier = config.xsession.windowManager.i3.config.modifier;
   insomnia =
     {
       lib,
@@ -147,4 +153,12 @@ let
 in
 {
   home.packages = [ (pkgs.callPackage insomnia { }) ];
+  xsession.windowManager.i3.config = {
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+i" = "workspace $ws8; exec insomnia";
+    };
+    assigns = {
+      "$ws8" = [ { class = "insomnia|Insomnia"; } ];
+    };
+  };
 }

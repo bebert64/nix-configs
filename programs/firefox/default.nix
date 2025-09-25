@@ -18,8 +18,15 @@ in
     };
   };
 
-  xsession.windowManager.i3.config.keybindings = lib.mkOptionDefault {
-    "${modifier}+Control+f" = "workspace $ws2; exec firefox";
-    "${modifier}+Control+s" = "workspace $ws9; exec firefox -P shortcuts https://google.com";
+  xsession.windowManager.i3.config = {
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+f" = "workspace $ws2; exec firefox";
+      "${modifier}+Control+s" =
+        "workspace $ws12; exec firefox -P shortcuts --class shortcuts https://google.com";
+    };
+    assigns = {
+      "$ws2" = [ { class = "firefox"; } ];
+      "$ws12" = [ { class = "shortcuts"; } ];
+    };
   };
 }
