@@ -153,10 +153,10 @@ let
 in
 {
   home.packages = [ (pkgs.callPackage insomnia { }) ];
-  keybindings = lib.mkOptionDefault {
-    "${modifier}+Control+i" = "workspace $ws18; exec insomnia";
-  };
   xsession.windowManager.i3.config = {
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+i" = "workspace $ws18; exec insomnia";
+    };
     assigns = {
       "$ws8" = [ { class = "insomnia|Insomnia"; } ];
     };
