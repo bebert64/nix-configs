@@ -147,4 +147,9 @@ let
 in
 {
   home.packages = [ (pkgs.callPackage insomnia { }) ];
+  xsession.windowManager.i3.config = {
+    assigns = {
+      "$ws8" = [ { class = "insomnia|Insomnia"; } ];
+    };
+  };
 }

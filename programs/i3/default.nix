@@ -33,6 +33,16 @@ in
             "${modifier}+8" = "workspace number $ws8";
             "${modifier}+9" = "workspace number $ws9";
             "${modifier}+0" = "workspace number $ws10";
+            "${modifier}+Ctrl+1" = "workspace number $ws11";
+            "${modifier}+Ctrl+2" = "workspace number $ws12";
+            "${modifier}+Ctrl+3" = "workspace number $ws13";
+            "${modifier}+Ctrl+4" = "workspace number $ws14";
+            "${modifier}+Ctrl+5" = "workspace number $ws15";
+            "${modifier}+Ctrl+6" = "workspace number $ws16";
+            "${modifier}+Ctrl+7" = "workspace number $ws17";
+            "${modifier}+Ctrl+8" = "workspace number $ws18";
+            "${modifier}+Ctrl+9" = "workspace number $ws19";
+            "${modifier}+Ctrl+0" = "workspace number $ws20";
 
             # Workspace move container to
             "${modifier}+Shift+1" = "move container to workspace number $ws1";
@@ -45,13 +55,23 @@ in
             "${modifier}+Shift+8" = "move container to workspace number $ws8";
             "${modifier}+Shift+9" = "move container to workspace number $ws9";
             "${modifier}+Shift+0" = "move container to workspace number $ws10";
+            "${modifier}+Shift+Ctrl+1" = "move container to workspace number $ws11";
+            "${modifier}+Shift+Ctrl+2" = "move container to workspace number $ws12";
+            "${modifier}+Shift+Ctrl+3" = "move container to workspace number $ws13";
+            "${modifier}+Shift+Ctrl+4" = "move container to workspace number $ws14";
+            "${modifier}+Shift+Ctrl+5" = "move container to workspace number $ws15";
+            "${modifier}+Shift+Ctrl+6" = "move container to workspace number $ws16";
+            "${modifier}+Shift+Ctrl+7" = "move container to workspace number $ws17";
+            "${modifier}+Shift+Ctrl+8" = "move container to workspace number $ws18";
+            "${modifier}+Shift+Ctrl+9" = "move container to workspace number $ws19";
+            "${modifier}+Shift+Ctrl+0" = "move container to workspace number $ws20";
 
             # Move workspace to different output
             "${modifier}+Mod1+Left" = "move workspace to output left";
             "${modifier}+Mod1+Right" = "move workspace to output right";
 
             # Used to display empty workspaces, allowing to see the wallpapers
-            "${modifier}+i" = "workspace $ws11; workspace $ws12";
+            "${modifier}+i" = "workspace $ws19; workspace $ws20";
 
             # Modes
             "${modifier}+Shift+e" = "mode \"${exitMode}\"";
@@ -108,33 +128,24 @@ in
           set $ws5 "5:"
           set $ws6 "6:"
           set $ws7 "7:"
-          set $ws8 "8:󰷝"
-          set $ws9 "9:"
+          set $ws8 "8:󰖔"
+          set $ws9 "9:󱓞"
           set $ws10 "10:"
           workspace $ws10 gaps inner 80
-          set $ws11 "11:󰸉"
-          workspace $ws11 output ${cfg.screens.primary}
-          set $ws12 "12:󰸉"
-          workspace $ws12 output ${cfg.screens.secondary}
+          set $ws11 "11:󰷝"
+          set $ws11 "12:"
+          set $ws13 "13"
+          set $ws14 "14"
+          set $ws15 "15"
+          set $ws16 "16"
+          set $ws17 "17"
+          set $ws18 "18"
+          set $ws19 "19:󰸉"
+          workspace $ws19 output ${cfg.screens.primary}
+          set $ws20 "20:󰸉"
+          workspace $ws20 output ${cfg.screens.secondary}
         '';
       };
     };
   };
 }
-# Icon suggestion for ws9
-# 
-# 󰍜
-# 󰀻
-# 
-# 
-
-# 󰚡
-# 󰈸
-# 󰀲
-# 󰝃
-# 󰍉
-# 󰙨
-# 
-# 󰜺
-# 󰴓
-# 󱓞
