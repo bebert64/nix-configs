@@ -33,7 +33,7 @@ patches: <patches|join( → )|pre_applied(%{$fg[yellow]%})|post_applied(%{$reset
 }
 
 function box_name() {
-  [ -f ~/.box-name ] && cat ~/.box-name || cat /etc/hostname
+  [ -f ~/.box-name ] && cat ~/.box-name || bash -c 'echo $HOSTNAME' 
 }
 
 function prompt_char() {
