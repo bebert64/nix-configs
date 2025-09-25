@@ -133,7 +133,7 @@ in
           set $ws10 "10:"
           workspace $ws10 gaps inner 80
           set $ws11 "11:󰷝"
-          set $ws11 "12:"
+          set $ws12 "12:"
           set $ws13 "13"
           set $ws14 "14"
           set $ws15 "15"
