@@ -20,12 +20,12 @@ in
 
   xsession.windowManager.i3.config = {
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+f" = "workspace $ws2; exec firefox --class my_firefox";
+      "${modifier}+Control+f" = "workspace $ws2; exec firefox";
       "${modifier}+Control+s" =
         "workspace $ws12; exec firefox -P shortcuts --class shortcuts https://google.com";
     };
     assigns = {
-      "$ws2" = [ { class = "my_firefox"; } ];
+      "$ws2" = [ { class = "firefox"; } ];
       "$ws12" = [ { class = "shortcuts"; } ];
     };
   };
