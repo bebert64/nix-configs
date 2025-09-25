@@ -25,13 +25,13 @@ in
       "$ws19" = [
         {
           class = "mpc-qt";
-          instance = "Lock1";
+          instance = "lock1";
         }
       ];
       "$ws20" = [
         {
           class = "mpc-qt";
-          instance = "Lock2";
+          instance = "lock2";
         }
       ];
     };
