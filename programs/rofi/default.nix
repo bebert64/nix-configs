@@ -9,7 +9,7 @@ let
   inherit (types) str;
   inherit (config.lib.formats.rasi) mkLiteral;
   open-rofi-in-dedicated-workspace = "${pkgs.writeScriptBin "open-rofi-in-dedicated-workspace" ''
-    bi3-msg "workspace 9:; exec rofi -show drun -show-icons"
+    i3-msg "workspace 9:󱓞; exec rofi -show drun -show-icons"
   ''}/bin/open-rofi-in-dedicated-workspace";
 in
 {
