@@ -21,7 +21,7 @@ in
     ../programs/ferdium
     ../programs/firefox
     ../programs/flameshot
-    ./programs/generative-ai
+    ../programs/generative-ai
     ../programs/i3
     ../programs/insomnia
     ../programs/lock
