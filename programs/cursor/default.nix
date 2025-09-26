@@ -47,25 +47,14 @@ let
   ''}/bin/open-salon";
 in
 {
-  home =
-    let
-      cursor = pkgs.code-cursor.fhsWithPackages (
-        ps: with ps; [
-          rustup
-          zlib
-          openssl.dev
-          pkg-config
-        ]
-      );
-    in
-    {
-      packages = [
-        cursor
-      ];
-      file = {
-        ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
-      };
+  home = {
+    packages = with pkgs; [
+      code-cursor
+    ];
+    file = {
+      ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
+  };
 
   by-db-pkgs.list-crate-dirs.enable = true;
 

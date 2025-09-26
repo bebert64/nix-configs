@@ -37,11 +37,17 @@ in
         scriptName: cmd:
         writeScriptBin scriptName ''
           # Prepare screen
-          pkill polybar || echo "polybar already killed"
-          wk1=$(i3-msg -t get_workspaces | ${jq}/bin/jq '.[] | select(.visible==true).name' | head -1)
-          wk2=$(i3-msg -t get_workspaces | ${jq}/bin/jq '.[] | select(.visible==true).name' | tail -1)
-          i3-msg workspace 11:󰸉
-          i3-msg workspace 12:󰸉
+          wk1=$(i3-msg -t get_workspaces | jq -r '.[] | select(.visible==true).name' | sed -n '1p')
+          wk2=$(i3-msg -t get_workspaces | jq -r '.[] | select(.visible==true).name' | sed -n '2p')
+
+          sed -i -E 's/^([[:space:]]*"fullscreenLaunch":[[:space:]]*)false(,?)/\1true\2/' /home/user/nix-config/programs/mpc-qt/settings.json
+          sed -i -E 's/^([[:space:]]*"afterPlaybackDefault":[[:space:]]*)2(,?)/\11\2/' /home/user/nix-config/programs/mpc-qt/settings.json
+          { read -r wallpaper1; read -r wallpaper2; } < <(wallpapers-manager lock-wallpapers fifty-fifty)
+
+          i3-msg "workspace \"19:󰸉\";exec mpc-qt $wallpaper1 --name lock1"
+          if [[ $wk2 ]]; then
+            i3-msg "workspace \"20:󰸉\";exec mpc-qt $wallpaper2 --name lock2";
+          fi;
 
           ${cmd}
 
@@ -50,8 +56,16 @@ in
 
           # Restore original config
           i3-msg workspace "$wk1"
-          i3-msg workspace "$wk2"
-          systemctl --user restart polybar
+          if [[ $wk2 ]]; then
+            i3-msg workspace "$wk2";
+          fi;
+
+          ps aux | grep mpc-qt | grep wallpapers | grep -v psg | grep -v grep  | awk '{print $2}' | xargs -r kill
+
+          sleep 0.5
+          sed -i -E 's/^([[:space:]]*"fullscreenLaunch":[[:space:]]*)true(,?)/\1false\2/' /home/user/nix-config/programs/mpc-qt/settings.json
+          sed -i -E 's/^([[:space:]]*"afterPlaybackDefault":[[:space:]]*)1(,?)/\12\2/' /home/user/nix-config/programs/mpc-qt/settings.json
+
           pkill xidlehook || echo "xidlehook already killed"
           xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock' ' ' &
         '';
