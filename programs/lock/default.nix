@@ -52,7 +52,7 @@ in
           ${cmd}
 
           # Lock
-          alock -bg none -cursor blank
+          alock -bg none -cursor blank -i none
 
           # Restore original config
           i3-msg workspace "$wk1"
