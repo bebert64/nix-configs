@@ -37,8 +37,8 @@ in
         scriptName: cmd:
         writeScriptBin scriptName ''
           # Prepare screen
-          wk1=$(i3-msg -t get_workspaces | jq -r '.[] | select(.visible==true).name' | sed -n '1p')
-          wk2=$(i3-msg -t get_workspaces | jq -r '.[] | select(.visible==true).name' | sed -n '2p')
+          wk1=$(i3-msg -t get_workspaces | ${jq}/bin/jq -r '.[] | select(.visible==true).name' | sed -n '1p')
+          wk2=$(i3-msg -t get_workspaces | ${jq}/bin/jq -r '.[] | select(.visible==true).name' | sed -n '2p')
 
           sed -i -E 's/^([[:space:]]*"fullscreenLaunch":[[:space:]]*)false(,?)/\1true\2/' /home/user/nix-config/programs/mpc-qt/settings.json
           sed -i -E 's/^([[:space:]]*"afterPlaybackDefault":[[:space:]]*)2(,?)/\11\2/' /home/user/nix-config/programs/mpc-qt/settings.json
