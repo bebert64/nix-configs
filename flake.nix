@@ -24,6 +24,10 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixai = {
+      url = "github:olafkfreund/nix-ai-help";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -34,6 +38,7 @@
       stockly-computers,
       sops-nix,
       vscode-server,
+      nixai,
       ...
     }:
     {
@@ -47,6 +52,7 @@
               home-manager
               by-db
               sops-nix
+              nixai
               ;
           };
         };
@@ -54,7 +60,12 @@
         bureau = nixpkgs.lib.nixosSystem {
           modules = [ ./computers/bureau/configuration.nix ];
           specialArgs = {
-            inherit home-manager by-db sops-nix;
+            inherit
+              home-manager
+              by-db
+              sops-nix
+              nixai
+              ;
           };
         };
 
@@ -66,6 +77,7 @@
               by-db
               sops-nix
               vscode-server
+              nixai
               ;
           };
         };
