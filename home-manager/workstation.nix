@@ -124,7 +124,7 @@ in
           services = {
             change = {
               enable = true;
-              commandArgs = "--mode fifty-fifty";
+              commandArgs = "--distribution fifty-fifty";
             };
           };
           firefox.ffsync = cfg.ffsync.bebert64;
