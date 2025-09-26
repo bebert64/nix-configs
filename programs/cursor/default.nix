@@ -12,7 +12,6 @@ let
   open-local = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
       list-crate-dirs ${homeDir}/code Cargo.toml 2>/dev/null | \
-      sort -u | \
       ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
@@ -24,7 +23,6 @@ let
   open-cerberus = "${pkgs.writeScriptBin "open-cerberus" ''
     selection=$(
       ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
-      sort -u | \
       ${rofi} -theme-str 'window {width: 30%;}'
     )
     if [[ $selection = "Main" ]]; then
@@ -36,7 +34,6 @@ let
   open-salon = "${pkgs.writeScriptBin "open-salon" ''
     selection=$(
       ssh salon "list-crate-dirs /home/romain/code Cargo.toml" 2>/dev/null | \
-      sort -u | \
       ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
