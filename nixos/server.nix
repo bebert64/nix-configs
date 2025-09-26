@@ -1,14 +1,17 @@
 {
   config,
-  vscode-server,
   nixpkgs,
   ...
 }:
 {
   imports = [
     ./common.nix
-    ../programs/server-global.nix
-    vscode-server.nixosModules.default
+    ../programs/dnsmasq
+    ../programs/jellyfin
+    ../programs/nginx
+    ../programs/postgresql
+    ../programs/qbittorrent
+    ../programs/stash
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
 
@@ -21,8 +24,6 @@
       users.users.${cfg.user.name}.linger = true;
 
       home-manager.users.${cfg.user.name}.imports = [ ../home-manager/server.nix ];
-
-      services.vscode-server.enable = true;
 
       networking.firewall = {
         enable = true;

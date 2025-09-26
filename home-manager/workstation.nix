@@ -12,8 +12,30 @@ in
 {
   imports = [
     ./common.nix
-    ../programs/workstation.nix
-    ../fonts
+    ../programs/autorandr
+    ../programs/avidemux
+    ../programs/calculator
+    ../programs/conky
+    ../programs/cursor
+    ../programs/datagrip
+    ../programs/ferdium
+    ../programs/firefox
+    ../programs/flameshot
+    ./programs/generative-ai
+    ../programs/i3
+    ../programs/insomnia
+    ../programs/lock
+    ../programs/mpc-qt
+    ../programs/music
+    ../programs/picom
+    ../programs/polybar
+    ../programs/rofi
+    ../programs/slack
+    ../programs/sqlfluff
+    ../programs/terminal
+    ../programs/theme
+    ../programs/udiskie
+    ../programs/vdhcoapp
     by-db.module.x86_64-linux
   ];
 
@@ -102,7 +124,7 @@ in
           services = {
             change = {
               enable = true;
-              commandArgs = "--mode fifty-fifty";
+              commandArgs = "--distribution fifty-fifty";
             };
           };
           firefox.ffsync = cfg.ffsync.bebert64;

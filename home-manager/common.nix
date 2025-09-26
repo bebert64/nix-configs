@@ -45,6 +45,17 @@ in
     };
   };
 
+  imports = [
+    ../programs/btop
+    ../programs/direnv
+    ../programs/git
+    ../programs/neovim
+    ../programs/ranger
+    ../programs/secrets
+    ../programs/ssh
+    ../programs/zsh
+  ];
+
   config =
     let
       cfg = config.by-db;
