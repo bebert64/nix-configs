@@ -50,6 +50,7 @@
       programs = {
         dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;
+        nix-ld.enable = true; # Necessary for rust-analyzer to function in cursor
       };
 
       services = {

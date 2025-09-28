@@ -48,6 +48,7 @@ in
           if [[ $wk2 ]]; then
             i3-msg "workspace \"20:󰸉\";exec mpc-qt $wallpaper2 --name lock2";
           fi;
+          sleep 1
 
           ${cmd}
 
