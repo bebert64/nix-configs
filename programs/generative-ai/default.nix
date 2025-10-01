@@ -11,6 +11,10 @@
       ollama = {
         enable = true;
         acceleration = "cuda";
+        loadModels = [
+          "llama3"
+          "codellama"
+        ];
       };
     };
     home.packages = [ nixai.packages.${pkgs.system}.default ];
