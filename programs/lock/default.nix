@@ -50,7 +50,6 @@ in
           if [[ $wk2 ]]; then
             i3-msg "workspace \"20:󰸉\";exec mpc-qt $wallpaper2 --name lock2";
           fi;
-          sleep 1
 
           ${cmd}
 
@@ -83,7 +82,7 @@ in
           ${killXidlehook}
           xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
         '')
-        (lockScript "lock-sleep" "systemctl suspend")
+        (lockScript "lock-sleep" "sleep 2 && systemctl suspend")
         (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
           xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
