@@ -81,7 +81,7 @@ in
         umnas = "unmount-nas";
       };
       home.activation = {
-        symlinkMountDirNas = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        createComfyuiDirs = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           mkdir -p ${comfyuiHome}/models
           mkdir -p ${comfyuiHome}/outputs
         '';
