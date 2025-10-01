@@ -61,7 +61,12 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware = {
     graphics.enable = true;
-    nvidia.open = true;
+    nvidia = {
+      open = false;
+      modesetting.enable = true;
+      powerManagement.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
+    };
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
   services.xserver.videoDrivers = [ "nvidia" ];

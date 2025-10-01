@@ -24,6 +24,7 @@ in
     nix-max-jobs = 2;
     nix-high-ram = "22G";
     nix-max-ram = "24G";
+    generativeAi.enable = true;
   };
 
   home-manager.users.${user.name} = {
@@ -35,7 +36,6 @@ in
       isHeadphonesOnCommand = "pactl get-default-sink | grep alsa_output.pci-0000_00_1b.0.analog-stereo";
       setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
       setSpeakerCommand = "set-default-sink alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2";
-      generativeAi.enable = true;
     };
 
     home.activation = {

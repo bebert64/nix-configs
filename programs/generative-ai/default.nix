@@ -1,6 +1,5 @@
 {
   config,
-  nixai,
   pkgs,
   lib,
   ...
@@ -17,6 +16,5 @@
         ];
       };
     };
-    home.packages = [ nixai.packages.${pkgs.system}.default ];
   };
 }

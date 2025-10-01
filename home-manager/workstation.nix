@@ -1,8 +1,8 @@
 {
-  pkgs,
-  lib,
-  config,
   by-db,
+  config,
+  lib,
+  pkgs,
   ...
 }:
 let
@@ -21,7 +21,6 @@ in
     ../programs/ferdium
     ../programs/firefox
     ../programs/flameshot
-    ../programs/generative-ai
     ../programs/i3
     ../programs/insomnia
     ../programs/lock
@@ -41,7 +40,6 @@ in
 
   options.by-db = {
     bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
-    generativeAi.enable = mkEnableOption "Whether to install generative AI tools";
     screens = {
       primary = mkOption {
         type = str;
