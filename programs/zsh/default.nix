@@ -28,14 +28,26 @@
         wke2 = "i3-msg workspace 12:󰸉";
         cargo2nix = "cdr && cargo2nix -ol && cd -";
 
-        # Nix aliases
+        # Systemd
+        jc = "journalctl -xeu";
+        jcb = "journalctl -xeu backup --user";
+        jcgt = "journalctl -xeu guitar-tutorials --user";
+        jcj = "journalctl -xeu jellyfin --user";
+        jcs = "journalctl -xeu shortcuts --user";
+        jcwd = "journalctl -xeu wallpapers-download --user";
+        ss = "systemctl status";
+        ssj = "systemctl status jellyfin --user";
+        ssq = "systemctl status qbittorrent --user";
+        sss = "systemctl status stash --user";
+
+        # Nix
         nix-shell = "nix-shell --run zsh";
         update = "run-in-nix-repo nix-switch";
         update-dirty = "run-in-nix-repo-dirty nix-switch";
         update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
         update-raspi = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'";
 
-        # Cargo aliases
+        # Cargo
         tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
         ccw = "run-in-code-repo 'cargo check'";
         cccw = "run-in-code-repo 'cargo clean && cargo check'";

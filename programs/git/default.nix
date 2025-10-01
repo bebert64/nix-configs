@@ -31,6 +31,7 @@
         arcap = "!git add $(git rev-parse --show-toplevel) && git commit --amend && git push -u --force-with-lease";
         arcp = "!git add $(git rev-parse --show-toplevel) && git commit && git push -u";
         b = "branch";
+        ba = "branch -a";
         c = "commit";
         ca = "commit --amend";
         cap = "!git commit --amend && git push -u --force-with-lease";
