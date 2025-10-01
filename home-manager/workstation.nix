@@ -36,7 +36,6 @@ in
     ../programs/udiskie
     ../programs/vdhcoapp
     by-db.module.x86_64-linux
-    ../fonts
   ];
 
   options.by-db = {
