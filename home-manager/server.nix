@@ -29,7 +29,7 @@
             (
               printf 'ffffffffffff'
               for i in $(seq 1 16); do
-                echo -n \$\{TARGETMAC//:/\}
+                echo -n ''${TARGETMAC//:/}
               done
             ) | xxd -r -p | socat - UDP4-DATAGRAM:192.168.1.255:9,broadcast
           '')
