@@ -41,6 +41,14 @@
         };
       };
 
+      "bar/HDMI-0" = {
+        "inherit" = "HDMI";
+        monitor = "HDMI-0";
+        modules = {
+          right = "right7-background filesystem right6 pulseaudio headphones_or_speaker right5 memory right4 cpu right3 wireless wired right2 date right1 tray";
+        };
+      };
+
       "bar/HDMI-1" = {
         "inherit" = "HDMI";
         monitor = "HDMI-1";
