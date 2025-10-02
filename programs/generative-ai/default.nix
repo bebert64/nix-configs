@@ -38,7 +38,7 @@
         comfyui = {
           uid = 10001;
           isSystemUser = true;
-          group = 10001;
+          group = "10001";
           extraGroups = [ "comfyshare" ];
         };
       };
