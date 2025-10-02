@@ -17,19 +17,8 @@
         ];
       };
     };
-    virtualisation.docker = {
-      enable = true;
-      daemon.settings = {
-        # runtimes = {
-        #   nvidia = {
-        #     path = "${pkgs.nvidia-container-toolkit}/bin/nvidia-container-runtime";
-        #     runtimeArgs = [ ];
-        #   };
-        # };
-        # default-runtime = "nvidia";
-      };
 
-    };
+    virtualisation.docker.enable = true;
 
     environment = {
       systemPackages = with pkgs; [
