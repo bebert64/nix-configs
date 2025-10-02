@@ -44,6 +44,7 @@ in
 
           sed -i -E 's/^([[:space:]]*"fullscreenLaunch":[[:space:]]*)false(,?)/\1true\2/' ${nixConfigsRepo}/programs/mpc-qt/settings.json
           sed -i -E 's/^([[:space:]]*"afterPlaybackDefault":[[:space:]]*)2(,?)/\11\2/' ${nixConfigsRepo}/programs/mpc-qt/settings.json
+          sed -i -E 's/^([[:space:]]*"playbackVolume":[[:space:]]*)([0-9]+)(,?)/\10\3/' ${nixConfigsRepo}/programs/mpc-qt/settings.json
           { read -r wallpaper1; read -r wallpaper2; } < <(wallpapers-manager lock-wallpapers fifty-fifty)
 
           i3-msg "workspace \"19:󰸉\";exec mpc-qt $wallpaper1 --name lock1"
@@ -67,6 +68,7 @@ in
           sleep 0.5
           sed -i -E 's/^([[:space:]]*"fullscreenLaunch":[[:space:]]*)true(,?)/\1false\2/' ${nixConfigsRepo}/programs/mpc-qt/settings.json
           sed -i -E 's/^([[:space:]]*"afterPlaybackDefault":[[:space:]]*)1(,?)/\12\2/' ${nixConfigsRepo}/programs/mpc-qt/settings.json
+          sed -i -E 's/^([[:space:]]*"playbackVolume":[[:space:]]*)0(,?)/\1100\2/' ${nixConfigsRepo}/programs/mpc-qt/settings.json
 
           pkill xidlehook || echo "xidlehook already killed"
           xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock' ' ' &
@@ -82,7 +84,7 @@ in
           ${killXidlehook}
           xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'systemctl suspend' ' ' &
         '')
-        (lockScript "lock-sleep" "sleep 2 && systemctl suspend")
+        (lockScript "lock-sleep" "sleep 1 && systemctl suspend")
         (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
           xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
