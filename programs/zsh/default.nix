@@ -142,10 +142,10 @@
           ssh $1 -t "xset -display :0.0 dpms force off; zsh -i"
         }
         wb() {
-          wssh bureau D4:3D:7E:D8:C3:95
+          wol-ssh bureau D4:3D:7E:D8:C3:95
         }
         ws() {
-          wssh salon 74:56:3c:36:71:db
+          wol-ssh salon 74:56:3c:36:71:db
         }
 
         path+="$HOME/.cargo/bin"
