@@ -133,18 +133,18 @@
           rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
           rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
         }
-        wssh() {
-          ssh raspi "wol-db $2"
+        wol-ssh() {
+          ssh raspi "wol-by-db $2"
           while ssh raspi "! ping -c1 192.168.1.4 &> /dev/null"; do
             echo "$1 is not responding"
             sleep 1
           done
           ssh $1 -t "xset -display :0.0 dpms force off; zsh -i"
         }
-        wsshb() {
+        wb() {
           wssh bureau D4:3D:7E:D8:C3:95
         }
-        wsshs() {
+        ws() {
           wssh salon 74:56:3c:36:71:db
         }
 

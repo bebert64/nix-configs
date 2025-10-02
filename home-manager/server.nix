@@ -17,7 +17,7 @@
     {
       home = {
         packages = [
-          (pkgs.writeScriptBin "wol-db" ''
+          (pkgs.writeScriptBin "wol-by-db" ''
             #!/usr/bin/env bash
             TARGETMAC="$1"
 
