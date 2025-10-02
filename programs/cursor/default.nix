@@ -64,6 +64,8 @@ in
       "${modifier}+Shift+v" = "workspace $ws3; exec ${open-cerberus}";
       "${modifier}+Mod1+v" = "workspace $ws3; exec ${open-salon}";
       "${modifier}+Control+n" = "workspace $ws3; exec cursor ${nixConfigsRepo}";
+      "${modifier}+Mod1+n" =
+        "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+salon/home/romain/nix-configs";
     };
   };
 }
