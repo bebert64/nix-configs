@@ -67,6 +67,7 @@
       powerManagement.enable = true;
       package = config.boot.kernelPackages.nvidiaPackages.production;
     };
+    nvidia-container-toolkit.enable = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
