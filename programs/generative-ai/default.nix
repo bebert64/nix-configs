@@ -9,6 +9,7 @@ let
   homeDir = cfgUser.home.homeDirectory;
   comfyuiDir = "${homeDir}/ai/comfyui";
   comfyuiPort = 8188;
+  comfyuiPortStr = toString comfyuiPort;
 in
 {
   config = lib.mkIf config.by-db.generativeAi.enable {
@@ -62,7 +63,7 @@ in
           ${pkgs.docker}/bin/docker run \
             --rm \
             --device nvidia.com/gpu=all \
-            -p ${comfyuiPort}:${comfyuiPort} \
+            -p ${comfyuiPortStr}:${comfyuiPortStr} \
             -v ${comfyuiDir}:/opt/comfyui \
             --group-add 1000 \
             --name comfyui \
