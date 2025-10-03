@@ -4,6 +4,11 @@
   pkgs,
   ...
 }:
+let
+  cfgUser = config.home-manager.users.${config.by-db.user.name};
+  homeDir = cfgUser.home.homeDirectory;
+  comfyuiDir = "${homeDir}/ai/comfyui";
+in
 {
   config = lib.mkIf config.by-db.generativeAi.enable {
     services = {
@@ -57,12 +62,7 @@
             --rm \
             --device nvidia.com/gpu=all \
             -p 8188:8188 \
-            -v /home/romain/SD/shared/user:/opt/comfyui/user \
-            -v /home/romain/SD/shared/models:/opt/comfyui/models \
-            -v /home/romain/SD/shared/output:/opt/comfyui/output \
-            -v /home/romain/SD/shared/input:/opt/comfyui/input \
-            -v /home/romain/SD/shared/temp:/opt/comfyui/temp \
-            -v /home/romain/SD/shared/custom_nodes:/opt/comfyui/custom_nodes \
+            -v ${comfyuiDir}:/opt/comfyui \
             --group-add 1000 \
             --name comfyui \
             jamesbrink/comfyui
@@ -77,18 +77,12 @@
 
     system.activationScripts.comfyShareDirs = {
       text = ''
-        shared="/home/romain/SD/shared"
-        subdirs="user models output input temp custom_nodes"
+        shared="${comfyuiDir}"
 
         mkdir -p "$shared"
-        chown 10001:comfyshare "$shared"
-        chmod 2770 "$shared"
-
-        for d in $subdirs; do
-          mkdir -p "$shared/$d"
-          chown 10001:comfyshare "$shared/$d"
-          chmod 2770 "$shared/$d"
-        done
+        chown -R 10001:comfyshare "$shared"
+        chmod -R 2770 "$shared"
+        chmod -R g+rwX "$shared"
       '';
     };
 
