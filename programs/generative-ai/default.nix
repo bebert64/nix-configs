@@ -8,6 +8,8 @@ let
   cfgUser = config.home-manager.users.${config.by-db.user.name};
   homeDir = cfgUser.home.homeDirectory;
   comfyuiDir = "${homeDir}/ai/comfyui";
+  comfyuiPort = 8188;
+  comfyuiPortStr = toString comfyuiPort;
 in
 {
   config = lib.mkIf config.by-db.generativeAi.enable {
@@ -61,7 +63,7 @@ in
           ${pkgs.docker}/bin/docker run \
             --rm \
             --device nvidia.com/gpu=all \
-            -p 8188:8188 \
+            -p ${comfyuiPortStr}:${comfyuiPortStr} \
             -v ${comfyuiDir}:/opt/comfyui \
             --group-add 1000 \
             --name comfyui \
@@ -85,6 +87,9 @@ in
         chmod -R g+rwX "$shared"
       '';
     };
+
+    # Open ComfyUI HTTP port for LAN access
+    networking.firewall.allowedTCPPorts = [ comfyuiPort ];
 
   };
 
