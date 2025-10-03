@@ -30,26 +30,17 @@
       "comfyui.capucina.net" = {
         enableACME = true;
         forceSSL = true;
+        # Web UI and WebSocket reverse proxy to ComfyUI host
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        '';
         locations = {
           "/" = {
             proxyPass = "http://192.168.1.6:8188";
             proxyWebsockets = true;
-            extraConfig = ''
-              proxy_http_version 1.1;
-
-              proxy_set_header Upgrade $http_upgrade;
-              proxy_set_header Connection "upgrade";
-
-              proxy_set_header Host $host;
-              proxy_set_header Origin $scheme://$host;
-
-              proxy_set_header X-Real-IP $remote_addr;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto $scheme;
-
-              proxy_read_timeout 86400;
-            '';
-
           };
         };
       };
