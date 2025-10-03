@@ -1,6 +1,5 @@
 {
   config,
-  home-manager,
   lib,
   pkgs,
   ...
@@ -40,7 +39,6 @@
           uid = 10001;
           isSystemUser = true;
           group = "comfyshare";
-          # extraGroups = [ "comfyshare" ];
         };
       };
     };
