@@ -66,6 +66,7 @@
             inherit
               by-db
               home-manager
+              nixpkgs
               sops-nix
               vscode-server
               ;
