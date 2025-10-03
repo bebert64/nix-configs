@@ -1,7 +1,8 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs-unstable,
+  pkgs,
   ...
 }:
 let
@@ -45,8 +46,8 @@ let
 in
 {
   home = {
-    packages = with pkgs; [
-      code-cursor
+    packages = [
+      pkgs-unstable.code-cursor
     ];
     file = {
       ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
