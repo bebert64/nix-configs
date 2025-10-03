@@ -29,16 +29,18 @@
         cargo2nix = "cdr && cargo2nix -ol && cd -";
 
         # Systemd
-        jc = "journalctl -xeu";
-        jcb = "journalctl -xeu backup --user";
-        jcgt = "journalctl -xeu guitar-tutorials --user";
-        jcj = "journalctl -xeu jellyfin --user";
-        jcs = "journalctl -xeu shortcuts --user";
-        jcwd = "journalctl -xeu wallpapers-download --user";
+        jc = "journalctl -xefu";
+        jcb = "jc backup --user";
+        jcc = "jc comfyui";
+        jcgt = "jc guitar-tutorials --user";
+        jcj = "jc jellyfin --user";
+        jcs = "jc shortcuts --user";
+        jcwd = "jc wallpapers-download --user";
         ss = "systemctl status";
-        ssj = "systemctl status jellyfin --user";
-        ssq = "systemctl status qbittorrent --user";
-        sss = "systemctl status stash --user";
+        ssc = "ss comfyui";
+        ssj = "ss jellyfin --user";
+        ssq = "ss qbittorrent --user";
+        sss = "ss stash --user";
 
         # Nix
         nix-shell = "nix-shell --run zsh";

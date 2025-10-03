@@ -24,6 +24,7 @@ in
     nix-max-jobs = 2;
     nix-high-ram = "22G";
     nix-max-ram = "24G";
+    generativeAi.enable = true;
   };
 
   home-manager.users.${user.name} = {
@@ -60,6 +61,7 @@ in
         "${homeDirectory}/.cursor-server"
       ];
     };
-
   };
+
+  nixpkgs.config.allowUnfree = true;
 }

@@ -1,10 +1,18 @@
 {
-  pkgs,
   config,
+  lib,
+  pkgs,
   ...
 }:
 {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ../programs/generative-ai
+  ];
+
+  options.by-db = {
+    generativeAi.enable = lib.mkEnableOption "Whether to install generative AI tools";
+  };
 
   config =
     let

@@ -1,8 +1,8 @@
 {
-  pkgs,
-  lib,
-  config,
   by-db,
+  config,
+  lib,
+  pkgs,
   ...
 }:
 let
@@ -40,7 +40,6 @@ in
 
   options.by-db = {
     bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
-    wifi.enable = mkEnableOption "Whether or not to install network manager";
     screens = {
       primary = mkOption {
         type = str;
@@ -60,6 +59,7 @@ in
       type = str;
       description = "Command to redirect the sound output to speaker";
     };
+    wifi.enable = mkEnableOption "Whether or not to install network manager";
   };
 
   config =
@@ -68,7 +68,6 @@ in
     in
     {
       home = {
-
         packages =
           (with pkgs; [
             anydesk

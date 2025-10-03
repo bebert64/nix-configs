@@ -59,5 +59,17 @@
   # networking.interfaces.wlp13s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware = {
+    graphics.enable = true;
+    nvidia = {
+      open = false;
+      modesetting.enable = true;
+      powerManagement.enable = true;
+      package = config.boot.kernelPackages.nvidiaPackages.production;
+    };
+    nvidia-container-toolkit.enable = true;
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+
 }
