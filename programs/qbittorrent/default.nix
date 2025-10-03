@@ -12,8 +12,10 @@
           Description = "QBittorrent server";
         };
         Service = {
-          Type = "exec";
-          ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
+          Type = "simple";
+          Restart = "on-failure";
+          ExecStart = "${pkgs.bash}/bin/bash -c 'while [ ! -d /mnt/NAS ]; do sleep 1; done; ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox'";
+
         };
         Install = {
           WantedBy = [ "default.target" ];

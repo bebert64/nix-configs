@@ -24,7 +24,8 @@ in
           Description = "Jellyfin";
         };
         Service = {
-          Type = "exec";
+          Type = "simple";
+          Restart = "on-failure";
           ExecStart = "${pkgs.jellyfin}/bin/jellyfin";
           Environment = "PATH=/run/current-system/sw/bin/:${cfgUser.home.homeDirectory}/.nix-profile/bin/";
         };
