@@ -33,13 +33,14 @@
         ${config.by-db.user.name} = {
           extraGroups = [
             "docker"
+            "comfyshare"
           ];
         };
         comfyui = {
           uid = 10001;
           isSystemUser = true;
-          group = "10001";
-          extraGroups = [ "comfyshare" ];
+          group = "comfyshare";
+          # extraGroups = [ "comfyshare" ];
         };
       };
     };
