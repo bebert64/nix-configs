@@ -40,6 +40,7 @@ in
   home.packages = with pkgs; [
     strawberry
     pulseaudio
+    spotify
   ];
 
   by-db-pkgs = {
@@ -100,7 +101,7 @@ in
 
   xsession.windowManager.i3.config = {
     assigns = {
-      "$ws10" = [ { class = "Strawberry"; } ];
+      "$ws10" = [ { class = "Strawberry|Spotify"; } ];
     };
 
     keybindings = lib.mkOptionDefault {
@@ -132,6 +133,7 @@ in
           "s" = "exec ${playerctl} stop, mode default";
           "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
           "l" = "workspace $ws10, exec strawberry, mode default";
+          "o" = "workspace $ws10, exec spotify, mode default";
           "r" = "exec choose-radios, mode default";
           "d" = "exec ${open-dir}, mode default";
           # Allows to restart strawberry after it has crashed
