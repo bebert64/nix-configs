@@ -41,7 +41,7 @@ in
       }
 
       sops-edit () {
-        cd $HOME/${cfg.nixConfigsRepo}/programs/configs/secrets
+        cd $HOME/${cfg.nixConfigsRepo}/programs/secrets
         sops secrets.yaml || true
         cd -
       }
