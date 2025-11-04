@@ -16,8 +16,6 @@ let
     ;
   cfg = config.by-db;
   modifier = config.xsession.windowManager.i3.config.modifier;
-  homeDir = config.home.homeDirectory;
-  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
 in
 {
   options.by-db = {
@@ -42,8 +40,8 @@ in
           pkill polybar || echo "polybar already killed"
           wk1=$(i3-msg -t get_workspaces | ${jq}/bin/jq '.[] | select(.visible==true).name' | head -1)
           wk2=$(i3-msg -t get_workspaces | ${jq}/bin/jq '.[] | select(.visible==true).name' | tail -1)
-          i3-msg workspace 11:󰸉
-          i3-msg workspace 12:󰸉
+          i3-msg workspace 19:󰸉
+          i3-msg workspace 20:󰸉
 
           ${cmd}
 
