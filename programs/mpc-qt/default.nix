@@ -20,20 +20,4 @@ in
       '';
     };
   };
-  xsession.windowManager.i3.config = {
-    assigns = {
-      "$ws19" = [
-        {
-          class = "mpc-qt";
-          instance = "lock1";
-        }
-      ];
-      "$ws20" = [
-        {
-          class = "mpc-qt";
-          instance = "lock2";
-        }
-      ];
-    };
-  };
 }
