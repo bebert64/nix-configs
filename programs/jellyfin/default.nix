@@ -8,7 +8,7 @@ let
   userHome = cfgUser.home.homeDirectory;
 
   # Instance names
-  jellyfinInstance1 = "guitar";
+  jellyfinInstance1 = "jellyfin";
   jellyfinInstance2 = "netflix";
 
   # Helper function to create a Jellyfin service
@@ -18,6 +18,7 @@ let
     instanceName: port:
     let
       dataDir = "${userHome}/.local/share/${instanceName}";
+      configDir = "${userHome}/.config/${instanceName}";
     in
     {
       Unit = {
@@ -26,7 +27,7 @@ let
       Service = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${pkgs.jellyfin}/bin/jellyfin";
+        ExecStart = "${pkgs.jellyfin}/bin/jellyfin --configdir ${configDir}";
         Environment = [
           "PATH=/run/current-system/sw/bin/:${userHome}/.nix-profile/bin/"
           "JELLYFIN_DATA_DIR=${dataDir}"
@@ -87,21 +88,17 @@ in
 
     systemd.user = {
       enable = true;
-      # First Jellyfin instance (default)
-      services.jellyfin = mkJellyfinService jellyfinInstance1 8096;
-      # Second Jellyfin instance
-      services.jellyfin2 = mkJellyfinService jellyfinInstance2 8097;
+      services.${jellyfinInstance1} = mkJellyfinService jellyfinInstance1 8096;
+      services.${jellyfinInstance2} = mkJellyfinService jellyfinInstance2 8097;
     };
   };
 
   services = {
-    # First Jellyfin instance virtual host
     nginx.virtualHosts."${jellyfinInstance1}.capucina.net" = mkJellyfinVirtualHost 8096 // {
       locations."/tabs/" = {
         alias = "/mnt/NAS/Guitare/Tabs/";
       };
     };
-    # Second Jellyfin instance virtual host
     nginx.virtualHosts."${jellyfinInstance2}.capucina.net" = mkJellyfinVirtualHost 8097;
 
     meilisearch.enable = true;
