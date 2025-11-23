@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }:
 let
@@ -93,12 +94,14 @@ in
   };
 
   services = {
-    nginx.virtualHosts."${jellyfinInstance1}.capucina.net" = mkJellyfinVirtualHost 8096;
-    # nginx.virtualHosts."${jellyfinInstance1}.capucina.net" = mkJellyfinVirtualHost 8096 // {
-    #   locations."/tabs/" = {
-    #     alias = "/mnt/NAS/Guitare/Tabs/";
-    #   };
-    # };
+    # nginx.virtualHosts."${jellyfinInstance1}.capucina.net" = mkJellyfinVirtualHost 8096;
+    nginx.virtualHosts."${jellyfinInstance1}.capucina.net" =
+      lib.recursiveUpdate (mkJellyfinVirtualHost 8096)
+        {
+          locations."/tabs/" = {
+            alias = "/mnt/NAS/Guitare/Tabs/";
+          };
+        };
     nginx.virtualHosts."${jellyfinInstance2}.capucina.net" = mkJellyfinVirtualHost 8097;
 
     meilisearch.enable = true;
