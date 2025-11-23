@@ -31,7 +31,6 @@ let
         Environment = [
           "PATH=/run/current-system/sw/bin/:${userHome}/.nix-profile/bin/"
           "JELLYFIN_DATA_DIR=${dataDir}"
-          "JELLYFIN_HTTP_PORT=${toString port}"
         ];
       };
       Install = {
