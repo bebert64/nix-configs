@@ -7,28 +7,39 @@ let
   cfgUser = config.home-manager.users.${config.by-db.user.name};
   userHome = cfgUser.home.homeDirectory;
 
+  # Instance names
+  jellyfinInstance1 = "guitar";
+  jellyfinInstance2 = "netflix";
+
   # Helper function to create a Jellyfin service
-  mkJellyfinService = name: port: dataDir: {
-    Unit = {
-      Description = "Jellyfin ${name}";
+  # instanceName: base name for the instance (e.g., "jellyfin", "jellyfin2")
+  # port: HTTP port for the service
+  mkJellyfinService =
+    instanceName: port:
+    let
+      dataDir = "${userHome}/.local/share/${instanceName}";
+    in
+    {
+      Unit = {
+        Description = "Jellyfin ${instanceName}";
+      };
+      Service = {
+        Type = "simple";
+        Restart = "on-failure";
+        ExecStart = "${pkgs.jellyfin}/bin/jellyfin";
+        Environment = [
+          "PATH=/run/current-system/sw/bin/:${userHome}/.nix-profile/bin/"
+          "JELLYFIN_DATA_DIR=${dataDir}"
+          "JELLYFIN_HTTP_PORT=${toString port}"
+        ];
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
     };
-    Service = {
-      Type = "simple";
-      Restart = "on-failure";
-      ExecStart = "${pkgs.jellyfin}/bin/jellyfin";
-      Environment = [
-        "PATH=/run/current-system/sw/bin/:${userHome}/.nix-profile/bin/"
-        "JELLYFIN_DATA_DIR=${dataDir}"
-        "JELLYFIN_HTTP_PORT=${toString port}"
-      ];
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-  };
 
   # Helper function to create nginx virtual host for Jellyfin
-  mkJellyfinVirtualHost = hostname: port: {
+  mkJellyfinVirtualHost = port: {
     enableACME = true;
     forceSSL = true;
     locations."/" = {
@@ -77,21 +88,21 @@ in
     systemd.user = {
       enable = true;
       # First Jellyfin instance (default)
-      services.jellyfin = mkJellyfinService "Instance 1" 8096 "${userHome}/.local/share/jellyfin";
+      services.jellyfin = mkJellyfinService jellyfinInstance1 8096;
       # Second Jellyfin instance
-      services.jellyfin2 = mkJellyfinService "Instance 2" 8097 "${userHome}/.local/share/jellyfin2";
+      services.jellyfin2 = mkJellyfinService jellyfinInstance2 8097;
     };
   };
 
   services = {
     # First Jellyfin instance virtual host
-    nginx.virtualHosts."jellyfin.capucina.net" = mkJellyfinVirtualHost "jellyfin.capucina.net" 8096 // {
+    nginx.virtualHosts."${jellyfinInstance1}.capucina.net" = mkJellyfinVirtualHost 8096 // {
       locations."/tabs/" = {
         alias = "/mnt/NAS/Guitare/Tabs/";
       };
     };
-    # Second Jellyfin instance virtual host (you can change the hostname as needed)
-    nginx.virtualHosts."jellyfin2.capucina.net" = mkJellyfinVirtualHost "jellyfin2.capucina.net" 8097;
+    # Second Jellyfin instance virtual host
+    nginx.virtualHosts."${jellyfinInstance2}.capucina.net" = mkJellyfinVirtualHost 8097;
 
     meilisearch.enable = true;
   };
