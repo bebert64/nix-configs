@@ -28,6 +28,6 @@
 
   home-common = {
     host = "bureau raspi salon stockly-romainc";
-    hostname = "88.160.246.99";
+    hostname = "82.225.65.163";
   };
 }
