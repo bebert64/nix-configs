@@ -40,10 +40,6 @@
         </introspection-scope>
         <substitutions use-mini-cat="false" />
       </schema-mapping>
-      <ssh-properties>
-        <enabled>true</enabled>
-        <ssh-config-id>230b5f61-796a-49ba-a718-34ea326cd8ed</ssh-config-id>
-      </ssh-properties>
     </data-source>
   </component>
 </project>
