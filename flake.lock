@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1761573555,
-        "narHash": "sha256-HBDHE4mINp7JDkvu7VNIL5nRyggcw6L8sraCRuhrKzM=",
+        "lastModified": 1765547190,
+        "narHash": "sha256-kftVHonDedbEqy6ktlmL4NqQSuVp+6IZNQxzz0N2FC4=",
         "ref": "refs/heads/main",
-        "rev": "65d8f13d668f916e15354c55657bba69092d1ff2",
-        "revCount": 144,
+        "rev": "6c126188a6fb3bb9394b51c5da1ba93ee2d57c6e",
+        "revCount": 145,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -218,11 +218,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1764939437,
-        "narHash": "sha256-4TLFHUwXraw9Df5mXC/vCrJgb50CRr3CzUzF0Mn3CII=",
+        "lastModified": 1765363881,
+        "narHash": "sha256-3C3xWn8/2Zzr7sxVBmpc1H1QfxjNfta5IMFe3O9ZEPw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "00d2457e2f608b4be6fe8b470b0a36816324b0ae",
+        "rev": "d2b1213bf5ec5e62d96b003ab4b5cbc42abfc0d0",
         "type": "github"
       },
       "original": {
