@@ -9,8 +9,8 @@ let
   userHome = cfgUser.home.homeDirectory;
 
   # Instance names
-  jellyfinInstance1 = "jellyfin";
-  jellyfinInstance2 = "netflix";
+  jellyfinInstance1 = "guitar";
+  jellyfinInstance2 = "media";
 
   # Helper function to create a Jellyfin service
   # instanceName: base name for the instance (e.g., "jellyfin", "jellyfin2")
