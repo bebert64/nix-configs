@@ -102,9 +102,8 @@ in
       };
 
       by-db-pkgs = {
-        compress-videos = {
+        video-manager = {
           enable = true;
-          jellyfin.accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
           stash.apiKey = "${config.sops.secrets."stash/api-key".path}";
         };
         guitar-tutorials = {
