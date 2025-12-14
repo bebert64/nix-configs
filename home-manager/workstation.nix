@@ -109,7 +109,7 @@ in
         guitar-tutorials = {
           app.enable = true;
           firefox.ffsync = cfg.ffsync.bebert64;
-          jellyfin.accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
+          jellyfin.accessToken = "${config.sops.secrets."jellyfin/guitar/access-token".path}";
         };
         shortcuts = {
           app.enable = true;

@@ -48,7 +48,7 @@
 
           firefox.ffsync = cfg.ffsync.bebert64;
           jellyfin = {
-            accessToken = "${config.sops.secrets."jellyfin/access-token".path}";
+            accessToken = "${config.sops.secrets."jellyfin/guitar/access-token".path}";
           };
         };
 
