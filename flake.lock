@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1765564032,
-        "narHash": "sha256-LF1Xu7iVPnrym8Wp/ywPRoDfhlkZTt8dUB5HZNv7P4g=",
+        "lastModified": 1765706275,
+        "narHash": "sha256-6yY4NU0NdnoRpWHrOnmi4TycWGNyLIOdgTIs3HLkkTo=",
         "ref": "refs/heads/main",
-        "rev": "00c6d77de9c136559dfd09ce124b73b265a199db",
-        "revCount": 147,
+        "rev": "5a7fe2b3a9b939595d4fbdf2b2525bbf915ed107",
+        "revCount": 149,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -267,11 +267,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759372351,
-        "narHash": "sha256-kULiC2oMMuyaO92gPiu+6XBfeXuFcXaauwo0tXAwXdQ=",
+        "lastModified": 1765680428,
+        "narHash": "sha256-fyPmRof9SZeI14ChPk5rVPOm7ISiiGkwGCunkhM+eUg=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "7ef14552303de7128662666f9a71342099ffc725",
+        "rev": "eb3898d8ef143d4bf0f7f2229105fc51c7731b2f",
         "type": "github"
       },
       "original": {
@@ -308,11 +308,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765553226,
-        "narHash": "sha256-Ii16Nq5jL2wURXpV3D3tOM3vPpbKh18roHLkyZCHK4Q=",
+        "lastModified": 1765684837,
+        "narHash": "sha256-fJCnsYcpQxxy/wit9EBOK33c0Z9U4D3Tvo3gf2mvHos=",
         "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "496a6f625f63b780ce849891868f2fad22fd49c6",
+        "rev": "94d8af61d8a603d33d1ed3500a33fcf35ae7d3bc",
         "type": "github"
       },
       "original": {
