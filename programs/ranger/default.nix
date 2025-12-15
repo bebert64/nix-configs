@@ -37,7 +37,7 @@ in
       ranger
       ffmpegthumbnailer # thumbnail for videos preview
       fontforge # thumbnail for fonts preview
-      poppler_utils # thumbnail for pdf preview
+      poppler-utils # thumbnail for pdf preview
       xclip # used to paste into global clipboard
     ];
     activation = {

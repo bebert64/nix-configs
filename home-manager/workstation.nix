@@ -75,10 +75,10 @@ in
             chromium
             evince # pdf reader
             filezilla
-            fusee-launcher
+            # fusee-launcher
             gnome-keyring
             inkscape
-            microcodeIntel # for increased microprocessor performance
+            microcode-intel # for increased microprocessor performance
             mcomix
             pavucontrol # pulse audio volume controle
             vlc
