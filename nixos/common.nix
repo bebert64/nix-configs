@@ -50,8 +50,10 @@
           by-db = {
             username = "${cfg.user.name}";
             git = {
-              userName = "RomainC";
-              userEmail = "bebert64@gmail.com";
+              user = {
+                name = "RomainC";
+                email = "bebert64@gmail.com";
+              };
             };
           };
         };
@@ -110,7 +112,7 @@
       environment = {
         systemPackages = with pkgs; [
           # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-          (vim_configurable.customize {
+          (vim-full.customize {
             name = "vim";
             vimrcConfig.packages.myplugins = with vimPlugins; {
               start = [ vim-nix ];
