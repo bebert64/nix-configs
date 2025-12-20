@@ -22,7 +22,8 @@ in
       "ffsync/shortcuts-db" = { };
       "raspi/postgresql/rw" = { };
       "stash/api-key" = { };
-      "jellyfin/access-token" = { };
+      "jellyfin/guitar/access-token" = { };
+      "jellyfin/media/access-token" = { };
       "radio-france/api-key" = { };
     };
   };

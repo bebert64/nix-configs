@@ -33,12 +33,14 @@
         jcb = "jc backup --user";
         jcc = "jc comfyui";
         jcgt = "jc guitar-tutorials --user";
-        jcj = "jc jellyfin --user";
+        jcg = "jc guitar --user";
+        jcm = "jc media --user";
         jcs = "jc shortcuts --user";
         jcwd = "jc wallpapers-download --user";
         ss = "systemctl status";
         ssc = "ss comfyui";
-        ssj = "ss jellyfin --user";
+        ssg = "ss guitar --user";
+        ssm = "ss media --user";
         ssq = "ss qbittorrent --user";
         sss = "ss stash --user";
 
