@@ -86,7 +86,6 @@
             "nix-command"
             "flakes"
           ];
-          gitFetchAll = true;
         };
         # Keep build inputs when using garbage collection
         extraOptions = ''
