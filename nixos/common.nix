@@ -81,12 +81,10 @@
           dates = "weekly";
           options = "--delete-older-than 30d";
         };
-        settings = {
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-        };
+        settings.experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         # Keep build inputs when using garbage collection
         extraOptions = ''
           keep-outputs = true
