@@ -71,7 +71,7 @@ in
             p7zip
             nixd
             nixfmt-rfc-style
-            nodejs
+            nodePackages.nodejs
             nodePackages.npm
             nodePackages.pnpm
             polkit_gnome
