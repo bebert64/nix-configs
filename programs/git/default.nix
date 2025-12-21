@@ -33,7 +33,7 @@
         };
         push.default = "current";
         gc.autoDetach = "false";
-        aliases = {
+        alias = {
           a = "add";
           ar = "!git add $(git rev-parse --show-toplevel)";
           arc = "!git add $(git rev-parse --show-toplevel) && git commit";
