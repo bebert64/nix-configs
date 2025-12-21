@@ -5,8 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso";
-      # url = "git+ssh://git@github.com/bebert64/perso?ref=branch_name";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
