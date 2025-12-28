@@ -8,6 +8,9 @@
     extra-trusted-public-keys = [
       "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
     ];
+    # Increase download buffer size to avoid warnings when downloading large files
+    # 256 MB (268435456 bytes) should be sufficient for most builds
+    download-buffer-size = 268435456;
   };
 
   inputs = {
