@@ -70,19 +70,6 @@ in
       home = {
         packages =
           (with pkgs; [
-            # Common packages (moved from common.nix to avoid collisions)
-            p7zip
-            nixd
-            nixfmt-rfc-style
-            nodePackages.npm
-            nodePackages.pnpm
-            polkit_gnome
-            rsync
-            screen
-            sshfs
-            unrar
-            yt-dlp
-            # Workstation-specific packages
             anydesk
             arandr # GUI to configure screens positions (need to kill autorandr)
             chromium

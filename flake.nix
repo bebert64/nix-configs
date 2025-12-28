@@ -14,7 +14,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
-    home-manager-25-05.url = "github:nix-community/home-manager/release-25.05";
 
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso?ref=main";
@@ -42,7 +41,6 @@
     {
       by-db,
       home-manager,
-      home-manager-25-05,
       nixos-raspberrypi,
       nixpkgs-unstable,
       nixpkgs,
@@ -92,12 +90,11 @@
             inherit
               nixos-raspberrypi
               by-db
+              home-manager
               nixpkgs
               sops-nix
               vscode-server
               ;
-            # Use home-manager 25.05 for raspi5 to match nixpkgs 25.05 from nixos-raspberrypi
-            home-manager = home-manager-25-05;
           };
         };
 
