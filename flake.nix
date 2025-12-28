@@ -92,11 +92,12 @@
             inherit
               nixos-raspberrypi
               by-db
-              home-manager
               nixpkgs
               sops-nix
               vscode-server
               ;
+            # Use home-manager 25.05 for raspi5 to match nixpkgs 25.05 from nixos-raspberrypi
+            home-manager = home-manager-25-05;
           };
         };
 

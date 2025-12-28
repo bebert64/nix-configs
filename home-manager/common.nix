@@ -65,22 +65,9 @@ in
         username = "${cfg.username}";
         homeDirectory = "/home/${cfg.username}";
 
-        packages = (
-          with pkgs;
-          [
-            p7zip
-            nixd
-            nixfmt-rfc-style
-            nodePackages.npm
-            nodePackages.pnpm
-            polkit_gnome
-            rsync
-            screen
-            sshfs
-            unrar
-            yt-dlp
-          ]
-        );
+        # Packages moved to server.nix and workstation.nix to avoid collisions
+        # when using different nixpkgs versions (e.g., raspi5 uses nixos-raspberrypi's nixpkgs)
+        packages = [ ];
       };
 
       programs = {

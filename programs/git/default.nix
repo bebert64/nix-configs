@@ -20,10 +20,7 @@
   config.programs.git =
     let
       cfg = config.by-db.git;
-    in
-    {
-      enable = true;
-      settings = {
+      gitConfig = {
         user = cfg.user;
         pull.rebase = "true";
         core = {
@@ -79,6 +76,12 @@
           wipp = "!git add $(git rev-parse --show-toplevel) && git commit -m 'wip' && git push -u";
         };
       };
+    in
+    {
+      enable = true;
+      # Use settings for home-manager 25.11+, extraConfig for 25.05
+      settings = lib.mkIf (lib.hasAttr "settings" config.programs.git) gitConfig;
+      extraConfig = lib.mkIf (!(lib.hasAttr "settings" config.programs.git)) gitConfig;
       ignores = [
         "*.swp"
         ".vscode"

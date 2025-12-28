@@ -33,7 +33,22 @@
               done
             ) | xxd -r -p | socat - UDP4-DATAGRAM:192.168.1.255:9,broadcast
           '')
-        ];
+        ]
+        # Add common packages using home-manager's pkgs (or system's pkgs if useGlobalPkgs=true)
+        # For raspi5, these will come from nixos-raspberrypi's nixpkgs to avoid collisions
+        ++ (with pkgs; [
+          p7zip
+          nixd
+          nixfmt-rfc-style
+          nodePackages.npm
+          nodePackages.pnpm
+          polkit_gnome
+          rsync
+          screen
+          sshfs
+          unrar
+          yt-dlp
+        ]);
       };
 
       by-db-pkgs = {
