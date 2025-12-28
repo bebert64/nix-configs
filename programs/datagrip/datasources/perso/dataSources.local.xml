@@ -24,7 +24,7 @@
       </ssh-properties>
     </data-source>
     <data-source name="Raspi" uuid="542e51ce-2052-419f-a85a-0b16bd9d1fd2">
-      <database-info product="PostgreSQL" version="15.14" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="15.14" exact-driver-version="42.7">
+      <database-info product="PostgreSQL" version="15.15" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.7.3" dbms="POSTGRES" exact-version="15.15" exact-driver-version="42.7">
         <identifier-quote-string>&quot;</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
@@ -40,6 +40,10 @@
         </introspection-scope>
         <substitutions use-mini-cat="false" />
       </schema-mapping>
+      <ssh-properties>
+        <enabled>true</enabled>
+        <ssh-config-id>230c6f2a-22eb-42fa-aa88-0a2318c1b39b</ssh-config-id>
+      </ssh-properties>
     </data-source>
   </component>
 </project>
