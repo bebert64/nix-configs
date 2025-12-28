@@ -78,7 +78,7 @@ in
             screen
             sshfs
             unrar
-            yt-dlp
+            # yt-dlp
           ]
         );
       };
