@@ -68,7 +68,7 @@ in
         packages = (
           with pkgs;
           [
-            # p7zip
+            p7zip
             nixd
             nixfmt-rfc-style
             nodePackages.npm
