@@ -36,11 +36,7 @@
       };
 
       # Necessary for remote installation, using --use-remote-sudo
-      nix.settings.trusted-users = [
-        "${cfg.user.name}"
-        "romain"
-        "user"
-      ];
+      nix.settings.trusted-users = [ "${cfg.user.name}" ];
 
       sdImage.compressImage = false;
     };
