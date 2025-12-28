@@ -1,9 +1,19 @@
 {
   description = "NixOS and HomeManager configurations";
 
+  nixConfig = {
+    extra-substituters = [
+      "https://nixos-raspberrypi.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,6 +40,7 @@
     {
       by-db,
       home-manager,
+      nixos-raspberrypi,
       nixpkgs-unstable,
       nixpkgs,
       sops-nix,
@@ -63,6 +74,20 @@
           modules = [ ./computers/raspi/configuration.nix ];
           specialArgs = {
             inherit
+              by-db
+              home-manager
+              nixpkgs
+              sops-nix
+              vscode-server
+              ;
+          };
+        };
+
+        raspi5 = nixos-raspberrypi.lib.nixosSystem {
+          modules = [ ./computers/raspi5/configuration.nix ];
+          specialArgs = {
+            inherit
+              nixos-raspberrypi
               by-db
               home-manager
               nixpkgs
