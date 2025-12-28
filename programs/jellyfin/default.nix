@@ -82,7 +82,7 @@ in
         pkgs.jellyfin
         pkgs.ffmpeg
         pkgs.jellyfin-web
-        pkgs.yt-dlp
+        # pkgs.yt-dlp
       ];
     };
 

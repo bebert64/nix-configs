@@ -7,11 +7,11 @@
   imports = [
     ./common.nix
     ../programs/dnsmasq
-    # ../programs/jellyfin  # Excluded: uses ffmpeg_7-rpi which doesn't handle cross-compilation
+    ../programs/jellyfin # Excluded: uses ffmpeg_7-rpi which doesn't handle cross-compilation
     ../programs/nginx
     ../programs/postgresql
     ../programs/qbittorrent
-    # ../programs/stash  # Excluded: uses ffmpeg_7-rpi which doesn't handle cross-compilation
+    ../programs/stash # Excluded: uses ffmpeg_7-rpi which doesn't handle cross-compilation
     "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
 
