@@ -13,10 +13,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-raspberrypi = {
-      url = "github:nvmd/nixos-raspberrypi/main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    home-manager-25-05.url = "github:nix-community/home-manager/release-25.05";
+
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,6 +42,7 @@
     {
       by-db,
       home-manager,
+      home-manager-25-05,
       nixos-raspberrypi,
       nixpkgs-unstable,
       nixpkgs,
