@@ -18,5 +18,7 @@
     };
   };
 
-  boot.loader.raspberryPi.bootloader = "kernel";
+  # Disable raspberryPi bootloader when building SD image
+  # The sd-image module will handle bootloader installation
+  boot.loader.raspberryPi.enable = lib.mkDefault false;
 }

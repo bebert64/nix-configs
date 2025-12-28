@@ -83,7 +83,7 @@
           };
         };
 
-        raspi5 = nixos-raspberrypi.lib.nixosSystemFull {
+        raspi5 = nixos-raspberrypi.lib.nixosSystem {
           modules = [ ./computers/raspi5/configuration.nix ];
           specialArgs = {
             inherit
