@@ -428,11 +428,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1767029280,
-        "narHash": "sha256-C4iEN0X24lflyhXTLZvwOI+WzUdcBWEvDnrKr81EKg4=",
+        "lastModified": 1767115998,
+        "narHash": "sha256-y4zP4zWADm9V7KtPkSPsxmOa1tqr5j5YIs4HMW19P5g=",
         "ref": "refs/heads/master",
-        "rev": "1f3215e4213c711f459e0e2d685593d68d02ed4b",
-        "revCount": 254,
+        "rev": "6d25c42b783ac557db6870bc229ae8c34cc06381",
+        "revCount": 256,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
