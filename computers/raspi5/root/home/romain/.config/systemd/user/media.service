@@ -1,0 +1,12 @@
+[Unit]
+Description=Jellyfin media
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/bin/jellyfin --configdir /home/romain/.config/media
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="JELLYFIN_DATA_DIR=/home/romain/.local/share/media"
+
+[Install]
+WantedBy=default.target

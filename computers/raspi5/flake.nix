@@ -71,12 +71,12 @@
                 boot.loader.raspberryPi.bootloader = lib.mkForce "kernel";
 
                 fileSystems."/" = lib.mkForce {
-                  device = "/dev/disk/by-uuid/9032e9c7-a576-4e00-9128-805972d2fbe5";
+                  device = "/dev/disk/by-label/nixos";
                   fsType = "ext4";
                 };
 
                 fileSystems."/boot" = lib.mkForce {
-                  device = "/dev/disk/by-uuid/08DE-87C5";
+                  device = "/dev/disk/by-label/boot";
                   fsType = "vfat";
                   options = [
                     "fmask=0077"

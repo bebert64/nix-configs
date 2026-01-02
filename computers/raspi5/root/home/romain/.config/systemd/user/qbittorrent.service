@@ -1,0 +1,11 @@
+[Unit]
+Description=QBittorrent server
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/bin/bash -c 'while [ ! -d /mnt/NAS ]; do sleep 1; done; /usr/bin/qbittorrent-nox'
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+
+[Install]
+WantedBy=default.target

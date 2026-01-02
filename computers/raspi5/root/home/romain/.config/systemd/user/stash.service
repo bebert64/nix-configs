@@ -1,0 +1,11 @@
+[Unit]
+Description=Stash server
+
+[Service]
+Type=simple
+Restart=on-failure
+ExecStart=/usr/bin/stash --config /home/romain/.stash/config.yml --nobrowser
+Environment="PATH=/usr/local/bin:/usr/bin:/bin:/home/romain/.local/bin"
+
+[Install]
+WantedBy=default.target

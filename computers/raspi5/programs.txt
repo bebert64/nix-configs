@@ -1,0 +1,82 @@
+# Programs to install for raspi profile (excluding nginx)
+# This list is based on the raspi profile configuration
+
+# ============================================
+# System Packages (install via package manager)
+# ============================================
+vim-full
+git
+ntfs3g
+wget
+zsh
+openssh-server
+postgresql
+dnsmasq
+earlyoom
+polkit
+
+# ============================================
+# Home User Packages (install in user home)
+# ============================================
+# Development tools
+p7zip
+nixd
+nixfmt-rfc-style
+nodejs (npm)
+pnpm
+rsync
+screen
+sshfs
+unrar
+
+# Media server packages
+jellyfin
+ffmpeg
+jellyfin-web
+stash
+qbittorrent-nox
+
+# File manager and dependencies
+ranger
+ffmpegthumbnailer
+fontforge
+poppler-utils
+xclip
+
+# Terminal tools
+btop
+direnv
+nix-direnv
+neovim
+
+# Shell
+oh-my-zsh
+zsh-autosuggestions
+zsh-syntax-highlighting
+
+# ============================================
+# System Services to Enable
+# ============================================
+# - openssh (SSH server)
+# - postgresql (PostgreSQL database)
+# - dnsmasq (DNS server)
+# - earlyoom (out-of-memory killer)
+
+# ============================================
+# User Systemd Services (to be created)
+# ============================================
+# - jellyfin (guitar instance on port 8096)
+# - jellyfin (media instance on port 8097)
+# - stash (on port 9999)
+# - qbittorrent-nox (on port 8080)
+
+# ============================================
+# Additional Notes
+# ============================================
+# - User should be created with username "romain"
+# - User should be in groups: networkmanager, wheel
+# - User should have linger enabled for systemd user services
+# - Timezone should be set to Europe/Paris
+# - Locale should be set to en_US.UTF-8 with fr_FR.UTF-8 for various LC_* settings
+# - Console keymap should be set to "fr"
+# - Firewall should allow ports: 8080 (qbittorrent), 9999 (stash), 5432 (postgresql), 53 (dnsmasq)

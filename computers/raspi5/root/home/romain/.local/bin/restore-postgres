@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euxo pipefail
+
+psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump.sql
