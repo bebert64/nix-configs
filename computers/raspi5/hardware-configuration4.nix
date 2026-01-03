@@ -9,7 +9,7 @@
     ];
 
   boot.initrd.availableKernelModules = [ "usb_storage" "usbhid" ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
 
