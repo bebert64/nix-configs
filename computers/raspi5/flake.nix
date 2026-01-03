@@ -3,6 +3,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -19,6 +21,7 @@
       self,
       nixpkgs,
       nixos-raspberrypi,
+      disko,
     }@inputs:
     {
       nixosConfigurations = {
@@ -49,46 +52,9 @@
               }
             )
 
-            (
-              {
-                lib,
-                modulesPath,
-                ...
-              }:
-
-              {
-                imports = [
-                  (modulesPath + "/installer/scan/not-detected.nix")
-                ];
-
-                boot.initrd.availableKernelModules = [
-                  "usb_storage"
-                  "usbhid"
-                ];
-                boot.initrd.kernelModules = [ ];
-                boot.kernelModules = [ ];
-                boot.extraModulePackages = [ ];
-                boot.loader.raspberryPi.bootloader = lib.mkForce "kernel";
-
-                fileSystems."/" = lib.mkForce {
-                  device = "/dev/disk/by-label/nixos";
-                  fsType = "ext4";
-                };
-
-                fileSystems."/boot" = lib.mkForce {
-                  device = "/dev/disk/by-label/boot";
-                  fsType = "vfat";
-                  options = [
-                    "fmask=0077"
-                    "dmask=0077"
-                  ];
-                };
-
-                swapDevices = [ ];
-
-                nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-              }
-            )
+            disko.nixosModules.disko
+            ./hardware-configuration.nix
+            ./disk-config.nix
           ];
         };
       };
