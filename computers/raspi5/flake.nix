@@ -49,6 +49,7 @@
                 };
 
                 services.openssh.enable = true;
+                boot.loader.raspberryPi.bootloader = "kernel";
               }
             )
 
