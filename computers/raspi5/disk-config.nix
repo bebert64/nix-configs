@@ -27,20 +27,6 @@
             name = "root";
             size = "100%";
             content = {
-              type = "lvm_pv";
-              vg = "poola";
-            };
-          };
-        };
-      };
-    };
-    lvm_vg = {
-      poola = {
-        type = "lvm_vg";
-        lvs = {
-          root = {
-            size = "100%FREE";
-            content = {
               type = "filesystem";
               format = "ext4";
               mountpoint = "/";

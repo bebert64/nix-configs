@@ -3,8 +3,8 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
-    # disko.url = "github:nix-community/disko";
-    # disko.inputs.nixpkgs.follows = "nixpkgs";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   nixConfig = {
@@ -21,7 +21,7 @@
       self,
       nixpkgs,
       nixos-raspberrypi,
-    # disko,
+      disko,
     }@inputs:
     {
       nixosConfigurations = {
@@ -53,9 +53,9 @@
               }
             )
 
-            # disko.nixosModules.disko
+            disko.nixosModules.disko
             ./hardware-configuration.nix
-            # ./disk-config.nix
+            ./disk-config.nix
           ];
         };
       };
