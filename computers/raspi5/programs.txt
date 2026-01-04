@@ -4,37 +4,33 @@
 # ============================================
 # System Packages (install via package manager)
 # ============================================
-vim-full
-git
-ntfs3g
-wget
-zsh
-openssh-server
-postgresql
-dnsmasq
-earlyoom
+vim-full  ✅
+git  ✅
+ntfs-3g  ✅
+wget  ✅
+zsh  ✅
+openssh-server  ✅
+postgresql  ✅
+earlyoom  ✅
 polkit
 
 # ============================================
 # Home User Packages (install in user home)
 # ============================================
 # Development tools
-p7zip
-nixd
-nixfmt-rfc-style
+p7zip  ✅
 nodejs (npm)
 pnpm
 rsync
-screen
+screen  ✅
 sshfs
 unrar
 
 # Media server packages
-jellyfin
-ffmpeg
-jellyfin-web
+jellyfin  (curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash)  ✅   (creates an initial service, to be removed)
+ffmpeg  ✅
 stash
-qbittorrent-nox
+qbittorrent-nox  ✅
 
 # File manager and dependencies
 ranger
@@ -44,10 +40,9 @@ poppler-utils
 xclip
 
 # Terminal tools
-btop
+btop  ✅
 direnv
-nix-direnv
-neovim
+neovim  ✅
 
 # Shell
 oh-my-zsh

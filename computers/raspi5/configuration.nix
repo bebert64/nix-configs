@@ -21,7 +21,7 @@
   };
 
   networking = {
-    hostName = "raspi";
+    hostName = "raspi5";
   };
 
   # Disable raspberryPi bootloader when building SD image to avoid conflicts

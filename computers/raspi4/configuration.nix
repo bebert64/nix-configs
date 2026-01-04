@@ -10,6 +10,6 @@
   };
 
   networking = {
-    hostName = "raspi";
+    hostName = "raspi4";
   };
 }

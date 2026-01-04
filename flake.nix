@@ -74,8 +74,8 @@
           };
         };
 
-        raspi = nixpkgs.lib.nixosSystem {
-          modules = [ ./computers/raspi/configuration.nix ];
+        raspi4 = nixpkgs.lib.nixosSystem {
+          modules = [ ./computers/raspi4/configuration.nix ];
           specialArgs = {
             inherit
               by-db
