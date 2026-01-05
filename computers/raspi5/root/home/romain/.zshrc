@@ -63,7 +63,7 @@ alias tfw="run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo
 alias ccw="run-in-code-repo 'cargo check'"
 alias cccw="run-in-code-repo 'cargo clean && cargo check'"
 alias cctfw="run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'"
-alias deploy-bydb="run-in-code-repo 'make -f mkFiles/raspi.mk deploy-all'"
+alias deploy-by-db="run-in-code-repo 'make -f mkFiles/raspi.mk deploy-all'"
 
 # Helpers
 mainCodingRepo="${MAIN_CODING_REPO:-code}"
