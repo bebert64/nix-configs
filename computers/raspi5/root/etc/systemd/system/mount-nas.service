@@ -1,0 +1,7 @@
+[Unit]
+Description=Mount NAS
+
+[Service]
+Type=oneshot
+ExecStart=/home/romain/.local/bin/mount-nas
+User=root

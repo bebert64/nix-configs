@@ -1,0 +1,6 @@
+#!/bin/bash
+NAS_MOUNT_POINT="/mnt/NAS"
+
+if mountpoint -q ${NAS_MOUNT_POINT} ; then
+  umount ${NAS_MOUNT_POINT}
+fi

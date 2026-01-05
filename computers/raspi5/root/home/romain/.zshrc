@@ -63,7 +63,7 @@ alias tfw="run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo
 alias ccw="run-in-code-repo 'cargo check'"
 alias cccw="run-in-code-repo 'cargo clean && cargo check'"
 alias cctfw="run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'"
-alias deploy-by-db="run-in-code-repo 'make -f mkFiles/raspi.mk deploy-all'"
+alias deploy-by-db="run-in-code-repo 'git pull && make -f mkFiles/raspi.mk deploy-all'"
 
 # Helpers
 mainCodingRepo="${MAIN_CODING_REPO:-code}"
@@ -101,6 +101,14 @@ wb() {
 ws() {
   wol-ssh salon 74:56:3c:36:71:db 192.168.1.6
 }
+
+# NAS aliases
+alias mnas="mount-nas"
+alias umnas="unmount-nas"
+
+# Set default editor
+export EDITOR="nvim"
+export VISUAL="nvim"
 
 # Add cargo bin to path
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"

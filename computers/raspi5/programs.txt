@@ -4,7 +4,7 @@
 sudo apt-get update
 sudo apt-get upgrade
 activate ssh server : sudo raspi-config
-sudo apt-get install git ntfs-3g wget zsh postgresql earlyoom 7zip screen ffmpeg qbittorrent-nox btop neovim libssl-dev libpq-dev
+sudo apt-get install git ntfs-3g nfs-common wget zsh postgresql earlyoom 7zip screen ffmpeg qbittorrent-nox btop neovim libssl-dev libpq-dev
 
 ## jellyfin
 curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash
