@@ -41,11 +41,6 @@ if [ -f ~/.oh-my-zsh/custom/git.zsh ]; then
   source ~/.oh-my-zsh/custom/git.zsh
 fi
 
-# Shell aliases
-alias wke1="i3-msg workspace 11:󰸉"
-alias wke2="i3-msg workspace 12:󰸉"
-alias cargo2nix="cdr && cargo2nix -ol && cd -"
-
 # Systemd
 alias jc="journalctl -xefu"
 alias jcb="jc backup --user"
@@ -62,32 +57,16 @@ alias ssm="ss media --user"
 alias ssq="ss qbittorrent --user"
 alias sss="ss stash --user"
 
-# Nix (may not be applicable on non-NixOS)
-alias nix-shell="nix-shell --run zsh"
-
 # Cargo
 formatOptions="comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true"
 alias tfw="run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'"
 alias ccw="run-in-code-repo 'cargo check'"
 alias cccw="run-in-code-repo 'cargo clean && cargo check'"
 alias cctfw="run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'"
+alias deploy-bydb="run-in-code-repo 'make -f mkFiles/raspi.mk deploy-all'"
 
 # Helpers
-nixConfigsRepo="${NIX_CONFIGS_REPO:-nix-configs}"
 mainCodingRepo="${MAIN_CODING_REPO:-code}"
-
-run-in-nix-repo() {
-  cd ~/${nixConfigsRepo}
-  git pull || return 1
-  (eval "$*")
-  cd -
-}
-
-run-in-nix-repo-dirty() {
-  cd ~/${nixConfigsRepo}
-  (eval "$*")
-  cd -
-}
 
 run-in-code-repo() {
   cd ~/${mainCodingRepo}
@@ -104,15 +83,6 @@ cdr() {
 # Other utilities
 psg() {
   ps aux | grep $1 | grep -v psg | grep -v grep
-}
-
-run() {
-  command -v nix > /dev/null && nix run "nixpkgs#$1" -- "${@:2}" || $1 "${@:2}"
-}
-
-sync-wallpapers() {
-  rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
-  rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
 }
 
 wol-ssh() {
@@ -133,7 +103,7 @@ ws() {
 }
 
 # Add cargo bin to path
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
 
 # Direnv hook
 if command -v direnv > /dev/null; then

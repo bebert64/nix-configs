@@ -1,36 +1,41 @@
 # Programs to install for raspi profile (excluding nginx)
 # This list is based on the raspi profile configuration
 
+sudo apt-get update
+sudo apt-get upgrade
+activate ssh server : sudo raspi-config
+sudo apt-get install git ntfs-3g wget zsh postgresql earlyoom 7zip screen ffmpeg qbittorrent-nox btop neovim libssl-dev libpq-dev
+
+## jellyfin
+curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash
+# remove jellyfin service created at install
+sudo systemctl stop jellyfin
+sudo systemctl disable jellyfin
+sudo rm /etc/systemd/system/jellyfin.service
+sudo rm /usr/lib/systemd/system/jellyfin.service
+reboot : sudo shutdown -r now
+
+## rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+
 # ============================================
 # System Packages (install via package manager)
 # ============================================
-vim-full  ✅
-git  ✅
-ntfs-3g  ✅
-wget  ✅
-zsh  ✅
-openssh-server  ✅
-postgresql  ✅
-earlyoom  ✅
 polkit
 
 # ============================================
 # Home User Packages (install in user home)
 # ============================================
 # Development tools
-p7zip  ✅
 nodejs (npm)
 pnpm
 rsync
-screen  ✅
 sshfs
 unrar
 
 # Media server packages
-jellyfin  (curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash)  ✅   (creates an initial service, to be removed)
-ffmpeg  ✅
 stash
-qbittorrent-nox  ✅
 
 # File manager and dependencies
 ranger
@@ -40,9 +45,7 @@ poppler-utils
 xclip
 
 # Terminal tools
-btop  ✅
 direnv
-neovim  ✅
 
 # Shell
 oh-my-zsh
