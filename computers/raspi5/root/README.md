@@ -229,18 +229,18 @@ After setting these, neovim will be used as the default editor for:
 - System tools that use the `editor` command
 - Any application that respects the `EDITOR` or `VISUAL` environment variables
 
-3. **Install neovim plugin manager and plugins:**
-   The neovim config uses vim-plug to manage plugins. Install it manually:
+3. **Install neovim catppuccin theme manually:**
+   The neovim config references the catppuccin theme. Install it manually using git:
 
 ```bash
-# Install vim-plug
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+# Create the plugin directory
+mkdir -p ~/.local/share/nvim/site/pack/plugins/start
 
-# Install plugins (catppuccin theme)
-nvim +PlugInstall +qall
+# Clone the catppuccin theme
+git clone https://github.com/catppuccin/nvim.git ~/.local/share/nvim/site/pack/plugins/start/catppuccin
 ```
 
-The catppuccin theme will be automatically applied on the next neovim launch.
+The catppuccin theme will be automatically applied on the next neovim launch (configured in `~/.config/nvim/init.lua`).
 
 ## Notes
 
