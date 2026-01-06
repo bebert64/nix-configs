@@ -138,12 +138,12 @@
           rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
         }
         wol-ssh() {
-          ssh raspi5 "wol-by-db $2"
+          ssh raspi5 "/home/romain/.local/bin/wol-by-db $2"
           while ssh raspi5 "! ping -c1 $3 &> /dev/null"; do
             echo "$1 is not responding"
             sleep 1
           done
-          ssh $1 -t "xset -display :0.0 dpms force off; zsh -i"
+          ssh $1 -t "zsh -i"
         }
         wb() {
           wol-ssh bureau D4:3D:7E:D8:C3:95 192.168.1.4
