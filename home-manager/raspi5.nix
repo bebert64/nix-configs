@@ -7,7 +7,6 @@
   imports = [
     ./raspberry.nix
     ../programs/jellyfin
-    ../programs/postgresql
     ../programs/qbittorrent
     ../programs/stash
     by-db.module.aarch64-linux

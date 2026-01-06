@@ -5,6 +5,7 @@
 {
   imports = [
     ./raspberry.nix
+    ../programs/postgresql
   ];
 
   config =
@@ -28,5 +29,8 @@
       services = {
         meilisearch.enable = true;
       };
+
+      # Might be needed for stash, not sure
+      nixpkgs.config.allowUnsupportedSystem = true;
     };
 }

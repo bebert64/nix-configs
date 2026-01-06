@@ -1,7 +1,4 @@
-{ pkgs, config, ... }:
-let
-  cfg = config.by-db;
-in
+{ pkgs, ... }:
 {
   services.postgresql = {
     enable = true;
@@ -13,14 +10,6 @@ in
       host  all       all     127.0.0.1/32  trust
     '';
   };
-
-  home-manager.users.${cfg.user.name}.home.packages = [
-    (pkgs.writeScriptBin "restore-postgres" ''
-      set -euxo pipefail
-
-      psql -U postgres -w -f /mnt/NAS/Backup/raspi/full_dump.sql
-    '')
-  ];
 
   networking.firewall = {
     enable = true;

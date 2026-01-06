@@ -120,7 +120,6 @@
           };
         };
       };
-      nix.settings.trusted-users = [ "${cfg.user.name}" ];
 
     };
 }
