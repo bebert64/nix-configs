@@ -12,7 +12,7 @@ let
     enableACME = true;
     forceSSL = true;
     locations."/" = {
-      proxyPass = "http://127.0.0.1:${toString port}";
+      proxyPass = "http://192.168.1.7:${toString port}";
       extraConfig = ''
         # Proxy main Jellyfin traffic
         proxy_set_header Host $host;
@@ -27,7 +27,7 @@ let
       '';
     };
     locations."/socket" = {
-      proxyPass = "http://127.0.0.1:${toString port}";
+      proxyPass = "http://192.168.1.7:${toString port}";
       extraConfig = ''
         # Proxy Jellyfin Websockets traffic
         proxy_http_version 1.1;
