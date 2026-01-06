@@ -97,6 +97,8 @@
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
 
+      programs.zsh.enable = true;
+
       environment = {
         pathsToLink = [ "/libexec" ];
       };
