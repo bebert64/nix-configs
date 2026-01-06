@@ -83,6 +83,7 @@ in
             mcomix
             nodePackages.npm
             nodePackages.pnpm
+            ntfs3g
             pavucontrol # pulse audio volume controle
             polkit_gnome
             vlc

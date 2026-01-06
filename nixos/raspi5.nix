@@ -5,10 +5,6 @@
 {
   imports = [
     ./raspberry.nix
-    ../programs/jellyfin
-    ../programs/postgresql
-    ../programs/qbittorrent
-    ../programs/stash
   ];
 
   config =
@@ -21,17 +17,12 @@
       networking.firewall = {
         enable = true;
         allowedTCPPorts = [
-          80 # http
-          443 # https
           8080 # qbittorrent
+          8096 # jellyfin guitar
+          8097 # jellyfin media
           9999 # stash
         ];
       };
-
-      # Necessary for remote installation, using --use-remote-sudo
-      nix.settings.trusted-users = [ "${cfg.user.name}" ];
-
-      sdImage.compressImage = false;
 
       #Used by jellyfin instances
       services = {

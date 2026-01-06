@@ -3,7 +3,7 @@
 Build image
 
 ```
-nix build .#nixosConfigurations.raspi.config.system.build.sdImage
+nix build .#nixosConfigurations.raspi4.config.system.build.sdImage
 ```
 
 Check the correct dev identifier with `lsblk`
