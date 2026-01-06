@@ -35,9 +35,6 @@ in
   home = {
     packages = with pkgs; [
       ranger
-      ffmpegthumbnailer # thumbnail for videos preview
-      fontforge # thumbnail for fonts preview
-      poppler-utils # thumbnail for pdf preview
       xclip # used to paste into global clipboard
     ];
     activation = {

@@ -97,39 +97,8 @@
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
 
-      programs = {
-        zsh = {
-          enable = true;
-          histSize = 200000;
-          ohMyZsh.enable = true;
-          autosuggestions.enable = true;
-          syntaxHighlighting.enable = true;
-        };
-      };
-
-      # List packages installed in system profile. To search, run:
-      # $ nix search wget
       environment = {
-        systemPackages = with pkgs; [
-          # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-          (vim-full.customize {
-            name = "vim";
-            vimrcConfig.packages.myplugins = with vimPlugins; {
-              start = [ vim-nix ];
-            };
-          })
-          git
-          ntfs3g
-          wget
-        ];
-
         pathsToLink = [ "/libexec" ];
-
-        # Hide direnv diff when entering a directory
-        etc."direnv/direnv.toml".text = ''
-          [global]
-          hide_env_diff = true
-        '';
       };
 
       hardware.bluetooth.enable = cfg.bluetooth.enable;
@@ -166,7 +135,6 @@
             "'^(ferdium|firefox)$'"
           ];
         };
-
       };
 
       # This value determines the NixOS release from which the default

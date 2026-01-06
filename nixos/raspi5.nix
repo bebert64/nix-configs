@@ -1,18 +1,14 @@
 {
   config,
-  nixpkgs,
   ...
 }:
 {
   imports = [
-    ./common.nix
-    ../programs/dnsmasq
+    ./raspberry.nix
     ../programs/jellyfin
-    ../programs/nginx
     ../programs/postgresql
     ../programs/qbittorrent
     ../programs/stash
-    "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
 
   config =
@@ -20,10 +16,7 @@
       cfg = config.by-db;
     in
     {
-      # Necessary for user's systemd services to start at boot (before user logs in)
-      users.users.${cfg.user.name}.linger = true;
-
-      home-manager.users.${cfg.user.name}.imports = [ ../home-manager/server.nix ];
+      home-manager.users.${cfg.user.name}.imports = [ ../home-manager/raspi5.nix ];
 
       networking.firewall = {
         enable = true;
@@ -39,5 +32,10 @@
       nix.settings.trusted-users = [ "${cfg.user.name}" ];
 
       sdImage.compressImage = false;
+
+      #Used by jellyfin instances
+      services = {
+        meilisearch.enable = true;
+      };
     };
 }

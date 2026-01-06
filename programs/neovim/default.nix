@@ -13,6 +13,7 @@
     '';
     plugins = [
       pkgs.vimPlugins.catppuccin-nvim
+      pkgs.vimPlugins.vim-nix
     ];
     extraLuaConfig = ''
       require('catppuccin').setup({

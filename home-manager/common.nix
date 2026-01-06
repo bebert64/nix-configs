@@ -47,7 +47,6 @@ in
 
   imports = [
     ../programs/btop
-    ../programs/direnv
     ../programs/git
     ../programs/neovim
     ../programs/ranger
@@ -68,17 +67,13 @@ in
         packages = (
           with pkgs;
           [
-            p7zip
             nixd
             nixfmt-rfc-style
-            nodePackages.npm
-            nodePackages.pnpm
-            polkit_gnome
+            p7zip
             rsync
             screen
-            sshfs
-            unrar
-            # yt-dlp
+            wget
+            yt-dlp
           ]
         );
       };

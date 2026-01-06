@@ -18,6 +18,7 @@ in
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
+    ../programs/direnv
     ../programs/ferdium
     ../programs/firefox
     ../programs/flameshot
@@ -80,7 +81,10 @@ in
             inkscape
             microcode-intel # for increased microprocessor performance
             mcomix
+            nodePackages.npm
+            nodePackages.pnpm
             pavucontrol # pulse audio volume controle
+            polkit_gnome
             vlc
           ])
           ++ lib.optionals cfg.wifi.enable (
