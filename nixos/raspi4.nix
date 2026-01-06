@@ -30,6 +30,7 @@
       # Forward port 5432 to 192.168.1.7:5432
       networking.nat = {
         enable = true;
+        externalInterface = "eth0";
         forwardPorts = [
           {
             sourcePort = 5432;
