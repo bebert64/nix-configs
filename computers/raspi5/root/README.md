@@ -61,6 +61,58 @@ host  all       all     192.168.1.0/24  trust
 host  all       all     127.0.0.1/32  trust
 ```
 
+**Important:** After modifying `pg_hba.conf`, you must reload PostgreSQL:
+
+```bash
+sudo systemctl reload postgresql
+# Or restart if reload doesn't work:
+sudo systemctl restart postgresql
+```
+
+**Troubleshooting "Peer authentication failed" error:**
+
+1. **Find the correct PostgreSQL version and config file:**
+
+   ```bash
+   # Find PostgreSQL version
+   sudo -u postgres psql -c "SELECT version();"
+
+   # Find the config file location (usually /etc/postgresql/*/main/pg_hba.conf)
+   sudo find /etc/postgresql -name "pg_hba.conf"
+   ```
+
+2. **Verify the `pg_hba.conf` file has the correct settings:**
+
+   ```bash
+   # Check the first few lines (order matters - more specific rules first)
+   sudo head -20 /etc/postgresql/*/main/pg_hba.conf
+   ```
+
+   Make sure the `local all all trust` line is **before** any `local ... peer` lines.
+
+3. **Reload PostgreSQL after changes:**
+
+   ```bash
+   sudo systemctl reload postgresql
+   ```
+
+4. **If still having issues, try connecting as the postgres OS user:**
+
+   ```bash
+   # Switch to postgres user and connect
+   sudo -u postgres psql
+
+   # Or connect via TCP instead of Unix socket:
+   psql -U postgres -h localhost
+   ```
+
+5. **Check PostgreSQL logs for more details:**
+   ```bash
+   sudo journalctl -u postgresql -n 50
+   # Or check the log file directly:
+   sudo tail -f /var/log/postgresql/postgresql-*-main.log
+   ```
+
 #### NAS Mount Configuration
 
 The NAS mount scripts and systemd services are provided. Set them up as follows:
