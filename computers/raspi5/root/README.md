@@ -113,6 +113,129 @@ sudo systemctl restart postgresql
    sudo tail -f /var/log/postgresql/postgresql-*-main.log
    ```
 
+**Restoring PostgreSQL databases from dump files:**
+
+1. **The "database does not exist" error for your target database is usually fine** - pg_dump files typically create the database if it doesn't exist. This error is not blocking.
+
+2. **Fixing locale errors (LC_COLLATE/LC_CTYPE):**
+
+   If you see errors like `invalid LC_COLLATE locale name: "en_US.utf8"`, the dump was created on a system with different locale settings. You have two options:
+
+   **Option A: Install the required locale (recommended if you want exact match):**
+
+   ```bash
+   # Check available locales
+   locale -a | grep -i en_us
+
+   # Install locale if missing (on Debian/Ubuntu/Raspberry Pi OS)
+   sudo apt-get install locales
+   sudo dpkg-reconfigure locales
+   # Select en_US.UTF-8 when prompted
+
+   # Or generate it manually
+   sudo locale-gen en_US.UTF-8
+   sudo update-locale
+   ```
+
+   **Option B: Replace locale in dump file (faster, use if locale doesn't matter):**
+
+   ```bash
+   # Find what locales are available on your system
+   locale -a
+
+   # Replace the locale in the dump (e.g., use C.UTF-8 or en_US.UTF-8 if available)
+   sed 's/LOCALE "en_US\.utf8"/LOCALE "C.UTF-8"/g' postgres_dump.sql > postgres_dump_fixed.sql
+   # Or if en_US.UTF-8 is available:
+   sed 's/LOCALE "en_US\.utf8"/LOCALE "en_US.UTF-8"/g' postgres_dump.sql > postgres_dump_fixed.sql
+
+   # Check what locale your PostgreSQL cluster uses
+   sudo -u postgres psql -c "SHOW lc_collate;"
+   ```
+
+3. **Understanding `\connect` commands and their impact (for cluster-wide dumps):**
+
+   **What is `\connect`?**
+
+   - `\connect` (or `\c`) is a psql meta-command that switches the active database connection
+   - In pg_dump files, it's used to:
+     - Switch between databases when dumping multiple databases
+     - Connect to template databases (like `template1`) for certain operations
+     - Handle cross-database references
+
+   **Why does it fail?**
+
+   - The dump was created on a different server with different database names/availability
+   - Template databases might not exist or have different names
+   - Connection permissions might differ between servers
+
+   **What happens if `\connect` fails?**
+
+   - **With `ON_ERROR_STOP=off`**: psql continues executing, BUT:
+     - All subsequent SQL commands run in the **wrong database context**
+     - Objects (tables, functions, etc.) may be created in the wrong database
+     - Commands expecting a specific database will fail or behave incorrectly
+     - This can cause **serious data integrity issues**
+
+   **For cluster-wide dumps (multiple databases):**
+
+   If your dump restores to ALL databases in the cluster, `\connect` commands are **essential** and cannot be removed. The solution is to:
+
+   1. **Fix locale issues first** (see step 2 above) - locale errors can prevent database creation, which causes `\connect` to fail
+   2. **Ensure template1 exists:**
+
+      ```bash
+      # Verify template1 exists
+      sudo -u postgres psql -d postgres -c "SELECT datname FROM pg_database WHERE datname='template1';"
+
+      # If missing, recreate it:
+      sudo -u postgres createdb -T template0 template1
+      ```
+
+   3. **Replace failed `\connect template1` with `\connect postgres`:**
+      ```bash
+      # If \connect template1 fails, replace it with \connect postgres (which should always exist)
+      sed 's/^\\connect template1$/\\connect postgres/g' postgres_dump_fixed.sql > postgres_dump_final.sql
+      ```
+   4. **Restore the fixed dump:**
+      ```bash
+      psql -U postgres -f postgres_dump_final.sql
+      ```
+
+   **For single-database dumps:**
+
+   **Option A: Remove `\connect` commands (if dump is for one database only):**
+
+   ```bash
+   sed '/^\\connect/d' postgres_dump.sql > postgres_dump_cleaned.sql
+   psql -U postgres -f postgres_dump_cleaned.sql
+   ```
+
+   **Option B: Restore to a specific database:**
+
+   ```bash
+   # Create the database first if it doesn't exist
+   createdb -U postgres my_db
+
+   # Restore to that specific database
+   psql -U postgres -d my_db -f postgres_dump.sql
+   ```
+
+4. **Complete restore workflow for cluster-wide dumps:**
+
+   ```bash
+   # Step 1: Fix locale issues
+   sed 's/LOCALE "en_US\.utf8"/LOCALE "C.UTF-8"/g' postgres_dump.sql > postgres_dump_step1.sql
+
+   # Step 2: Ensure template1 exists
+   sudo -u postgres createdb -T template0 template1 2>/dev/null || true
+
+   # Step 3: Replace problematic \connect template1 with \connect postgres
+   sed 's/^\\connect template1$/\\connect postgres/g' postgres_dump_step1.sql > postgres_dump_final.sql
+
+   # Step 4: Restore
+   psql -U postgres -f postgres_dump_final.sql
+   ```
+
 #### NAS Mount Configuration
 
 The NAS mount scripts and systemd services are provided. Set them up as follows:

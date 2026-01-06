@@ -23,6 +23,19 @@
         allowedTCPPorts = [
           80 # http
           443 # https
+          5432 # PostgreSQL forwarding
+        ];
+      };
+
+      # Forward port 5432 to 192.168.1.7:5432
+      networking.nat = {
+        enable = true;
+        forwardPorts = [
+          {
+            sourcePort = 5432;
+            destination = "192.168.1.7:5432";
+            proto = "tcp";
+          }
         ];
       };
     };
