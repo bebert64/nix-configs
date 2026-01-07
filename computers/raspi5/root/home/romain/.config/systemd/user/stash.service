@@ -4,8 +4,11 @@ Description=Stash server
 [Service]
 Type=simple
 Restart=on-failure
-ExecStart=/usr/bin/stash --config /home/romain/.stash/config.yml --nobrowser
+WorkingDirectory=/home/romain/.stash
+ExecStart=/home/romain/.local/bin/stash-linux-arm64v8 --config /home/romain/.stash/config.yml --nobrowser
 Environment="PATH=/usr/local/bin:/usr/bin:/bin:/home/romain/.local/bin"
+User=romain
+Group=romain
 
 [Install]
 WantedBy=default.target
