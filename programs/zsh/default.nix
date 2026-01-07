@@ -49,7 +49,7 @@
         update = "run-in-nix-repo nix-switch";
         update-dirty = "run-in-nix-repo-dirty nix-switch";
         update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
-        update-raspi4 = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi4 && nixos-rebuild switch --target-host raspi4 --sudo --flake .#raspi4'";
+        update-raspi4 = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi4 && nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4'";
 
         # Cargo
         tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
