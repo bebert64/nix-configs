@@ -154,7 +154,10 @@ in
     };
   };
 
-  file."/var/www/capucina.net/qbittorrent/down.html".source = ./qbittorrent-down.html;
+  systemd.tmpfiles.rules = [
+    "d /var/www/capucina.net/qbittorrent 0755 root root -"
+    "C /var/www/capucina.net/qbittorrent/down.html 0644 root root - ${./qbittorrent-down.html}"
+  ];
 
   security.acme = {
     acceptTerms = true;
