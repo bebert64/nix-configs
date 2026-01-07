@@ -139,7 +139,7 @@
         };
       };
 
-      # Necessary for remote installation, using --use-remote-sudo or to get access to additional caches
+      # Necessary for remote installation, using --sudo or to get access to additional caches
       nix.settings.trusted-users = [ "${cfg.user.name}" ];
 
       # This value determines the NixOS release from which the default
