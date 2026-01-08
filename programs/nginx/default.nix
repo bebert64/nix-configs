@@ -137,6 +137,18 @@ in
             proxy_set_header X-Forwarded-Proto  $scheme;
             proxy_set_header X-Forwarded-Host   $host;
             proxy_set_header X-Forwarded-Port   $server_port;
+
+            # Forward Plex-specific headers from client
+            proxy_set_header X-Plex-Client-Identifier $http_x_plex_client_identifier;
+            proxy_set_header X-Plex-Device $http_x_plex_device;
+            proxy_set_header X-Plex-Device-Name $http_x_plex_device_name;
+            proxy_set_header X-Plex-Platform $http_x_plex_platform;
+            proxy_set_header X-Plex-Platform-Version $http_x_plex_platform_version;
+            proxy_set_header X-Plex-Product $http_x_plex_product;
+            proxy_set_header X-Plex-Token $http_x_plex_token;
+            proxy_set_header X-Plex-Version $http_x_plex_version;
+
+            # WebSocket headers
             proxy_set_header Sec-Websocket-Extensions $http_sec_websocket_extensions;
             proxy_set_header Sec-Websocket-Key $http_sec_websocket_key;
             proxy_set_header Sec-Websocket-Protocol $http_sec_websocket_protocol;
