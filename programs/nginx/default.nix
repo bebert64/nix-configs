@@ -134,6 +134,7 @@ in
             proxy_set_header Accept-Encoding    "";
             proxy_set_header X-Real-IP          $remote_addr;
             proxy_set_header X-Forwarded-For    $remote_addr;
+            proxy_set_header X-Plex-Client-IP   $remote_addr;
             proxy_set_header X-Forwarded-Proto  $scheme;
             proxy_set_header X-Forwarded-Host   $host;
             proxy_set_header X-Forwarded-Port   $server_port;
@@ -156,6 +157,8 @@ in
             proxy_connect_timeout               300;
             proxy_send_timeout                  300;
             proxy_read_timeout                  300;
+            proxy_buffering                     off;
+            proxy_request_buffering             off;
             proxy_buffers                       512 512k;
             proxy_buffer_size                   512k;
             proxy_busy_buffers_size             512k;
