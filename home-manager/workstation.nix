@@ -28,6 +28,7 @@ in
     ../programs/mpc-qt
     ../programs/music
     ../programs/picom
+    ../programs/plex-desktop
     ../programs/polybar
     ../programs/rofi
     ../programs/slack
