@@ -3,7 +3,10 @@
     enable = true;
     resolveLocalQueries = true;
     settings = {
-      address = [ "/.capucina.net/192.168.1.2" ];
+      address = [
+        "/.capucina.net/192.168.1.2"
+        "/plex.capucina.net/192.168.1.7"
+      ];
       listen-address = [
         "127.0.0.1"
         "192.168.1.2"
