@@ -47,6 +47,14 @@ in
   services.nginx = {
     enable = true;
 
+    # Map for WebSocket connection upgrade
+    appendHttpConfig = ''
+      map $http_upgrade $connection_upgrade {
+        default upgrade;
+        "" close;
+      }
+    '';
+
     virtualHosts = {
       "capucina.net" = {
         enableACME = true;
@@ -104,17 +112,42 @@ in
       "plex.capucina.net" = {
         enableACME = true;
         forceSSL = true;
+        # Set client_max_body_size to 0 (unlimited) for streaming
+        extraConfig = ''
+          client_max_body_size 0;
+        '';
         locations."/" = {
           proxyPass = "http://192.168.1.7:32400";
           extraConfig = ''
-            proxy_http_version 1.1;
-            proxy_cache_bypass $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header X-Forwarded-For $remote_addr;
-            proxy_set_header X-Plex-Client-IP $remote_addr;
-            proxy_set_header X-Real-IP $remote_addr;
+            # Rewrite root to web interface if no device name
+            if ($http_x_plex_device_name = "") {
+              rewrite ^/$ /web/index.html;
+            }
+
+            proxy_set_header Host               192.168.1.7;
+            proxy_set_header Referer            https://192.168.1.7:32400;
+            proxy_set_header Origin             192.168.1.7;
+            proxy_http_version                  1.1;
+            proxy_cache_bypass                  $http_upgrade;
+            proxy_set_header Upgrade            $http_upgrade;
+            proxy_set_header Connection         $connection_upgrade;
+            proxy_set_header Accept-Encoding    "";
+            proxy_set_header X-Real-IP          $remote_addr;
+            proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto  $scheme;
+            proxy_set_header X-Forwarded-Host   $host;
+            proxy_set_header X-Forwarded-Port   $server_port;
+            proxy_set_header Sec-Websocket-Extensions $http_sec_websocket_extensions;
+            proxy_set_header Sec-Websocket-Key $http_sec_websocket_key;
+            proxy_set_header Sec-Websocket-Protocol $http_sec_websocket_protocol;
+            proxy_set_header Sec-Websocket-Version $http_sec_websocket_version;
+            proxy_connect_timeout               300;
+            proxy_send_timeout                  300;
+            proxy_read_timeout                  300;
+            proxy_buffers                       512 512k;
+            proxy_buffer_size                   512k;
+            proxy_busy_buffers_size             512k;
+            proxy_redirect off;
           '';
         };
       };
@@ -132,6 +165,10 @@ in
             proxy_set_header   X-Forwarded-Proto $scheme;
             proxy_set_header   Upgrade $http_upgrade;
             proxy_set_header   Connection $http_connection;
+
+
+
+
             proxy_redirect off;
           '';
         };
