@@ -109,6 +109,23 @@ in
         locations."/".proxyPass = "http://192.168.1.3:5000";
       };
 
+      "plex.capucina.net" = {
+        enableACME = true;
+        forceSSL = true;
+        # Reverse proxy to Plex server (for browsing/admin only, not streaming)
+        locations."/" = {
+          proxyPass = "http://192.168.1.7:32400";
+          extraConfig = ''
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $host;
+            proxy_http_version 1.1;
+          '';
+        };
+      };
+
       "prowlarr.capucina.net" = {
         enableACME = true;
         forceSSL = true;
