@@ -47,14 +47,6 @@ in
   services.nginx = {
     enable = true;
 
-    # Map for WebSocket connection upgrade
-    appendHttpConfig = ''
-      map $http_upgrade $connection_upgrade {
-        default upgrade;
-        "" close;
-      }
-    '';
-
     virtualHosts = {
       "capucina.net" = {
         enableACME = true;
@@ -119,11 +111,6 @@ in
         locations."/" = {
           proxyPass = "http://192.168.1.7:32400";
           extraConfig = ''
-            # Rewrite root to web interface if no device name
-            if ($http_x_plex_device_name = "") {
-              rewrite ^/$ /web/index.html;
-            }
-
             proxy_set_header Host               192.168.1.7;
             proxy_set_header Referer            https://192.168.1.7:32400;
             proxy_set_header Origin             192.168.1.7;
@@ -133,23 +120,10 @@ in
             proxy_set_header Connection         $connection_upgrade;
             proxy_set_header Accept-Encoding    "";
             proxy_set_header X-Real-IP          $remote_addr;
-            proxy_set_header X-Forwarded-For    $remote_addr;
-            proxy_set_header X-Plex-Client-IP   $remote_addr;
+            proxy_set_header X-Forwarded-For    $proxy_add_x_forwarded_for;
             proxy_set_header X-Forwarded-Proto  $scheme;
             proxy_set_header X-Forwarded-Host   $host;
             proxy_set_header X-Forwarded-Port   $server_port;
-
-            # Forward Plex-specific headers from client
-            proxy_set_header X-Plex-Client-Identifier $http_x_plex_client_identifier;
-            proxy_set_header X-Plex-Device $http_x_plex_device;
-            proxy_set_header X-Plex-Device-Name $http_x_plex_device_name;
-            proxy_set_header X-Plex-Platform $http_x_plex_platform;
-            proxy_set_header X-Plex-Platform-Version $http_x_plex_platform_version;
-            proxy_set_header X-Plex-Product $http_x_plex_product;
-            proxy_set_header X-Plex-Token $http_x_plex_token;
-            proxy_set_header X-Plex-Version $http_x_plex_version;
-
-            # WebSocket headers
             proxy_set_header Sec-Websocket-Extensions $http_sec_websocket_extensions;
             proxy_set_header Sec-Websocket-Key $http_sec_websocket_key;
             proxy_set_header Sec-Websocket-Protocol $http_sec_websocket_protocol;
@@ -157,8 +131,6 @@ in
             proxy_connect_timeout               300;
             proxy_send_timeout                  300;
             proxy_read_timeout                  300;
-            proxy_buffering                     off;
-            proxy_request_buffering             off;
             proxy_buffers                       512 512k;
             proxy_buffer_size                   512k;
             proxy_busy_buffers_size             512k;
