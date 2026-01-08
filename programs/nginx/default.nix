@@ -47,6 +47,14 @@ in
   services.nginx = {
     enable = true;
 
+    # Map for WebSocket connection upgrade
+    appendHttpConfig = ''
+      map $http_upgrade $connection_upgrade {
+        default upgrade;
+        "" close;
+      }
+    '';
+
     virtualHosts = {
       "capucina.net" = {
         enableACME = true;
@@ -124,8 +132,9 @@ in
             proxy_set_header Upgrade            $http_upgrade;
             proxy_set_header Connection         $connection_upgrade;
             proxy_set_header Accept-Encoding    "";
-            proxy_set_header X-Real-IP          $remote_addr;
+            # Always overwrite X-Forwarded-For with the actual client IP connecting to nginx
             proxy_set_header X-Forwarded-For    $remote_addr;
+            proxy_set_header X-Real-IP          $remote_addr;
             proxy_set_header X-Plex-Client-IP   $remote_addr;
             proxy_set_header X-Forwarded-Proto  $scheme;
             proxy_set_header X-Forwarded-Host   $host;
@@ -155,6 +164,7 @@ in
             proxy_buffers                       512 512k;
             proxy_buffer_size                   512k;
             proxy_busy_buffers_size             512k;
+            proxy_intercept_errors              off;
             proxy_redirect off;
           '';
         };
