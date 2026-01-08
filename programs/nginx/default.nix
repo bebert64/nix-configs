@@ -101,6 +101,22 @@ in
         locations."/".proxyPass = "http://192.168.1.3:5000";
       };
 
+      "plex.capucina.net" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://192.168.1.7:32400";
+          extraConfig = ''
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection 'upgrade';
+            proxy_set_header Host $host;
+            proxy_cache_bypass $http_upgrade;
+            proxy_set_header X-Real-IP $remote_addr;
+          '';
+        };
+      };
+
       "prowlarr.capucina.net" = {
         enableACME = true;
         forceSSL = true;
