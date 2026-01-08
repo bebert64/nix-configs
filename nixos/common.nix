@@ -30,6 +30,14 @@
     in
     {
       users = {
+        groups = {
+          media = {
+            gid = 65536;
+          };
+          nas = {
+            gid = 65537;
+          };
+        };
         users.${cfg.user.name} = {
           isNormalUser = true;
           hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
@@ -37,6 +45,8 @@
           extraGroups = [
             "networkmanager"
             "wheel"
+            "media"
+            "nas"
           ];
           openssh.authorizedKeys.keys = [
             "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGjhHLih5ykkFc2kOGxVboxjnUARDNMn4/ptovfaNceC bebert64@gmail.com"
