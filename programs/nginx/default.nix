@@ -144,6 +144,42 @@ in
         };
       };
 
+      "sonarr.capucina.net" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://192.168.1.7:8989";
+          extraConfig = ''
+            proxy_set_header   Host $host;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header   X-Forwarded-Host $host;
+            proxy_set_header   X-Forwarded-Proto $scheme;
+            proxy_set_header   Upgrade $http_upgrade;
+            proxy_set_header   Connection $http_connection;
+            proxy_redirect     off;
+            proxy_http_version 1.1;
+          '';
+        };
+      };
+
+      "radarr.capucina.net" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://192.168.1.7:7878";
+          extraConfig = ''
+            proxy_set_header   Host $host;
+            proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header   X-Forwarded-Host $host;
+            proxy_set_header   X-Forwarded-Proto $scheme;
+            proxy_set_header   Upgrade $http_upgrade;
+            proxy_set_header   Connection $http_connection;
+            proxy_redirect     off;
+            proxy_http_version 1.1;
+          '';
+        };
+      };
+
       "stash.capucina.net" = {
         enableACME = true;
         forceSSL = true;
