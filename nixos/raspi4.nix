@@ -25,6 +25,8 @@
             80 # http
             443 # https
             5432 # PostgreSQL forwarding
+          ];
+          allowedUDPPorts = [
             16120 # VPN
           ];
         };
