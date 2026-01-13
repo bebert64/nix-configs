@@ -50,7 +50,12 @@
               ips = [ "10.200.200.1/24" ];
               listenPort = 51820;
               privateKeyFile = "/etc/wireguard/privatekey";
-              peers = [ ];
+              peers = [
+                {
+                  publicKey = "RkpsY1WJPiyZAj+l/QoY8qGW75rbQBmjAiVphuowkSc=";
+                  allowedIPs = [ "10.200.200.2/32" ]; # VPN IP for this client
+                }
+              ];
             };
           };
         };
