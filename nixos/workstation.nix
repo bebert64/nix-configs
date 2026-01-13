@@ -67,17 +67,20 @@
         '';
       };
 
-      networking.wireguard = {
-        enable = true;
+      networking.wg-quick = {
         interfaces = {
           wg0 = {
-            ips = [ "10.200.200.2/32" ];
+            address = [ "10.200.200.2/32" ];
             privateKeyFile = "home/${cfg.user.name}/.config/wireguard/privatekey";
+            dns = [ "192.168.1.2" ];
             peers = [
               {
                 publicKey = "6ZRoIttIUFHhEK/UCOTI491s8sMQcBEJApD/gqDCSmo=";
-                allowedIPs = [ "0.0.0.0/0" ]; # route all traffic or just 10.200.200.0/24 for LAN
-                endpoint = "82.225.65.163:51820";
+                allowedIPs = [
+                  "10.200.200.0/24"
+                  "192.168.1.0/24"
+                ];
+                endpoint = "82.225.65.163:16120";
               }
             ];
           };

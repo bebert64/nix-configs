@@ -25,7 +25,7 @@
             80 # http
             443 # https
             5432 # PostgreSQL forwarding
-            51820 # VPN
+            16120 # VPN
           ];
         };
 
@@ -48,7 +48,7 @@
           interfaces = {
             wg0 = {
               ips = [ "10.200.200.1/24" ];
-              listenPort = 51820;
+              listenPort = 16120;
               privateKeyFile = "/etc/wireguard/privatekey";
               peers = [
                 {
