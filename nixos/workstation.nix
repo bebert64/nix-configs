@@ -71,7 +71,7 @@
         enable = true;
         interfaces = {
           wg0 = {
-            address = [ "10.200.200.2/32" ];
+            ips = [ "10.200.200.2/32" ];
             privateKeyFile = "home/${cfg.user.name}/.config/wireguard/privatekey";
             peers = [
               {
