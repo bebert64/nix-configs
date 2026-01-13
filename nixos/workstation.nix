@@ -67,6 +67,23 @@
         '';
       };
 
+      networking.wireguard = {
+        enable = true;
+        interfaces = {
+          wg0 = {
+            address = [ "10.200.200.2/32" ];
+            privateKeyFile = "home/${cfg.user.name}/.config/wireguard/privatekey";
+            peers = [
+              {
+                publicKey = "6ZRoIttIUFHhEK/UCOTI491s8sMQcBEJApD/gqDCSmo=";
+                allowedIPs = [ "0.0.0.0/0" ]; # route all traffic or just 10.200.200.0/24 for LAN
+                endpoint = "82.225.65.163:51820";
+              }
+            ];
+          };
+        };
+      };
+
       programs = {
         dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;
