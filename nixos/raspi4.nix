@@ -47,10 +47,10 @@
           enable = true;
           interfaces = {
             wg0 = {
-              address = [ "10.200.200.1/24" ]; # VPN subnet
-              listenPort = 51820; # UDP port for VPN
+              ips = [ "10.200.200.1/24" ];
+              listenPort = 51820;
               privateKeyFile = "/etc/wireguard/privatekey";
-              peers = [ ]; # We'll add clients later
+              peers = [ ];
             };
           };
         };
