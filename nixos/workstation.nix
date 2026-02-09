@@ -67,26 +67,6 @@
         '';
       };
 
-      networking.wg-quick = {
-        interfaces = {
-          wg0 = {
-            address = [ "10.200.200.2/32" ];
-            privateKeyFile = "home/${cfg.user.name}/.config/wireguard/privatekey";
-            dns = [ "192.168.1.2" ];
-            peers = [
-              {
-                publicKey = "6ZRoIttIUFHhEK/UCOTI491s8sMQcBEJApD/gqDCSmo=";
-                allowedIPs = [
-                  "10.200.200.0/24"
-                  "192.168.1.0/24"
-                ];
-                endpoint = "82.225.65.163:16120";
-              }
-            ];
-          };
-        };
-      };
-
       programs = {
         dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;

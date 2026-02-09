@@ -26,9 +26,6 @@
             443 # https
             5432 # PostgreSQL forwarding
           ];
-          allowedUDPPorts = [
-            16120 # VPN
-          ];
         };
 
         # Forward port 5432 to 192.168.1.7:5432
@@ -42,24 +39,6 @@
               proto = "tcp";
             }
           ];
-        };
-
-        # VPN server
-        wireguard = {
-          enable = true;
-          interfaces = {
-            wg0 = {
-              ips = [ "10.200.200.1/24" ];
-              listenPort = 16120;
-              privateKeyFile = "/etc/wireguard/privatekey";
-              peers = [
-                {
-                  publicKey = "RkpsY1WJPiyZAj+l/QoY8qGW75rbQBmjAiVphuowkSc=";
-                  allowedIPs = [ "10.200.200.2/32" ]; # VPN IP for this client
-                }
-              ];
-            };
-          };
         };
 
       };
