@@ -2,12 +2,6 @@
   description = "NixOS and HomeManager configurations";
 
   nixConfig = {
-    extra-substituters = [
-      "https://nixos-raspberrypi.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "nixos-raspberrypi.cachix.org-1:4iMO9LXa8BqhU+Rpg6LQKiGa2lsNh/j2oiYLNOQ5sPI="
-    ];
     # Increase download buffer size to avoid warnings when downloading large files
     # 256 MB (268435456 bytes) should be sufficient for most builds
     download-buffer-size = 268435456;
@@ -16,7 +10,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/develop";
 
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso?ref=main";
@@ -44,7 +37,6 @@
     {
       by-db,
       home-manager,
-      nixos-raspberrypi,
       nixpkgs-unstable,
       nixpkgs,
       sops-nix,
@@ -86,21 +78,6 @@
               ;
           };
         };
-
-        raspi5 = nixos-raspberrypi.lib.nixosSystem {
-          modules = [ ./computers/raspi5/configuration.nix ];
-          specialArgs = {
-            inherit
-              nixos-raspberrypi
-              by-db
-              home-manager
-              nixpkgs
-              sops-nix
-              vscode-server
-              ;
-          };
-        };
-
         salon = nixpkgs.lib.nixosSystem {
           modules = [ ./computers/salon/configuration.nix ];
           specialArgs = {
