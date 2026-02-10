@@ -68,16 +68,12 @@ in
         packages = (
           with pkgs;
           [
-            p7zip
             nixd
             nixfmt-rfc-style
-            nodePackages.npm
-            nodePackages.pnpm
-            polkit_gnome
+            p7zip
             rsync
             screen
-            sshfs
-            unrar
+            wget
             yt-dlp
           ]
         );

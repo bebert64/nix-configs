@@ -5,9 +5,14 @@
     port = 2223;
   };
 
-  raspi = {
-    host = "raspi";
+  raspi4 = {
+    host = "raspi4";
     port = 2222;
+  };
+
+  raspi5 = {
+    host = "raspi5";
+    port = 2226;
   };
 
   salon = {
@@ -22,12 +27,12 @@
   };
 
   home-romain = {
-    host = "bureau raspi salon";
+    host = "bureau raspi4 raspi5 salon";
     user = "romain";
   };
 
   home-common = {
-    host = "bureau raspi salon stockly-romainc";
+    host = "bureau raspi4 raspi5 salon stockly-romainc";
     hostname = "82.225.65.163";
   };
 }

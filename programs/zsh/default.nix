@@ -49,7 +49,7 @@
         update = "run-in-nix-repo nix-switch";
         update-dirty = "run-in-nix-repo-dirty nix-switch";
         update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
-        update-raspi = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi && nixos-rebuild switch --target-host raspi --use-remote-sudo --flake .#raspi'";
+        update-raspi4 = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi4 && nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4'";
 
         # Cargo
         tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
@@ -138,12 +138,12 @@
           rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
         }
         wol-ssh() {
-          ssh raspi "wol-by-db $2"
-          while ssh raspi "! ping -c1 $3 &> /dev/null"; do
+          ssh raspi5 "/home/romain/.local/bin/wol-by-db $2"
+          while ssh raspi5 "! ping -c1 $3 &> /dev/null"; do
             echo "$1 is not responding"
             sleep 1
           done
-          ssh $1 -t "xset -display :0.0 dpms force off; zsh -i"
+          ssh $1 -t "zsh -i"
         }
         wb() {
           wol-ssh bureau D4:3D:7E:D8:C3:95 192.168.1.4

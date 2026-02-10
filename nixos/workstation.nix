@@ -59,6 +59,14 @@
         max-jobs = cfg.nix-max-jobs;
       };
 
+      environment = {
+        # Hide direnv diff when entering a directory
+        etc."direnv/direnv.toml".text = ''
+          [global]
+          hide_env_diff = true
+        '';
+      };
+
       programs = {
         dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;

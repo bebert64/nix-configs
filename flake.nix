@@ -1,6 +1,12 @@
 {
   description = "NixOS and HomeManager configurations";
 
+  nixConfig = {
+    # Increase download buffer size to avoid warnings when downloading large files
+    # 256 MB (268435456 bytes) should be sufficient for most builds
+    download-buffer-size = 268435456;
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -59,8 +65,8 @@
           };
         };
 
-        raspi = nixpkgs.lib.nixosSystem {
-          modules = [ ./computers/raspi/configuration.nix ];
+        raspi4 = nixpkgs.lib.nixosSystem {
+          modules = [ ./computers/raspi4/configuration.nix ];
           specialArgs = {
             inherit
               by-db

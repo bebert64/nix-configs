@@ -27,6 +27,7 @@ in
     ../programs/mpc-qt
     ../programs/music
     ../programs/picom
+    ../programs/plex-desktop
     ../programs/polybar
     ../programs/rofi
     ../programs/slack
@@ -80,7 +81,11 @@ in
             inkscape
             microcode-intel # for increased microprocessor performance
             mcomix
+            nodePackages.npm
+            nodePackages.pnpm
+            ntfs3g
             pavucontrol # pulse audio volume controle
+            polkit_gnome
             vlc
           ])
           ++ lib.optionals cfg.wifi.enable (
