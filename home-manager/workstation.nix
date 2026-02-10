@@ -18,7 +18,6 @@ in
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
-    ../programs/direnv
     ../programs/ferdium
     ../programs/firefox
     ../programs/flameshot

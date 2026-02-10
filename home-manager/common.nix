@@ -47,6 +47,7 @@ in
 
   imports = [
     ../programs/btop
+    ../programs/direnv
     ../programs/git
     ../programs/neovim
     ../programs/ranger
