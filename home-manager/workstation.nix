@@ -12,6 +12,7 @@ in
 {
   imports = [
     ./common.nix
+    ../programs/chromium
     ../programs/autorandr
     ../programs/avidemux
     ../programs/calculator
@@ -73,7 +74,6 @@ in
           (with pkgs; [
             anydesk
             arandr # GUI to configure screens positions (need to kill autorandr)
-            chromium
             evince # pdf reader
             filezilla
             # fusee-launcher
@@ -145,11 +145,11 @@ in
             "x-scheme-handler/https" = [ "firefox.desktop" ];
           };
           defaultApplications = {
-            "defaut-web-browser" = [ "firefox.desktop" ];
-            "text/html" = [ "firefox.desktop" ];
-            "text/xml" = [ "firefox.desktop" ];
-            "x-scheme-handler/http" = [ "firefox.desktop" ];
-            "x-scheme-handler/https" = [ "firefox.desktop" ];
+            "defaut-web-browser" = [ "chromium-browser.desktop" ];
+            "text/html" = [ "chromium-browser.desktop" ];
+            "text/xml" = [ "chromium-browser.desktop" ];
+            "x-scheme-handler/http" = [ "chromium-browser.desktop" ];
+            "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
           };
         };
       };
