@@ -235,11 +235,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1770562336,
-        "narHash": "sha256-ub1gpAONMFsT/GU2hV6ZWJjur8rJ6kKxdm9IlCT0j84=",
+        "lastModified": 1770841267,
+        "narHash": "sha256-9xejG0KoqsoKEGp2kVbXRlEYtFFcDTHjidiuX8hGO44=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d6c71932130818840fc8fe9509cf50be8c64634f",
+        "rev": "ec7c70d12ce2fc37cb92aff673dcdca89d187bae",
         "type": "github"
       },
       "original": {
@@ -349,11 +349,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1770734617,
-        "narHash": "sha256-g6K1IJSK6kVdBZMHG/2jETrDutdMxJTzoWpaUKjTVpk=",
+        "lastModified": 1770902636,
+        "narHash": "sha256-tMxEqn1tt5KMDMxlpr01vYpGB2XsIAoASgLEqT99sCc=",
         "ref": "refs/heads/master",
-        "rev": "f37156b00bd1ed811b7a348c80e93ef772a63147",
-        "revCount": 279,
+        "rev": "7e1c85dc8de82508e5af44143cb796073c8bfb54",
+        "revCount": 280,
         "type": "git",
         "url": "ssh://git@github.com/Stockly/Computers.git"
       },
