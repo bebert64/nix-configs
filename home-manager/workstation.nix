@@ -76,7 +76,7 @@ in
             arandr # GUI to configure screens positions (need to kill autorandr)
             evince # pdf reader
             filezilla
-            # fusee-launcher
+            fusee-interfacee-tk
             gnome-keyring
             inkscape
             microcode-intel # for increased microprocessor performance
