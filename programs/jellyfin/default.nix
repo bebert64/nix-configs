@@ -4,8 +4,8 @@
   ...
 }:
 let
-  cfgUser = config.by-db.hmUser;
-  userHome = cfgUser.home.homeDirectory;
+  userConfig = config.by-db.hmUser;
+  userHome = userConfig.home.homeDirectory;
 
   # Instance names
   jellyfinInstance1 = "guitar";

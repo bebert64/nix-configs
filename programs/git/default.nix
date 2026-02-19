@@ -19,12 +19,12 @@
 
   config.programs.git =
     let
-      byDbHomeManager = config.by-db;
+      gitConfig = config.by-db.git;
     in
     {
       enable = true;
       settings = {
-        user = byDbHomeManager.git.user;
+        user = gitConfig.user;
         pull.rebase = "true";
         core = {
           commentchar = "%";
@@ -47,7 +47,7 @@
           cap = "!git commit --amend && git push -u --force-with-lease";
           clb = "!git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done;";
           co = "checkout";
-          com = "!git checkout ${byDbHomeManager.git.mainOrMaster}";
+          com = "!git checkout ${gitConfig.mainOrMaster}";
           cop = "!git commit && git push -u";
           cp = "cherry-pick";
           d = "diff";
@@ -58,10 +58,10 @@
           ma = "merge --abort";
           mc = "merge --continue";
           mcp = "!git merge --continue && git push";
-          mom = "merge --no-edit origin/${byDbHomeManager.git.mainOrMaster}";
-          momp = "!git merge --no-edit origin/${byDbHomeManager.git.mainOrMaster} && git push";
+          mom = "merge --no-edit origin/${gitConfig.mainOrMaster}";
+          momp = "!git merge --no-edit origin/${gitConfig.mainOrMaster} && git push";
           ms = "merge --squash";
-          mum = "merge --ff-only upstream/${byDbHomeManager.git.mainOrMaster}";
+          mum = "merge --ff-only upstream/${gitConfig.mainOrMaster}";
           pfl = "push --force-with-lease";
           pl = "pull";
           pmp = "!git pull && git momp";
@@ -69,7 +69,7 @@
           r = "rebase";
           rc = "rebase --continue";
           ri = "rebase -i";
-          riom = "rebase -i origin/${byDbHomeManager.git.mainOrMaster}";
+          riom = "rebase -i origin/${gitConfig.mainOrMaster}";
           rt = "restore";
           s = "status";
           sp = "stash pop";

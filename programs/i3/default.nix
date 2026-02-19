@@ -6,7 +6,8 @@ in
 {
   options.by-db.i3.exitMode = lib.mkOption {
     type = lib.types.str;
-    description = "This is a hack to share the value with lock.nix, but is not meant to be overriden";
+    internal = true;
+    readOnly = true;
     default = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
   };
 
