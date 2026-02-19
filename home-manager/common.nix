@@ -155,7 +155,7 @@ in
     ../programs/ranger
     ../programs/secrets
     ../programs/ssh
-    ../programs/zsh
+    ../programs/zsh/home-manager.nix
   ];
 
   config = {
