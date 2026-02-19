@@ -7,18 +7,17 @@
 }:
 {
 
-  options.by-db = with lib; {
+  options.byDb = with lib; {
     isHeadphonesOnCommand = mkOption {
       type = types.str;
-      default = 3;
-      description = "Command that should return something if the headphones are on, or nothing if the speaker are on";
+      description = "Command that returns something if headphones are on, nothing if speaker";
     };
   };
 
   config =
     let
-      cfg = config.by-db;
-      colors = cfg.polybar.colors;
+      byDbHomeManager = config.byDb;
+      colors = byDbHomeManager.polybar.colors;
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
@@ -45,7 +44,7 @@
             pkgs.pulseaudio
           ]
         }
-        IS_HEADPHONES_ON=$(${cfg.isHeadphonesOnCommand})
+        IS_HEADPHONES_ON=$(${byDbHomeManager.isHeadphonesOnCommand})
         if [[ $IS_HEADPHONES_ON ]]; then
           echo " "
         else
@@ -54,9 +53,13 @@
       '';
     in
     {
-      by-db-pkgs.music-title = {
+      byDbPkgs.music-title = {
         enable = true;
-        radioFrance.apiKeyFile = "${config.sops.secrets."radio-france/api-key".path}";
+        currentSongsDir = "${config.home.homeDirectory}/.config/by_db/music_title";
+        radioFrance = {
+          apiKeyFile = byDbHomeManager.secrets.radioFranceApiKey;
+          url = "https://openapi.radiofrance.fr/v1/graphql";
+        };
       };
       services.polybar.settings = {
         "module/i3" = {

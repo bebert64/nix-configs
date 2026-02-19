@@ -16,9 +16,9 @@ let
     esac
     tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
   ''}/bin/sshr";
-  open-remote = "${pkgs.writeScriptBin "open-remote" ''
+  openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      grep -P "^Host ([^*]+)$" $HOME/.ssh/config | \
+      grep -P "^Host ([^*]+)$" ${homeDir}/.ssh/config | \
       sed 's/Host //' | \
       tr ' ' '\n' | \
       sort -u | \
@@ -28,7 +28,7 @@ let
     ${sshr} $selection
   ''}/bin/open-remote";
   homeDir = config.home.homeDirectory;
-  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
+  nixPrograms = config.byDb.paths.nixPrograms;
   rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
 in
 {
@@ -45,7 +45,7 @@ in
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${rangerPluginsDir}/
-        ln -sf ${nixConfigsRepo}/programs/ranger/ranger-archives ${rangerPluginsDir}/
+        ln -sf ${nixPrograms}/ranger/ranger-archives ${rangerPluginsDir}/
       '';
     };
     file = {
@@ -58,7 +58,7 @@ in
   xsession.windowManager.i3.config = {
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-      "${modifier}+Shift+r" = "workspace $ws7; exec ${open-remote}";
+      "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
     };
   };
 }

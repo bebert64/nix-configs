@@ -9,8 +9,8 @@
     packages = [ pkgs.udiskie ];
     activation = {
       symlinkUsbMountPoint = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p $HOME/mnt/
-        ln -sf -T /run/media/${config.by-db.username} $HOME/mnt/usb
+        mkdir -p ${config.home.homeDirectory}/mnt/
+        ln -sf -T /run/media/${config.byDb.user.name} ${config.home.homeDirectory}/mnt/usb
       '';
     };
   };

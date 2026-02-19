@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
 
   imports = [
@@ -7,7 +12,7 @@
     ./modules.nix
   ];
 
-  options.by-db.polybar = {
+  options.byDb.polybar = {
     colors = lib.mkOption {
       type = lib.types.attrs;
       default = import ./colors.nix;
@@ -24,7 +29,7 @@
       };
 
       script = ''
-        for BAR in $(${pkgs.coreutils}/bin/cat $HOME/.config/polybar/bars);
+        for BAR in $(${pkgs.coreutils}/bin/cat ${config.home.homeDirectory}/.config/polybar/bars);
         do
           polybar $BAR &
         done'';

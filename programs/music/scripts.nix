@@ -4,7 +4,7 @@ let
   playerctl = "${pkgs.playerctl}/bin/playerctl";
 in
 {
-  playerctl-move = "${writeScriptBin "playerctl-move" ''
+  playerctlMove = "${writeScriptBin "playerctl-move" ''
     CURRENT_PLAYER=$(${playerctl} --list-all | head -n 1)
 
     case $CURRENT_PLAYER in
@@ -13,7 +13,7 @@ in
     esac
   ''}/bin/${playerctl}-move";
 
-  playerctl-restart-or-previous = "${writeScriptBin "playerctl-restart-or-previous" ''
+  playerctlRestartOrPrevious = "${writeScriptBin "playerctl-restart-or-previous" ''
     CURRENT_PLAYER=$(${playerctl} --list-all | head -n 1)
 
     case $CURRENT_PLAYER in

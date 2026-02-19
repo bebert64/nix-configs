@@ -1,6 +1,7 @@
 { config, ... }:
 let
-  user = config.by-db.user;
+  user = config.byDb.user;
+  byDbHomeManager = config.byDb.hmUser.byDb;
 in
 {
   imports = [
@@ -8,21 +9,21 @@ in
     ./hardware-configuration.nix
   ];
 
-  by-db = {
+  byDb = {
     user = {
       name = "user";
       description = "User";
     };
     bluetooth.enable = true;
-    nix-cores = 4;
-    nix-max-jobs = 2;
-    nix-high-ram = "7G";
-    nix-max-ram = "8G";
+    nixCores = 4;
+    nixMaxJobs = 2;
+    nixHighRam = "7G";
+    nixMaxRam = "8G";
   };
 
   home-manager = {
     users.${user.name} = {
-      by-db = {
+      byDb = {
         wifi.enable = true;
         nixConfigsRepo = "nix-config";
         isHeadphonesOnCommand = "pactl info | grep \"Default Sink.*Headphones\"";
@@ -33,9 +34,10 @@ in
           secondary = "HDMI-1";
         };
       };
-      by-db-pkgs.save-autorandr-config = {
+      byDbPkgs.save-autorandr-config = {
         enable = true;
-        default-bars = "eDP-1-tray-off HDMI-1-battery";
+        autorandrConfigsPath = "${byDbHomeManager.paths.nixPrograms}/autorandr.nix";
+        defaultBars = "eDP-1-tray-off HDMI-1-battery";
       };
     };
   };

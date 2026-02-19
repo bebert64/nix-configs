@@ -10,30 +10,38 @@
   imports = [
     home-manager.nixosModules.home-manager
     ../nas.nix
+    ../programs/zsh/nixos.nix
   ];
 
-  options.by-db = with lib; {
+  options.byDb = with lib; {
+    hmUser = mkOption {
+      type = types.attrs;
+      internal = true;
+      readOnly = true;
+      description = "Home Manager user config for the by-db user";
+      default = config.home-manager.users.${config.byDb.user.name};
+    };
     user = {
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
     bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
-    nix-cores = mkOption { type = types.number; };
-    nix-max-jobs = mkOption { type = types.number; };
-    nix-high-ram = mkOption { type = types.str; };
-    nix-max-ram = mkOption { type = types.str; };
+    nixCores = mkOption { type = types.number; };
+    nixMaxJobs = mkOption { type = types.number; };
+    nixHighRam = mkOption { type = types.str; };
+    nixMaxRam = mkOption { type = types.str; };
   };
 
   config =
     let
-      cfg = config.by-db;
+      byDbNixos = config.byDb;
     in
     {
       users = {
-        users.${cfg.user.name} = {
+        users.${byDbNixos.user.name} = {
           isNormalUser = true;
           hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
-          description = "${cfg.user.description}";
+          description = "${byDbNixos.user.description}";
           extraGroups = [
             "networkmanager"
             "wheel"
@@ -46,15 +54,19 @@
       };
 
       home-manager = {
-        users.${cfg.user.name} = {
-          by-db = {
-            username = "${cfg.user.name}";
+        users.${byDbNixos.user.name} = {
+          byDb = {
+            user = {
+              name = byDbNixos.user.name;
+              description = byDbNixos.user.description;
+            };
             git = {
               user = {
                 name = "RomainC";
                 email = "bebert64@gmail.com";
               };
             };
+            bluetooth.enable = byDbNixos.bluetooth.enable;
           };
         };
         backupFileExtension = "bckp";
@@ -97,13 +109,11 @@
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
 
-      programs.zsh.enable = true;
-
       environment = {
         pathsToLink = [ "/libexec" ];
       };
 
-      hardware.bluetooth.enable = cfg.bluetooth.enable;
+      hardware.bluetooth.enable = byDbNixos.bluetooth.enable;
 
       # Select internationalisation properties.
       i18n = {
@@ -140,7 +150,7 @@
       };
 
       # Necessary for remote installation, using --sudo or to get access to additional caches
-      nix.settings.trusted-users = [ "${cfg.user.name}" ];
+      nix.settings.trusted-users = [ "${byDbNixos.user.name}" ];
 
       # This value determines the NixOS release from which the default
       # settings for stateful data, like file locations and database versions

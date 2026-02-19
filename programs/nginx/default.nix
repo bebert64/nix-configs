@@ -1,5 +1,6 @@
 {
   lib,
+  config,
   ...
 }:
 let
@@ -116,7 +117,7 @@ in
 
       "${jellyfinInstance1}.capucina.net" = lib.recursiveUpdate (mkJellyfinVirtualHost 8096) {
         locations."/tabs/" = {
-          alias = "/mnt/NAS/Guitare/Tabs/";
+          alias = "${config.byDb.hmUser.byDb.paths.nasBase}/Guitare/Tabs/";
         };
       };
       "${jellyfinInstance2}.capucina.net" = mkJellyfinVirtualHost 8097;

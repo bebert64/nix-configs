@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
   ];
 
-  by-db.user = {
+  byDb.user = {
     name = "romain";
     description = "Romain";
   };

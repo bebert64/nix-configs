@@ -10,13 +10,13 @@
     ../programs/generative-ai
   ];
 
-  options.by-db = {
+  options.byDb = {
     generativeAi.enable = lib.mkEnableOption "Whether to install generative AI tools";
   };
 
   config =
     let
-      cfg = config.by-db;
+      byDbNixos = config.byDb;
     in
     {
       # Bootloader.
@@ -42,21 +42,18 @@
       };
 
       hardware = {
-        bluetooth.enable = cfg.bluetooth.enable;
+        bluetooth.enable = byDbNixos.bluetooth.enable;
       };
 
       home-manager = {
-        users.${cfg.user.name} = {
+        users.${byDbNixos.user.name} = {
           imports = [ ../home-manager/workstation.nix ];
-          by-db = {
-            bluetooth.enable = cfg.bluetooth.enable;
-          };
         };
       };
 
       nix.settings = {
-        cores = cfg.nix-cores;
-        max-jobs = cfg.nix-max-jobs;
+        cores = byDbNixos.nixCores;
+        max-jobs = byDbNixos.nixMaxJobs;
       };
 
       environment = {
@@ -82,7 +79,7 @@
               {
                 name = "home-manager";
                 start = ''
-                  ${pkgs.runtimeShell} $HOME/.hm-xsession &
+                  ${pkgs.runtimeShell} ${config.byDb.hmUser.home.homeDirectory}/.hm-xsession &
                   waitPID=$!
                 '';
               }
@@ -97,13 +94,13 @@
         udisks2.enable = true; # automount usb keys and drives
         gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
         # Enable the bluetooth daemon.
-        blueman.enable = cfg.bluetooth.enable;
+        blueman.enable = byDbNixos.bluetooth.enable;
       };
 
       systemd = {
         services.nix-daemon.serviceConfig = {
-          MemoryHigh = cfg.nix-high-ram;
-          MemoryMax = cfg.nix-max-ram;
+          MemoryHigh = byDbNixos.nixHighRam;
+          MemoryMax = byDbNixos.nixMaxRam;
         };
 
         user.services.polkit-gnome-authentication-agent-1 = {

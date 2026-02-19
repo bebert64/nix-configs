@@ -44,7 +44,7 @@
       ...
     }:
     let
-      pkgs-unstable = import nixpkgs-unstable {
+      pkgsUnstable = import nixpkgs-unstable {
         system = "x86_64-linux";
         # To use Cursor, we need to allow the installation of non-free software.
         config.allowUnfree = true;
@@ -58,7 +58,7 @@
             inherit
               by-db
               home-manager
-              pkgs-unstable
+              pkgsUnstable
               sops-nix
               ;
 
@@ -84,7 +84,7 @@
             inherit
               by-db
               home-manager
-              pkgs-unstable
+              pkgsUnstable
               sops-nix
               vscode-server
               ;
@@ -98,7 +98,7 @@
             inherit
               by-db
               home-manager
-              pkgs-unstable
+              pkgsUnstable
               sops-nix
               stockly-computers
               ;

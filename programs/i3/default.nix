@@ -1,12 +1,13 @@
 { lib, config, ... }:
 let
-  cfg = config.by-db;
-  exitMode = cfg.i3.exitMode;
+  byDbHomeManager = config.byDb;
+  exitMode = byDbHomeManager.i3.exitMode;
 in
 {
-  options.by-db.i3.exitMode = lib.mkOption {
+  options.byDb.i3.exitMode = lib.mkOption {
     type = lib.types.str;
-    description = "This is a hack to share the value with lock.nix, but is not meant to be overriden";
+    internal = true;
+    readOnly = true;
     default = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
   };
 
@@ -88,11 +89,11 @@ in
               notification = false;
             }
           ]
-          ++ lib.optional cfg.wifi.enable {
+          ++ lib.optional byDbHomeManager.wifi.enable {
             command = "nm-applet";
             notification = false;
           }
-          ++ lib.optional cfg.bluetooth.enable {
+          ++ lib.optional byDbHomeManager.bluetooth.enable {
             command = "blueman-applet";
             notification = false;
           };
@@ -141,9 +142,9 @@ in
           set $ws17 "17"
           set $ws18 "18"
           set $ws19 "19:󰸉"
-          workspace $ws19 output ${cfg.screens.primary}
+          workspace $ws19 output ${byDbHomeManager.screens.primary}
           set $ws20 "20:󰸉"
-          workspace $ws20 output ${cfg.screens.secondary}
+          workspace $ws20 output ${byDbHomeManager.screens.secondary}
         '';
       };
     };

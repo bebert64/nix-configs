@@ -6,26 +6,24 @@
   ...
 }:
 let
-  inherit (lib) mkOption types;
-  inherit (types) int;
   inherit (pkgs)
     alock
     jq
     xidlehook
     writeScriptBin
     ;
-  cfg = config.by-db;
+  byDbHomeManager = config.byDb;
   modifier = config.xsession.windowManager.i3.config.modifier;
 in
 {
-  options.by-db = {
-    minutes-before-lock = mkOption {
-      type = int;
+  options.byDb = {
+    minutesBeforeLock = lib.mkOption {
+      type = lib.types.int;
       default = 3;
       description = "Minutes before the computer locks itself";
     };
-    minutes-from-lock-to-sleep = mkOption {
-      type = int;
+    minutesFromLockToSleep = lib.mkOption {
+      type = lib.types.int;
       default = 7;
       description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };
@@ -69,7 +67,7 @@ in
           systemctl --user restart polybar
 
           pkill xidlehook || echo "xidlehook already killed"
-          xidlehook --timer ${toString (cfg.minutes-before-lock * 60)} 'lock' ' ' &
+          xidlehook --timer ${toString (byDbHomeManager.minutesBeforeLock * 60)} 'lock' ' ' &
         '';
       killXidlehook = ''pkill xidlehook || echo "xidlehook already killed"'';
       lockMode = "Lock: l[o]ck, [d]on't sleep";
@@ -81,14 +79,16 @@ in
         (lockScript "lock" ''
           ${killXidlehook}
           xidlehook --timer ${
-            toString (cfg.minutes-from-lock-to-sleep * 60)
+            toString (byDbHomeManager.minutesFromLockToSleep * 60)
           } 'suspend-if-no-incoming-ssh' ' ' &
         '')
         # Manual sleep (press s): always suspend immediately, ignore SSH
         (lockScript "lock-sleep" "sleep 1 && systemctl suspend")
         (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
-          xidlehook --timer ${toString (cfg.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
+          xidlehook --timer ${
+            toString (byDbHomeManager.minutesFromLockToSleep * 60)
+          } 'xset dpms force off' ' ' &
         '')
         suspendIfNoIncomingSsh
       ];
@@ -97,7 +97,7 @@ in
         startup = [
           {
             command = "xidlehook --timer ${
-              toString (cfg.minutes-before-lock or 3 * 60)
+              toString (byDbHomeManager.minutesBeforeLock or 3 * 60)
             } 'lock-wait-sleep' ' ' &";
             notification = false;
           }
@@ -106,7 +106,7 @@ in
           "--release ${modifier}+o" = "mode \"${lockMode}\"";
         };
         modes = {
-          ${cfg.i3.exitMode} = {
+          ${byDbHomeManager.i3.exitMode} = {
             "--release s" = "exec lock-sleep, mode default";
           };
 

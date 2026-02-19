@@ -5,8 +5,8 @@
   ...
 }:
 let
-  user = config.by-db.user;
-  homeDirectory = "/home/${user.name}";
+  user = config.byDb.user;
+  homeDirectory = config.users.users.${user.name}.home;
 in
 {
   imports = [
@@ -15,21 +15,21 @@ in
     vscode-server.nixosModules.default
   ];
 
-  by-db = {
+  byDb = {
     user = {
       name = "romain";
       description = "Romain";
     };
-    nix-cores = 4;
-    nix-max-jobs = 2;
-    nix-high-ram = "22G";
-    nix-max-ram = "24G";
+    nixCores = 4;
+    nixMaxJobs = 2;
+    nixHighRam = "22G";
+    nixMaxRam = "24G";
     generativeAi.enable = true;
   };
 
   home-manager.users.${user.name} = {
-    by-db = {
-      minutes-from-lock-to-sleep = 17;
+    byDb = {
+      minutesFromLockToSleep = 17;
       screens = {
         primary = "HDMI-0";
       };
