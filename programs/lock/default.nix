@@ -27,6 +27,11 @@ in
       default = 7;
       description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };
+    lockPasswordHash = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = "SHA-256 hash for alock authentication. When set, alock uses this hash instead of PAM (system password). Generate with: echo -n \"password\" | sha256sum | awk '{print $1}'";
+    };
   };
 
   config =
@@ -59,7 +64,7 @@ in
           ${cmd}
 
           # Lock
-          alock -bg none -cursor blank
+          alock ${if byDbHomeManager.lockPasswordHash != null then "-auth hash:type=sha256,hash=${byDbHomeManager.lockPasswordHash}" else ""} -bg none -cursor blank
 
           # Restore original config
           i3-msg workspace "$wk1"

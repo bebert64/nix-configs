@@ -30,6 +30,7 @@ in
   home-manager.users.${user.name} = {
     byDb = {
       minutesFromLockToSleep = 17;
+      lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
       screens = {
         primary = "HDMI-0";
       };
@@ -52,6 +53,10 @@ in
   };
 
   services = {
+    displayManager.autoLogin = {
+      enable = true;
+      user = "romain";
+    };
     vscode-server = {
       enable = true;
       installPath = [
