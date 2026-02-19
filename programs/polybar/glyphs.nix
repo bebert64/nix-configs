@@ -2,8 +2,7 @@
 {
   services.polybar.settings =
     let
-      byDbHomeManager = config.by-db;
-      colors = byDbHomeManager.polybar.colors;
+      colors = config.by-db.polybar.colors;
     in
     {
       "glyphs" = {
