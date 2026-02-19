@@ -3,16 +3,28 @@
   lib,
   ...
 }:
+let
+  byDbHomeManager = config.by-db;
+in
 {
-  options.by-db.mainCodingRepo = lib.mkOption {
-    type = lib.types.str;
-    default = "code";
-    description = "Name of the main coding repo directory — used for cdr and related zsh helpers";
+  options.by-db = {
+    mainCodingRepo = lib.mkOption {
+      type = lib.types.str;
+      default = "${config.home.homeDirectory}/code";
+      description = "Name of the main coding repo directory — used for cdr and related zsh helpers";
+    };
+
+    mainCodingPath = lib.mkOption {
+      type = lib.types.str;
+      internal = true;
+      readOnly = true;
+      default = "${config.home.homeDirectory}/${config.by-db.mainCodingRepo}";
+      description = "Full path to the main coding repo";
+    };
   };
 
   config.programs.zsh =
     let
-      byDbHomeManager = config.by-db;
       formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
     in
     {
@@ -51,31 +63,21 @@
         cccw = "run-in-code-repo 'cargo clean && cargo check'";
         cctfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'";
       };
-      history = {
-        size = 200000;
-        save = 200000;
-        extended = true; # save timestamps
-      };
-      oh-my-zsh = {
-        enable = true;
-      };
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
       initContent = ''
         # Helpers
         run-in-nix-repo() {
-          cd ~/${byDbHomeManager.nixConfigsRepo}
+          cd ${byDbHomeManager.nixConfigsPath}
           git pull || return 1
           (eval "$*")
           cd -
         }
         run-in-nix-repo-dirty() {
-          cd ~/${byDbHomeManager.nixConfigsRepo}
+          cd ${byDbHomeManager.nixConfigsPath}
           (eval "$*")
           cd -
         }
         run-in-code-repo() {
-          cd ~/${byDbHomeManager.mainCodingRepo}
+          cd ${byDbHomeManager.mainCodingPath}
           (eval "$*")
           cd -
         }
@@ -115,9 +117,9 @@
         }
 
         # Cdr and completion
-        compdef '_files -W "$HOME/${byDbHomeManager.mainCodingRepo}" -/' cdr
+        compdef '_files -W "${byDbHomeManager.mainCodingPath}" -/' cdr
         cdr() {
-          cd "$HOME/${byDbHomeManager.mainCodingRepo}/$@"
+          cd "${byDbHomeManager.mainCodingPath}/$@"
         }
 
         # Other

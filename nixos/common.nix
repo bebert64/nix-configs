@@ -10,6 +10,7 @@
   imports = [
     home-manager.nixosModules.home-manager
     ../nas.nix
+    ../programs/zsh/nixos.nix
   ];
 
   options.by-db = with lib; {
@@ -107,8 +108,6 @@
 
       # Configure console keymap
       console.keyMap = lib.mkDefault "fr";
-
-      programs.zsh.enable = true;
 
       environment = {
         pathsToLink = [ "/libexec" ];
