@@ -88,6 +88,11 @@ in
         cd "${byDbHomeManager.paths.mainCodingRepo}/$@"
       }
 
+      compdef '_files -W "${byDbHomeManager.paths.nixConfigs}" -/' cdn
+      cdn() {
+        cd "${byDbHomeManager.paths.nixConfigs}/$@"
+      }
+
       sync-wallpapers() {
         rsync -avh --exclude "Fond pour téléphone" ${byDbHomeManager.paths.nasBase}/Wallpapers/ ${homeDir}/wallpapers
         rsync -avh ${homeDir}/wallpapers/ ${byDbHomeManager.paths.nasBase}/Wallpapers
