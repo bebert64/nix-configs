@@ -40,32 +40,32 @@ in
   ];
 
   options.by-db = {
-    bluetooth.enable = mkEnableOption "Whether to activate or not the blueman applet";
     screens = {
-      primary = mkOption {
-        type = str;
+      primary = lib.mkOption {
+        type = lib.types.str;
         description = "The primary screen";
       };
-      secondary = mkOption {
-        type = str;
+      secondary = lib.mkOption {
+        type = lib.types.str;
         default = "";
         description = "The secondary screen";
       };
     };
-    setHeadphonesCommand = mkOption {
-      type = str;
+    setHeadphonesCommand = lib.mkOption {
+      type = lib.types.str;
       description = "Command to redirect the sound output to headphones";
     };
-    setSpeakerCommand = mkOption {
-      type = str;
+    setSpeakerCommand = lib.mkOption {
+      type = lib.types.str;
       description = "Command to redirect the sound output to speaker";
     };
-    wifi.enable = mkEnableOption "Whether or not to install network manager";
+    wifi.enable = lib.mkEnableOption "Whether or not to install network manager";
   };
 
   config =
     let
       cfg = config.by-db;
+      homeDir = config.home.homeDirectory;
     in
     {
       home = {
@@ -108,27 +108,61 @@ in
       by-db-pkgs = {
         video-manager = {
           enable = true;
-          stash.apiKey = "${config.sops.secrets."stash/api-key".path}";
+          stash = cfg.stashApiConfig;
         };
         guitar-tutorials = {
           app.enable = true;
-          firefox.ffsync = cfg.ffsync.bebert64;
-          guitarService.accessToken = "${config.sops.secrets."jellyfin/guitar/access-token".path}";
+          service.runAt = "*-*-* 02:00:00";
+          tabsDir = "${cfg.paths.nasBase}/Guitare/Tabs";
+          ytDlp = {
+            downloadDir = "${cfg.paths.nasBase}/Guitare/YouTube";
+            cookiePath = "${homeDir}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
+          };
+          firefox = {
+            guitarTutoFolder = "toolbar/Guitar tutos";
+            ffsync = cfg.ffsync.bebert64 // {
+              sessionFile = "${homeDir}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
+            };
+          };
+          guitarService = cfg.guitarService;
         };
         shortcuts = {
           app.enable = true;
+          service.runAt = "*-*-* 00:00:00";
           postgres = cfg.postgres;
-          firefox.ffsync = cfg.ffsync.shortcutsDb;
-          stashApiConfig.apiKey = "${config.sops.secrets."stash/api-key".path}";
+          stashApiConfig = cfg.stashApiConfig;
+          shortcutsDirs = cfg.shortcutsDirs;
+          parallelDownloads = "4";
+          firefox = {
+            ffsync = cfg.ffsync.shortcutsDb // {
+              sessionFile = "${homeDir}/.config/by_db/shortcuts-firefox-sync-client.secret";
+            };
+            videosToDownloadFolder = "toolbar/DL";
+            comixToDownloadFolder = "toolbar/Other";
+          };
         };
         wallpapers-manager = {
           services = {
             change = {
               enable = true;
               commandArgs = "--distribution fifty-fifty";
+              frequency = "1h";
+            };
+            download = {
+              bookmarkDir = "toolbar/Wallpaper/Download";
+              runAt = "*-*-* 23:00:00";
             };
           };
-          firefox.ffsync = cfg.ffsync.bebert64;
+          wallpapersDir = "${homeDir}/wallpapers";
+          singleScreenDirName = "SingleScreen";
+          dualScreenDirName = "DualScreen";
+          animatedDirName = "Animated";
+          firefox = {
+            ffsync = cfg.ffsync.bebert64 // {
+              sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
+            };
+            wallpapersFolder = "toolbar/Wallpaper/Download";
+          };
         };
       };
 

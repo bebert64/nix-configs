@@ -19,13 +19,13 @@ let
 in
 {
   options.by-db = {
-    minutes-before-lock = mkOption {
-      type = int;
+    minutes-before-lock = lib.mkOption {
+      type = lib.types.int;
       default = 3;
       description = "Minutes before the computer locks itself";
     };
-    minutes-from-lock-to-sleep = mkOption {
-      type = int;
+    minutes-from-lock-to-sleep = lib.mkOption {
+      type = lib.types.int;
       default = 7;
       description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };

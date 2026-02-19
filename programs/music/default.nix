@@ -46,6 +46,7 @@ in
   by-db-pkgs = {
     strawberry-radios = {
       activationScript.enable = true;
+      db = "${config.home.homeDirectory}/.local/share/strawberry/strawberry/strawberry.db";
       radios = [
         {
           name = "FIP";

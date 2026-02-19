@@ -4,16 +4,10 @@
   ...
 }:
 {
-  options.by-db = with lib; {
-    nixConfigsRepo = mkOption {
-      type = types.str;
-      default = "nix-configs";
-    };
-    mainCodingRepo = mkOption {
-      type = types.str;
-      default = "code";
-    };
-
+  options.by-db.mainCodingRepo = lib.mkOption {
+    type = lib.types.str;
+    default = "code";
+    description = "Name of the main coding repo directory — used for cdr and related zsh helpers";
   };
 
   config.programs.zsh =

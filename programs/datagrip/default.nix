@@ -8,7 +8,7 @@ let
   modifier = config.xsession.windowManager.i3.config.modifier;
   homeDir = config.home.homeDirectory;
   datagripProjectsDir = "${homeDir}/datagrip-projects";
-  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
+  nixConfigsPath = config.by-db.nixConfigsPath;
   rofi = config.rofi.defaultCmd;
 in
 {
@@ -17,11 +17,11 @@ in
     activation = {
       symlinkDatagripProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${datagripProjectsDir}/Perso/.idea
-        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/perso/dataSources.xml ${datagripProjectsDir}/Perso/.idea/dataSources.xml
-        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/perso/dataSources.local.xml ${datagripProjectsDir}/Perso/.idea/dataSources.local.xml
+        ln -sf ${nixConfigsPath}/programs/datagrip/datasources/perso/dataSources.xml ${datagripProjectsDir}/Perso/.idea/dataSources.xml
+        ln -sf ${nixConfigsPath}/programs/datagrip/datasources/perso/dataSources.local.xml ${datagripProjectsDir}/Perso/.idea/dataSources.local.xml
         mkdir -p ${datagripProjectsDir}/Stockly/.idea
-        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/stockly/dataSources.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.xml
-        ln -sf ${nixConfigsRepo}/programs/datagrip/datasources/stockly/dataSources.local.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.local.xml
+        ln -sf ${nixConfigsPath}/programs/datagrip/datasources/stockly/dataSources.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.xml
+        ln -sf ${nixConfigsPath}/programs/datagrip/datasources/stockly/dataSources.local.xml ${datagripProjectsDir}/Stockly/.idea/dataSources.local.xml
       '';
     };
   };

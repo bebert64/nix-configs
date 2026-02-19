@@ -35,6 +35,7 @@ in
       };
       by-db-pkgs.save-autorandr-config = {
         enable = true;
+        autorandr-configs-path = "/home/${user.name}/nix-config/programs/configs/autorandr.nix";
         default-bars = "eDP-1-tray-off HDMI-1-battery";
       };
     };

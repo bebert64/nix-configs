@@ -10,8 +10,7 @@
   options.by-db = with lib; {
     isHeadphonesOnCommand = mkOption {
       type = types.str;
-      default = 3;
-      description = "Command that should return something if the headphones are on, or nothing if the speaker are on";
+      description = "Command that returns something if headphones are on, nothing if speaker";
     };
   };
 
@@ -56,7 +55,11 @@
     {
       by-db-pkgs.music-title = {
         enable = true;
-        radioFrance.apiKeyFile = "${config.sops.secrets."radio-france/api-key".path}";
+        currentSongsDir = "${config.home.homeDirectory}/.config/by_db/music_title";
+        radioFrance = {
+          apiKeyFile = cfg.secrets.radioFranceApiKey;
+          url = "https://openapi.radiofrance.fr/v1/graphql";
+        };
       };
       services.polybar.settings = {
         "module/i3" = {

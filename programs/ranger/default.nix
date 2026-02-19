@@ -28,7 +28,7 @@ let
     ${sshr} $selection
   ''}/bin/open-remote";
   homeDir = config.home.homeDirectory;
-  nixConfigsRepo = "${homeDir}/${config.by-db.nixConfigsRepo}";
+  nixConfigsPath = config.by-db.nixConfigsPath;
   rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
 in
 {
@@ -45,7 +45,7 @@ in
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${rangerPluginsDir}/
-        ln -sf ${nixConfigsRepo}/programs/ranger/ranger-archives ${rangerPluginsDir}/
+        ln -sf ${nixConfigsPath}/programs/ranger/ranger-archives ${rangerPluginsDir}/
       '';
     };
     file = {

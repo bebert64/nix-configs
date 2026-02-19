@@ -13,6 +13,12 @@
   ];
 
   options.by-db = with lib; {
+    hmUser = mkOption {
+      type = types.attrs;
+      internal = true;
+      readOnly = true;
+      default = config.home-manager.users.${config.by-db.user.name};
+    };
     user = {
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
@@ -48,7 +54,10 @@
       home-manager = {
         users.${cfg.user.name} = {
           by-db = {
-            username = "${cfg.user.name}";
+            user = {
+              name = cfg.user.name;
+              description = cfg.user.description;
+            };
             git = {
               user = {
                 name = "RomainC";

@@ -14,7 +14,7 @@ in
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [ "/home/${cfg.username}/.ssh/id_ed25519" ];
+    age.sshKeyPaths = [ "/home/${cfg.user.name}/.ssh/id_ed25519" ];
     secrets = {
       "1password-secret-keys/bebert64" = { };
       "1password-secret-keys/stockly" = { };
@@ -42,7 +42,7 @@ in
       }
 
       sops-edit () {
-        cd $HOME/${cfg.nixConfigsRepo}/programs/secrets
+        cd ${cfg.nixConfigsPath}/programs/secrets
         sops secrets.yaml || true
         cd -
       }

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  cfgUser = config.home-manager.users.${config.by-db.user.name};
+  cfgUser = config.by-db.hmUser;
   userHome = cfgUser.home.homeDirectory;
 
   # Instance names

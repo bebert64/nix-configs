@@ -4,7 +4,7 @@
   ...
 }:
 let
-  cfgUser = config.home-manager.users.${config.by-db.user.name};
+  cfgUser = config.by-db.hmUser;
   stashDir = "${cfgUser.home.homeDirectory}/.stash";
   stash = pkgs.stash;
 in
