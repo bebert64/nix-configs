@@ -29,7 +29,10 @@
           postgresBackupDir = "${byDbHomeManager.paths.nasBase}/Backup/postgres";
           stashApp = {
             database = {
-              apiConfig = byDbHomeManager.stashApiConfigLocal;
+              apiConfig = {
+                url = "http://localhost:9999/graphql";
+                apiKey = byDbHomeManager.secrets.stashApiKey;
+              };
               file = "${stashDir}/stash-go.sqlite";
               otherFilesToRemove = [
                 "${stashDir}/stash-go.sqlite-shm"
@@ -105,7 +108,7 @@
               sessionFile = "${homeDir}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
             };
           };
-          guitarService = byDbHomeManager.guitarService;
+          jellyfin = byDbHomeManager.guitarJellyfinService;
         };
 
         shortcuts = {

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 {
 
   imports = [
@@ -24,7 +24,7 @@
       };
 
       script = ''
-        for BAR in $(${pkgs.coreutils}/bin/cat $HOME/.config/polybar/bars);
+        for BAR in $(${pkgs.coreutils}/bin/cat ${config.home.homeDirectory}/.config/polybar/bars);
         do
           polybar $BAR &
         done'';

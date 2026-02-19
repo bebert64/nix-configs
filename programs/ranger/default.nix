@@ -18,7 +18,7 @@ let
   ''}/bin/sshr";
   open-remote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      grep -P "^Host ([^*]+)$" $HOME/.ssh/config | \
+      grep -P "^Host ([^*]+)$" ${homeDir}/.ssh/config | \
       sed 's/Host //' | \
       tr ' ' '\n' | \
       sort -u | \

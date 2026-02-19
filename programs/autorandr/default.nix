@@ -5,14 +5,15 @@
   ...
 }:
 let
+  homeDir = config.home.homeDirectory;
   hooks-postswitch = bars: profile-name: ''
-    echo "${bars}" > $HOME/.config/polybar/bars
+    echo "${bars}" > ${homeDir}/.config/polybar/bars
     systemctl --user restart wallpapers-manager
     systemctl --user restart polybar
-    echo "${profile-name}" > $HOME/.config/autorandr/current
+    echo "${profile-name}" > ${homeDir}/.config/autorandr/current
   '';
   autorandr-force = "${pkgs.writeScriptBin "autorandr-force" ''
-    echo "" > $HOME/.config/autorandr/current && autorandr -c
+    echo "" > ${homeDir}/.config/autorandr/current && autorandr -c
   ''}/bin/autorandr-force";
 in
 {
@@ -20,7 +21,7 @@ in
     enable = true;
     hooks.preswitch = {
       cmd = ''
-        if [[ $(cat $HOME/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
+        if [[ $(cat ${homeDir}/.config/autorandr/current) == $AUTORANDR_CURRENT_PROFILE ]]; then
           pkill autorandr
         fi
       '';

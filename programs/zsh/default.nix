@@ -130,8 +130,8 @@ in
           nix run "nixpkgs#$1" -- "''${@:2}"
         }
         sync-wallpapers() {
-          rsync -avh --exclude "Fond pour téléphone" $HOME/mnt/NAS/Wallpapers/ ~/wallpapers
-          rsync -avh ~/wallpapers/ $HOME/mnt/NAS/Wallpapers
+          rsync -avh --exclude "Fond pour téléphone" ${byDbHomeManager.paths.nasBase}/Wallpapers/ ${config.home.homeDirectory}/wallpapers
+          rsync -avh ${config.home.homeDirectory}/wallpapers/ ${byDbHomeManager.paths.nasBase}/Wallpapers
         }
         wol-ssh() {
           ssh raspi5 "/home/romain/.local/bin/wol-by-db $2"
@@ -148,7 +148,7 @@ in
           wol-ssh salon 74:56:3c:36:71:db 192.168.1.6
         }
 
-        path+="$HOME/.cargo/bin"
+        path+="${config.home.homeDirectory}/.cargo/bin"
         eval "$(direnv hook zsh)"
       '';
       plugins = [

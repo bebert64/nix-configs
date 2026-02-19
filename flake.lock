@@ -10,16 +10,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1767973414,
-        "narHash": "sha256-Os41xGqqdjRXzrnMg1bMKDQVJ0kSEqLOOMwH3GaipUE=",
-        "ref": "main",
-        "rev": "9026c25cd2ff32b88ba5acd2a6e6b0ab0e7680f2",
-        "revCount": 156,
+        "lastModified": 1771516790,
+        "narHash": "sha256-uftgNiO9pLX3rzT45k3+RZbv8Wup+iaISitR0CXdiqM=",
+        "ref": "move-config-default-to-nix-repo",
+        "rev": "b3aa2c71fcc984be3e5be9ed80c8c7cb0110e876",
+        "revCount": 164,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
       "original": {
-        "ref": "main",
+        "ref": "move-config-default-to-nix-repo",
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       }
@@ -284,11 +284,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1765680428,
-        "narHash": "sha256-fyPmRof9SZeI14ChPk5rVPOm7ISiiGkwGCunkhM+eUg=",
+        "lastModified": 1771470520,
+        "narHash": "sha256-PvytHcaYN5cPUll7FB70mXv1rRsIBRmu47fFfq3haxA=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "eb3898d8ef143d4bf0f7f2229105fc51c7731b2f",
+        "rev": "a1d4cc1f264c45d3745af0d2ca5e59d460e58777",
         "type": "github"
       },
       "original": {

@@ -124,7 +124,7 @@ in
               sessionFile = "${homeDir}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
             };
           };
-          guitarService = byDbHomeManager.guitarService;
+          jellyfin = byDbHomeManager.guitarJellyfinService;
         };
         shortcuts = {
           app.enable = true;

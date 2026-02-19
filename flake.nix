@@ -11,7 +11,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso?ref=main";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=move-config-default-to-nix-repo";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

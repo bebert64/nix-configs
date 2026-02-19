@@ -16,9 +16,9 @@ let
       ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
-      cursor $HOME/code
+      cursor ${homeDir}/code
     elif [[ $selection ]]; then
-      cursor $HOME/code/$selection
+      cursor ${homeDir}/code/$selection
     fi
   ''}/bin/open-local";
   open-cerberus = "${pkgs.writeScriptBin "open-cerberus" ''

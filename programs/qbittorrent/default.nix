@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
@@ -12,7 +13,7 @@
       Service = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'while [ ! -d /mnt/NAS ]; do sleep 1; done; ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox'";
+        ExecStart = "${pkgs.bash}/bin/bash -c 'while [ ! -d ${config.by-db.paths.nasBase} ]; do sleep 1; done; ${pkgs.qbittorrent-nox}/bin/qbittorrent-nox'";
 
       };
       Install = {

@@ -6,12 +6,13 @@
 }:
 let
   inherit (config.by-db) setHeadphonesCommand setSpeakerCommand;
+  homeDir = config.home.homeDirectory;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   open-dir = "${pkgs.writeScriptBin "open-dir" ''
-    base_dir=$HOME/mnt/NAS/Musique
+    base_dir=${config.by-db.paths.nasBase}/Musique
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
       grep -v "@eaDir"| \
