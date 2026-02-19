@@ -9,9 +9,9 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgsUnstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso?ref=move-config-default-to-nix-repo";
+      url = "git+ssh://git@github.com/bebert64/perso?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -36,7 +36,7 @@
     {
       by-db,
       home-manager,
-      nixpkgsUnstable,
+      nixpkgs-unstable,
       nixpkgs,
       sops-nix,
       stockly-computers,
@@ -44,7 +44,7 @@
       ...
     }:
     let
-      pkgsUnstable = import nixpkgsUnstable {
+      pkgsUnstable = import nixpkgs-unstable {
         system = "x86_64-linux";
         # To use Cursor, we need to allow the installation of non-free software.
         config.allowUnfree = true;
