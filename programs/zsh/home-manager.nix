@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 let
@@ -25,7 +26,7 @@ in
       update = "run-in-nix-repo nix-switch";
       update-dirty = "run-in-nix-repo-dirty nix-switch";
       update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
-      update-raspi4 = "run-in-nix-repo systemd-inhibit 'nixos-rebuild build --flake .#raspi4 && nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4'";
+      update-raspi4 = "run-in-nix-repo 'inhibit-and-sleep nixos-rebuild build --flake .#raspi4 && nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4'";
 
       # Cargo
       tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
@@ -34,8 +35,19 @@ in
       cctfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo clean && cargo test'";
     };
     initContent = ''
+      inhibit-and-sleep() {
+        systemd-inhibit bash -c "$*"
+        local exit_code=$?
+        local idle_ms=$(${pkgs.xprintidle}/bin/xprintidle)
+        local sleep_threshold_ms=${toString ((byDbHomeManager.minutesBeforeLock + byDbHomeManager.minutesFromLockToSleep) * 60 * 1000)}
+        if (( idle_ms >= sleep_threshold_ms )); then
+          systemctl suspend
+        fi
+        return $exit_code
+      }
+
       nix-switch() {
-        sudo systemd-inhibit nixos-rebuild switch --flake .#
+        inhibit-and-sleep 'nixos-rebuild build --flake .# && sudo nixos-rebuild switch --flake .#'
       }
 
       run-in-nix-repo() {
