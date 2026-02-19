@@ -6,7 +6,7 @@
 }:
 let
   user = config.by-db.user;
-  homeDirectory = "/home/${user.name}";
+  homeDirectory = config.home.homeDirectory;
 in
 {
   imports = [

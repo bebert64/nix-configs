@@ -126,20 +126,20 @@
 
   config =
     let
-      cfg = config.by-db;
+      byDbHomeManager = config.by-db;
     in
     {
       by-db = {
         stashApiConfig = {
           url = "https://stash.capucina.net/graphql";
-          apiKey = cfg.secrets.stashApiKey;
+          apiKey = byDbHomeManager.secrets.stashApiKey;
         };
         stashApiConfigLocal = {
           url = "http://localhost:9999/graphql";
-          apiKey = cfg.secrets.stashApiKey;
+          apiKey = byDbHomeManager.secrets.stashApiKey;
         };
         shortcutsDirs = {
-          root = "${cfg.paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/";
+          root = "${byDbHomeManager.paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/";
           toCut = "Videos a couper";
           cut = "Videos cut";
           cutTmp = "Temp cut";
@@ -149,13 +149,13 @@
         guitarService = {
           url = "https://guitar.capucina.net";
           userId = "b4817b818e794ffd9ae445048320ed44";
-          accessToken = cfg.secrets.jellyfinGuitarAccessToken;
+          accessToken = byDbHomeManager.secrets.jellyfinGuitarAccessToken;
         };
       };
 
       home = {
-        username = "${cfg.user.name}";
-        homeDirectory = "/home/${cfg.user.name}";
+        username = "${byDbHomeManager.user.name}";
+        homeDirectory = "/home/${byDbHomeManager.user.name}";
 
         packages = (
           with pkgs;

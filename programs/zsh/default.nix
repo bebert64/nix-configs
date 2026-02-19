@@ -12,7 +12,7 @@
 
   config.programs.zsh =
     let
-      cfg = config.by-db;
+      byDbHomeManager = config.by-db;
       formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
     in
     {
@@ -64,18 +64,18 @@
       initContent = ''
         # Helpers
         run-in-nix-repo() {
-          cd ~/${cfg.nixConfigsRepo}
+          cd ~/${byDbHomeManager.nixConfigsRepo}
           git pull || return 1
           (eval "$*")
           cd -
         }
         run-in-nix-repo-dirty() {
-          cd ~/${cfg.nixConfigsRepo}
+          cd ~/${byDbHomeManager.nixConfigsRepo}
           (eval "$*")
           cd -
         }
         run-in-code-repo() {
-          cd ~/${cfg.mainCodingRepo}
+          cd ~/${byDbHomeManager.mainCodingRepo}
           (eval "$*")
           cd -
         }
@@ -115,9 +115,9 @@
         }
 
         # Cdr and completion
-        compdef '_files -W "$HOME/${cfg.mainCodingRepo}" -/' cdr
+        compdef '_files -W "$HOME/${byDbHomeManager.mainCodingRepo}" -/' cdr
         cdr() {
-          cd "$HOME/${cfg.mainCodingRepo}/$@"
+          cd "$HOME/${byDbHomeManager.mainCodingRepo}/$@"
         }
 
         # Other

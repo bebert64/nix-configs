@@ -13,10 +13,10 @@
 
   config =
     let
-      cfg = config.by-db;
+      byDbNixos = config.by-db;
     in
     {
-      home-manager.users.${cfg.user.name}.imports = [ ../home-manager/raspi4.nix ];
+      home-manager.users.${byDbNixos.user.name}.imports = [ ../home-manager/raspi4.nix ];
 
       networking = {
         firewall = {

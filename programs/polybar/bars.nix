@@ -2,7 +2,8 @@
 {
   services.polybar.settings =
     let
-      colors = config.by-db.polybar.colors;
+      byDbHomeManager = config.by-db;
+      colors = byDbHomeManager.polybar.colors;
     in
     {
       mainbar = {

@@ -16,8 +16,8 @@
 
   config =
     let
-      cfg = config.by-db;
-      colors = cfg.polybar.colors;
+      byDbHomeManager = config.by-db;
+      colors = byDbHomeManager.polybar.colors;
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [
@@ -44,7 +44,7 @@
             pkgs.pulseaudio
           ]
         }
-        IS_HEADPHONES_ON=$(${cfg.isHeadphonesOnCommand})
+        IS_HEADPHONES_ON=$(${byDbHomeManager.isHeadphonesOnCommand})
         if [[ $IS_HEADPHONES_ON ]]; then
           echo " "
         else
@@ -57,7 +57,7 @@
         enable = true;
         currentSongsDir = "${config.home.homeDirectory}/.config/by_db/music_title";
         radioFrance = {
-          apiKeyFile = cfg.secrets.radioFranceApiKey;
+          apiKeyFile = byDbHomeManager.secrets.radioFranceApiKey;
           url = "https://openapi.radiofrance.fr/v1/graphql";
         };
       };

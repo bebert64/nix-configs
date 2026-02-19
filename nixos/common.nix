@@ -33,14 +33,14 @@
 
   config =
     let
-      cfg = config.by-db;
+      byDbNixos = config.by-db;
     in
     {
       users = {
-        users.${cfg.user.name} = {
+        users.${byDbNixos.user.name} = {
           isNormalUser = true;
           hashedPassword = "$y$j9T$tfVkqx8wSszbCd1IrY7eH.$ZWUxuTCMxC84rmMzpIcEl7wGkfRywng7Swn4pdqI7S5";
-          description = "${cfg.user.description}";
+          description = "${byDbNixos.user.description}";
           extraGroups = [
             "networkmanager"
             "wheel"
@@ -53,11 +53,11 @@
       };
 
       home-manager = {
-        users.${cfg.user.name} = {
+        users.${byDbNixos.user.name} = {
           by-db = {
             user = {
-              name = cfg.user.name;
-              description = cfg.user.description;
+              name = byDbNixos.user.name;
+              description = byDbNixos.user.description;
             };
             git = {
               user = {
@@ -65,7 +65,7 @@
                 email = "bebert64@gmail.com";
               };
             };
-            bluetooth.enable = cfg.bluetooth.enable;
+            bluetooth.enable = byDbNixos.bluetooth.enable;
           };
         };
         backupFileExtension = "bckp";
@@ -114,7 +114,7 @@
         pathsToLink = [ "/libexec" ];
       };
 
-      hardware.bluetooth.enable = cfg.bluetooth.enable;
+      hardware.bluetooth.enable = byDbNixos.bluetooth.enable;
 
       # Select internationalisation properties.
       i18n = {
@@ -151,7 +151,7 @@
       };
 
       # Necessary for remote installation, using --sudo or to get access to additional caches
-      nix.settings.trusted-users = [ "${cfg.user.name}" ];
+      nix.settings.trusted-users = [ "${byDbNixos.user.name}" ];
 
       # This value determines the NixOS release from which the default
       # settings for stateful data, like file locations and database versions

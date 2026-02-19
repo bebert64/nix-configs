@@ -5,8 +5,8 @@
   ...
 }:
 let
-  cfg = config.by-db;
-  inherit (cfg) setHeadphonesCommand setSpeakerCommand;
+  byDbHomeManager = config.by-db;
+  inherit (byDbHomeManager) setHeadphonesCommand setSpeakerCommand;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";

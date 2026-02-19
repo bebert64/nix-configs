@@ -5,7 +5,7 @@
   ...
 }:
 let
-  cfg = config.by-db;
+  byDbHomeManager = config.by-db;
   SymlinkPath = config.sops.defaultSymlinkPath;
 in
 {
@@ -14,7 +14,7 @@ in
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [ "/home/${cfg.user.name}/.ssh/id_ed25519" ];
+    age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
     secrets = {
       "1password-secret-keys/bebert64" = { };
       "1password-secret-keys/stockly" = { };
@@ -42,7 +42,7 @@ in
       }
 
       sops-edit () {
-        cd ${cfg.nixConfigsPath}/programs/secrets
+        cd ${byDbHomeManager.nixConfigsPath}/programs/secrets
         sops secrets.yaml || true
         cd -
       }

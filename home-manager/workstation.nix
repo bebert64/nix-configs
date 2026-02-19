@@ -64,7 +64,7 @@ in
 
   config =
     let
-      cfg = config.by-db;
+      byDbHomeManager = config.by-db;
       homeDir = config.home.homeDirectory;
     in
     {
@@ -87,7 +87,7 @@ in
             polkit_gnome
             vlc
           ])
-          ++ lib.optionals cfg.wifi.enable (
+          ++ lib.optionals byDbHomeManager.wifi.enable (
             with pkgs;
             [
               networkmanager
@@ -108,33 +108,33 @@ in
       by-db-pkgs = {
         video-manager = {
           enable = true;
-          stash = cfg.stashApiConfig;
+          stash = byDbHomeManager.stashApiConfig;
         };
         guitar-tutorials = {
           app.enable = true;
           service.runAt = "*-*-* 02:00:00";
-          tabsDir = "${cfg.paths.nasBase}/Guitare/Tabs";
+          tabsDir = "${byDbHomeManager.paths.nasBase}/Guitare/Tabs";
           ytDlp = {
-            downloadDir = "${cfg.paths.nasBase}/Guitare/YouTube";
+            downloadDir = "${byDbHomeManager.paths.nasBase}/Guitare/YouTube";
             cookiePath = "${homeDir}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
           };
           firefox = {
             guitarTutoFolder = "toolbar/Guitar tutos";
-            ffsync = cfg.ffsync.bebert64 // {
+            ffsync = byDbHomeManager.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
             };
           };
-          guitarService = cfg.guitarService;
+          guitarService = byDbHomeManager.guitarService;
         };
         shortcuts = {
           app.enable = true;
           service.runAt = "*-*-* 00:00:00";
-          postgres = cfg.postgres;
-          stashApiConfig = cfg.stashApiConfig;
-          shortcutsDirs = cfg.shortcutsDirs;
+          postgres = byDbHomeManager.postgres;
+          stashApiConfig = byDbHomeManager.stashApiConfig;
+          shortcutsDirs = byDbHomeManager.shortcutsDirs;
           parallelDownloads = "4";
           firefox = {
-            ffsync = cfg.ffsync.shortcutsDb // {
+            ffsync = byDbHomeManager.ffsync.shortcutsDb // {
               sessionFile = "${homeDir}/.config/by_db/shortcuts-firefox-sync-client.secret";
             };
             videosToDownloadFolder = "toolbar/DL";
@@ -158,7 +158,7 @@ in
           dualScreenDirName = "DualScreen";
           animatedDirName = "Animated";
           firefox = {
-            ffsync = cfg.ffsync.bebert64 // {
+            ffsync = byDbHomeManager.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
             };
             wallpapersFolder = "toolbar/Wallpaper/Download";
