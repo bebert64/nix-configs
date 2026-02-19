@@ -8,7 +8,7 @@
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
   homeDir = config.home.homeDirectory;
-  nixConfigsPath = config.by-db.nixConfigsPath;
+  nixConfigs = config.by-db.paths.nixConfigs;
   rofi = config.rofi.defaultCmd;
   open-local = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
@@ -64,7 +64,7 @@ in
       "${modifier}+Control+v" = "workspace $ws3; exec ${open-local}";
       "${modifier}+Shift+v" = "workspace $ws3; exec ${open-cerberus}";
       "${modifier}+Mod1+v" = "workspace $ws3; exec ${open-salon}";
-      "${modifier}+Control+n" = "workspace $ws3; exec cursor ${nixConfigsPath}";
+      "${modifier}+Control+n" = "workspace $ws3; exec cursor ${nixConfigs}";
       "${modifier}+Mod1+n" =
         "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+salon/home/romain/nix-configs";
     };

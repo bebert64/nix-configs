@@ -66,13 +66,13 @@ in
       initContent = ''
         # Helpers
         run-in-nix-repo() {
-          cd ${byDbHomeManager.nixConfigsPath}
+          cd ${byDbHomeManager.paths.nixConfigs}
           git pull || return 1
           (eval "$*")
           cd -
         }
         run-in-nix-repo-dirty() {
-          cd ${byDbHomeManager.nixConfigsPath}
+          cd ${byDbHomeManager.paths.nixConfigs}
           (eval "$*")
           cd -
         }

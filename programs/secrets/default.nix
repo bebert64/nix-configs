@@ -42,7 +42,7 @@ in
       }
 
       sops-edit () {
-        cd ${byDbHomeManager.nixConfigsPath}/programs/secrets
+        cd ${byDbHomeManager.paths.nixPrograms}/secrets
         sops secrets.yaml || true
         cd -
       }

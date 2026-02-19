@@ -62,23 +62,30 @@
         default = "shortcuts_dev";
       };
     };
-    paths = {
-      nasBase = lib.mkOption {
-        type = lib.types.str;
-        default = "/mnt/NAS";
-      };
-    };
     nixConfigsRepo = lib.mkOption {
       type = lib.types.str;
       default = "nix-configs";
       description = "Name of the nix configs repo directory (e.g. nix-configs or nix-config)";
     };
-    nixConfigsPath = lib.mkOption {
-      type = lib.types.str;
-      internal = true;
-      readOnly = true;
-      default = "${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}";
-      description = "Full path to the nix configs repo";
+    paths = {
+      nasBase = lib.mkOption {
+        type = lib.types.str;
+        default = "/mnt/NAS";
+      };
+      nixConfigs = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}";
+        description = "Full path to the nix configs repo";
+      };
+      nixPrograms = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${config.by-db.paths.nixConfigs}/programs";
+        description = "Full path to the programs directory in the nix configs repo";
+      };
     };
     secrets = {
       stashApiKey = lib.mkOption {
