@@ -79,7 +79,7 @@
               {
                 name = "home-manager";
                 start = ''
-                  ${pkgs.runtimeShell} $HOME/.hm-xsession &
+                  ${pkgs.runtimeShell} ${config.by-db.hmUser.home.homeDirectory}/.hm-xsession &
                   waitPID=$!
                 '';
               }

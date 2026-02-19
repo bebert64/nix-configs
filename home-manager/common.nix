@@ -73,7 +73,7 @@ in
     paths = {
       nasBase = lib.mkOption {
         type = lib.types.str;
-        default = "/mnt/NAS";
+        description = "Base path for NAS mount point — set by nas.nix";
       };
       nixConfigs = lib.mkOption {
         type = lib.types.str;
