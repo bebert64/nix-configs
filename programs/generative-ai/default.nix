@@ -5,14 +5,14 @@
   ...
 }:
 let
-  userConfig = config.by-db.hmUser;
+  userConfig = config.byDb.hmUser;
   homeDir = userConfig.home.homeDirectory;
   comfyuiDir = "${homeDir}/ai/comfyui";
   comfyuiPort = 8188;
   comfyuiPortStr = toString comfyuiPort;
 in
 {
-  config = lib.mkIf config.by-db.generativeAi.enable {
+  config = lib.mkIf config.byDb.generativeAi.enable {
     services = {
       ollama = {
         enable = true;
@@ -36,7 +36,7 @@ in
     users = {
       groups.comfyshare = { };
       users = {
-        ${config.by-db.user.name} = {
+        ${config.byDb.user.name} = {
           extraGroups = [
             "docker"
             "comfyshare"

@@ -5,14 +5,14 @@
   ...
 }:
 let
-  inherit (config.by-db) setHeadphonesCommand setSpeakerCommand;
+  inherit (config.byDb) setHeadphonesCommand setSpeakerCommand;
   homeDir = config.home.homeDirectory;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
-  open-dir = "${pkgs.writeScriptBin "open-dir" ''
-    base_dir=${config.by-db.paths.nasBase}/Musique
+  openDir = "${pkgs.writeScriptBin "open-dir" ''
+    base_dir=${config.byDb.paths.nasBase}/Musique
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
       grep -v "@eaDir"| \
@@ -30,8 +30,8 @@ let
     strawberry --play-playlist "$playlist_title" &
   ''}/bin/open-dir";
   inherit (import ./scripts.nix { inherit pkgs; })
-    playerctl-move
-    playerctl-restart-or-previous
+    playerctlMove
+    playerctlRestartOrPrevious
     ;
 in
 {
@@ -43,10 +43,10 @@ in
     spotify
   ];
 
-  by-db-pkgs = {
+  byDbPkgs = {
     strawberry-radios = {
       activationScript.enable = true;
-      db = "${config.home.homeDirectory}/.local/share/strawberry/strawberry/strawberry.db";
+      db = "${homeDir}/.local/share/strawberry/strawberry/strawberry.db";
       radios = [
         {
           name = "FIP";
@@ -124,10 +124,10 @@ in
       in
       {
         ${music_mode} = {
-          "${modifier}+Left" = " exec ${playerctl-restart-or-previous}";
+          "${modifier}+Left" = " exec ${playerctlRestartOrPrevious}";
           "${modifier}+Right" = "exec ${playerctl} next";
-          "Left" = "exec ${playerctl-move} - 10";
-          "Right" = "exec ${playerctl-move} + 10";
+          "Left" = "exec ${playerctlMove} - 10";
+          "Right" = "exec ${playerctlMove} + 10";
           "Up" = "exec ${playerctl} volume 0.1+";
           "Down" = "exec ${playerctl} volume 0.1-";
           "space" = "exec ${playerctl} play-pause, mode default";
@@ -136,7 +136,7 @@ in
           "l" = "workspace $ws10, exec strawberry, mode default";
           "o" = "workspace $ws10, exec spotify, mode default";
           "r" = "exec choose-radios, mode default";
-          "d" = "exec ${open-dir}, mode default";
+          "d" = "exec ${openDir}, mode default";
           # Allows to restart strawberry after it has crashed
           "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
           "${modifier}+m" = "mode default";

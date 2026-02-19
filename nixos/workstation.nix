@@ -10,13 +10,13 @@
     ../programs/generative-ai
   ];
 
-  options.by-db = {
+  options.byDb = {
     generativeAi.enable = lib.mkEnableOption "Whether to install generative AI tools";
   };
 
   config =
     let
-      byDbNixos = config.by-db;
+      byDbNixos = config.byDb;
     in
     {
       # Bootloader.
@@ -52,8 +52,8 @@
       };
 
       nix.settings = {
-        cores = byDbNixos.nix-cores;
-        max-jobs = byDbNixos.nix-max-jobs;
+        cores = byDbNixos.nixCores;
+        max-jobs = byDbNixos.nixMaxJobs;
       };
 
       environment = {
@@ -79,7 +79,7 @@
               {
                 name = "home-manager";
                 start = ''
-                  ${pkgs.runtimeShell} ${config.by-db.hmUser.home.homeDirectory}/.hm-xsession &
+                  ${pkgs.runtimeShell} ${config.byDb.hmUser.home.homeDirectory}/.hm-xsession &
                   waitPID=$!
                 '';
               }
@@ -99,8 +99,8 @@
 
       systemd = {
         services.nix-daemon.serviceConfig = {
-          MemoryHigh = byDbNixos.nix-high-ram;
-          MemoryMax = byDbNixos.nix-max-ram;
+          MemoryHigh = byDbNixos.nixHighRam;
+          MemoryMax = byDbNixos.nixMaxRam;
         };
 
         user.services.polkit-gnome-authentication-agent-1 = {

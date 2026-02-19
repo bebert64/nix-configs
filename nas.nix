@@ -13,7 +13,7 @@ let
   nasMountPoint = "/mnt/NAS";
   nasName = "NasLaFouillouse";
   nasPort = "5000";
-  homeMountDir = "${config.by-db.hmUser.home.homeDirectory}/mnt/";
+  homeMountDir = "${config.byDb.hmUser.home.homeDirectory}/mnt/";
   mountNas = writeScriptBin "mount-nas" ''
     PATH=${
       makeBinPath [
@@ -91,8 +91,8 @@ in
     unmountNas
   ];
 
-  home-manager.users.${config.by-db.user.name} = {
-    by-db.paths.nasBase = nasMountPoint;
+  home-manager.users.${config.byDb.user.name} = {
+    byDb.paths.nasBase = nasMountPoint;
     programs.zsh.shellAliases = {
       mnas = "mount-nas";
       umnas = "unmount-nas";

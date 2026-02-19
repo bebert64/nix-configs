@@ -4,7 +4,7 @@
   ...
 }:
 let
-  userConfig = config.by-db.hmUser;
+  userConfig = config.byDb.hmUser;
   stashDir = "${userConfig.home.homeDirectory}/.stash";
   stash = pkgs.stash;
 in

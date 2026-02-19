@@ -8,7 +8,7 @@ let
   modifier = config.xsession.windowManager.i3.config.modifier;
   homeDir = config.home.homeDirectory;
   datagripProjectsDir = "${homeDir}/datagrip-projects";
-  nixDatagrip = "${config.by-db.paths.nixPrograms}/datagrip/datasources";
+  nixDatagrip = "${config.byDb.paths.nixPrograms}/datagrip/datasources";
   rofi = config.rofi.defaultCmd;
 in
 {

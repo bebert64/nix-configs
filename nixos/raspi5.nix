@@ -10,7 +10,7 @@
 
   config =
     let
-      byDbNixos = config.by-db;
+      byDbNixos = config.byDb;
     in
     {
       home-manager.users.${byDbNixos.user.name}.imports = [ ../home-manager/raspi5.nix ];

@@ -6,13 +6,13 @@
 }:
 let
   homeDir = config.home.homeDirectory;
-  hooks-postswitch = bars: profile-name: ''
+  hooksPostswitch = bars: profileName: ''
     echo "${bars}" > ${homeDir}/.config/polybar/bars
     systemctl --user restart wallpapers-manager
     systemctl --user restart polybar
-    echo "${profile-name}" > ${homeDir}/.config/autorandr/current
+    echo "${profileName}" > ${homeDir}/.config/autorandr/current
   '';
-  autorandr-force = "${pkgs.writeScriptBin "autorandr-force" ''
+  autorandrForce = "${pkgs.writeScriptBin "autorandr-force" ''
     echo "" > ${homeDir}/.config/autorandr/current && autorandr -c
   ''}/bin/autorandr-force";
 in
@@ -51,7 +51,7 @@ in
             rate = "60.01";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-tom";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-off HDMI-1-battery" "stockly-tom";
       };
       zizou = {
         fingerprint = {
@@ -77,7 +77,7 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "zizou";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-off HDMI-1-battery" "zizou";
       };
       factory-s = {
         fingerprint = {
@@ -103,7 +103,7 @@ in
             rate = "60.01";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "factory-s";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-off HDMI-1-battery" "factory-s";
       };
       bureau = {
         fingerprint = {
@@ -130,7 +130,7 @@ in
             rate = "59.96";
           };
         };
-        hooks.postswitch = hooks-postswitch "HDMI-1 HDMI-2" "bureau";
+        hooks.postswitch = hooksPostswitch "HDMI-1 HDMI-2" "bureau";
       };
       salon0 = {
         fingerprint = {
@@ -146,7 +146,7 @@ in
             rate = "60.00";
           };
         };
-        hooks.postswitch = hooks-postswitch "HDMI-0" "salon0";
+        hooks.postswitch = hooksPostswitch "HDMI-0" "salon0";
       };
       salon2 = {
         fingerprint = {
@@ -162,7 +162,7 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "HDMI-2" "salon2";
+        hooks.postswitch = hooksPostswitch "HDMI-2" "salon2";
       };
       stockly-romainc = {
         fingerprint = {
@@ -179,7 +179,7 @@ in
             rate = "120.00";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-on" "stockly-romainc";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-on" "stockly-romainc";
       };
       stockly-romainc-bureau = {
         fingerprint = {
@@ -205,7 +205,7 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-off HDMI-1-battery" "stockly-romainc-bureau";
       };
       stockly-bureau-1 = {
         fingerprint = {
@@ -231,7 +231,7 @@ in
             rate = "59.95";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-off HDMI-1-battery" "stockly-bureau-1";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-off HDMI-1-battery" "stockly-bureau-1";
       };
       grenoble-yohan = {
         fingerprint = {
@@ -257,7 +257,7 @@ in
             rate = "60.00";
           };
         };
-        hooks.postswitch = hooks-postswitch "eDP-1-tray-on eDP-1-tray-off-on-hdmi1" "grenoble-yohan";
+        hooks.postswitch = hooksPostswitch "eDP-1-tray-on eDP-1-tray-off-on-hdmi1" "grenoble-yohan";
       };
     };
   };
@@ -268,12 +268,12 @@ in
     in
     {
       keybindings = lib.mkOptionDefault {
-        "${modifier}+Shift+a" = "exec ${autorandr-force}";
+        "${modifier}+Shift+a" = "exec ${autorandrForce}";
       };
       startup = [
         # Force refresh at boot, in case the config stored on disk is not the one currently applied
         {
-          command = "${autorandr-force}";
+          command = "${autorandrForce}";
           notification = false;
         }
         {

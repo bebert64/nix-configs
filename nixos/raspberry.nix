@@ -11,7 +11,7 @@
 
   config =
     let
-      byDbNixos = config.by-db;
+      byDbNixos = config.byDb;
     in
     {
       # Necessary for user's systemd services to start at boot (before user logs in)

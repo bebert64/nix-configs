@@ -13,28 +13,28 @@
     ../programs/zsh/nixos.nix
   ];
 
-  options.by-db = with lib; {
+  options.byDb = with lib; {
     hmUser = mkOption {
       type = types.attrs;
       internal = true;
       readOnly = true;
       description = "Home Manager user config for the by-db user";
-      default = config.home-manager.users.${config.by-db.user.name};
+      default = config.home-manager.users.${config.byDb.user.name};
     };
     user = {
       name = mkOption { type = types.str; };
       description = mkOption { type = types.str; };
     };
     bluetooth.enable = mkEnableOption "Whether or not to activate the global bluetooth daemon";
-    nix-cores = mkOption { type = types.number; };
-    nix-max-jobs = mkOption { type = types.number; };
-    nix-high-ram = mkOption { type = types.str; };
-    nix-max-ram = mkOption { type = types.str; };
+    nixCores = mkOption { type = types.number; };
+    nixMaxJobs = mkOption { type = types.number; };
+    nixHighRam = mkOption { type = types.str; };
+    nixMaxRam = mkOption { type = types.str; };
   };
 
   config =
     let
-      byDbNixos = config.by-db;
+      byDbNixos = config.byDb;
     in
     {
       users = {
@@ -55,7 +55,7 @@
 
       home-manager = {
         users.${byDbNixos.user.name} = {
-          by-db = {
+          byDb = {
             user = {
               name = byDbNixos.user.name;
               description = byDbNixos.user.description;

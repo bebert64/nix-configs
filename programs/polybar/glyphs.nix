@@ -2,7 +2,7 @@
 {
   services.polybar.settings =
     let
-      colors = config.by-db.polybar.colors;
+      colors = config.byDb.polybar.colors;
     in
     {
       "glyphs" = {

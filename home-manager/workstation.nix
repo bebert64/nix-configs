@@ -39,7 +39,7 @@ in
     by-db.module.x86_64-linux
   ];
 
-  options.by-db = {
+  options.byDb = {
     screens = {
       primary = lib.mkOption {
         type = lib.types.str;
@@ -64,7 +64,7 @@ in
 
   config =
     let
-      byDbHomeManager = config.by-db;
+      byDbHomeManager = config.byDb;
       homeDir = config.home.homeDirectory;
     in
     {
@@ -105,14 +105,13 @@ in
         caffeine.enable = true;
       };
 
-      by-db-pkgs = {
+      byDbPkgs = {
         video-manager = {
           enable = true;
           stash = byDbHomeManager.stashApiConfig;
         };
         guitar-tutorials = {
           app.enable = true;
-          service.runAt = "*-*-* 02:00:00";
           tabsDir = "${byDbHomeManager.paths.nasBase}/Guitare/Tabs";
           ytDlp = {
             downloadDir = "${byDbHomeManager.paths.nasBase}/Guitare/YouTube";
@@ -128,7 +127,6 @@ in
         };
         shortcuts = {
           app.enable = true;
-          service.runAt = "*-*-* 00:00:00";
           postgres = byDbHomeManager.postgres;
           stashApiConfig = byDbHomeManager.stashApiConfig;
           shortcutsDirs = byDbHomeManager.shortcutsDirs;
@@ -147,10 +145,6 @@ in
               enable = true;
               commandArgs = "--distribution fifty-fifty";
               frequency = "1h";
-            };
-            download = {
-              bookmarkDir = "toolbar/Wallpaper/Download";
-              runAt = "*-*-* 23:00:00";
             };
           };
           wallpapersDir = "${homeDir}/wallpapers";

@@ -7,7 +7,7 @@
 }:
 {
 
-  options.by-db = with lib; {
+  options.byDb = with lib; {
     isHeadphonesOnCommand = mkOption {
       type = types.str;
       description = "Command that returns something if headphones are on, nothing if speaker";
@@ -16,7 +16,7 @@
 
   config =
     let
-      byDbHomeManager = config.by-db;
+      byDbHomeManager = config.byDb;
       colors = byDbHomeManager.polybar.colors;
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
@@ -53,7 +53,7 @@
       '';
     in
     {
-      by-db-pkgs.music-title = {
+      byDbPkgs.music-title = {
         enable = true;
         currentSongsDir = "${config.home.homeDirectory}/.config/by_db/music_title";
         radioFrance = {

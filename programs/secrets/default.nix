@@ -5,7 +5,7 @@
   ...
 }:
 let
-  byDbHomeManager = config.by-db;
+  byDbHomeManager = config.byDb;
   SymlinkPath = config.sops.defaultSymlinkPath;
 in
 {

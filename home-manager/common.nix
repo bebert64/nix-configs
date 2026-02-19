@@ -5,10 +5,10 @@
   ...
 }:
 let
-  byDbHomeManager = config.by-db;
+  byDbHomeManager = config.byDb;
 in
 {
-  options.by-db = {
+  options.byDb = {
     bluetooth.enable = lib.mkOption {
       type = lib.types.bool;
       description = "Enable bluetooth (synced from NixOS by-db.bluetooth.enable)";
@@ -70,6 +70,11 @@ in
       default = "nix-configs";
       description = "Name of the nix configs repo directory (e.g. nix-configs or nix-config)";
     };
+    mainCodingRepo = lib.mkOption {
+      type = lib.types.str;
+      default = "code";
+      description = "Name of the main coding repo directory";
+    };
     paths = {
       nasBase = lib.mkOption {
         type = lib.types.str;
@@ -79,15 +84,22 @@ in
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${config.home.homeDirectory}/${config.by-db.nixConfigsRepo}";
+        default = "${config.home.homeDirectory}/${config.byDb.nixConfigsRepo}";
         description = "Full path to the nix configs repo";
       };
       nixPrograms = lib.mkOption {
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${config.by-db.paths.nixConfigs}/programs";
+        default = "${config.byDb.paths.nixConfigs}/programs";
         description = "Full path to the programs directory in the nix configs repo";
+      };
+      mainCodingRepo = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${config.home.homeDirectory}/${config.byDb.mainCodingRepo}";
+        description = "Full path to the main coding repo";
       };
     };
     secrets = {

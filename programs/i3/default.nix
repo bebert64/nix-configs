@@ -1,10 +1,10 @@
 { lib, config, ... }:
 let
-  byDbHomeManager = config.by-db;
+  byDbHomeManager = config.byDb;
   exitMode = byDbHomeManager.i3.exitMode;
 in
 {
-  options.by-db.i3.exitMode = lib.mkOption {
+  options.byDb.i3.exitMode = lib.mkOption {
     type = lib.types.str;
     internal = true;
     readOnly = true;

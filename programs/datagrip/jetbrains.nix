@@ -1,12 +1,12 @@
 { pkgs, lib, ... }:
 
 let
-  ja-jetfilter-base-url = "https://ipfs.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i";
-  ja-netfilter = pkgs.stdenv.mkDerivation {
+  jaJetfilterBaseUrl = "https://ipfs.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i";
+  jaNetfilter = pkgs.stdenv.mkDerivation {
     # https://jetbra.in/s
     name = "ja-netfilter";
     src = pkgs.fetchzip {
-      url = "${ja-jetfilter-base-url}/files/jetbra-8f6785eac5e6e7e8b20e6174dd28bb19d8da7550.zip";
+      url = "${jaJetfilterBaseUrl}/files/jetbra-8f6785eac5e6e7e8b20e6174dd28bb19d8da7550.zip";
       hash = "sha256-FvjwrmRE9xXkDIIkOyxVEFdycYa/t2Z0EgBueV+26BQ=";
     };
     installPhase = ''
@@ -18,13 +18,13 @@ let
     "pycharm" = "PC";
     "idea" = "II";
   };
-  jetbrains-keys = pkgs.callPackage (
+  jetbrainsKeys = pkgs.callPackage (
     { pkgs, stdenvNoCC }:
     stdenvNoCC.mkDerivation {
       name = "jetbrains-keys";
 
       src = pkgs.fetchurl {
-        url = ja-jetfilter-base-url;
+        url = jaJetfilterBaseUrl;
         hash = "sha256-/ojbOi/nXxnMEMbz9RDyVz01/a/20SW9GxG/Wvjzmic=";
       };
       dontUnpack = true;
@@ -48,7 +48,7 @@ let
           export PATH="${lib.makeBinPath runtimeInputs}:\$PATH"
           PRODUCT_CODE="\''${1-}"
           if [ -z "\$PRODUCT_CODE" ]; then
-            xdg-open "${ja-jetfilter-base-url}"
+            xdg-open "${jaJetfilterBaseUrl}"
           else
             ACTIVATION_OUTPUT_FILE="\''${2-}"
             if [ -n "\$ACTIVATION_OUTPUT_FILE" ]; then echo "Product code: \$PRODUCT_CODE"; fi
@@ -70,51 +70,47 @@ let
         '';
     }
   ) { };
-  with-ja-netfilter = builtins.mapAttrs (
+  withJaNetfilter = builtins.mapAttrs (
     name: product:
     product.overrideAttrs (oldAttrs: {
-      postFixup =
-        (oldAttrs.postFixup or "")
-        + ''
-          set -eo pipefail
+      postFixup = (oldAttrs.postFixup or "") + ''
+        set -eo pipefail
 
-          VM_OPTIONS_FILE_PATH=$(${pkgs.jq}/bin/jq -r '.launch[].vmOptionsFilePath' "$out/$pname/product-info.json")
-          cat <<EOF >> $out/$pname/$VM_OPTIONS_FILE_PATH
+        VM_OPTIONS_FILE_PATH=$(${pkgs.jq}/bin/jq -r '.launch[].vmOptionsFilePath' "$out/$pname/product-info.json")
+        cat <<EOF >> $out/$pname/$VM_OPTIONS_FILE_PATH
 
-          --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
-          --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
+        --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
+        --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-          -javaagent:${ja-netfilter}/ja-netfilter.jar=jetbrains
-          EOF
-        '';
+        -javaagent:${jaNetfilter}/ja-netfilter.jar=jetbrains
+        EOF
+      '';
     })
   ) pkgs.jetbrains;
-  with-auto-activation = builtins.mapAttrs (
+  withAutoActivation = builtins.mapAttrs (
     name: product:
     product.overrideAttrs (oldAttrs: {
-      postFixup =
-        (oldAttrs.postFixup or "")
-        + ''
-          PRODUCT_INFO_JSON="$out/$pname/product-info.json"
-          IDE_BIN_PATH=$(${pkgs.jq}/bin/jq -r '.launch[].launcherPath' "$PRODUCT_INFO_JSON")
-          PRODUCT_CODE="${
-            product_code_overrides.${name}
-              or (product_code_overrides.${builtins.head (lib.splitString "-" name)}
-              or ''$(${pkgs.jq}/bin/jq -r '.productCode' "$PRODUCT_INFO_JSON")''
-              )
-          }"
-          APPDATA="\$HOME/.config/JetBrains/$(${pkgs.jq}/bin/jq -r '.dataDirectoryName' $PRODUCT_INFO_JSON)"
-          KEY_FILE_PREFIX=$(${pkgs.jq}/bin/jq -r '.launch[].launcherPath' $PRODUCT_INFO_JSON)
-          KEY_FILE_PREFIX=$(basename $KEY_FILE_PREFIX)
-          KEY_FILE_PREFIX=''${KEY_FILE_PREFIX%.*}
-          sed -i "2i${jetbrains-keys}/bin/jetbrains-keys '$PRODUCT_CODE' \"$APPDATA/$KEY_FILE_PREFIX.key\"" "$out/$pname/$IDE_BIN_PATH"
-        '';
+      postFixup = (oldAttrs.postFixup or "") + ''
+        PRODUCT_INFO_JSON="$out/$pname/product-info.json"
+        IDE_BIN_PATH=$(${pkgs.jq}/bin/jq -r '.launch[].launcherPath' "$PRODUCT_INFO_JSON")
+        PRODUCT_CODE="${
+          product_code_overrides.${name}
+            or (product_code_overrides.${builtins.head (lib.splitString "-" name)}
+            or ''$(${pkgs.jq}/bin/jq -r '.productCode' "$PRODUCT_INFO_JSON")''
+            )
+        }"
+        APPDATA="\$HOME/.config/JetBrains/$(${pkgs.jq}/bin/jq -r '.dataDirectoryName' $PRODUCT_INFO_JSON)"
+        KEY_FILE_PREFIX=$(${pkgs.jq}/bin/jq -r '.launch[].launcherPath' $PRODUCT_INFO_JSON)
+        KEY_FILE_PREFIX=$(basename $KEY_FILE_PREFIX)
+        KEY_FILE_PREFIX=''${KEY_FILE_PREFIX%.*}
+        sed -i "2i${jetbrainsKeys}/bin/jetbrains-keys '$PRODUCT_CODE' \"$APPDATA/$KEY_FILE_PREFIX.key\"" "$out/$pname/$IDE_BIN_PATH"
+      '';
     })
-  ) with-ja-netfilter;
+  ) withJaNetfilter;
 in
 
-with-auto-activation
+withAutoActivation
 // {
-  no-auto-activation = with-ja-netfilter;
-  inherit jetbrains-keys;
+  noAutoActivation = withJaNetfilter;
+  inherit jetbrainsKeys;
 }

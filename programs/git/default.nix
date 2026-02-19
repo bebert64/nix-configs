@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  options.by-db.git =
+  options.byDb.git =
     with lib;
     with types;
     {
@@ -19,7 +19,7 @@
 
   config.programs.git =
     let
-      gitConfig = config.by-db.git;
+      gitConfig = config.byDb.git;
     in
     {
       enable = true;

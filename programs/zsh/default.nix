@@ -4,25 +4,9 @@
   ...
 }:
 let
-  byDbHomeManager = config.by-db;
+  byDbHomeManager = config.byDb;
 in
 {
-  options.by-db = {
-    mainCodingRepo = lib.mkOption {
-      type = lib.types.str;
-      default = "${config.home.homeDirectory}/code";
-      description = "Name of the main coding repo directory — used for cdr and related zsh helpers";
-    };
-
-    mainCodingPath = lib.mkOption {
-      type = lib.types.str;
-      internal = true;
-      readOnly = true;
-      default = "${config.home.homeDirectory}/${config.by-db.mainCodingRepo}";
-      description = "Full path to the main coding repo";
-    };
-  };
-
   config.programs.zsh =
     let
       formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
@@ -77,7 +61,7 @@ in
           cd -
         }
         run-in-code-repo() {
-          cd ${byDbHomeManager.mainCodingPath}
+          cd ${byDbHomeManager.paths.mainCodingRepo}
           (eval "$*")
           cd -
         }
@@ -117,9 +101,9 @@ in
         }
 
         # Cdr and completion
-        compdef '_files -W "${byDbHomeManager.mainCodingPath}" -/' cdr
+        compdef '_files -W "${byDbHomeManager.paths.mainCodingRepo}" -/' cdr
         cdr() {
-          cd "${byDbHomeManager.mainCodingPath}/$@"
+          cd "${byDbHomeManager.paths.mainCodingRepo}/$@"
         }
 
         # Other

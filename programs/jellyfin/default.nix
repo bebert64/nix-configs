@@ -4,7 +4,7 @@
   ...
 }:
 let
-  userConfig = config.by-db.hmUser;
+  userConfig = config.byDb.hmUser;
   userHome = userConfig.home.homeDirectory;
 
   # Instance names

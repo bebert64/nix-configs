@@ -14,13 +14,13 @@
 
   config =
     let
-      byDbHomeManager = config.by-db;
+      byDbHomeManager = config.byDb;
       homeDir = config.home.homeDirectory;
       stashDir = "${homeDir}/.stash";
       stashBackupDir = "${byDbHomeManager.paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
     in
     {
-      by-db-pkgs = {
+      byDbPkgs = {
         backup = {
           service = {
             enable = true;
@@ -131,10 +131,6 @@
 
         wallpapers-manager = {
           services = {
-            change = {
-              commandArgs = "";
-              frequency = "1h";
-            };
             download = {
               enable = true;
               bookmarkDir = "toolbar/Wallpaper/Download";

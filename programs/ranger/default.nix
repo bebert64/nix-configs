@@ -16,7 +16,7 @@ let
     esac
     tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
   ''}/bin/sshr";
-  open-remote = "${pkgs.writeScriptBin "open-remote" ''
+  openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
       grep -P "^Host ([^*]+)$" ${homeDir}/.ssh/config | \
       sed 's/Host //' | \
@@ -28,7 +28,7 @@ let
     ${sshr} $selection
   ''}/bin/open-remote";
   homeDir = config.home.homeDirectory;
-  nixPrograms = config.by-db.paths.nixPrograms;
+  nixPrograms = config.byDb.paths.nixPrograms;
   rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
 in
 {
@@ -58,7 +58,7 @@ in
   xsession.windowManager.i3.config = {
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-      "${modifier}+Shift+r" = "workspace $ws7; exec ${open-remote}";
+      "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
     };
   };
 }
