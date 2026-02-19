@@ -25,7 +25,6 @@ in
     ../programs/i3
     ../programs/insomnia
     ../programs/lock
-    ../programs/mpc-qt
     ../programs/music
     ../programs/picom
     ../programs/plex-desktop
