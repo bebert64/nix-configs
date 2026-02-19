@@ -154,9 +154,6 @@
       };
 
       home = {
-        username = "${byDbHomeManager.user.name}";
-        homeDirectory = "/home/${byDbHomeManager.user.name}";
-
         packages = (
           with pkgs;
           [
