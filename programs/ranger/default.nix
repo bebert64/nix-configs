@@ -45,7 +45,7 @@ in
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${rangerPluginsDir}/
-        ln -sf ${nixPrograms}/ranger/ranger-archives ${rangerPluginsDir}/
+        ln -sfT ${nixPrograms}/ranger/ranger-archives ${rangerPluginsDir}/ranger-archives
       '';
     };
     file = {

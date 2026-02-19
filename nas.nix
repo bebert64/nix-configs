@@ -100,7 +100,7 @@ in
     home.activation = {
       symlinkMountDirNas = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${homeMountDir}
-        ln -sf ${nasMountPoint} ${homeMountDir}
+        ln -sfT ${nasMountPoint} ${homeMountDir}/NAS
       '';
     };
   };
