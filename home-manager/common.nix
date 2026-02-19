@@ -6,7 +6,10 @@
 }:
 {
   options.by-db = {
-    bluetooth.enable = lib.mkEnableOption "Whether to activate or not the blueman applet";
+    bluetooth.enable = lib.mkOption {
+      type = lib.types.bool;
+      description = "Enable bluetooth (synced from NixOS by-db.bluetooth.enable)";
+    };
     user = {
       name = lib.mkOption { type = lib.types.str; };
       description = lib.mkOption { type = lib.types.str; };

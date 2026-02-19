@@ -17,6 +17,7 @@
       type = types.attrs;
       internal = true;
       readOnly = true;
+      description = "Home Manager user config for the by-db user";
       default = config.home-manager.users.${config.by-db.user.name};
     };
     user = {
@@ -64,6 +65,7 @@
                 email = "bebert64@gmail.com";
               };
             };
+            bluetooth.enable = cfg.bluetooth.enable;
           };
         };
         backupFileExtension = "bckp";
