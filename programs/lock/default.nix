@@ -6,8 +6,6 @@
   ...
 }:
 let
-  inherit (lib) mkOption types;
-  inherit (types) int;
   inherit (pkgs)
     alock
     jq
@@ -88,7 +86,9 @@ in
         (lockScript "lock-sleep" "sleep 1 && systemctl suspend")
         (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
-          xidlehook --timer ${toString (byDbHomeManager.minutes-from-lock-to-sleep * 60)} 'xset dpms force off' ' ' &
+          xidlehook --timer ${
+            toString (byDbHomeManager.minutes-from-lock-to-sleep * 60)
+          } 'xset dpms force off' ' ' &
         '')
         suspendIfNoIncomingSsh
       ];
