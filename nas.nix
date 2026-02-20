@@ -13,7 +13,8 @@ let
   nasMountPoint = "/mnt/NAS";
   nasName = "NasLaFouillouse";
   nasPort = "5000";
-  homeMountDir = "${config.byDb.hmUser.home.homeDirectory}/mnt/";
+  homeDir = config.byDb.hmUser.home.homeDirectory;
+  homeMountDir = "${homeDir}/mnt/";
   mountNas = writeScriptBin "mount-nas" ''
     PATH=${
       makeBinPath [

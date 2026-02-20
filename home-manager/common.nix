@@ -5,7 +5,8 @@
   ...
 }:
 let
-  byDbHomeManager = config.byDb;
+  homeManagerBydbConfig = config.byDb;
+  homeDir = config.home.homeDirectory;
 in
 {
   options.byDb = {
@@ -84,7 +85,7 @@ in
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${config.home.homeDirectory}/${config.byDb.nixConfigsRepo}";
+        default = "${homeDir}/${config.byDb.nixConfigsRepo}";
         description = "Full path to the nix configs repo";
       };
       nixPrograms = lib.mkOption {
@@ -98,7 +99,7 @@ in
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${config.home.homeDirectory}/${config.byDb.mainCodingRepo}";
+        default = "${homeDir}/${config.byDb.mainCodingRepo}";
         description = "Full path to the main coding repo";
       };
     };
@@ -122,14 +123,14 @@ in
       default = {
         url = "https://guitar.capucina.net";
         userId = "b4817b818e794ffd9ae445048320ed44";
-        accessToken = byDbHomeManager.secrets.jellyfinGuitarAccessToken;
+        accessToken = homeManagerBydbConfig.secrets.jellyfinGuitarAccessToken;
       };
     };
     shortcutsDirs = lib.mkOption {
       type = lib.types.attrsOf lib.types.str;
       description = "Shortcuts directory structure — shared by shortcuts crate";
       default = {
-        root = "${byDbHomeManager.paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/";
+        root = "${homeManagerBydbConfig.paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/";
         toCut = "Videos a couper";
         cut = "Videos cut";
         cutTmp = "Temp cut";
@@ -142,7 +143,7 @@ in
       description = "Stash API config (remote) — used by video-manager, shortcuts";
       default = {
         url = "https://stash.capucina.net/graphql";
-        apiKey = byDbHomeManager.secrets.stashApiKey;
+        apiKey = homeManagerBydbConfig.secrets.stashApiKey;
       };
     };
   };

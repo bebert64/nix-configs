@@ -5,8 +5,8 @@
   ...
 }:
 let
-  user = config.byDb.user;
-  homeDirectory = config.users.users.${user.name}.home;
+  nixosUserConfig = config.byDb.user;
+  homeDir = config.byDb.hmUser.home.homeDirectory;
 in
 {
   imports = [
@@ -27,7 +27,7 @@ in
     generativeAi.enable = true;
   };
 
-  home-manager.users.${user.name} = {
+  home-manager.users.${nixosUserConfig.name} = {
     byDb = {
       minutesFromLockToSleep = 17;
       lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
@@ -41,8 +41,8 @@ in
 
     home.activation = {
       symlinkAutoFixVsCodeServerService = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${homeDirectory}/.config/systemd/user/
-        ln -sf /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ${homeDirectory}/.config/systemd/user/
+        mkdir -p ${homeDir}/.config/systemd/user/
+        ln -sf /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ${homeDir}/.config/systemd/user/
       '';
     };
   };
@@ -60,10 +60,10 @@ in
     vscode-server = {
       enable = true;
       installPath = [
-        "${homeDirectory}/.vscode-server"
-        "${homeDirectory}/.vscode-server-oss"
-        "${homeDirectory}/.vscode-server-insiders"
-        "${homeDirectory}/.cursor-server"
+        "${homeDir}/.vscode-server"
+        "${homeDir}/.vscode-server-oss"
+        "${homeDir}/.vscode-server-insiders"
+        "${homeDir}/.cursor-server"
       ];
     };
   };

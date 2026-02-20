@@ -8,6 +8,9 @@
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
+  homeDir = config.home.homeDirectory;
+  nixProgramsDir = config.byDb.paths.nixPrograms;
+  rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
   sshr = "${pkgs.writeScriptBin "sshr" ''
     REMOTE=$1
     case $REMOTE in
@@ -27,9 +30,6 @@ let
     )
     ${sshr} $selection
   ''}/bin/open-remote";
-  homeDir = config.home.homeDirectory;
-  nixPrograms = config.byDb.paths.nixPrograms;
-  rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
 in
 {
   home = {
@@ -45,7 +45,7 @@ in
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${rangerPluginsDir}/
-        ln -sfT ${nixPrograms}/ranger/ranger-archives ${rangerPluginsDir}/ranger-archives
+        ln -sfT ${nixProgramsDir}/ranger/ranger-archives ${rangerPluginsDir}/ranger-archives
       '';
     };
     file = {

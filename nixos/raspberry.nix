@@ -11,11 +11,11 @@
 
   config =
     let
-      byDbNixos = config.byDb;
+      userConfig = config.byDb.user;
     in
     {
       # Necessary for user's systemd services to start at boot (before user logs in)
-      users.users.${byDbNixos.user.name}.linger = true;
+      users.users.${userConfig.name}.linger = true;
 
       sdImage.compressImage = false;
     };

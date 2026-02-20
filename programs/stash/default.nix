@@ -4,8 +4,8 @@
   ...
 }:
 let
-  userConfig = config.byDb.hmUser;
-  stashDir = "${userConfig.home.homeDirectory}/.stash";
+  homeDir = config.home.homeDirectory;
+  stashDir = "${homeDir}/.stash";
   stash = pkgs.stash;
 in
 {
@@ -30,7 +30,7 @@ in
         Type = "simple";
         Restart = "on-failure";
         ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
-        Environment = "PATH=/run/current-system/sw/bin/:${userConfig.home.homeDirectory}/.nix-profile/bin/";
+        Environment = "PATH=/run/current-system/sw/bin/:${homeDir}/.nix-profile/bin/";
       };
       Install = {
         WantedBy = [ "default.target" ];

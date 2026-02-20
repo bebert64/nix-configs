@@ -1,7 +1,7 @@
 { lib, config, ... }:
 let
-  byDbHomeManager = config.byDb;
-  exitMode = byDbHomeManager.i3.exitMode;
+  homeManagerBydbConfig = config.byDb;
+  exitMode = homeManagerBydbConfig.i3.exitMode;
 in
 {
   options.byDb.i3.exitMode = lib.mkOption {
@@ -89,11 +89,11 @@ in
               notification = false;
             }
           ]
-          ++ lib.optional byDbHomeManager.wifi.enable {
+          ++ lib.optional homeManagerBydbConfig.wifi.enable {
             command = "nm-applet";
             notification = false;
           }
-          ++ lib.optional byDbHomeManager.bluetooth.enable {
+          ++ lib.optional homeManagerBydbConfig.bluetooth.enable {
             command = "blueman-applet";
             notification = false;
           };
@@ -142,9 +142,9 @@ in
           set $ws17 "17"
           set $ws18 "18"
           set $ws19 "19:󰸉"
-          workspace $ws19 output ${byDbHomeManager.screens.primary}
+          workspace $ws19 output ${homeManagerBydbConfig.screens.primary}
           set $ws20 "20:󰸉"
-          workspace $ws20 output ${byDbHomeManager.screens.secondary}
+          workspace $ws20 output ${homeManagerBydbConfig.screens.secondary}
         '';
       };
     };

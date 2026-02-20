@@ -5,8 +5,9 @@
   ...
 }:
 let
-  byDbHomeManager = config.byDb;
-  SymlinkPath = config.sops.defaultSymlinkPath;
+  homeManagerBydbConfig = config.byDb;
+  homeDir = config.home.homeDirectory;
+  symlinkPath = config.sops.defaultSymlinkPath;
 in
 {
 
@@ -14,7 +15,7 @@ in
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+    age.sshKeyPaths = [ "${homeDir}/.ssh/id_ed25519" ];
     secrets = {
       "1password-secret-keys/bebert64" = { };
       "1password-secret-keys/stockly" = { };
@@ -34,15 +35,15 @@ in
 
   programs.zsh = {
     initContent = ''
-      compdef '_files -W "${SymlinkPath}" -/' sops-read
+      compdef '_files -W "${symlinkPath}" -/' sops-read
 
       sops-read () {
         PROMPT_EOL_MARK=""
-        cat ${SymlinkPath}/$1
+        cat ${symlinkPath}/$1
       }
 
       sops-edit () {
-        cd ${byDbHomeManager.paths.nixPrograms}/secrets
+        cd ${homeManagerBydbConfig.paths.nixPrograms}/secrets
         sops secrets.yaml || true
         cd -
       }

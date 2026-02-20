@@ -4,13 +4,16 @@
   config,
   ...
 }:
+let
+  homeDir = config.home.homeDirectory;
+in
 {
   home = {
     packages = [ pkgs.udiskie ];
     activation = {
       symlinkUsbMountPoint = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${config.home.homeDirectory}/mnt/
-        ln -sfT /run/media/${config.byDb.user.name} ${config.home.homeDirectory}/mnt/usb
+        mkdir -p ${homeDir}/mnt/
+        ln -sfT /run/media/${config.byDb.user.name} ${homeDir}/mnt/usb
       '';
     };
   };
