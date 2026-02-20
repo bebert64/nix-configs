@@ -1,6 +1,8 @@
 {
   config,
+  options,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -8,6 +10,7 @@ let
   byDbHomeManager = config.byDb;
   homeDir = config.home.homeDirectory;
   formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
+  hasLock = options.byDb ? minutesBeforeLock;
 in
 {
   config.programs.zsh = {
@@ -38,11 +41,13 @@ in
       inhibit-and-sleep() {
         systemd-inhibit bash -c "$*"
         local exit_code=$?
-        local idle_ms=$(${pkgs.xprintidle}/bin/xprintidle)
-        local sleep_threshold_ms=${toString ((byDbHomeManager.minutesBeforeLock + byDbHomeManager.minutesFromLockToSleep) * 60 * 1000)}
-        if (( idle_ms >= sleep_threshold_ms )); then
-          systemctl suspend
-        fi
+        ${lib.optionalString hasLock ''
+          local idle_ms=$(${pkgs.xprintidle}/bin/xprintidle)
+          local sleep_threshold_ms=${toString ((byDbHomeManager.minutesBeforeLock + byDbHomeManager.minutesFromLockToSleep) * 60 * 1000)}
+          if (( idle_ms >= sleep_threshold_ms )); then
+            systemctl suspend
+          fi
+        ''}
         return $exit_code
       }
 
