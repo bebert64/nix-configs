@@ -9,6 +9,7 @@ let
   paths = config.byDb.paths;
   datagripProjectsDir = "${paths.home}/datagrip-projects";
   nixDatagrip = "${paths.nixPrograms}/datagrip/datasources";
+  rofi = config.rofi.defaultCmd;
 in
 {
   home = {
@@ -33,7 +34,7 @@ in
       "${modifier}+Control+d" = "workspace $ws6; exec ${pkgs.writeScriptBin "open-datagrip-project" ''
         project=$(
           ls -1 ${datagripProjectsDir} | \
-          ${config.rofi.defaultCmd}
+          ${rofi}
         )
         if [[ $project ]]; then
           datagrip ${datagripProjectsDir}/$project

@@ -7,13 +7,14 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
+  rofi = config.rofi.defaultCmd;
   rofiScreenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
     selection="$(echo -en \
     'Gui to clipboard
     Gui to file
     Fullscreen to clipboard
     Fullscreen to file' \
-    | ${config.rofi.defaultCmd} )"
+    | ${rofi} )"
 
     case "$selection" in
       "Gui to clipboard")
