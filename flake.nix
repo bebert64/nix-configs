@@ -69,7 +69,6 @@
           modules = [ ./computers/raspi4/configuration.nix ];
           specialArgs = {
             inherit
-              by-db
               home-manager
               nixpkgs
               sops-nix
