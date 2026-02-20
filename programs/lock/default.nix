@@ -64,7 +64,12 @@ in
           ${cmd}
 
           # Lock
-          alock ${if byDbHomeManager.lockPasswordHash != null then "-auth hash:type=sha256,hash=${byDbHomeManager.lockPasswordHash}" else ""} -bg none -cursor blank
+          alock ${
+            if byDbHomeManager.lockPasswordHash != null then
+              "-auth hash:type=sha256,hash=${byDbHomeManager.lockPasswordHash}"
+            else
+              ""
+          } -bg none -cursor blank
 
           # Restore original config
           i3-msg workspace "$wk1"
