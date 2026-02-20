@@ -5,10 +5,6 @@
   pkgs,
   ...
 }:
-let
-  inherit (lib) mkEnableOption mkOption types;
-  inherit (types) str;
-in
 {
   imports = [
     ./common.nix
