@@ -159,6 +159,18 @@
 
       xdg = {
         enable = true;
+        userDirs = {
+          enable = true;
+          createDirectories = false;
+          desktop = "${homeDir}";
+          download = "${homeDir}/downloads";
+          documents = "${homeDir}";
+          music = "${homeDir}";
+          pictures = "${homeDir}";
+          publicShare = "${homeDir}";
+          templates = "${homeDir}";
+          videos = "${homeDir}";
+        };
         mimeApps = {
           enable = true;
           associations.added = {
