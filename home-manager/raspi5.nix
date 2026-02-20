@@ -18,8 +18,8 @@
       homeDirectory = config.home.homeDirectory;
       secrets = homeManagerBydbConfig.secrets;
       paths = homeManagerBydbConfig.paths;
-      stashDir = "${homeDirectory}/.stash";
-      stashBackupDir = "${paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
+      stashDirectory = "${homeDirectory}/.stash";
+      stashBackupDirectory = "${paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
     in
     {
       byDbPkgs = {
@@ -35,22 +35,22 @@
                 url = "http://localhost:9999/graphql";
                 apiKey = secrets.stashApiKey;
               };
-              file = "${stashDir}/stash-go.sqlite";
+              file = "${stashDirectory}/stash-go.sqlite";
               otherFilesToRemove = [
-                "${stashDir}/stash-go.sqlite-shm"
-                "${stashDir}/stash-go.sqlite-wal"
+                "${stashDirectory}/stash-go.sqlite-shm"
+                "${stashDirectory}/stash-go.sqlite-wal"
               ];
-              downloadDir = "${stashDir}/generated/download_stage";
-              backupDir = stashBackupDir;
+              downloadDir = "${stashDirectory}/generated/download_stage";
+              backupDir = stashBackupDirectory;
             };
             thumbnailsDir = {
-              targetDir = "${stashDir}/data";
-              backupDir = "${stashBackupDir}/thumbnails";
+              targetDir = "${stashDirectory}/data";
+              backupDir = "${stashBackupDirectory}/thumbnails";
             };
             configFile = {
-              targets = [ "${stashDir}/config.yml" ];
+              targets = [ "${stashDirectory}/config.yml" ];
               backupFileName = "config.yml";
-              backupDir = stashBackupDir;
+              backupDir = stashBackupDirectory;
             };
           };
           guitar = {

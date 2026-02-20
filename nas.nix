@@ -13,7 +13,7 @@ let
   nasMountPoint = "/mnt/NAS";
   nasName = "NasLaFouillouse";
   nasPort = "5000";
-  homeMountDir = "${config.byDb.hmUser.home.homeDirectory}/mnt/";
+  homeMountDirectory = "${config.byDb.hmUser.home.homeDirectory}/mnt/";
   mountNas = writeScriptBin "mount-nas" ''
     PATH=${
       makeBinPath [
@@ -99,8 +99,8 @@ in
     };
     home.activation = {
       symlinkMountDirNas = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${homeMountDir}
-        ln -sfT ${nasMountPoint} ${homeMountDir}/NAS
+        mkdir -p ${homeMountDirectory}
+        ln -sfT ${nasMountPoint} ${homeMountDirectory}/NAS
       '';
     };
   };

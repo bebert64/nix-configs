@@ -14,8 +14,8 @@ let
   mkJellyfinService =
     instanceName: port:
     let
-      dataDir = "${homeDirectory}/.local/share/${instanceName}";
-      configDir = "${homeDirectory}/.config/${instanceName}";
+      dataDirectory = "${homeDirectory}/.local/share/${instanceName}";
+      configDirectory = "${homeDirectory}/.config/${instanceName}";
     in
     {
       Unit = {
@@ -24,10 +24,10 @@ let
       Service = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${pkgs.jellyfin}/bin/jellyfin --configdir ${configDir}";
+        ExecStart = "${pkgs.jellyfin}/bin/jellyfin --configdir ${configDirectory}";
         Environment = [
           "PATH=/run/current-system/sw/bin/:${homeDirectory}/.nix-profile/bin/"
-          "JELLYFIN_DATA_DIR=${dataDir}"
+          "JELLYFIN_DATA_DIR=${dataDirectory}"
         ];
       };
       Install = {
