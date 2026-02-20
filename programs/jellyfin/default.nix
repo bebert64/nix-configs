@@ -4,8 +4,7 @@
   ...
 }:
 let
-  userConfig = config.byDb.hmUser;
-  userHome = userConfig.home.homeDirectory;
+  homeDirectory = config.byDb.hmUser.home.homeDirectory;
 
   # Instance names
   jellyfinInstance1 = "guitar";
@@ -15,8 +14,8 @@ let
   mkJellyfinService =
     instanceName: port:
     let
-      dataDir = "${userHome}/.local/share/${instanceName}";
-      configDir = "${userHome}/.config/${instanceName}";
+      dataDir = "${homeDirectory}/.local/share/${instanceName}";
+      configDir = "${homeDirectory}/.config/${instanceName}";
     in
     {
       Unit = {
@@ -27,7 +26,7 @@ let
         Restart = "on-failure";
         ExecStart = "${pkgs.jellyfin}/bin/jellyfin --configdir ${configDir}";
         Environment = [
-          "PATH=/run/current-system/sw/bin/:${userHome}/.nix-profile/bin/"
+          "PATH=/run/current-system/sw/bin/:${homeDirectory}/.nix-profile/bin/"
           "JELLYFIN_DATA_DIR=${dataDir}"
         ];
       };

@@ -7,28 +7,27 @@
 }:
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
-  rofi = config.rofi.defaultCmd;
   rofiScreenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
     selection="$(echo -en \
     'Gui to clipboard
     Gui to file
     Fullscreen to clipboard
     Fullscreen to file' \
-    | ${rofi} )"
+    | ${config.rofi.defaultCmd} )"
 
     case "$selection" in
       "Gui to clipboard")
         flameshot gui -r | xclip -selection clipboard -t image/png ;;
       "Gui to file")
-        flameshot gui -p "${screenshotsDir}" ;;
+        flameshot gui -p "${screenshotsDirectory}" ;;
       "Fullscreen to clipboard")
         flameshot full r | xclip -selection clipboard -t image/png ;;
       "Fullscreen to file")
-        flameshot full -p "${screenshotsDir}" ;;
+        flameshot full -p "${screenshotsDirectory}" ;;
     esac
   ''}/bin/rofi-screenshots";
-  homeDir = config.home.homeDirectory;
-  screenshotsDir = "${homeDir}/screenshots";
+  homeDirectory = config.home.homeDirectory;
+  screenshotsDirectory = "${homeDirectory}/screenshots";
 in
 {
   home = {
@@ -38,7 +37,7 @@ in
 
     activation = {
       createScreenshotsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${homeDir}/screenshots/
+        mkdir -p ${homeDirectory}/screenshots/
       '';
     };
   };

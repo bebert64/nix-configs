@@ -14,10 +14,12 @@
 
   config =
     let
-      byDbHomeManager = config.byDb;
-      homeDir = config.home.homeDirectory;
-      stashDir = "${homeDir}/.stash";
-      stashBackupDir = "${byDbHomeManager.paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
+      homeManagerBydbConfig = config.byDb;
+      homeDirectory = config.home.homeDirectory;
+      secrets = homeManagerBydbConfig.secrets;
+      paths = homeManagerBydbConfig.paths;
+      stashDir = "${homeDirectory}/.stash";
+      stashBackupDir = "${paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
     in
     {
       byDbPkgs = {
@@ -26,12 +28,12 @@
             enable = true;
             runAt = "*-*-* 04:00:00";
           };
-          postgresBackupDir = "${byDbHomeManager.paths.nasBase}/Backup/postgres";
+          postgresBackupDir = "${paths.nasBase}/Backup/postgres";
           stashApp = {
             database = {
               apiConfig = {
                 url = "http://localhost:9999/graphql";
-                apiKey = byDbHomeManager.secrets.stashApiKey;
+                apiKey = secrets.stashApiKey;
               };
               file = "${stashDir}/stash-go.sqlite";
               otherFilesToRemove = [
@@ -53,41 +55,41 @@
           };
           guitar = {
             metadata = {
-              targetDir = "${homeDir}/.local/share/guitar/metadata";
-              backupDir = "${byDbHomeManager.paths.nasBase}/Backup/guitar/metadata";
+              targetDir = "${homeDirectory}/.local/share/guitar/metadata";
+              backupDir = "${paths.nasBase}/Backup/guitar/metadata";
             };
             snapshotDirs = {
               targets = [
-                "${homeDir}/.local/share/guitar/data"
-                "${homeDir}/.local/share/guitar/plugins"
-                "${homeDir}/.local/share/guitar/root"
-                "${homeDir}/.config/guitar"
+                "${homeDirectory}/.local/share/guitar/data"
+                "${homeDirectory}/.local/share/guitar/plugins"
+                "${homeDirectory}/.local/share/guitar/root"
+                "${homeDirectory}/.config/guitar"
               ];
               backupFileName = "guitar_config";
-              backupDir = "${byDbHomeManager.paths.nasBase}/Backup/guitar";
+              backupDir = "${paths.nasBase}/Backup/guitar";
             };
           };
           media = {
             metadata = {
-              targetDir = "${homeDir}/.local/share/media/metadata";
-              backupDir = "${byDbHomeManager.paths.nasBase}/Backup/media/metadata";
+              targetDir = "${homeDirectory}/.local/share/media/metadata";
+              backupDir = "${paths.nasBase}/Backup/media/metadata";
             };
             snapshotDirs = {
               targets = [
-                "${homeDir}/.local/share/media/data"
-                "${homeDir}/.local/share/media/plugins"
-                "${homeDir}/.local/share/media/root"
-                "${homeDir}/.config/media"
+                "${homeDirectory}/.local/share/media/data"
+                "${homeDirectory}/.local/share/media/plugins"
+                "${homeDirectory}/.local/share/media/root"
+                "${homeDirectory}/.config/media"
               ];
               backupFileName = "media_config";
-              backupDir = "${byDbHomeManager.paths.nasBase}/Backup/media";
+              backupDir = "${paths.nasBase}/Backup/media";
             };
           };
           qbittorrent = {
             configFile = {
-              targets = [ "${homeDir}/.config/qBittorrent/qBittorrent.conf" ];
+              targets = [ "${homeDirectory}/.config/qBittorrent/qBittorrent.conf" ];
               backupFileName = "qBittorrent.conf";
-              backupDir = "${byDbHomeManager.paths.nasBase}/Backup/qbittorrent";
+              backupDir = "${paths.nasBase}/Backup/qbittorrent";
             };
           };
         };
@@ -97,18 +99,18 @@
             enable = true;
             runAt = "*-*-* 02:00:00";
           };
-          tabsDir = "${byDbHomeManager.paths.nasBase}/Guitare/Tabs";
+          tabsDir = "${paths.nasBase}/Guitare/Tabs";
           ytDlp = {
-            downloadDir = "${byDbHomeManager.paths.nasBase}/Guitare/YouTube";
-            cookiePath = "${homeDir}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
+            downloadDir = "${paths.nasBase}/Guitare/YouTube";
+            cookiePath = "${homeDirectory}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
           };
           firefox = {
             guitarTutoFolder = "toolbar/Guitar tutos";
-            ffsync = byDbHomeManager.ffsync.bebert64 // {
-              sessionFile = "${homeDir}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
+            ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
+              sessionFile = "${homeDirectory}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
             };
           };
-          jellyfin = byDbHomeManager.guitarJellyfinService;
+          jellyfin = homeManagerBydbConfig.guitarJellyfinService;
         };
 
         shortcuts = {
@@ -116,13 +118,13 @@
             enable = true;
             runAt = "*-*-* 00:00:00";
           };
-          postgres = byDbHomeManager.postgres;
-          stashApiConfig = byDbHomeManager.stashApiConfig;
-          shortcutsDirs = byDbHomeManager.shortcutsDirs;
+          postgres = homeManagerBydbConfig.postgres;
+          stashApiConfig = homeManagerBydbConfig.stashApiConfig;
+          shortcutsDirs = homeManagerBydbConfig.shortcutsDirs;
           parallelDownloads = "4";
           firefox = {
-            ffsync = byDbHomeManager.ffsync.shortcutsDb // {
-              sessionFile = "${homeDir}/.config/by_db/shortcuts-firefox-sync-client.secret";
+            ffsync = homeManagerBydbConfig.ffsync.shortcutsDb // {
+              sessionFile = "${homeDirectory}/.config/by_db/shortcuts-firefox-sync-client.secret";
             };
             videosToDownloadFolder = "toolbar/DL";
             comixToDownloadFolder = "toolbar/Other";
@@ -137,13 +139,13 @@
               runAt = "*-*-* 23:00:00";
             };
           };
-          wallpapersDir = "${byDbHomeManager.paths.nasBase}/Wallpapers";
+          wallpapersDir = "${paths.nasBase}/Wallpapers";
           singleScreenDirName = "SingleScreen";
           dualScreenDirName = "DualScreen";
           animatedDirName = "Animated";
           firefox = {
-            ffsync = byDbHomeManager.ffsync.bebert64 // {
-              sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
+            ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
+              sessionFile = "${homeDirectory}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
             };
             wallpapersFolder = "toolbar/Wallpaper/Download";
           };

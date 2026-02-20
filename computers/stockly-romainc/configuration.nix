@@ -1,7 +1,7 @@
 { config, ... }:
 let
-  user = config.byDb.user;
-  byDbHomeManager = config.byDb.hmUser.byDb;
+  nixosUserConfig = config.byDb.user;
+  homeManagerBydbConfig = config.byDb.hmUser.byDb;
 in
 {
   imports = [
@@ -22,7 +22,7 @@ in
   };
 
   home-manager = {
-    users.${user.name} = {
+    users.${nixosUserConfig.name} = {
       byDb = {
         wifi.enable = true;
         nixConfigsRepo = "nix-config";
@@ -36,7 +36,7 @@ in
       };
       byDbPkgs.save-autorandr-config = {
         enable = true;
-        autorandrConfigsPath = "${byDbHomeManager.paths.nixPrograms}/autorandr.nix";
+        autorandrConfigsPath = "${homeManagerBydbConfig.paths.nixPrograms}/autorandr.nix";
         defaultBars = "eDP-1-tray-off HDMI-1-battery";
       };
     };

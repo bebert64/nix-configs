@@ -7,8 +7,9 @@
 }:
 let
   common = import ./common.nix;
-  byDbHomeManager = config.byDb;
-  homeDir = config.home.homeDirectory;
+  homeManagerBydbConfig = config.byDb;
+  paths = homeManagerBydbConfig.paths;
+  homeDirectory = config.home.homeDirectory;
   formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
   hasLock = options.byDb ? minutesBeforeLock;
 in
@@ -43,7 +44,11 @@ in
         local exit_code=$?
         ${lib.optionalString hasLock ''
           local idle_ms=$(${pkgs.xprintidle}/bin/xprintidle)
-          local sleep_threshold_ms=${toString ((byDbHomeManager.minutesBeforeLock + byDbHomeManager.minutesFromLockToSleep) * 60 * 1000)}
+          local sleep_threshold_ms=${
+            toString (
+              (homeManagerBydbConfig.minutesBeforeLock + homeManagerBydbConfig.minutesFromLockToSleep) * 60 * 1000
+            )
+          }
           if (( idle_ms >= sleep_threshold_ms )); then
             systemctl suspend
           fi
@@ -56,18 +61,18 @@ in
       }
 
       run-in-nix-repo() {
-        cd ${byDbHomeManager.paths.nixConfigs}
+        cd ${paths.nixConfigs}
         git pull || return 1
         (eval "$*")
         cd -
       }
       run-in-nix-repo-dirty() {
-        cd ${byDbHomeManager.paths.nixConfigs}
+        cd ${paths.nixConfigs}
         (eval "$*")
         cd -
       }
       run-in-code-repo() {
-        cd ${byDbHomeManager.paths.mainCodingRepo}
+        cd ${paths.mainCodingRepo}
         (eval "$*")
         cd -
       }
@@ -100,22 +105,22 @@ in
         upgrade-nix
       }
 
-      compdef '_files -W "${byDbHomeManager.paths.mainCodingRepo}" -/' cdr
+      compdef '_files -W "${paths.mainCodingRepo}" -/' cdr
       cdr() {
-        cd "${byDbHomeManager.paths.mainCodingRepo}/$@"
+        cd "${paths.mainCodingRepo}/$@"
       }
 
-      compdef '_files -W "${byDbHomeManager.paths.nixConfigs}" -/' cdn
+      compdef '_files -W "${paths.nixConfigs}" -/' cdn
       cdn() {
-        cd "${byDbHomeManager.paths.nixConfigs}/$@"
+        cd "${paths.nixConfigs}/$@"
       }
 
       sync-wallpapers() {
-        rsync -avh --exclude "Fond pour téléphone" ${byDbHomeManager.paths.nasBase}/Wallpapers/ ${homeDir}/wallpapers
-        rsync -avh ${homeDir}/wallpapers/ ${byDbHomeManager.paths.nasBase}/Wallpapers
+        rsync -avh --exclude "Fond pour téléphone" ${paths.nasBase}/Wallpapers/ ${homeDirectory}/wallpapers
+        rsync -avh ${homeDirectory}/wallpapers/ ${paths.nasBase}/Wallpapers
       }
 
-      path+="${homeDir}/.cargo/bin"
+      path+="${homeDirectory}/.cargo/bin"
       eval "$(direnv hook zsh)"
     '';
     plugins = [

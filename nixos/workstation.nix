@@ -16,7 +16,7 @@
 
   config =
     let
-      byDbNixos = config.byDb;
+      nixosBydbConfig = config.byDb;
     in
     {
       # Bootloader.
@@ -42,18 +42,18 @@
       };
 
       hardware = {
-        bluetooth.enable = byDbNixos.bluetooth.enable;
+        bluetooth.enable = nixosBydbConfig.bluetooth.enable;
       };
 
       home-manager = {
-        users.${byDbNixos.user.name} = {
+        users.${nixosBydbConfig.user.name} = {
           imports = [ ../home-manager/workstation.nix ];
         };
       };
 
       nix.settings = {
-        cores = byDbNixos.nixCores;
-        max-jobs = byDbNixos.nixMaxJobs;
+        cores = nixosBydbConfig.nixCores;
+        max-jobs = nixosBydbConfig.nixMaxJobs;
       };
 
       environment = {
@@ -94,13 +94,13 @@
         udisks2.enable = true; # automount usb keys and drives
         gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
         # Enable the bluetooth daemon.
-        blueman.enable = byDbNixos.bluetooth.enable;
+        blueman.enable = nixosBydbConfig.bluetooth.enable;
       };
 
       systemd = {
         services.nix-daemon.serviceConfig = {
-          MemoryHigh = byDbNixos.nixHighRam;
-          MemoryMax = byDbNixos.nixMaxRam;
+          MemoryHigh = nixosBydbConfig.nixHighRam;
+          MemoryMax = nixosBydbConfig.nixMaxRam;
         };
 
         user.services.polkit-gnome-authentication-agent-1 = {

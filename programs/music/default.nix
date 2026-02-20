@@ -6,12 +6,12 @@
 }:
 let
   inherit (config.byDb) setHeadphonesCommand setSpeakerCommand;
-  homeDir = config.home.homeDirectory;
+  homeDirectory = config.home.homeDirectory;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
-  openDir = "${pkgs.writeScriptBin "open-dir" ''
+  openDirectory = "${pkgs.writeScriptBin "open-dir" ''
     base_dir=${config.byDb.paths.nasBase}/Musique
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
@@ -46,7 +46,7 @@ in
   byDbPkgs = {
     strawberry-radios = {
       activationScript.enable = true;
-      db = "${homeDir}/.local/share/strawberry/strawberry/strawberry.db";
+      db = "${homeDirectory}/.local/share/strawberry/strawberry/strawberry.db";
       radios = [
         {
           name = "FIP";
@@ -136,7 +136,7 @@ in
           "l" = "workspace $ws10, exec strawberry, mode default";
           "o" = "workspace $ws10, exec spotify, mode default";
           "r" = "exec choose-radios, mode default";
-          "d" = "exec ${openDir}, mode default";
+          "d" = "exec ${openDirectory}, mode default";
           # Allows to restart strawberry after it has crashed
           "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
           "${modifier}+m" = "mode default";

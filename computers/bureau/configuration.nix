@@ -1,6 +1,6 @@
 { config, ... }:
 let
-  user = config.byDb.user;
+  nixosUserConfig = config.byDb.user;
 in
 {
   imports = [
@@ -19,7 +19,7 @@ in
     nixMaxRam = "8G";
   };
 
-  home-manager.users.${user.name} = {
+  home-manager.users.${nixosUserConfig.name} = {
     byDb = {
       minutesBeforeLock = 10;
       minutesFromLockToSleep = 10;

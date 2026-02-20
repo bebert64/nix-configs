@@ -5,8 +5,8 @@
   ...
 }:
 let
-  user = config.byDb.user;
-  homeDirectory = config.users.users.${user.name}.home;
+  nixosUserConfig = config.byDb.user;
+  homeDirectory = config.users.users.${nixosUserConfig.name}.home;
 in
 {
   imports = [
@@ -27,7 +27,7 @@ in
     generativeAi.enable = true;
   };
 
-  home-manager.users.${user.name} = {
+  home-manager.users.${nixosUserConfig.name} = {
     byDb = {
       minutesFromLockToSleep = 17;
       lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";

@@ -12,7 +12,7 @@ let
     xidlehook
     writeScriptBin
     ;
-  byDbHomeManager = config.byDb;
+  homeManagerBydbConfig = config.byDb;
   modifier = config.xsession.windowManager.i3.config.modifier;
 in
 {
@@ -65,8 +65,8 @@ in
 
           # Lock
           alock ${
-            if byDbHomeManager.lockPasswordHash != null then
-              "-auth hash:type=sha256,hash=${byDbHomeManager.lockPasswordHash}"
+            if homeManagerBydbConfig.lockPasswordHash != null then
+              "-auth hash:type=sha256,hash=${homeManagerBydbConfig.lockPasswordHash}"
             else
               ""
           } -bg none -cursor blank
@@ -77,7 +77,7 @@ in
           systemctl --user restart polybar
 
           pkill xidlehook || echo "xidlehook already killed"
-          xidlehook --timer ${toString (byDbHomeManager.minutesBeforeLock * 60)} 'lock' ' ' &
+          xidlehook --timer ${toString (homeManagerBydbConfig.minutesBeforeLock * 60)} 'lock' ' ' &
         '';
       killXidlehook = ''pkill xidlehook || echo "xidlehook already killed"'';
       lockMode = "Lock: l[o]ck, [d]on't sleep";
@@ -89,7 +89,7 @@ in
         (lockScript "lock" ''
           ${killXidlehook}
           xidlehook --timer ${
-            toString (byDbHomeManager.minutesFromLockToSleep * 60)
+            toString (homeManagerBydbConfig.minutesFromLockToSleep * 60)
           } 'suspend-if-no-incoming-ssh' ' ' &
         '')
         # Manual sleep (press s): always suspend immediately, ignore SSH
@@ -97,7 +97,7 @@ in
         (lockScript "lock-dont-sleep" ''
           ${killXidlehook}
           xidlehook --timer ${
-            toString (byDbHomeManager.minutesFromLockToSleep * 60)
+            toString (homeManagerBydbConfig.minutesFromLockToSleep * 60)
           } 'xset dpms force off' ' ' &
         '')
         suspendIfNoIncomingSsh
@@ -107,7 +107,7 @@ in
         startup = [
           {
             command = "xidlehook --timer ${
-              toString (byDbHomeManager.minutesBeforeLock or 3 * 60)
+              toString (homeManagerBydbConfig.minutesBeforeLock or 3 * 60)
             } 'lock-wait-sleep' ' ' &";
             notification = false;
           }
@@ -116,7 +116,7 @@ in
           "--release ${modifier}+o" = "mode \"${lockMode}\"";
         };
         modes = {
-          ${byDbHomeManager.i3.exitMode} = {
+          ${homeManagerBydbConfig.i3.exitMode} = {
             "--release s" = "exec lock-sleep, mode default";
           };
 

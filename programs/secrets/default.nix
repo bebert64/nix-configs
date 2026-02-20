@@ -5,8 +5,8 @@
   ...
 }:
 let
-  byDbHomeManager = config.byDb;
-  SymlinkPath = config.sops.defaultSymlinkPath;
+  homeManagerBydbConfig = config.byDb;
+  symlinkPath = config.sops.defaultSymlinkPath;
 in
 {
 
@@ -34,15 +34,15 @@ in
 
   programs.zsh = {
     initContent = ''
-      compdef '_files -W "${SymlinkPath}" -/' sops-read
+      compdef '_files -W "${symlinkPath}" -/' sops-read
 
       sops-read () {
         PROMPT_EOL_MARK=""
-        cat ${SymlinkPath}/$1
+        cat ${symlinkPath}/$1
       }
 
       sops-edit () {
-        cd ${byDbHomeManager.paths.nixPrograms}/secrets
+        cd ${homeManagerBydbConfig.paths.nixPrograms}/secrets
         sops secrets.yaml || true
         cd -
       }
