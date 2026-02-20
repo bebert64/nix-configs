@@ -72,18 +72,18 @@ in
         cd -
       }
       run-in-code-repo() {
-        cd ${paths.mainCodingRepo}
+        cd ${paths.mainWorktree}
         (eval "$*")
         cd -
       }
 
       upgrade-code() {
         orig_dir="$(pwd)"
-        cdr
+        cdm
         git pull || return 1
-        cdr nix/dev
+        cdm nix/dev
         nix flake update
-        cdr
+        cdm
         nix flake update
         if cargo check; then
           git add .
@@ -105,9 +105,37 @@ in
         upgrade-nix
       }
 
-      compdef '_files -W "${paths.mainCodingRepo}" -/' cdr
+      _cdr_complete() {
+        local base git_root
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [[ "$git_root" == ${paths.codeRoot}/Main* ]]; then
+          base="$git_root"
+        else
+          base="${paths.mainWorktree}"
+        fi
+        _files -W "$base" -/
+      }
+      compdef _cdr_complete cdr
       cdr() {
-        cd "${paths.mainCodingRepo}/$@"
+        local base git_root
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [[ "$git_root" == ${paths.codeRoot}/Main* ]]; then
+          base="$git_root"
+        else
+          base="${paths.mainWorktree}"
+        fi
+        cd "$base/$@"
+      }
+
+      dc() {
+        cd ${paths.mainWorktree}
+        cargo run -p db_cli -- "$@"
+        cd -
+      }
+
+      compdef '_files -W "${paths.mainWorktree}" -/' cdm
+      cdm() {
+        cd "${paths.mainWorktree}/$@"
       }
 
       compdef '_files -W "${paths.nixConfigs}" -/' cdn

@@ -66,26 +66,40 @@ in
         default = "shortcuts_dev";
       };
     };
-    nixConfigsRepo = lib.mkOption {
-      type = lib.types.str;
-      default = "nix-configs";
-      description = "Name of the nix configs repo directory (e.g. nix-configs or nix-config)";
-    };
-    mainCodingRepo = lib.mkOption {
+    codeRoot = lib.mkOption {
       type = lib.types.str;
       default = "code";
-      description = "Name of the main coding repo directory";
+      description = "Name of the root code directory containing worktrees and repos";
+    };
+    nixConfigsRelativePath = lib.mkOption {
+      type = lib.types.str;
+      default = "${config.byDb.codeRoot}/nix-configs";
+      description = "Relative path from home to the nix configs repo";
     };
     paths = {
       nasBase = lib.mkOption {
         type = lib.types.str;
         description = "Base path for NAS mount point — set by nas.nix";
       };
+      codeRoot = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${homeDir}/${config.byDb.codeRoot}";
+        description = "Full path to the root code directory";
+      };
+      mainWorktree = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${homeDir}/${config.byDb.codeRoot}/Main";
+        description = "Full path to the main worktree of the coding repo";
+      };
       nixConfigs = lib.mkOption {
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${homeDir}/${config.byDb.nixConfigsRepo}";
+        default = "${homeDir}/${config.byDb.nixConfigsRelativePath}";
         description = "Full path to the nix configs repo";
       };
       nixPrograms = lib.mkOption {
@@ -94,13 +108,6 @@ in
         readOnly = true;
         default = "${config.byDb.paths.nixConfigs}/programs";
         description = "Full path to the programs directory in the nix configs repo";
-      };
-      mainCodingRepo = lib.mkOption {
-        type = lib.types.str;
-        internal = true;
-        readOnly = true;
-        default = "${homeDir}/${config.byDb.mainCodingRepo}";
-        description = "Full path to the main coding repo";
       };
     };
     secrets = {
