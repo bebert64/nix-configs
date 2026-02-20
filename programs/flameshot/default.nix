@@ -27,8 +27,8 @@ let
         flameshot full -p "${screenshotsDir}" ;;
     esac
   ''}/bin/rofi-screenshots";
-  paths = config.byDb.paths;
-  screenshotsDir = "${paths.home}/screenshots";
+  homeDir = config.home.homeDirectory;
+  screenshotsDir = "${homeDir}/screenshots";
 in
 {
   home = {
@@ -38,7 +38,7 @@ in
 
     activation = {
       createScreenshotsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${paths.home}/screenshots/
+        mkdir -p ${homeDir}/screenshots/
       '';
     };
   };

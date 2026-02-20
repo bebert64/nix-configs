@@ -6,13 +6,13 @@
 }:
 let
   inherit (config.byDb) setHeadphonesCommand setSpeakerCommand;
-  paths = config.byDb.paths;
+  homeDir = config.home.homeDirectory;
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl";
   openDir = "${pkgs.writeScriptBin "open-dir" ''
-    base_dir=${paths.nasBase}/Musique
+    base_dir=${config.byDb.paths.nasBase}/Musique
     selection=$(
       ${pkgs.fd}/bin/fd . --type dir --base-directory $base_dir 2>/dev/null | \
       grep -v "@eaDir"| \
@@ -46,7 +46,7 @@ in
   byDbPkgs = {
     strawberry-radios = {
       activationScript.enable = true;
-      db = "${paths.homeLocalShare}/strawberry/strawberry/strawberry.db";
+      db = "${homeDir}/.local/share/strawberry/strawberry/strawberry.db";
       radios = [
         {
           name = "FIP";

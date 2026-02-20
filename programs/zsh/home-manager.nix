@@ -9,6 +9,7 @@ let
   common = import ./common.nix;
   homeManagerBydbConfig = config.byDb;
   paths = homeManagerBydbConfig.paths;
+  homeDir = config.home.homeDirectory;
   formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
   hasLock = options.byDb ? minutesBeforeLock;
 in
@@ -115,11 +116,11 @@ in
       }
 
       sync-wallpapers() {
-        rsync -avh --exclude "Fond pour téléphone" ${paths.nasBase}/Wallpapers/ ${paths.home}/wallpapers
-        rsync -avh ${paths.home}/wallpapers/ ${paths.nasBase}/Wallpapers
+        rsync -avh --exclude "Fond pour téléphone" ${paths.nasBase}/Wallpapers/ ${homeDir}/wallpapers
+        rsync -avh ${homeDir}/wallpapers/ ${paths.nasBase}/Wallpapers
       }
 
-      path+="${paths.home}/.cargo/bin"
+      path+="${homeDir}/.cargo/bin"
       eval "$(direnv hook zsh)"
     '';
     plugins = [

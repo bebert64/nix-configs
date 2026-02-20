@@ -6,6 +6,7 @@
 }:
 let
   homeManagerBydbConfig = config.byDb;
+  homeDir = config.home.homeDirectory;
   symlinkPath = config.sops.defaultSymlinkPath;
 in
 {
@@ -14,7 +15,7 @@ in
 
   sops = {
     defaultSopsFile = ./secrets.yaml;
-    age.sshKeyPaths = [ "${homeManagerBydbConfig.paths.home}/.ssh/id_ed25519" ];
+    age.sshKeyPaths = [ "${homeDir}/.ssh/id_ed25519" ];
     secrets = {
       "1password-secret-keys/bebert64" = { };
       "1password-secret-keys/stockly" = { };

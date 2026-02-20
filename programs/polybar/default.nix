@@ -4,6 +4,9 @@
   config,
   ...
 }:
+let
+  homeDir = config.home.homeDirectory;
+in
 {
 
   imports = [
@@ -29,7 +32,7 @@
       };
 
       script = ''
-        for BAR in $(${pkgs.coreutils}/bin/cat ${config.byDb.paths.homeConfig}/polybar/bars);
+        for BAR in $(${pkgs.coreutils}/bin/cat ${homeDir}/.config/polybar/bars);
         do
           polybar $BAR &
         done'';

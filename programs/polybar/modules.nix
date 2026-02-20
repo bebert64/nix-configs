@@ -17,6 +17,7 @@
   config =
     let
       homeManagerBydbConfig = config.byDb;
+      homeDir = config.home.homeDirectory;
       colors = homeManagerBydbConfig.polybar.colors;
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
@@ -55,7 +56,7 @@
     {
       byDbPkgs.music-title = {
         enable = true;
-        currentSongsDir = "${homeManagerBydbConfig.paths.homeConfigBydb}/music_title";
+        currentSongsDir = "${homeDir}/.config/by_db/music_title";
         radioFrance = {
           apiKeyFile = homeManagerBydbConfig.secrets.radioFranceApiKey;
           url = "https://openapi.radiofrance.fr/v1/graphql";

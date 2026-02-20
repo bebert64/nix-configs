@@ -17,6 +17,7 @@
   config =
     let
       nixosBydbConfig = config.byDb;
+      homeDir = nixosBydbConfig.hmUser.home.homeDirectory;
     in
     {
       # Bootloader.
@@ -79,7 +80,7 @@
               {
                 name = "home-manager";
                 start = ''
-                  ${pkgs.runtimeShell} ${config.byDb.hmUser.byDb.paths.home}/.hm-xsession &
+                  ${pkgs.runtimeShell} ${homeDir}/.hm-xsession &
                   waitPID=$!
                 '';
               }

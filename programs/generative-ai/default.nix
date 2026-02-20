@@ -5,7 +5,7 @@
   ...
 }:
 let
-  homeDir = config.byDb.hmUser.byDb.paths.home;
+  homeDir = config.byDb.hmUser.home.homeDirectory;
   comfyuiDir = "${homeDir}/ai/comfyui";
   comfyuiPort = 8188;
   comfyuiPortStr = toString comfyuiPort;

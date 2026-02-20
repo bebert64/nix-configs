@@ -8,6 +8,9 @@
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
+  homeDir = config.home.homeDirectory;
+  nixProgramsDir = config.byDb.paths.nixPrograms;
+  rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
   sshr = "${pkgs.writeScriptBin "sshr" ''
     REMOTE=$1
     case $REMOTE in
@@ -18,7 +21,7 @@ let
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      grep -P "^Host ([^*]+)$" ${paths.home}/.ssh/config | \
+      grep -P "^Host ([^*]+)$" ${homeDir}/.ssh/config | \
       sed 's/Host //' | \
       tr ' ' '\n' | \
       sort -u | \
@@ -27,8 +30,6 @@ let
     )
     ${sshr} $selection
   ''}/bin/open-remote";
-  paths = config.byDb.paths;
-  rangerPluginsDir = "${paths.homeConfig}/ranger/plugins";
 in
 {
   home = {
@@ -38,13 +39,13 @@ in
     ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${paths.homeLocalShare}/ranger/
-        sed "s/\$USER/"$USER"/" ${./bookmarks} > ${paths.homeLocalShare}/ranger/bookmarks
+        mkdir -p ${homeDir}/.local/share/ranger/
+        sed "s/\$USER/"$USER"/" ${./bookmarks} > ${homeDir}/.local/share/ranger/bookmarks
       '';
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${rangerPluginsDir}/
-        ln -sfT ${paths.nixPrograms}/ranger/ranger-archives ${rangerPluginsDir}/ranger-archives
+        ln -sfT ${nixProgramsDir}/ranger/ranger-archives ${rangerPluginsDir}/ranger-archives
       '';
     };
     file = {
