@@ -4,18 +4,16 @@
   ...
 }:
 let
-  homeDirectory = config.byDb.hmUser.home.homeDirectory;
+  paths = config.byDb.paths;
 
-  # Instance names
   jellyfinInstance1 = "guitar";
   jellyfinInstance2 = "media";
 
-  # Helper function to create a Jellyfin service
   mkJellyfinService =
     instanceName: port:
     let
-      dataDirectory = "${homeDirectory}/.local/share/${instanceName}";
-      configDirectory = "${homeDirectory}/.config/${instanceName}";
+      dataDir = "${paths.homeLocalShare}/${instanceName}";
+      configDir = "${paths.homeConfig}/${instanceName}";
     in
     {
       Unit = {
@@ -24,10 +22,10 @@ let
       Service = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${pkgs.jellyfin}/bin/jellyfin --configdir ${configDirectory}";
+        ExecStart = "${pkgs.jellyfin}/bin/jellyfin --configdir ${configDir}";
         Environment = [
-          "PATH=/run/current-system/sw/bin/:${homeDirectory}/.nix-profile/bin/"
-          "JELLYFIN_DATA_DIR=${dataDirectory}"
+          "PATH=/run/current-system/sw/bin/:${paths.home}/.nix-profile/bin/"
+          "JELLYFIN_DATA_DIR=${dataDir}"
         ];
       };
       Install = {

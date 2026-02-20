@@ -15,11 +15,10 @@
   config =
     let
       homeManagerBydbConfig = config.byDb;
-      homeDirectory = config.home.homeDirectory;
       secrets = homeManagerBydbConfig.secrets;
       paths = homeManagerBydbConfig.paths;
-      stashDirectory = "${homeDirectory}/.stash";
-      stashBackupDirectory = "${paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
+      stashDir = "${paths.home}/.stash";
+      stashBackupDir = "${paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
     in
     {
       byDbPkgs = {
@@ -35,35 +34,35 @@
                 url = "http://localhost:9999/graphql";
                 apiKey = secrets.stashApiKey;
               };
-              file = "${stashDirectory}/stash-go.sqlite";
+              file = "${stashDir}/stash-go.sqlite";
               otherFilesToRemove = [
-                "${stashDirectory}/stash-go.sqlite-shm"
-                "${stashDirectory}/stash-go.sqlite-wal"
+                "${stashDir}/stash-go.sqlite-shm"
+                "${stashDir}/stash-go.sqlite-wal"
               ];
-              downloadDir = "${stashDirectory}/generated/download_stage";
-              backupDir = stashBackupDirectory;
+              downloadDir = "${stashDir}/generated/download_stage";
+              backupDir = stashBackupDir;
             };
             thumbnailsDir = {
-              targetDir = "${stashDirectory}/data";
-              backupDir = "${stashBackupDirectory}/thumbnails";
+              targetDir = "${stashDir}/data";
+              backupDir = "${stashBackupDir}/thumbnails";
             };
             configFile = {
-              targets = [ "${stashDirectory}/config.yml" ];
+              targets = [ "${stashDir}/config.yml" ];
               backupFileName = "config.yml";
-              backupDir = stashBackupDirectory;
+              backupDir = stashBackupDir;
             };
           };
           guitar = {
             metadata = {
-              targetDir = "${homeDirectory}/.local/share/guitar/metadata";
+              targetDir = "${paths.homeLocalShare}/guitar/metadata";
               backupDir = "${paths.nasBase}/Backup/guitar/metadata";
             };
             snapshotDirs = {
               targets = [
-                "${homeDirectory}/.local/share/guitar/data"
-                "${homeDirectory}/.local/share/guitar/plugins"
-                "${homeDirectory}/.local/share/guitar/root"
-                "${homeDirectory}/.config/guitar"
+                "${paths.homeLocalShare}/guitar/data"
+                "${paths.homeLocalShare}/guitar/plugins"
+                "${paths.homeLocalShare}/guitar/root"
+                "${paths.homeConfig}/guitar"
               ];
               backupFileName = "guitar_config";
               backupDir = "${paths.nasBase}/Backup/guitar";
@@ -71,15 +70,15 @@
           };
           media = {
             metadata = {
-              targetDir = "${homeDirectory}/.local/share/media/metadata";
+              targetDir = "${paths.homeLocalShare}/media/metadata";
               backupDir = "${paths.nasBase}/Backup/media/metadata";
             };
             snapshotDirs = {
               targets = [
-                "${homeDirectory}/.local/share/media/data"
-                "${homeDirectory}/.local/share/media/plugins"
-                "${homeDirectory}/.local/share/media/root"
-                "${homeDirectory}/.config/media"
+                "${paths.homeLocalShare}/media/data"
+                "${paths.homeLocalShare}/media/plugins"
+                "${paths.homeLocalShare}/media/root"
+                "${paths.homeConfig}/media"
               ];
               backupFileName = "media_config";
               backupDir = "${paths.nasBase}/Backup/media";
@@ -87,7 +86,7 @@
           };
           qbittorrent = {
             configFile = {
-              targets = [ "${homeDirectory}/.config/qBittorrent/qBittorrent.conf" ];
+              targets = [ "${paths.homeConfig}/qBittorrent/qBittorrent.conf" ];
               backupFileName = "qBittorrent.conf";
               backupDir = "${paths.nasBase}/Backup/qbittorrent";
             };
@@ -102,12 +101,12 @@
           tabsDir = "${paths.nasBase}/Guitare/Tabs";
           ytDlp = {
             downloadDir = "${paths.nasBase}/Guitare/YouTube";
-            cookiePath = "${homeDirectory}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
+            cookiePath = "${paths.homeConfigBydb}/guitar-tutorials-yt-dlp-cookie.txt";
           };
           firefox = {
             guitarTutoFolder = "toolbar/Guitar tutos";
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
-              sessionFile = "${homeDirectory}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
+              sessionFile = "${paths.homeConfigBydb}/guitar-tutorials-firefox-sync-client.secret";
             };
           };
           jellyfin = homeManagerBydbConfig.guitarJellyfinService;
@@ -124,7 +123,7 @@
           parallelDownloads = "4";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.shortcutsDb // {
-              sessionFile = "${homeDirectory}/.config/by_db/shortcuts-firefox-sync-client.secret";
+              sessionFile = "${paths.homeConfigBydb}/shortcuts-firefox-sync-client.secret";
             };
             videosToDownloadFolder = "toolbar/DL";
             comixToDownloadFolder = "toolbar/Other";
@@ -145,7 +144,7 @@
           animatedDirName = "Animated";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
-              sessionFile = "${homeDirectory}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
+              sessionFile = "${paths.homeConfigBydb}/wallpapers-manager-firefox-sync-client.secret";
             };
             wallpapersFolder = "toolbar/Wallpaper/Download";
           };

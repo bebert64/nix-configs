@@ -18,7 +18,7 @@ let
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
-      grep -P "^Host ([^*]+)$" ${homeDirectory}/.ssh/config | \
+      grep -P "^Host ([^*]+)$" ${paths.home}/.ssh/config | \
       sed 's/Host //' | \
       tr ' ' '\n' | \
       sort -u | \
@@ -27,9 +27,8 @@ let
     )
     ${sshr} $selection
   ''}/bin/open-remote";
-  homeDirectory = config.home.homeDirectory;
-  nixPrograms = config.byDb.paths.nixPrograms;
-  rangerPluginsDirectory = "${homeDirectory}/.config/ranger/plugins";
+  paths = config.byDb.paths;
+  rangerPluginsDir = "${paths.homeConfig}/ranger/plugins";
 in
 {
   home = {
@@ -39,13 +38,13 @@ in
     ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${homeDirectory}/.local/share/ranger/
-        sed "s/\$USER/"$USER"/" ${./bookmarks} > ${homeDirectory}/.local/share/ranger/bookmarks
+        mkdir -p ${paths.homeLocalShare}/ranger/
+        sed "s/\$USER/"$USER"/" ${./bookmarks} > ${paths.homeLocalShare}/ranger/bookmarks
       '';
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${rangerPluginsDirectory}/
-        ln -sfT ${nixPrograms}/ranger/ranger-archives ${rangerPluginsDirectory}/ranger-archives
+        mkdir -p ${rangerPluginsDir}/
+        ln -sfT ${paths.nixPrograms}/ranger/ranger-archives ${rangerPluginsDir}/ranger-archives
       '';
     };
     file = {

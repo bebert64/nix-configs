@@ -8,7 +8,6 @@
 let
   modifier = config.xsession.windowManager.i3.config.modifier;
   paths = config.byDb.paths;
-  homeDirectory = config.home.homeDirectory;
   nixPrograms = paths.nixPrograms;
   rofi = config.rofi.defaultCmd;
   openLocal = "${pkgs.writeScriptBin "open-local" ''
@@ -55,7 +54,7 @@ in
     };
     activation = {
       symlinkCursorCommands = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        ln -sfT ${nixPrograms}/cursor/commands ${homeDirectory}/.cursor/commands
+        ln -sfT ${nixPrograms}/cursor/commands ${paths.home}/.cursor/commands
       '';
     };
   };

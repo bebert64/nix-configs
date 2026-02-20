@@ -19,15 +19,15 @@ let
       "Gui to clipboard")
         flameshot gui -r | xclip -selection clipboard -t image/png ;;
       "Gui to file")
-        flameshot gui -p "${screenshotsDirectory}" ;;
+        flameshot gui -p "${screenshotsDir}" ;;
       "Fullscreen to clipboard")
         flameshot full r | xclip -selection clipboard -t image/png ;;
       "Fullscreen to file")
-        flameshot full -p "${screenshotsDirectory}" ;;
+        flameshot full -p "${screenshotsDir}" ;;
     esac
   ''}/bin/rofi-screenshots";
-  homeDirectory = config.home.homeDirectory;
-  screenshotsDirectory = "${homeDirectory}/screenshots";
+  paths = config.byDb.paths;
+  screenshotsDir = "${paths.home}/screenshots";
 in
 {
   home = {
@@ -37,7 +37,7 @@ in
 
     activation = {
       createScreenshotsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${homeDirectory}/screenshots/
+        mkdir -p ${paths.home}/screenshots/
       '';
     };
   };

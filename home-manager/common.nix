@@ -76,6 +76,30 @@ in
       description = "Name of the main coding repo directory";
     };
     paths = {
+      home = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = config.home.homeDirectory;
+      };
+      homeConfig = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${config.byDb.paths.home}/.config";
+      };
+      homeLocalShare = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${config.byDb.paths.home}/.local/share";
+      };
+      homeConfigBydb = lib.mkOption {
+        type = lib.types.str;
+        internal = true;
+        readOnly = true;
+        default = "${config.byDb.paths.homeConfig}/by_db";
+      };
       nasBase = lib.mkOption {
         type = lib.types.str;
         description = "Base path for NAS mount point — set by nas.nix";
@@ -84,7 +108,7 @@ in
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${config.home.homeDirectory}/${config.byDb.nixConfigsRepo}";
+        default = "${config.byDb.paths.home}/${config.byDb.nixConfigsRepo}";
         description = "Full path to the nix configs repo";
       };
       nixPrograms = lib.mkOption {
@@ -98,7 +122,7 @@ in
         type = lib.types.str;
         internal = true;
         readOnly = true;
-        default = "${config.home.homeDirectory}/${config.byDb.mainCodingRepo}";
+        default = "${config.byDb.paths.home}/${config.byDb.mainCodingRepo}";
         description = "Full path to the main coding repo";
       };
     };

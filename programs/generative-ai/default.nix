@@ -5,8 +5,8 @@
   ...
 }:
 let
-  homeDirectory = config.byDb.hmUser.home.homeDirectory;
-  comfyuiDirectory = "${homeDirectory}/ai/comfyui";
+  homeDir = config.byDb.hmUser.byDb.paths.home;
+  comfyuiDir = "${homeDir}/ai/comfyui";
   comfyuiPort = 8188;
   comfyuiPortStr = toString comfyuiPort;
 in
@@ -63,7 +63,7 @@ in
             --rm \
             --device nvidia.com/gpu=all \
             -p ${comfyuiPortStr}:${comfyuiPortStr} \
-            -v ${comfyuiDirectory}:/opt/comfyui \
+            -v ${comfyuiDir}:/opt/comfyui \
             --group-add 1000 \
             --name comfyui \
             jamesbrink/comfyui
@@ -78,7 +78,7 @@ in
 
     system.activationScripts.comfyShareDirs = {
       text = ''
-        shared="${comfyuiDirectory}"
+        shared="${comfyuiDir}"
 
         mkdir -p "$shared"
         chown -R 10001:comfyshare "$shared"

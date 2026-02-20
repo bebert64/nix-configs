@@ -62,7 +62,6 @@
     let
       homeManagerBydbConfig = config.byDb;
       paths = homeManagerBydbConfig.paths;
-      homeDirectory = config.home.homeDirectory;
     in
     {
       home = {
@@ -112,12 +111,12 @@
           tabsDir = "${paths.nasBase}/Guitare/Tabs";
           ytDlp = {
             downloadDir = "${paths.nasBase}/Guitare/YouTube";
-            cookiePath = "${homeDirectory}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
+            cookiePath = "${paths.homeConfigBydb}/guitar-tutorials-yt-dlp-cookie.txt";
           };
           firefox = {
             guitarTutoFolder = "toolbar/Guitar tutos";
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
-              sessionFile = "${homeDirectory}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
+              sessionFile = "${paths.homeConfigBydb}/guitar-tutorials-firefox-sync-client.secret";
             };
           };
           jellyfin = homeManagerBydbConfig.guitarJellyfinService;
@@ -130,7 +129,7 @@
           parallelDownloads = "4";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.shortcutsDb // {
-              sessionFile = "${homeDirectory}/.config/by_db/shortcuts-firefox-sync-client.secret";
+              sessionFile = "${paths.homeConfigBydb}/shortcuts-firefox-sync-client.secret";
             };
             videosToDownloadFolder = "toolbar/DL";
             comixToDownloadFolder = "toolbar/Other";
@@ -144,13 +143,13 @@
               frequency = "1h";
             };
           };
-          wallpapersDir = "${homeDirectory}/wallpapers";
+          wallpapersDir = "${paths.home}/wallpapers";
           singleScreenDirName = "SingleScreen";
           dualScreenDirName = "DualScreen";
           animatedDirName = "Animated";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
-              sessionFile = "${homeDirectory}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
+              sessionFile = "${paths.homeConfigBydb}/wallpapers-manager-firefox-sync-client.secret";
             };
             wallpapersFolder = "toolbar/Wallpaper/Download";
           };

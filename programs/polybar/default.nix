@@ -29,7 +29,7 @@
       };
 
       script = ''
-        for BAR in $(${pkgs.coreutils}/bin/cat ${config.home.homeDirectory}/.config/polybar/bars);
+        for BAR in $(${pkgs.coreutils}/bin/cat ${config.byDb.paths.homeConfig}/polybar/bars);
         do
           polybar $BAR &
         done'';

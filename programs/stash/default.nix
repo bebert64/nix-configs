@@ -4,8 +4,8 @@
   ...
 }:
 let
-  homeDirectory = config.byDb.hmUser.home.homeDirectory;
-  stashDirectory = "${homeDirectory}/.stash";
+  paths = config.byDb.paths;
+  stashDir = "${paths.home}/.stash";
   stash = pkgs.stash;
 in
 {
@@ -16,7 +16,7 @@ in
     ];
 
     file = {
-      "${stashDirectory}/scrapers".source = ./scrapers;
+      "${stashDir}/scrapers".source = ./scrapers;
     };
   };
 
@@ -29,8 +29,8 @@ in
       Service = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${stash}/bin/stash --config ${stashDirectory}/config.yml --nobrowser";
-        Environment = "PATH=/run/current-system/sw/bin/:${homeDirectory}/.nix-profile/bin/";
+        ExecStart = "${stash}/bin/stash --config ${stashDir}/config.yml --nobrowser";
+        Environment = "PATH=/run/current-system/sw/bin/:${paths.home}/.nix-profile/bin/";
       };
       Install = {
         WantedBy = [ "default.target" ];

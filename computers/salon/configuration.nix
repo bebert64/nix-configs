@@ -6,7 +6,7 @@
 }:
 let
   nixosUserConfig = config.byDb.user;
-  homeDirectory = config.users.users.${nixosUserConfig.name}.home;
+  hmPaths = config.byDb.hmUser.byDb.paths;
 in
 {
   imports = [
@@ -41,8 +41,8 @@ in
 
     home.activation = {
       symlinkAutoFixVsCodeServerService = home-manager.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        mkdir -p ${homeDirectory}/.config/systemd/user/
-        ln -sf /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ${homeDirectory}/.config/systemd/user/
+        mkdir -p ${hmPaths.homeConfig}/systemd/user/
+        ln -sf /run/current-system/etc/systemd/user/auto-fix-vscode-server.service ${hmPaths.homeConfig}/systemd/user/
       '';
     };
   };
@@ -60,10 +60,10 @@ in
     vscode-server = {
       enable = true;
       installPath = [
-        "${homeDirectory}/.vscode-server"
-        "${homeDirectory}/.vscode-server-oss"
-        "${homeDirectory}/.vscode-server-insiders"
-        "${homeDirectory}/.cursor-server"
+        "${hmPaths.home}/.vscode-server"
+        "${hmPaths.home}/.vscode-server-oss"
+        "${hmPaths.home}/.vscode-server-insiders"
+        "${hmPaths.home}/.cursor-server"
       ];
     };
   };

@@ -55,7 +55,7 @@
     {
       byDbPkgs.music-title = {
         enable = true;
-        currentSongsDir = "${config.home.homeDirectory}/.config/by_db/music_title";
+        currentSongsDir = "${homeManagerBydbConfig.paths.homeConfigBydb}/music_title";
         radioFrance = {
           apiKeyFile = homeManagerBydbConfig.secrets.radioFranceApiKey;
           url = "https://openapi.radiofrance.fr/v1/graphql";
