@@ -31,12 +31,12 @@ xPathScrapers:
           fixed: PimpBunny
       Performers:
         Name: $models//div[contains(@class, "pages-view-video-model-title")]//a
-        URL: $models//div[contains(@class, "pages-view-video-model-title")]//a/@href
+        URLs: $models//div[contains(@class, "pages-view-video-model-title")]//a/@href
       Tags:
         Name: //ul[contains(@class, "pages-view-video-tags")][1]//a
   performerScraper:
     performer:
       Name: //h1[contains(@class, "ui-heading-h1")]
       Image: //div[contains(@class, "blocks-model-view-thumbnail")]//img/@data-original
-      URL:
+      URLs:
         fixed: "{inputURL}"
