@@ -13,7 +13,14 @@ let
   rofi = config.rofi.defaultCmd;
   openLocal = "${pkgs.writeScriptBin "open-local" ''
     selection=$(
-      list-crate-dirs ${paths.mainCodingRepo} Cargo.toml 2>/dev/null | \
+      (echo "code"
+       cd ${paths.mainCodingRepo} && fd -t d -0 \
+        --exec-batch bash -c '
+          for d in "$@"; do
+            [[ -d "$d/.vscode" ]] && printf "%s\n" "$d"
+          done
+          exit 0
+        ' _ | sed 's|^./||' | sort -fu) 2>/dev/null | \
       ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
@@ -24,18 +31,39 @@ let
   ''}/bin/open-local";
   openCerberus = "${pkgs.writeScriptBin "open-cerberus" ''
     selection=$(
-      ssh cerberus "./list-crate-dirs ./Stockly/Main stockly-package.json" 2>/dev/null | \
+      ssh cerberus "
+        cd ~/Stockly && {
+          for d in Main Main_*; do
+            [ -d \"\$d\" ] && echo \"\$d\"
+          done
+          fd -t d -0 \
+            --exec-batch bash -c '
+              for d in \"\$@\"; do
+                [[ -d \"\$d/.vscode\" ]] && printf \"%s\n\" \"\$d\"
+              done
+              exit 0
+            ' _ | sed 's|^./||'
+        } | grep -E '^Main(_[^/]*)?' \
+          | LC_ALL=C sort -fu
+      " 2>/dev/null | \
       ${rofi} -theme-str 'window {width: 30%;}'
     )
-    if [[ $selection = "Main" ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main
-    elif [[ $selection ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main/$selection
+    if [[ $selection ]]; then
+      cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
     fi
   ''}/bin/open-cerberus";
   openSalon = "${pkgs.writeScriptBin "open-salon" ''
     selection=$(
-      ssh salon "list-crate-dirs /home/romain/code Cargo.toml" 2>/dev/null | \
+      ssh salon "(
+        echo code
+        cd /home/romain/code && fd -t d -0 \
+          --exec-batch bash -c '
+            for d in \"\$@\"; do
+              [[ -d \"\$d/.vscode\" ]] && printf \"%s\n\" \"\$d\"
+            done
+            exit 0
+          ' _ | sed 's|^./||' | sort -fu
+      )" 2>/dev/null | \
       ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ $selection = "code" ]]; then
@@ -49,6 +77,7 @@ in
   home = {
     packages = [
       pkgsUnstable.code-cursor
+      pkgs.fd
     ];
     file = {
       ".cursor/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
@@ -59,8 +88,6 @@ in
       '';
     };
   };
-
-  byDbPkgs.list-crate-dirs.enable = true;
 
   xsession.windowManager.i3.config = {
     assigns = {

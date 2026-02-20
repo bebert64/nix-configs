@@ -12,12 +12,7 @@ let
   nixProgramsDir = config.byDb.paths.nixPrograms;
   rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
   sshr = "${pkgs.writeScriptBin "sshr" ''
-    REMOTE=$1
-    case $REMOTE in
-      "cerberus") CMD="nix run \"nixpkgs#ranger\"";;
-      *) CMD="ranger";;
-    esac
-    tilix -p Ranger -e "ssh $REMOTE -t ''${CMD}"
+    tilix -p Ranger -e "ssh $1 -t ranger"
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
