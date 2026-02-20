@@ -51,7 +51,7 @@ in
       pkgsUnstable.code-cursor
     ];
     file = {
-      ".vscode/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
+      ".cursor/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
     activation = {
       symlinkCursorCommands = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
