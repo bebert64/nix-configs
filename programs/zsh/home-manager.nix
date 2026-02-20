@@ -57,7 +57,7 @@ in
       }
 
       nix-switch() {
-        inhibit-and-sleep 'nixos-rebuild build --flake .# && sudo nixos-rebuild switch --flake .#'
+        inhibit-and-sleep 'env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# && sudo env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .#'
       }
 
       run-in-nix-repo() {
