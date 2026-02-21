@@ -12,15 +12,19 @@ let
     systemctl --user restart polybar
     echo "${profileName}" > ${homeDir}/.config/autorandr/current
   '';
-  autorandrForce = "${pkgs.writeScriptBin "autorandr-force" ''
+  autorandrForce = "${pkgs.writeShellScriptBin "autorandr-force" ''
     echo "" > ${homeDir}/.config/autorandr/current && autorandr -c
   ''}/bin/autorandr-force";
   xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
   grep = "${pkgs.gnugrep}/bin/grep";
   cut = "${pkgs.coreutils}/bin/cut";
-  fixScreens = "${pkgs.writeScriptBin "fix-screens" ''
+  fixScreens = "${pkgs.writeShellScriptBin "fix-screens" ''
     for OUTPUT in $(${xrandr} --query | ${grep} ' connected' | ${cut} -d' ' -f1); do
       ${xrandr} --output "$OUTPUT" --off
+    done
+    sleep 2
+    for OUTPUT in $(${xrandr} --query | ${grep} ' connected' | ${cut} -d' ' -f1); do
+      ${xrandr} --output "$OUTPUT" --auto
     done
     sleep 1
     ${autorandrForce}
