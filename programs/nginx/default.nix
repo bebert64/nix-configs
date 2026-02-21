@@ -132,12 +132,12 @@ in
         locations."/".proxyPass = "http://192.168.1.254";
       };
 
-      "${jellyfinInstance1}.capucina.net" = mkProtectedVirtualHost (lib.recursiveUpdate (mkJellyfinVirtualHost 8096) {
+      "${jellyfinInstance1}.capucina.net" = lib.recursiveUpdate (mkJellyfinVirtualHost 8096) {
         locations."/tabs/" = {
           alias = "${config.byDb.hmUser.byDb.paths.nasBase}/Guitare/Tabs/";
         };
-      });
-      "${jellyfinInstance2}.capucina.net" = mkProtectedVirtualHost (mkJellyfinVirtualHost 8097);
+      };
+      "${jellyfinInstance2}.capucina.net" = mkJellyfinVirtualHost 8097;
 
       "nas.capucina.net" = {
         enableACME = true;
