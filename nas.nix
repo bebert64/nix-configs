@@ -11,46 +11,16 @@ let
   nasIp = "192.168.1.3";
   nasIpAndVolume = "${nasIp}:/volume1/NAS";
   nasMountPoint = "/mnt/NAS";
-  nasName = "NasLaFouillouse";
-  nasPort = "5000";
   homeDir = config.byDb.hmUser.home.homeDirectory;
   homeMountDir = "${homeDir}/mnt/";
-  mountNas = writeScriptBin "mount-nas" ''
-    PATH=${
-      makeBinPath [
-        pkgs.curlMinimal
-        pkgs.toybox # contains mkdir, grep and ping
-        unmountNas
-      ]
-    }
-    set -euo pipefail
-
-    mkdir -p ${nasMountPoint}
-
-    if [[ $(ls ${nasMountPoint}) ]]; then
-      echo "NAS seems to already be mounted"
-      exit
-    fi
-
-    if ! ping -c1 ${nasIp} &> /dev/null; then
-      echo "No machine responding at ${nasIp}"
-      unmount-nas
-      exit
-    fi
-
-    if [[ $(curl -s ${nasIp}:${nasPort} | grep ${nasName}) ]]; then
-      # We specifically want to avoid using toybox's mount, which doesn't work with nfs
-      ${pkgs.mount}/bin/mount ${nasIpAndVolume} ${nasMountPoint}
-      echo "mounted ${nasName} successfully"
-    else
-      echo "The machine at ${nasIp} seems to not be ${nasName}"
-      unmount-nas
-    fi
-  '';
   unmountNas = writeScriptBin "unmount-nas" ''
     PATH=${makeBinPath [ pkgs.util-linux ]}
+    set -euo pipefail
     if mountpoint -q ${nasMountPoint} ; then
-      umount ${nasMountPoint} 
+      umount -l ${nasMountPoint}
+      echo "NAS unmounted"
+    else
+      echo "NAS is not mounted"
     fi
   '';
 in
@@ -62,40 +32,22 @@ in
     options = [
       "noexec"
       "noauto"
+      "soft"
+      "timeo=30"
+      "retrans=3"
+      "x-systemd.automount"
+      "x-systemd.idle-timeout=300"
+      "x-systemd.mount-timeout=10s"
     ];
   };
 
-  systemd = {
-    services = {
-      mount-nas = {
-        script = "${mountNas}/bin/mount-nas";
-        serviceConfig = {
-          Type = "oneshot";
-          User = "root";
-        };
-      };
-    };
-    timers = {
-      mount-nas = {
-        wantedBy = [ "timers.target" ];
-        timerConfig = {
-          OnBootSec = "20s";
-          OnUnitActiveSec = "5m";
-          Unit = "mount-nas.service";
-        };
-      };
-    };
-  };
-
   environment.systemPackages = [
-    mountNas
     unmountNas
   ];
 
   home-manager.users.${config.byDb.user.name} = {
     byDb.paths.nasBase = nasMountPoint;
     programs.zsh.shellAliases = {
-      mnas = "mount-nas";
       umnas = "unmount-nas";
     };
     home.activation = {
