@@ -8,6 +8,24 @@ let
   jellyfinInstance1 = "guitar";
   jellyfinInstance2 = "media";
 
+  # Wraps a virtual host definition with LAN-bypass basic auth:
+  # LAN clients (192.168.1.0/24) pass without auth, WAN clients must authenticate.
+  # Requires sops secret "nginx/htpasswd" containing an htpasswd-format line
+  # (generate with: htpasswd -nbBC 10 <user> <password>).
+  # Backend services should disable their own auth (see plan for per-service commands).
+  mkProtectedVirtualHost =
+    attrs:
+    lib.recursiveUpdate attrs {
+      extraConfig = ''
+        satisfy any;
+        allow 192.168.1.0/24;
+        deny all;
+        auth_basic "Restricted";
+        auth_basic_user_file ${config.sops.secrets."nginx/htpasswd".path};
+      ''
+      + (attrs.extraConfig or "");
+    };
+
   # Helper function to create nginx virtual host for Jellyfin
   mkJellyfinVirtualHost = port: {
     enableACME = true;
@@ -65,7 +83,7 @@ in
         };
       };
 
-      "bazarr.capucina.net" = {
+      "bazarr.capucina.net" = mkProtectedVirtualHost {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -83,10 +101,9 @@ in
         };
       };
 
-      "comfyui.capucina.net" = {
+      "comfyui.capucina.net" = mkProtectedVirtualHost {
         enableACME = true;
         forceSSL = true;
-        # Web UI and WebSocket reverse proxy to ComfyUI host
         extraConfig = ''
           proxy_set_header Host $host;
           proxy_set_header X-Real-IP $remote_addr;
@@ -131,7 +148,6 @@ in
       "plex.capucina.net" = {
         enableACME = true;
         forceSSL = true;
-        # Reverse proxy to Plex server (for browsing/admin only, not streaming)
         locations."/" = {
           proxyPass = "http://192.168.1.7:32400";
           extraConfig = ''
@@ -145,7 +161,7 @@ in
         };
       };
 
-      "prowlarr.capucina.net" = {
+      "prowlarr.capucina.net" = mkProtectedVirtualHost {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -163,7 +179,7 @@ in
         };
       };
 
-      "radarr.capucina.net" = {
+      "radarr.capucina.net" = mkProtectedVirtualHost {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -181,7 +197,7 @@ in
         };
       };
 
-      "sonarr.capucina.net" = {
+      "sonarr.capucina.net" = mkProtectedVirtualHost {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -217,25 +233,22 @@ in
         };
       };
 
-      "torrent.capucina.net" = {
+      "torrent.capucina.net" = mkProtectedVirtualHost {
         enableACME = true;
         forceSSL = true;
 
-        # Serve the "down" page from a static path
-        root = "/var/www/capucina.net/qbittorrent"; # directory for down.html
+        root = "/var/www/capucina.net/qbittorrent";
 
         locations = {
           "/" = {
             proxyPass = "http://192.168.1.7:8080";
             extraConfig = ''
               proxy_http_version 1.1;
-              # headers recognized by qBittorrent
               proxy_set_header   Host               $proxy_host;
               proxy_set_header   X-Forwarded-For    $proxy_add_x_forwarded_for;
               proxy_set_header   X-Forwarded-Host   $http_host;
               proxy_set_header   X-Forwarded-Proto  $scheme;
 
-              # Detect if backend is down and serve down.html
               proxy_connect_timeout 1s;
               proxy_read_timeout 3s;
               proxy_send_timeout 3s;
@@ -243,7 +256,6 @@ in
               error_page 502 503 504 /down.html;
             '';
           };
-          # Serve static down.html page
           "/down.html" = {
             root = "/var/www/capucina.net/qbittorrent";
           };
