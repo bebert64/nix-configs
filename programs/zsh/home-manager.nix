@@ -127,7 +127,7 @@ in
         cd "$base/$@"
       }
 
-      unalias dc
+      unalias dc 2>/dev/null
       dc() {
         cd ${paths.mainWorktree}
         cargo run -p db_cli -- "$@"
