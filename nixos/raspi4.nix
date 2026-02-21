@@ -1,6 +1,5 @@
 {
   config,
-  nixpkgs,
   sops-nix,
   ...
 }:
@@ -10,7 +9,6 @@
     ../programs/dnsmasq
     ../programs/nginx
     sops-nix.nixosModules.sops
-    "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64-installer.nix"
   ];
 
   config =
