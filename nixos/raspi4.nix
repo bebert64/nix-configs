@@ -1,5 +1,6 @@
 {
   config,
+  sops-nix,
   ...
 }:
 {
@@ -7,6 +8,7 @@
     ./raspberry.nix
     ../programs/dnsmasq
     ../programs/nginx
+    sops-nix.nixosModules.sops
   ];
 
   config =
@@ -14,6 +16,15 @@
       userConfig = config.byDb.user;
     in
     {
+      sops = {
+        defaultSopsFile = ../programs/secrets/secrets.yaml;
+        age.sshKeyPaths = [ "/home/${userConfig.name}/.ssh/id_ed25519" ];
+        secrets."nginx/htpasswd" = {
+          owner = "nginx";
+          group = "nginx";
+        };
+      };
+
       home-manager.users.${userConfig.name}.imports = [ ../home-manager/raspi4.nix ];
 
       networking = {
