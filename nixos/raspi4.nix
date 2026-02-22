@@ -6,6 +6,7 @@
 {
   imports = [
     ./raspberry.nix
+    ../programs/authelia
     ../programs/dnsmasq
     ../programs/nginx
     sops-nix.nixosModules.sops
@@ -19,10 +20,6 @@
       sops = {
         defaultSopsFile = ../programs/secrets/secrets.yaml;
         age.sshKeyPaths = [ "/home/${userConfig.name}/.ssh/id_ed25519" ];
-        secrets."nginx/htpasswd" = {
-          owner = "nginx";
-          group = "nginx";
-        };
       };
 
       home-manager.users.${userConfig.name}.imports = [ ../home-manager/raspi4.nix ];

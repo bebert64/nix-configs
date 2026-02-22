@@ -8,22 +8,37 @@ let
   jellyfinInstance1 = "guitar";
   jellyfinInstance2 = "media";
 
-  # Wraps a virtual host definition with LAN-bypass basic auth:
-  # LAN clients (192.168.1.0/24) pass without auth, WAN clients must authenticate.
-  # Requires sops secret "nginx/htpasswd" containing an htpasswd-format line
-  # (generate with: htpasswd -nbBC 10 <user> <password>).
-  # Backend services should disable their own auth (see plan for per-service commands).
+  # Wraps a virtual host definition with Authelia forward-auth:
+  # nginx sends an auth subrequest to Authelia on every request.
+  # Authelia's access_control handles LAN bypass (192.168.1.0/24 → bypass)
+  # and requires one-factor auth for WAN clients via a login form.
+  # Unauthenticated WAN users are redirected to https://auth.capucina.net.
   mkProtectedVirtualHost =
     attrs:
     lib.recursiveUpdate attrs {
       extraConfig = ''
-        satisfy any;
-        allow 192.168.1.0/24;
-        deny all;
-        auth_basic "Restricted";
-        auth_basic_user_file ${config.sops.secrets."nginx/htpasswd".path};
+        auth_request /_authelia;
+        error_page 401 =302 https://auth.capucina.net/?rd=$scheme://$http_host$request_uri;
+
+        auth_request_set $user $upstream_http_remote_user;
+        auth_request_set $groups $upstream_http_remote_groups;
+        auth_request_set $name $upstream_http_remote_name;
+        auth_request_set $email $upstream_http_remote_email;
       ''
       + (attrs.extraConfig or "");
+
+      locations."/_authelia" = {
+        proxyPass = "http://127.0.0.1:9091/api/authz/auth-request";
+        extraConfig = ''
+          internal;
+          proxy_set_header X-Original-Method $request_method;
+          proxy_set_header X-Original-URL $scheme://$http_host$request_uri;
+          proxy_set_header X-Forwarded-For $remote_addr;
+          proxy_set_header Content-Length "";
+          proxy_set_header Connection "";
+          proxy_pass_request_body off;
+        '';
+      };
     };
 
   # Helper function to create nginx virtual host for Jellyfin
@@ -75,6 +90,22 @@ in
     '';
 
     virtualHosts = {
+      "auth.capucina.net" = {
+        enableACME = true;
+        forceSSL = true;
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:9091";
+          extraConfig = ''
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header X-Forwarded-Host $http_host;
+            proxy_buffering off;
+          '';
+        };
+      };
+
       "capucina.net" = {
         enableACME = true;
         forceSSL = true;
