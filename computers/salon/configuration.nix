@@ -25,6 +25,10 @@ in
     nixHighRam = "22G";
     nixMaxRam = "24G";
     generativeAi.enable = true;
+    autoUpdate = {
+      enable = true;
+      flakePath = "/home/romain/code/nix-configs";
+    };
   };
 
   home-manager.users.${nixosUserConfig.name} = {

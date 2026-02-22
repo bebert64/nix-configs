@@ -17,6 +17,10 @@ in
     nixMaxJobs = 1;
     nixHighRam = "7G";
     nixMaxRam = "8G";
+    autoUpdate = {
+      enable = true;
+      flakePath = "/home/romain/code/nix-configs";
+    };
   };
 
   home-manager.users.${nixosUserConfig.name} = {

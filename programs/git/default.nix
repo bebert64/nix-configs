@@ -31,7 +31,10 @@
           editor = "nvim";
           ui = "true";
         };
-        push.default = "current";
+        push = {
+          default = "current";
+          autoSetupRemote = "true";
+        };
         gc.autoDetach = "false";
         alias = {
           a = "add";

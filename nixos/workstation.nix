@@ -7,6 +7,7 @@
 {
   imports = [
     ./common.nix
+    ../programs/auto-update
     ../programs/generative-ai
   ];
 

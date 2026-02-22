@@ -1,6 +1,7 @@
 {
   pkgs,
   home-manager,
+  nixpkgs,
   lib,
   config,
   specialArgs,
@@ -88,12 +89,13 @@
       };
 
       nix = {
-        # Auto perodic garbage collection
         gc = {
           automatic = true;
           dates = "weekly";
           options = "--delete-older-than 30d";
         };
+        nixPath = [ "nixpkgs=${nixpkgs}" ];
+        registry.nixpkgs.flake = nixpkgs;
         settings.experimental-features = [
           "nix-command"
           "flakes"

@@ -46,45 +46,43 @@
     let
       pkgsUnstable = import nixpkgs-unstable {
         system = "x86_64-linux";
-        # To use Cursor, we need to allow the installation of non-free software.
         config.allowUnfree = true;
       };
-    in
-    {
-      nixosConfigurations = {
-        bureau = nixpkgs.lib.nixosSystem {
-          modules = [ ./computers/bureau/configuration.nix ];
-          specialArgs = {
-            inherit
-              by-db
-              home-manager
-              pkgsUnstable
-              sops-nix
-              ;
-
-          };
-        };
-
-        raspi4 = nixpkgs.lib.nixosSystem {
-          modules = [ ./computers/raspi4/configuration.nix ];
+      mkHost =
+        {
+          modules,
+          extraSpecialArgs ? { },
+        }:
+        nixpkgs.lib.nixosSystem {
+          modules = modules;
           specialArgs = {
             inherit
               home-manager
               nixpkgs
               sops-nix
-              vscode-server
               ;
-          };
+          }
+          // extraSpecialArgs;
+        };
+    in
+    {
+      nixosConfigurations = {
+        bureau = mkHost {
+          modules = [ ./computers/bureau/configuration.nix ];
+          extraSpecialArgs = { inherit by-db pkgsUnstable; };
         };
 
-        salon = nixpkgs.lib.nixosSystem {
+        raspi4 = mkHost {
+          modules = [ ./computers/raspi4/configuration.nix ];
+          extraSpecialArgs = { inherit vscode-server; };
+        };
+
+        salon = mkHost {
           modules = [ ./computers/salon/configuration.nix ];
-          specialArgs = {
+          extraSpecialArgs = {
             inherit
               by-db
-              home-manager
               pkgsUnstable
-              sops-nix
               vscode-server
               ;
           };
