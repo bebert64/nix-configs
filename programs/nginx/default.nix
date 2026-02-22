@@ -284,6 +284,7 @@ in
               proxy_read_timeout 3s;
               proxy_send_timeout 3s;
               proxy_intercept_errors on;
+              error_page 401 =302 https://auth.capucina.net/?rd=$scheme://$http_host$request_uri;
               error_page 502 503 504 /down.html;
             '';
           };
