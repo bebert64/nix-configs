@@ -114,7 +114,7 @@ in
         };
       };
 
-      "bazarr.capucina.net" = mkProtectedVirtualHost {
+      "bazarr.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -192,7 +192,7 @@ in
         };
       };
 
-      "prowlarr.capucina.net" = mkProtectedVirtualHost {
+      "prowlarr.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -210,7 +210,7 @@ in
         };
       };
 
-      "radarr.capucina.net" = mkProtectedVirtualHost {
+      "radarr.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
@@ -228,7 +228,7 @@ in
         };
       };
 
-      "sonarr.capucina.net" = mkProtectedVirtualHost {
+      "sonarr.capucina.net" = {
         enableACME = true;
         forceSSL = true;
         locations."/" = {
