@@ -53,43 +53,63 @@
               backupDir = stashBackupDir;
             };
           };
-          guitar = {
-            metadata = {
-              targetDir = "${homeDir}/.local/share/guitar/metadata";
-              backupDir = "${paths.nasBase}/Backup/guitar/metadata";
-            };
-            snapshotDirs = {
-              targets = [
-                "${homeDir}/.local/share/guitar/data"
-                "${homeDir}/.local/share/guitar/plugins"
-                "${homeDir}/.local/share/guitar/root"
-                "${homeDir}/.config/guitar"
+          services = {
+            guitar = {
+              serviceName = "guitar";
+              stopForBackup = true;
+              stopForRestore = true;
+              snapshots = [
+                {
+                  targets = [
+                    "${homeDir}/.local/share/guitar/data"
+                    "${homeDir}/.local/share/guitar/plugins"
+                    "${homeDir}/.local/share/guitar/root"
+                    "${homeDir}/.config/guitar"
+                  ];
+                  backupFileName = "guitar_config";
+                  backupDir = "${paths.nasBase}/Backup/guitar";
+                }
               ];
-              backupFileName = "guitar_config";
-              backupDir = "${paths.nasBase}/Backup/guitar";
-            };
-          };
-          media = {
-            metadata = {
-              targetDir = "${homeDir}/.local/share/media/metadata";
-              backupDir = "${paths.nasBase}/Backup/media/metadata";
-            };
-            snapshotDirs = {
-              targets = [
-                "${homeDir}/.local/share/media/data"
-                "${homeDir}/.local/share/media/plugins"
-                "${homeDir}/.local/share/media/root"
-                "${homeDir}/.config/media"
+              syncs = [
+                {
+                  targetDir = "${homeDir}/.local/share/guitar/metadata";
+                  backupDir = "${paths.nasBase}/Backup/guitar/metadata";
+                }
               ];
-              backupFileName = "media_config";
-              backupDir = "${paths.nasBase}/Backup/media";
             };
-          };
-          qbittorrent = {
-            configFile = {
-              targets = [ "${homeDir}/.config/qBittorrent/qBittorrent.conf" ];
-              backupFileName = "qBittorrent.conf";
-              backupDir = "${paths.nasBase}/Backup/qbittorrent";
+            media = {
+              serviceName = "media";
+              stopForBackup = true;
+              stopForRestore = true;
+              snapshots = [
+                {
+                  targets = [
+                    "${homeDir}/.local/share/media/data"
+                    "${homeDir}/.local/share/media/plugins"
+                    "${homeDir}/.local/share/media/root"
+                    "${homeDir}/.config/media"
+                  ];
+                  backupFileName = "media_config";
+                  backupDir = "${paths.nasBase}/Backup/media";
+                }
+              ];
+              syncs = [
+                {
+                  targetDir = "${homeDir}/.local/share/media/metadata";
+                  backupDir = "${paths.nasBase}/Backup/media/metadata";
+                }
+              ];
+            };
+            qbittorrent = {
+              serviceName = "qbittorrent";
+              stopForRestore = true;
+              snapshots = [
+                {
+                  targets = [ "${homeDir}/.config/qBittorrent/qBittorrent.conf" ];
+                  backupFileName = "qBittorrent.conf";
+                  backupDir = "${paths.nasBase}/Backup/qbittorrent";
+                }
+              ];
             };
           };
         };
