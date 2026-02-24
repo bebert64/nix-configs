@@ -5,6 +5,7 @@
 {
   imports = [
     ./common.nix
+    ../programs/ranger
   ];
 
   config = {
