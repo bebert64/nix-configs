@@ -32,6 +32,21 @@ alwaysApply: false
 - Visibility (`pub`) doesn't affect grouping — `use` and `pub use` from the same group should NOT have a newline between them.
 - **Never use more than one `super::`** (e.g., `super::super::...`). Use `crate::explicit::path` instead for anything beyond immediate parent.
 
+## Module organization
+
+- **No inline modules** except short tests (under ~20 lines).
+- Files included with `include_str!` should be nested under the relevant folder as sub-modules.
+- Module declarations (`mod`) should be grouped and alphabetically sorted at the top of the file, after module-level comments if any.
+
+## Safety
+
+- **`unsafe` is banned** unless absolutely necessary. If needed, add `#[allow(unsafe_code)]` with a comment justifying why it is safe. Exception: `std::env::set_var` in tests.
+
+## Serde
+
+- **Prefer enums over correlated optional fields** to represent state. When an API exposes fields that are set if and only if another field has a specific value, deserialize them into an enum rather than separate `Option` fields (per "impossible situations should not be representable").
+- **Untagged enum ordering matters**: serde tries to match data against each variant in order and returns the first successful match. When adding a variant, verify its expected payload cannot be deserialized by an earlier variant.
+
 ## Compilation and testing
 
 - Always use `cargo check` instead of `cargo build` when just verifying compilation — it's much faster.
@@ -41,6 +56,12 @@ alwaysApply: false
 
 - Migrations: only `up.sql`, never `down.sql`.
 - Diesel: always use full `schema::table_name::column` path. Never import tables into scope (no `use schema::table_name;` or `use schema::table_name::dsl::*;`). For `#[derive(Selectable)]`, explicitly specify `#[diesel(table_name = schema::table_name)]`.
+- **Join cardinality**: when doing joins (inner or left), check the relationship cardinality. Non-1:1 joins produce duplicate rows that can corrupt aggregations — handle with `GROUP BY`, deduplication, or restructuring the query.
+
+## Cargo.toml conventions
+
+- **`[package]` fields** must be alphabetically ordered: `authors`, `default-run` (if multiple bins), `edition` (currently `"2024"`), `name`, `publish` (`false`), `version` (`"1.0.0"`), `workspace` (relative path to workspace `Cargo.toml`).
+- **`[features]`** must be alphabetically sorted and `snake_case` named.
 
 ## Project tooling
 

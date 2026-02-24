@@ -13,6 +13,26 @@ alwaysApply: true
   - Note: The CLI requires `push.default=current` git config to work properly with worktrees
   - After using `-w`, symlinks to untracked files are created in the worktree — be careful not to commit them
 
+## Makefile introspection
+
+- `make help`: lists documented targets.
+- `make list-targets`: lists all targets.
+- `make which target=<NAME>`: shows which Makefile defines a target.
+- All three also have `smake` equivalents for SCD targets.
+
 ## Compilation
 
 - Use `cargo check` over `cargo build` for fast verification. In the Stockly context, `smake` commands wrap common workflows.
+
+## Monorepo file naming
+
+- Units and libraries use **PascalCase** folder names. Grouping directories use **camelCase**.
+- Each package has a `stockly-package.json` at its root indicating its language and type.
+
+## Integration tests
+
+- Rust packages may have a `tintes` binary target for integration tests, registered in a `[[bin]]` section. When present alongside the main binary, set `default-run` to the package name in `Cargo.toml`.
+
+## Proto crate features
+
+- Proto crates must include `default = ["with-serde"]` and `with-serde = ["protobuf/with-serde"]` in `[features]` to enable serde on protobuf messages for error context.

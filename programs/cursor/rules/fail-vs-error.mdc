@@ -21,3 +21,17 @@ The project's error type (e.g. `DonError`, `InternalError`) and `anyhow::Error` 
 Helper for working with `Result<Result<T, Fail>, Error>`:
 - Unwraps the outer `Ok` and returns early on inner `Err` wrapped in `Ok`.
 - Pattern: `match x { Ok(v) => v, Err(e) => return Ok(Err(e)) }` → `try_or_wrap!(x)`
+
+## Wrapping exception
+
+You may wrap a `Fail` unconditionally into another `Fail` (via `derive_more::From` + `try_or_wrap!`) **if and only if** every possible new variant of the inner Fail is always also a valid Fail of the outer function. This avoids redundant exhaustive matching when the relationship is guaranteed:
+
+```rust
+#[derive(derive_more::From)]
+pub(crate) enum OuterFail {
+    EntityNotFound(DbValidationFailure<EntityId>),
+    Inner(InnerFail),
+}
+
+let result = try_or_wrap!(inner_call()?);
+```
