@@ -1,0 +1,18 @@
+---
+description: Workaround for MCP servers (Notion, Sentry) not being visible to agents after Cursor starts
+alwaysApply: true
+---
+
+# MCP Server Restart Workaround
+
+Due to a Cursor bug, MCP tools (Notion, Sentry) sometimes appear as started but are not available to agents.
+
+When you attempt to use an MCP tool and it fails or the tool is missing, restart the MCP servers by running this command in the terminal:
+
+```bash
+T="$(readlink -f ~/.cursor/mcp.json)" && jq '. + {"_restart": now}' "$T" > ~/.cursor/mcp.json && sleep 3 && ln -sf "$T" ~/.cursor/mcp.json
+```
+
+This works by modifying `~/.cursor/mcp.json` to trigger Cursor's file watcher, then restoring the original symlink.
+
+After running the command, retry the MCP tool call. If it still fails, inform the user that the MCP servers could not be restored and ask them to manually toggle the servers off and back on in Cursor's MCP panel.

@@ -20,6 +20,40 @@ alwaysApply: false
 - Avoid `let _ = ...` or `Err(_)` wildcards — they hide what's being discarded.
 - This ensures new variants added later force review of the handling logic.
 
+## Inline single-use variables
+
+Do not introduce a variable that is only used once — inline the expression at its usage site. This applies to all code, including tests.
+
+```rust
+// Good
+Ok(compute_value()?.into())
+
+// Bad
+let result = compute_value()?;
+Ok(result.into())
+```
+
+Exception: keep a variable if inlining would break the code (e.g., borrow checker constraints).
+
+## Prefer `match` over `if let ... else`
+
+When both branches of an `Option` or `Result` are handled, use `match` instead of `if let ... else`. This makes exhaustive handling explicit. `if let` without an `else` is fine.
+
+```rust
+// Good
+match option {
+    Some(value) => do_something(value),
+    None => handle_none(),
+}
+
+// Bad
+if let Some(value) = option {
+    do_something(value)
+} else {
+    handle_none()
+}
+```
+
 ## Imports
 
 - Imports must be grouped using `use { ... }` syntax.
@@ -31,12 +65,43 @@ alwaysApply: false
   4. External libraries (including other project libraries)
 - Visibility (`pub`) doesn't affect grouping — `use` and `pub use` from the same group should NOT have a newline between them.
 - **Never use more than one `super::`** (e.g., `super::super::...`). Use `crate::explicit::path` instead for anything beyond immediate parent.
+- **Use wildcard import for `don_error`**: Always `use don_error::*;` — do not import specific items individually.
 
 ## Module organization
 
 - **No inline modules** except short tests (under ~20 lines).
 - Files included with `include_str!` should be nested under the relevant folder as sub-modules.
 - Module declarations (`mod`) should be grouped and alphabetically sorted at the top of the file, after module-level comments if any.
+
+## Visibility
+
+Apply visibility in this priority:
+
+1. **Private** (default) — leave everything private unless needed elsewhere.
+2. **`pub(crate)`** — when access is needed outside the module.
+3. **`pub`** — only for the crate's public API. Avoid otherwise; it suppresses `unused` warnings.
+
+Avoid `pub(super)` and `pub(in path)` — they increase refactoring cost.
+
+## Items ordering
+
+Define items (structs, enums, type aliases) in order of first reference, outermost first. A type used as a field or parameter of another must appear **after** the item referencing it.
+
+```rust
+// Good — Parent appears first since it references Sub
+struct Parent {
+    field: Sub,
+}
+
+struct Sub {}
+
+// Bad — Sub defined before it is referenced
+struct Sub {}
+
+struct Parent {
+    field: Sub,
+}
+```
 
 ## Safety
 
@@ -46,17 +111,21 @@ alwaysApply: false
 
 - **Prefer enums over correlated optional fields** to represent state. When an API exposes fields that are set if and only if another field has a specific value, deserialize them into an enum rather than separate `Option` fields (per "impossible situations should not be representable").
 - **Untagged enum ordering matters**: serde tries to match data against each variant in order and returns the first successful match. When adding a variant, verify its expected payload cannot be deserialized by an earlier variant.
+- **Prefer `Vec<T>` with `#[serde(default)]` over `Option<Vec<T>>`** — avoids distinguishing "absent" from "empty" when both mean the same thing. Only use `Option<Vec<T>>` when the API explicitly distinguishes null/absent from empty.
 
 ## Compilation and testing
 
+- Always use `--quiet` with cargo commands (`cargo check`, `cargo test`, `cargo build`, `cargo clippy`, etc.) to reduce noise.
 - Always use `cargo check` instead of `cargo build` when just verifying compilation — it's much faster.
 - Always suggest unit tests for important and non-trivial logic, even if it requires adjusting architecture slightly to make logic unit-testable.
+- Run `cargo machete` after modifying Rust code to check for unused dependencies.
 
 ## Database
 
 - Migrations: only `up.sql`, never `down.sql`.
 - Diesel: always use full `schema::table_name::column` path. Never import tables into scope (no `use schema::table_name;` or `use schema::table_name::dsl::*;`). For `#[derive(Selectable)]`, explicitly specify `#[diesel(table_name = schema::table_name)]`.
 - **Join cardinality**: when doing joins (inner or left), check the relationship cardinality. Non-1:1 joins produce duplicate rows that can corrupt aggregations — handle with `GROUP BY`, deduplication, or restructuring the query.
+- **Always read `schema.rs` before writing or modifying queries** to verify table/column names, column types, and join relationships. Do not guess — confirm against the schema file.
 
 ## Cargo.toml conventions
 
@@ -65,6 +134,6 @@ alwaysApply: false
 
 ## Project tooling
 
-- When entering a project with `.envrc`, run `direnv allow && eval "$(direnv export zsh)"` as your first action.
+- When entering a project with `.envrc`, **try the command directly first**. Only if it fails with `command not found`, run `direnv allow && eval "$(direnv export zsh)"` and retry. The environment usually persists across terminal sessions.
 - After creating worktrees, be careful not to commit ported untracked files (hardlinks/symlinks from the main worktree).
 - Place generated/temp files (scripts, intermediate outputs) in `.cursor/scratch/`. This directory should be gitignored — add it to `.gitignore` if the repo tracks `.cursor/`.

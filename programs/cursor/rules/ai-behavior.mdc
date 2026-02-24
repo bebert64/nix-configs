@@ -11,6 +11,11 @@ alwaysApply: true
 - **Wait for confirmation before implementing design decisions**: When discussing architecture/design with multiple valid approaches, present the options and wait for explicit approval before writing code.
 - If there are surprises during implementation, ask before continuing.
 
+## Before implementing
+
+- **Read similar/relevant code first** — before implementing any change, identify existing patterns or similar code in the codebase and read them.
+- **Recap current behavior** — before making a change, explicitly state the current behavior. This catches misunderstandings early.
+
 ## Proactivity
 
 - **Make things better as you go** — consider improvements while working, but ask when they imply non-trivial changes. Suspect existing patterns might be that way for good reason, but don't blindly follow suboptimal patterns.
@@ -24,6 +29,13 @@ alwaysApply: true
 ## Code review
 
 - When reviewing PRs, always commit and push the changes at the end so the user can see the review diff on GitHub.
+
+## Task delegation
+
+- **Break plans into subagent-delegable blocks**: Decompose work into independent units that can be executed by subagents (Task tool). Whatever can be delegated should be delegated.
+- Launch independent subagents concurrently (up to 4 at a time) to maximize throughput.
+- Only keep sequential what truly depends on prior steps' output. Everything else runs in parallel.
+- Each delegated block should have a clear, self-contained description with all context the subagent needs (it doesn't share your conversation history).
 
 ## Plans
 

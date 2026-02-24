@@ -16,6 +16,7 @@ alwaysApply: true
 - **Proactively flag naming issues** — naming is worth fighting for. Discuss naming choices together, don't wait to be asked.
 - **Encode type information in names when the type system can't**: If a value has important semantic meaning not captured by its type, include it in the name. Examples: `_json` suffix for JSON strings, `_eur` or `_currency` suffix for money amounts, `_alpha3` for country codes stored as strings. **Conversely**: when the type system DOES encode the constraint (e.g., `Alpha3`, `EuroableCurrency`), don't repeat it in the name.
 - It's rare (~1%) that you should introduce new concepts when writing code. Code should use descriptive names that refer to already-existing concepts, making it readable without memorizing arbitrary definitions.
+- **Avoid redundant module-name prefixes** — enum, struct, and function names should not repeat the module name (e.g., `save::Recap` not `save::SaveRecap`).
 
 ### 4-step naming method
 
@@ -33,6 +34,8 @@ Two ways to name a variable: by _how it was computed_ (what it contains) or by _
 - Functions that take action: **active voice** (`cancel_purchase`, `register_purchase_cancellation`).
 - Functions that query or compute: name reflects exactly **how the value is obtained** (`first_parcel_item_of_purchase`).
 - Avoid functions that are only called once — inline them unless extraction meaningfully improves readability.
+- **Do not prefix test functions** with `test_` — the `#[test]` attribute and module path already convey it.
+- **Do not prefix getters** with `get`. **Do prefix setters** with `set`.
 
 ### Struct naming
 
