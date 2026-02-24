@@ -1,4 +1,3 @@
-# Terminal
 {
   pkgs,
   lib,
@@ -6,32 +5,13 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
-  rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   nixProgramsDir = config.byDb.paths.nixPrograms;
   rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
-  sshr = "${pkgs.writeScriptBin "sshr" ''
-    tilix -p Ranger -e "ssh $1 -t ranger"
-  ''}/bin/sshr";
-  openRemote = "${pkgs.writeScriptBin "open-remote" ''
-    selection=$(
-      grep -P "^Host ([^*]+)$" ${homeDir}/.ssh/config | \
-      sed 's/Host //' | \
-      tr ' ' '\n' | \
-      sort -u | \
-      grep -v "$(hostname)" | \
-      ${rofi}
-    )
-    ${sshr} $selection
-  ''}/bin/open-remote";
 in
 {
   home = {
-    packages = with pkgs; [
-      ranger
-      xclip # used to paste into global clipboard
-    ];
+    packages = [ pkgs.ranger ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${homeDir}/.local/share/ranger/
@@ -47,13 +27,6 @@ in
       ".config/ranger/rc.conf".source = ./rc.conf;
       ".config/ranger/rifle.conf".source = ./rifle.conf;
       ".config/ranger/scope.sh".source = ./scope.sh;
-    };
-  };
-
-  xsession.windowManager.i3.config = {
-    keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-      "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
     };
   };
 }
