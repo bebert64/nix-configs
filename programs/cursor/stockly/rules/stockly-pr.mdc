@@ -1,0 +1,16 @@
+---
+description: Stockly PR workflow and review conventions
+alwaysApply: true
+---
+
+## PR template
+
+- **PR template exists!** Always use `.github/pull_request_template.md` when writing PR titles/descriptions. Format: Resolves, What it does, Good to know, Todo on merge, What has been tested.
+
+## SupplyMessages CLI
+
+The SupplyMessages service has a CLI tool at `src/cli.rs` that serves as an alternative to Admin RPCs. Run it with:
+```
+CARGO_FLAGS='--features cli --bin cli' run_args='--help' SCD_DEPLOYTYPE=prod SCD_GROUP=prod smake run
+```
+It uses clap for argument parsing.

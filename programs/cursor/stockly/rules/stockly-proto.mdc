@@ -1,0 +1,67 @@
+---
+description: Stockly proto/gRPC patterns and model ID conventions
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+## Proto Additionals pattern
+
+Always follow the additionals pattern for gRPC services:
+- `additionals/structs.rs`: Clean business-logic Rust structs WITH their `From`/`TryFrom`/`validated()` conversions defined next to each struct.
+- `additionals/mod.rs`: Re-exports.
+
+**Three-layer pattern**:
+1. Raw proto structs (auto-generated in `protobuf_gen/`)
+2. Clean structs/enums in additionals (with `From`/`Into` to raw proto)
+3. Applicative/service structs (in service layer, convert to clean types)
+
+**Naming convention**: Clean structs use the "default" names (e.g., `RenderAndSendMessageRequest`). Proto types are the "dirty" ones and should be aliased if needed (e.g., `ProtoRenderAndSendMessageRequest`).
+
+**`.validated()` method**: Add a convenience method on proto types for clean conversion. Must always be a simple wrapper around `TryFrom` — never duplicate validation logic:
+```rust
+impl proto::MyRequest {
+    pub fn validated(&self) -> Result<MyRequest, DynFieldInvalidity<'static>> {
+        self.try_into()
+    }
+}
+```
+
+In RPC handlers, use `req.validated()` instead of `(&*req).try_into().on_field("request")`.
+
+## Proto generation
+
+To regenerate proto Rust code after modifying a `.proto` file, just run `cargo check` in the service where the protos are defined. The `build.rs` will handle regeneration automatically.
+
+## Model IDs
+
+- Model ID definition crates (like `supply_messages_core`) are designed to be lightweight, so it's never a problem to depend on them.
+- When heavier features are needed (like Diesel integration with schema), those are gated behind feature flags.
+- Proto crates CAN depend on ID core crates without issues.
+- Use proper model ID types instead of raw `i32` values.
+- **When a core crate isn't lightweight** (like `operations_core` which pulls schema/diesel): define local `model_id!()` types in proto additionals with the same names, then convert via `.value` in the service layer (e.g., `operations_core::PurchaseId::assume_exists(proto_purchase_id.value)`).
+
+## PreValidated vs Validated semantics
+
+- `PreValidated<T>`: Format is valid (e.g., positive i32), but NOT verified to exist in DB.
+- Raw `T` (ModelId): Confirmed to exist in the database.
+- In RPC requests: Always use `PreValidated` — input comes from external caller, format checked, DB existence NOT verified.
+- After DB validation: Can use raw `T` — use `.assume_exists()` only after DB confirms existence.
+- **Loading from DB validates the ID**: If you load an entity from DB (e.g., `supplier`), use its fields for validated IDs (e.g., `supplier.id`) instead of re-constructing via `assume_exists(pre_validated.value)`.
+- This applies to core services (Stockly entities). For non-Stockly entities (partner/external), it's mainly for strong typing.
+
+## RPC design
+
+### Input/output principles
+
+- **Input**: the caller must send the precise information they have. Never let the RPC depend on server state that might have changed between the caller's read and the call.
+- **Output**: don't send back info the caller already sent (they have it). Don't send unrelated info. Do send proof that the requested action was performed.
+- **Noop rejection**: calls that are noops given the arguments (e.g., empty batch) must be rejected with `INVALID_ARGUMENT` to prevent unnecessary network calls. This differs from in-app functions, which should early-return success for noops. Idempotent calls that are effectively noops with proper arguments (e.g., setting value V when already V) should NOT error.
+
+### Error handling in RPCs
+
+- **`From<Fail> for RpcStatus`**: implement this conversion to enable `try_or_wrap!` in the RPC's `perform` function for legitimate caller-side failures (e.g., entity not found after pre-validation passed).
+- **gRPC metadata limit**: hard limit of 16384 bytes for status code + error message through gRPC metadata channels.
+
+### Response structure
+
+- **Recap struct**: when an RPC returns complex results, create a named `Recap` struct with properly named fields in the application code. Convert it to the corresponding proto `Recap` in the RPC layer. This keeps application logic clean and makes the return value self-documenting.

@@ -1,0 +1,25 @@
+---
+description: Handle split().next() correctly — it's always Some
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+`str::split()` never returns an empty iterator (per its documentation), so `.split(...).next()` always returns `Some`.
+
+Using `unwrap_or(...)` hides this invariant. Instead:
+
+- In fallible functions: use the project's error helper (e.g. `.ok_or_don_err(...)`, `.ok_or_internal_err(...)`) with `?`
+- In infallible functions: use `.expect("split never returns an empty iterator")`
+
+This is one of the rare cases where `expect()` is acceptable — making the function fallible just to propagate an impossible `None` would force all infallible callers to change, which isn't worth it.
+
+```rust
+// Bad: hides that the None case is impossible
+let mime = ct.split(';').next().unwrap_or("").trim();
+
+// Good (fallible function):
+let mime = ct.split(';').next().ok_or_err("split never returns an empty iterator")?;
+
+// Good (infallible function):
+let mime = ct.split(';').next().expect("split never returns an empty iterator");
+```

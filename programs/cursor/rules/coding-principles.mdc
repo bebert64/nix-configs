@@ -1,0 +1,43 @@
+---
+description: Core development principles
+alwaysApply: true
+---
+
+## No silent fail
+
+Never silently drop errors or skip items. A silent fail is when a program encounters an invalid state and instead of crashing or reporting an error, decides to ignore the problem or drop its task. They prevent developers from understanding what's happening and propagate invalid states.
+
+- Always report/propagate errors — never `filter_map` away missing required data.
+- If something is expected to be present, treat its absence as an error, not a filter condition.
+
+## Catch errors early
+
+Prefer catching errors as early as possible in the pipeline. In order of preference:
+
+1. **Compilation error** (best — instant, zero cost)
+2. **CI / test failure**
+3. **Boot crash**
+4. **Production error** (worst — affects users, hard to debug)
+
+When the compiler highlights an error, first understand _why_ the type/value is what it is, then choose the _correct_ fix. Never make an arbitrary change just to make it compile.
+
+## Impossible situations should not be representable
+
+Leverage the type system to make bugs un-writable. Design interfaces so developers _cannot_ code invalid states.
+
+- Use enums to represent mutually exclusive states instead of correlated optional fields.
+- Use database checks to ensure no invalid data is stored.
+- Map to a more fitting representation as soon as you load data from an external source (DB, API, proto).
+
+## Performance
+
+- **Batch queries** instead of looping with individual calls.
+- **Filter closest to the data source** — SQL `WHERE` clauses are cheaper than Rust-side filtering.
+- **Prefer references** over cloning. Unnecessary clones often indicate a design issue.
+- **Use sorted arrays** for repeated lookups instead of linear scans.
+- **Optimize for the happy path** — the common case should be fast; edge cases can be slower.
+
+## Tests are examples
+
+- First tests **must** cover primary use cases, not edge cases. Tests serve as documentation for how the code is intended to be used.
+- Documentation and examples are code — they must be equally well thought out. To justify their presence, they must be a significant improvement over simply reading the code.

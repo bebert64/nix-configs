@@ -1,0 +1,16 @@
+---
+description: Conventions for Fail enums vs error types
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+# Fail vs Error: Addenda
+
+`Result<T, Fail>` without an outer error Result is rare and reserved for thin wrappers
+around the `Fail` itself.
+
+## try_or_wrap! macro
+
+Helper for working with `Result<Result<T, Fail>, Error>`:
+- Unwraps the outer `Ok` and returns early on inner `Err` wrapped in `Ok`.
+- Pattern: `match x { Ok(v) => v, Err(e) => return Ok(Err(e)) }` → `try_or_wrap!(x)`

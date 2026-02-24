@@ -6,16 +6,18 @@ The user wants to create a new Cursor command (a `.md` file).
 
 ## Placement
 
-Commands can live in two locations:
+Commands can live in three locations:
 
+- **Global**: `/home/romain/.cursor/commands/` — for commands that are useful across all projects (e.g., meta commands about Cursor itself, plans management, general workflows, code review).
+- **Stockly-specific**: `/home/romain/Stockly/.cursor/commands/` — for commands tied to Stockly's workflows, tooling, or codebase.
 - **Repo-local**: `<workspace_root>/.cursor/commands/` — for commands specific to the current project (e.g., build, test, new-crate, anything tied to the repo's tech stack).
-- **Global**: `/home/romain/.cursor/commands/` — for commands that are useful across all projects (e.g., meta commands about Cursor itself, plans management, general workflows).
 
 **How to decide:**
 1. If the user specifies where it should go, follow their instruction.
 2. Otherwise, infer from the command's nature:
-   - Project/tech-stack specific (Rust, JS, DB, etc.) → repo-local.
+   - Stockly tooling, infra, PR workflow → Stockly-specific.
    - Meta / editor / workflow / cross-project → global.
+   - Project/tech-stack specific → repo-local.
 3. **If there is any doubt, ask the user** rather than guessing wrong.
 4. If you do decide autonomously, **always tell the user** where you placed the file and why.
 

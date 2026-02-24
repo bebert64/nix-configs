@@ -1,0 +1,24 @@
+---
+description: Use Deref for wrapper structs with an inner field that should be transparently accessible
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+When creating a wrapper struct around an inner type (e.g., adding extra fields to an existing struct), derive `Deref` targeting the inner type so callers can access the inner's methods directly without writing `.inner`.
+
+Use `derive_more::Deref` with `#[deref]` on the inner field (works for both single and multi-field structs):
+
+```rust
+// Good: derive Deref so callers use the wrapper transparently
+#[derive(derive_more::Deref)]
+struct MyWrapper {
+    #[deref]
+    inner: InnerType,
+    extra_field: bool,
+}
+
+wrapper.some_inner_method()  // calls InnerType method directly
+
+// Bad: forcing callers to go through .inner explicitly
+wrapper.inner.some_inner_method()
+```

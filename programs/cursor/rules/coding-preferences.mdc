@@ -1,0 +1,59 @@
+---
+description: General coding conventions and preferences
+alwaysApply: true
+---
+
+## Comments
+
+- **Comments explain WHY, never WHAT.** Only add a comment when it explains _why_ the code does something. Never comment _what_ the code does — reading the code itself should always be sufficient. "What" comments bloat the file and actively decrease readability.
+- Avoid over-specific comments that reference implementation details elsewhere in the codebase — they become misleading when that code changes. Keep doc comments self-contained or general.
+- When refactoring, preserve comments that explain _why_ something is done (rationale). Important context should survive refactoring.
+- In comments about edge cases, mention production examples (company names, dates, stats) to distinguish "actually happened" from "theoretical what-if". This enables reproduction and gives future maintainers confidence.
+
+## Naming
+
+- Always keep names semantically accurate and non-misleading (variables, functions, structs, fields). This applies to both newly introduced names and names in existing code being modified. Misleading names cause bugs, waste time, and make refactoring dangerous.
+- **Proactively flag naming issues** — naming is worth fighting for. Discuss naming choices together, don't wait to be asked.
+- **Encode type information in names when the type system can't**: If a value has important semantic meaning not captured by its type, include it in the name. Examples: `_json` suffix for JSON strings, `_eur` or `_currency` suffix for money amounts, `_alpha3` for country codes stored as strings. **Conversely**: when the type system DOES encode the constraint (e.g., `Alpha3`, `EuroableCurrency`), don't repeat it in the name.
+- It's rare (~1%) that you should introduce new concepts when writing code. Code should use descriptive names that refer to already-existing concepts, making it readable without memorizing arbitrary definitions.
+- **Avoid redundant module-name prefixes** — enum, struct, and function names should not repeat the module name (e.g., `save::Recap` not `save::SaveRecap`).
+
+### 4-step naming method
+
+1. Start with the full English **descriptive sentence** (e.g., `list_of_documents_that_we_will_ask_demand_to_send_us`).
+2. **Remove** information already carried by the type and the path (modules, current function name). If nothing is left, the function should probably be named `perform`.
+3. **Simplify** wording (e.g., `documents_to_ask_for`).
+4. **Cross-check**: re-translate to English and confirm the name plus its surrounding context still convey the original meaning.
+
+### Variable naming
+
+Two ways to name a variable: by _how it was computed_ (what it contains) or by _what it will be used for_. Both can be correct, but one usually makes the code clearer depending on context. **Default to "how it was computed"** — when the computation changes, renaming propagation forces reviewing every usage site for correctness.
+
+### Function naming
+
+- Functions that take action: **active voice** (`cancel_purchase`, `register_purchase_cancellation`).
+- Functions that query or compute: name reflects exactly **how the value is obtained** (`first_parcel_item_of_purchase`).
+- Avoid functions that are only called once — inline them unless extraction meaningfully improves readability.
+- **Do not prefix test functions** with `test_` — the `#[test]` attribute and module path already convey it.
+- **Do not prefix getters** with `get`. **Do prefix setters** with `set`.
+
+### Struct naming
+
+- The fully qualified name (path + struct name) conveys what object the struct represents. Its fields convey properties of that object.
+- Naming should force review when the struct widens (fields removed or semantics broadened) — renaming everywhere catches places depending on the old guarantees.
+- Don't introduce a new concept unless naming the set of properties directly would be unreasonably long. When you do, document the concept clearly.
+
+## Code organization
+
+- Order code blocks from most relevant to least relevant (top to bottom). Local helpers should be at the bottom. Unlike C, we're free from declaration-before-use constraints.
+- **Separation of Concerns**: Each function should have a single responsibility. E.g., `build_context` is responsible for the full shape of the context — callers shouldn't need to mutate it after.
+
+## Design
+
+- Avoid overkill genericity — use concrete types when a function is only used with one type.
+- **Always document rationale for arbitrary values** (constants, timeouts, limits, etc.). Even if it's just "arbitrarily picked as a reasonable default" — future maintainers need to know whether a value was carefully calculated or just a starting point. Include trade-offs to help with tuning.
+- **YAGNI (You Ain't Gonna Need It)** — don't build features "just in case". Ship simple, add complexity only when there's a real need. Avoids wasted effort, maintenance burden, and unnecessary complexity.
+
+## Rust-specific
+
+- Always favor `to_owned()` over `to_string()` to get a String from an `&str` or `&String`. For `Cow<str> -> String`, use `into_owned()` instead.
