@@ -160,7 +160,6 @@ in
     ../programs/direnv
     ../programs/git
     ../programs/neovim
-    ../programs/ranger
     ../programs/secrets
     ../programs/ssh
     ../programs/zsh/home-manager.nix

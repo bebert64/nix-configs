@@ -66,6 +66,13 @@
         };
     in
     {
+      packages.x86_64-linux.home-manager = home-manager.packages.x86_64-linux.home-manager;
+
+      homeConfigurations."romain@cerberus" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        modules = [ ./home-manager/cerberus.nix ];
+      };
+
       nixosConfigurations = {
         bureau = mkHost {
           modules = [ ./computers/bureau/configuration.nix ];

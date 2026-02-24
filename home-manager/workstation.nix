@@ -8,6 +8,7 @@
 {
   imports = [
     ./common.nix
+    ../programs/ranger/gui.nix
     ../programs/chromium
     ../programs/autorandr
     ../programs/avidemux
