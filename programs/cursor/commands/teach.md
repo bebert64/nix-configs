@@ -10,6 +10,7 @@ Listen to what the user describes. If anything is unclear, ask questions — don
 
 Check if this knowledge already exists by searching:
 - Global rules: `/home/romain/.cursor/rules/`
+- Stockly rules: `/home/romain/Stockly/.cursor/rules/`
 - Repo-local rules: `<workspace_root>/.cursor/rules/`
 - Global skills: `/home/romain/.cursor/skills/`
 - Repo-local skills: `<workspace_root>/.cursor/skills/`
@@ -72,10 +73,20 @@ Step-by-step instructions for the agent.
 
 ## Step 3: Decide the location
 
-- **Repo-local** (`<workspace_root>/.cursor/`): for rules/skills tied to a specific project's tech stack, codebase conventions, or repo-specific workflows.
-- **Global** (`/home/romain/.cursor/`): for rules/skills useful across all projects (personal preferences, general workflows, editor conventions).
+There are three scopes:
 
-If in doubt, ask. If you decide autonomously, tell the user where you placed it and why.
+- **Global** (`/home/romain/.cursor/`): for rules/skills useful across all projects — personal preferences, general workflows, editor conventions, language-level patterns.
+- **Stockly-specific** (`/home/romain/Stockly/.cursor/`): for rules/skills tied to Stockly's codebase, tooling, or conventions. Only applies when working on Stockly projects.
+- **Repo-local** (`<workspace_root>/.cursor/`): for rules/skills tied to a specific project's tech stack, codebase conventions, or repo-specific workflows.
+
+**How to decide:**
+1. If the user specifies the scope, follow their instruction.
+2. Otherwise, infer from the content:
+   - Stockly infra, tooling, proto patterns, DB conventions → Stockly-specific.
+   - Personal preferences, Rust idioms, general workflows → global.
+   - Tied to the current repo's structure or libraries → repo-local.
+3. **If there is any doubt, ask the user.**
+4. If you decide autonomously, tell the user where you placed it and why.
 
 ## Step 4: Create or update
 

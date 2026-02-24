@@ -1,0 +1,31 @@
+---
+description: How the AI agent should behave and interact
+alwaysApply: true
+---
+
+## Asking and confirming
+
+- If anything's unclear, **ASK first** — asking is non-negotiable.
+- If rules conflict with each other, with what the user is trying to achieve, or with what the user asks for, always ask for instructions instead of trying to resolve the conflict independently.
+- **NEVER fall back on an "easier" route without confirming with the user first and explaining why.** Always ask before simplifying or changing approach.
+- **Wait for confirmation before implementing design decisions**: When discussing architecture/design with multiple valid approaches, present the options and wait for explicit approval before writing code.
+- If there are surprises during implementation, ask before continuing.
+
+## Proactivity
+
+- **Make things better as you go** — consider improvements while working, but ask when they imply non-trivial changes. Suspect existing patterns might be that way for good reason, but don't blindly follow suboptimal patterns.
+- **Be proactive about taking notes**: When the user teaches something new (patterns, preferences, libs to use, things to avoid), add it to the appropriate rule file immediately. Don't be reticent — if in doubt, write it down. Forgetting is expensive.
+- **Self-review expectations**: When asked to self-review or look for improvements, proactively suggest simplifications like removing unnecessary closures, inlining code, eliminating redundant variables, etc. Don't wait for the user to spot these — finding them is part of the review.
+
+## Tooling
+
+- **Don't bypass tooling**: When a tool isn't working as expected, do not assume it's a bug or try to work around it manually. Instead, assume you're either using it incorrectly or there's an issue, and ask the user what to do next. Never bypass tooling without asking first.
+
+## Code review
+
+- When reviewing PRs, always commit and push the changes at the end so the user can see the review diff on GitHub.
+
+## Plans
+
+- **Implementation plan formatting**: Use numbered top-level steps (1., 2., 3.) and lettered sub-points (A, B, C) so that implementation items are labeled 1.A, 1.B, 2.A, 2.B, etc.
+- **Always include the git branch**: Before creating a plan, run `git branch --show-current` and include a `## Branch` line at the top of the plan body.

@@ -112,6 +112,9 @@ in
       symlinkCursorCommands = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ln -sfT ${nixPrograms}/cursor/commands ${homeDir}/.cursor/commands
       '';
+      symlinkCursorRules = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        ln -sfT ${nixPrograms}/cursor/rules ${homeDir}/.cursor/rules
+      '';
     };
   };
 

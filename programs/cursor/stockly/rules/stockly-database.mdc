@@ -1,0 +1,25 @@
+---
+description: Stockly database and schema conventions
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+## DieselHelpers
+
+**DieselHelpers library** (`lib/rust/DieselHelpers`) — use it! Contains tons of useful utilities: transaction helpers (`with_read_committed`, `with_serializable`, etc.), advisory locks, JSON helpers, filters, `ensure_n_results`, and more. Always check what's available there before rolling your own.
+
+## Schema management
+
+- After schema changes, run `smake reset-database` to update Rust schema structs before compilation. **Run this from the Service folder, not the Schema folder.**
+- **Never run both `smake clean-database` and `smake reset-database`** — `reset-database` already runs `clean-database` as its first step.
+- Schema changes may require updating/adding example data in `default_data.sql` if relevant.
+- **Comment abbreviated database identifiers**: When using abbreviations in database names (columns, tables, types) to stay within PostgreSQL's 63-char limit, always add a PostgreSQL `COMMENT ON` statement with the full unabbreviated name.
+
+## Testing
+
+- **PostgreSQL function testing**: When adding PostgreSQL functions, create unit tests as `tunit_`-prefixed functions using pgTAP's `IS(computed, expected, description)` assertions; tests run automatically with `smake reset-database`.
+
+## Transactions
+
+- **Always use transactions** for DB operations (unless it would keep the transaction open too long or introduce bigger issues). Use helpers from DieselHelpers.
+- **Use retryable transactions when there are no side effects**: If the closure can be safely re-executed (no external API calls, no non-idempotent side effects), use `with_serializable_and_retries` instead of `with_read_committed`. It retries on serialization failures automatically.

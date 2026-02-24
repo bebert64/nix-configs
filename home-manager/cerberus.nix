@@ -40,9 +40,13 @@
           home-manager switch --flake '.#romain@cerberus' --show-trace
         '')
       ];
-      activation.symlinkCursorCommands = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      activation.symlinkCursor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p /home/romain/.cursor
+        mkdir -p /home/romain/Stockly/.cursor
         ln -sfT /home/romain/nix-configs/programs/cursor/commands /home/romain/.cursor/commands
+        ln -sfT /home/romain/nix-configs/programs/cursor/rules /home/romain/.cursor/rules
+        ln -sfT /home/romain/nix-configs/programs/cursor/stockly/commands /home/romain/Stockly/.cursor/commands
+        ln -sfT /home/romain/nix-configs/programs/cursor/stockly/rules /home/romain/Stockly/.cursor/rules
       '';
     };
 

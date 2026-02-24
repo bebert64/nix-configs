@@ -1,0 +1,18 @@
+---
+description: Stockly environment setup, CLI, and tooling
+alwaysApply: true
+---
+
+## Stockly CLI
+
+- Use `s wk <TICKET_IDENTIFIER>` (Notion URL, ShortId, or UUID) to start working on a task. This creates a branch, pushes it, opens a PR, links it to the Notion ticket, and updates the ticket status to "Started".
+  - `-w` flag: create a dedicated git worktree instead of switching branches
+  - `--only-helps` flag: if the PR only partially addresses the ticket
+  - `-s` flag: stash-and-pop if you have uncommitted changes
+  - `-b <branch>`: specify a base branch (default: master)
+  - Note: The CLI requires `push.default=current` git config to work properly with worktrees
+  - After using `-w`, symlinks to untracked files are created in the worktree — be careful not to commit them
+
+## Compilation
+
+- Use `cargo check` over `cargo build` for fast verification. In the Stockly context, `smake` commands wrap common workflows.

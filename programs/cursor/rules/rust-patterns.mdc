@@ -1,0 +1,49 @@
+---
+description: Rust coding patterns and conventions
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+## Destructuring
+
+- **Destructuring should be the default** — always consider it first.
+- Benefits: compiler forces handling new fields, clearer code, expresses intent.
+- **Only opt out with a reason**: typically verbosity when fields aren't semantically related in the current context.
+- **Never use `..`** — it defeats compile-time safety. Instead: `field: _, // why not relevant here`
+- Especially important for proto TryFrom/From impls — if a new field is added, compiler forces you to handle it.
+- **For binary operators** (like `eq`, `cmp`, custom comparisons): destructuring `self` is enough — if a new field is added, compiler will force handling it. No need to destructure both sides.
+
+## Exhaustive matching
+
+- **Match exhaustively on enums by default**, especially on error/failure types.
+- When ignoring errors, match each variant explicitly and comment why it's safe to ignore.
+- Avoid `let _ = ...` or `Err(_)` wildcards — they hide what's being discarded.
+- This ensures new variants added later force review of the handling logic.
+
+## Imports
+
+- Imports must be grouped using `use { ... }` syntax.
+- Import groups must be separated by exactly one empty line.
+- Groups are sorted in this order (each separated by one empty line):
+  1. Sub-modules (`self::`)
+  2. Relative modules (`super::`, `crate::`)
+  3. Crate modules
+  4. External libraries (including other project libraries)
+- Visibility (`pub`) doesn't affect grouping — `use` and `pub use` from the same group should NOT have a newline between them.
+- **Never use more than one `super::`** (e.g., `super::super::...`). Use `crate::explicit::path` instead for anything beyond immediate parent.
+
+## Compilation and testing
+
+- Always use `cargo check` instead of `cargo build` when just verifying compilation — it's much faster.
+- Always suggest unit tests for important and non-trivial logic, even if it requires adjusting architecture slightly to make logic unit-testable.
+
+## Database
+
+- Migrations: only `up.sql`, never `down.sql`.
+- Diesel: always use full `schema::table_name::column` path. Never import tables into scope (no `use schema::table_name;` or `use schema::table_name::dsl::*;`). For `#[derive(Selectable)]`, explicitly specify `#[diesel(table_name = schema::table_name)]`.
+
+## Project tooling
+
+- When entering a project with `.envrc`, run `direnv allow && eval "$(direnv export zsh)"` as your first action.
+- After creating worktrees, be careful not to commit ported untracked files (hardlinks/symlinks from the main worktree).
+- Place generated/temp files (scripts, intermediate outputs) in `.cursor/scratch/`. This directory should be gitignored — add it to `.gitignore` if the repo tracks `.cursor/`.
