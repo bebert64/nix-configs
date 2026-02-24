@@ -4,34 +4,13 @@ globs: "**/*.rs"
 alwaysApply: false
 ---
 
-# Fail vs Error
+# Fail vs Error: Addenda
 
-`Fail` enums represent **expected failures** caused by external factors (network, user input, third-party services), not bugs.
-The project's error type (e.g. `DonError`, `InternalError`) and `anyhow::Error` represent **unexpected errors** that are most likely bugs or infrastructure issues.
+`Result<T, Fail>` without an outer error Result is rare and reserved for thin wrappers
+around the `Fail` itself.
 
-## Key rules
-
-- A `Fail` forces the caller to explicitly match on each variant and handle it. It must **not** be convertible to the outer error type via `?` — the compiler should force exhaustive handling.
-- The typical signature is `Result<Result<T, Fail>, Error>` (outer Result carries real errors, inner Result carries domain-level failures).
-- `Result<T, Fail>` without an outer error Result is rare and reserved for thin wrappers around the `Fail` itself.
-- Do **not** implement `std::error::Error` or conversion traits on `Fail` types that would allow `?` to bypass the match.
-
-## `try_or_wrap!` macro
+## try_or_wrap! macro
 
 Helper for working with `Result<Result<T, Fail>, Error>`:
 - Unwraps the outer `Ok` and returns early on inner `Err` wrapped in `Ok`.
 - Pattern: `match x { Ok(v) => v, Err(e) => return Ok(Err(e)) }` → `try_or_wrap!(x)`
-
-## Wrapping exception
-
-You may wrap a `Fail` unconditionally into another `Fail` (via `derive_more::From` + `try_or_wrap!`) **if and only if** every possible new variant of the inner Fail is always also a valid Fail of the outer function. This avoids redundant exhaustive matching when the relationship is guaranteed:
-
-```rust
-#[derive(derive_more::From)]
-pub(crate) enum OuterFail {
-    EntityNotFound(DbValidationFailure<EntityId>),
-    Inner(InnerFail),
-}
-
-let result = try_or_wrap!(inner_call()?);
-```

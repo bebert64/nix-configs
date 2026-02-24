@@ -51,11 +51,6 @@ To regenerate proto Rust code after modifying a `.proto` file, just run `cargo c
 
 ## RPC design
 
-### Request handling
-
-- **Destructure the `req` argument** in RPC handlers unless it is passed directly to a validation function or is a simple id/`Empty`. For long type names, rename in imports (e.g., `use SendManualMessageRequest as Request`).
-- **Avoid `allow(unused)` for Fail variant fields**: when Fail variants have fields used only in Debug, don't suppress the warning. Instead, use the fields explicitly when converting to `RpcStatus` — this produces better error messages and ensures the data is actually relevant.
-
 ### Input/output principles
 
 - **Input**: the caller must send the precise information they have. Never let the RPC depend on server state that might have changed between the caller's read and the call.
