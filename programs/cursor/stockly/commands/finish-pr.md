@@ -37,3 +37,19 @@ If any command fails, **stop immediately**, report which crate and which check f
 2. Review the full diff (`git diff master...HEAD`) for context.
 3. Generate the PR description using the template at `.github/pull_request_template.md`: fill in everything you can (especially "What it does", inferred from branch name, modified files, and context); only leave placeholders for what you truly don't know (e.g. ticket URL, commit SHA).
 4. Present the description to the user for review/editing.
+
+## 6. Look for learnable patterns
+
+After drafting the PR description, review the full PR diff one more time with a "learning" lens. Look for:
+
+- New coding conventions or patterns that aren't yet captured in any existing rule or skill (e.g., error handling style, module structure, naming conventions, API design patterns).
+- Deviations from existing rules that seem intentional and worth updating the rule for.
+- Recurring patterns across the PR that suggest a convention the team is settling on.
+
+**Important constraints:**
+
+- **Never create or modify rules/skills automatically.** Only suggest them.
+- If you identify something worth learning, present it to the user as a proposal: describe the pattern, suggest whether it should be a new rule or an amendment to an existing one, and quote the relevant code.
+- If you'd amend an existing rule, show the current rule content and the proposed change side by side.
+- Wait for the user's explicit approval before making any changes.
+- If nothing noteworthy is found, simply say so and move on — don't force it.
