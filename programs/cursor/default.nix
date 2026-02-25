@@ -27,6 +27,26 @@ let
     } | grep -E '^Main(_[^/]*)?' \
       | LC_ALL=C sort -fu
   '';
+  writeCerberusWorkspace = pkgs.writeScript "write-cerberus-workspace" ''
+    #!/usr/bin/env bash
+    # Runs on cerberus via ssh. Arg: worktree name (e.g. Main_EWVY6).
+    # Writes a workspace with (worktree + Stockly parent) so Cursor finds .cursor at /home/romain/Stockly/.cursor
+    selection="$1"
+    stockly_root="/home/romain/Stockly"
+    worktree_path="$stockly_root/$selection"
+    workspace_dir="$HOME/.cursor/workspaces"
+    mkdir -p "$workspace_dir"
+    workspace_file="$workspace_dir/stockly-$selection.code-workspace"
+    cat > "$workspace_file" << EOF
+    {
+      "folders": [
+        {"path": "$worktree_path", "name": "Stockly"},
+        {"path": "$stockly_root", "name": "Stockly .cursor"}
+      ]
+    }
+    EOF
+    echo "$workspace_file"
+  '';
   writeNixWorkspace = pkgs.writeScript "write-nix-workspace" ''
     #!/usr/bin/env bash
     nix_configs_path="$1"
@@ -60,7 +80,8 @@ let
       ${rofi} -theme-str 'window {width: 30%;}'
     )
     if [[ $selection ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
+      workspace_path=$(ssh cerberus bash -s "$selection" < ${writeCerberusWorkspace})
+      cursor --file-uri="vscode-remote://ssh-remote+cerberus$workspace_path"
     fi
   ''}/bin/open-cerberus";
   openSalon = "${pkgs.writeScriptBin "open-salon" ''
