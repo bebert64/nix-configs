@@ -10,17 +10,16 @@ Run this workflow to select unassigned Quality Tech tickets (**Status Intl** = "
 
 - If the user specified a number in their message (e.g. "pick 5 tickets", "just 1"), use that.
 - Otherwise ask: "How many tickets do you want to work on? (default 3)" and use their answer, or 3 if they don't care.
-- Call this number **N**. You will fetch candidates, exclude ignored ones, then take the top **N** and run subagents for those.
+- Call this number **N**. You will fetch candidates, exclude ignored ones and tickets that already have a corresponding plan, then take the top **N** and run subagents for those.
 
 ## 1. Ignore list (local) and cleanup
 
 - **File:** `/home/romain/Stockly/.cursor/ignored-quality-tickets.txt`
 - **Format:** One Notion page ID per line (the `id` field from the API, e.g. `0000fd7f-2f85-49c5-8cd8-a61f0b731b47`). No header. Strip whitespace; skip empty lines.
-- **Before selecting tickets:** Read this file if it exists. Build a set of ignored page IDs. When building the candidate list (after filter and sort), exclude any page whose `id` is in that set. Then take the first **N** remaining.
+- **Before selecting tickets:** Read this file if it exists. Build a set of ignored page IDs. When building the candidate list (after filter and sort), exclude any page whose `id` is in that set. **Also exclude** any ticket that already has a corresponding plan in `~/.cursor/plans/` (see below). Then take the first **N** remaining.
+- **Exclude tickets that already have a plan:** List plan files in `~/.cursor/plans/`. A ticket (with short_id e.g. `ABCDE`) is considered to have a plan if there is a plan file whose name starts with `<short_id>-` (e.g. `ABCDE-fix-login.md`), or whose content contains a `## Short ID` section with that same short_id. Exclude those tickets from the list before taking the top N.
 - **Adding to the list:** If at any point (in this run or a follow-up) the user says they want to ignore a ticket (e.g. "ignore this one", "skip ABCDE", "add to ignore list"), append that ticket's Notion page ID to the file on a new line. Confirm to the user. The next run of this command will then skip it.
 - If the file doesn't exist, create it when first adding an ID; otherwise proceed with an empty ignore set.
-
-**Prune the ignore list (each run):** So the list doesn't grow indefinitely, at the start of each run — after reading the ignore file — prune it. For each page ID in the file, use the Notion API (e.g. `retrieve-a-page`) to check whether that page still exists and would still match the selection criteria (assignee empty, **Status Intl** = "0 - Pending Workforce", Teams Intl not "Partner Inputs_Front"). If the page is missing (e.g. 404 / object_not_found), or it exists but no longer matches (e.g. now has an assignee, or Status Intl changed, or Teams Intl is Partner Inputs_Front), remove that ID from the ignore file. Write the file back. Then proceed with the pruned list.
 
 ## 2. Notion database
 
@@ -31,45 +30,62 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 ## 3. Filter and sort
 
-**Notion MCP:** Call `API-query-data-source` (user-Notion) with:
+**Notion MCP — query with status filter, then paginate if needed:** The API filter is applied server-side so you fetch only pending tickets (~38), not the full database. The parser still applies Assignee empty and Teams Intl ≠ Partner Inputs_Front.
 
-- **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
-- **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}, {"property": "Assignee", "people": {"is_empty": true}}, {"or": [{"property": "Teams Intl", "multi_select": {"is_empty": true}}, {"property": "Teams Intl", "multi_select": {"does_not_contain": "Partner Inputs_Front"}}]}]}`
-- **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Updated At", "direction": "descending"}]`
-- **page_size:** Use **100** (or more). The Notion API sort by Severity may not return SEV4 before SEV5; the parser re-sorts by Severity (SEV1 first, SEV5 last) then Updated At descending. Fetching enough results ensures SEV4 tickets (higher priority) are in the set and the parser will order them correctly.
+- **Filter (property + type):** Use **Status Intl** with **select** and **equals**. This returns ~38 rows. Do not use "Status" or "status" — the source of truth is Status Intl.
 
-The tool returns a message like "Large output has been written to: .../agent-tools/<uuid>.txt" — copy that full path and pass it to the parser.
+1. **First request:** Call `API-query-data-source` (user-Notion) with:
+   - **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
+   - **page_size:** **100**
+   - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Updated At", "direction": "descending"}]`
+   - **filter:** `{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}`
 
-**Get top N and apply ignore list:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 /home/romain/Stockly/.cursor/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It reads the JSON from the Notion query result file, filters (Status Intl = Pending workforce, Assignee empty, Teams Intl not Partner Inputs_Front), sorts by Severity then Updated At, prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set and take the first **N** tickets from the remaining list (if the parser was run with a large N, you already have a sorted list; drop ignored IDs and take first N).
+   The tool returns a message like "Large output has been written to: .../agent-tools/<uuid>.txt". Read that file; the JSON has `results`, `next_cursor`, and `has_more`.
+
+2. **Paginate:** While the response has `has_more` true and a non-empty `next_cursor`, call `API-query-data-source` again with the **same** parameters (including **filter**) plus **start_cursor:** the value of `next_cursor` from the previous response. Read each new output file and append its `results` to your collected list.
+
+3. **Merge:** Build a single JSON object: `{"results": <all collected page objects>}`. Write it to a file (e.g. the path of the first response file, or a new path under agent-tools) so the parser can read it.
+
+4. **Parser:** The Notion API sort by Severity may not return SEV4 before SEV5; the parser re-sorts by Severity (SEV1 first, SEV5 last) then Updated At descending. Pass the **merged** file path to the parser.
+
+**Get top N and apply ignore list and existing plans:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 /home/romain/Stockly/.cursor/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It reads the JSON from the Notion query result file, filters (Status Intl = Pending workforce, Assignee empty, Teams Intl not Partner Inputs_Front), sorts by Severity then Updated At, prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set **and** any ticket whose short_id already has a corresponding plan in `~/.cursor/plans/` (filename `<short_id>-*.md` or plan content with `## Short ID` equal to that short_id). Take the first **N** tickets from the remaining list (if the parser was run with a large N, you already have a sorted list; drop ignored and already-planned, then take first N).
 
 ## 4. Investigate in parallel
 
 For each of the top N tickets, launch a **subagent** (Task tool) with:
 
 - The ticket's Notion page URL (from the `url` field of each result).
-- Instruction: "Investigate this Quality Tech ticket. Do not guess if information is missing — report what's missing and ask questions. Output either: (1) clarifying questions for the user, or (2) an action plan. If you write an action plan, the user will work on a branch whose name includes the ticket's Notion short ID (the 5-character code at the start of the ticket title, e.g. `ABCDE`). Write the plan so it can be picked up by the open-plans command: save it as a plan file with a `## Branch` section whose value is the suggested branch name (e.g. `ABCDE-short-description`)."
+- Instruction: "Investigate this Quality Tech ticket. Do not guess if information is missing — report what's missing and ask questions. Choose exactly one of three outcomes and output accordingly: (1) **Code will be needed** (any amount, small or big) → write an action plan and prepare for a new branch (plan file under `~/.cursor/plans/<short-id>-<slug>.md` with `## Short ID`; the user's branch is created by Stockly tooling and includes the ticket's 5-character Short ID, e.g. `ABCDE`; open-plans will find the plan when they are on that branch). (2) **Easy** → summarize precisely the next steps (no plan file). (3) **Else** (not easy, not really code-related) → prepare a ready-to-paste prompt for another agent (no plan file). If you need more info first, output clarifying questions."
 
 Let each subagent return: questions **or** an action plan (and optionally a suggested branch name and plan path).
 
+**Stream results:** As soon as the **first** subagent (or any subagent) returns, **immediately** produce and display that ticket's super-synthetic resume (section 5) to the user — do not wait for the others. As each further subagent returns, produce and display that ticket's resume in turn. When **all** subagents have returned, output the final section (section 6). This way the user sees results as they complete instead of waiting for the slowest one.
+
 ## 5. Super-synthetic resume per ticket
 
-For each ticket, after the subagent responds, produce exactly one of these outcomes in a short, scannable block:
+For each ticket, **as soon as** its subagent responds, produce exactly one of these three outcomes in a short, scannable block. The subagent should have chosen based on: **code will be needed** → A; **else, if easy** → B; **else** → C.
 
-**A. Needs a plan and a git branch / worktree**  
-- Create the plan file so **open-plans** will match it:
+**A. Code will be needed (plan + branch)**
+
+- Any amount of code, small or big, is fine. Create the plan file so **open-plans** will match it when the user is on the ticket's branch (the branch name is created by Stockly tooling and always includes the Short ID):
   - Path: `~/.cursor/plans/<short-id>-<slug>.md` (e.g. `~/.cursor/plans/ABCDE-fix-login.md`).
-  - Content must include a line `## Branch` and on the next line the **exact branch name** the user will use (e.g. `ABCDE-fix-login`). Match the format used by open-plans (it matches the current git branch to the value after `## Branch`).
-- In the resume: ticket title + short ID, one line "what it is", and: "**Plan + branch.** Plan written to `~/.cursor/plans/<filename>.md`. Create branch `<suggested-branch>`, open a new Agent window, and run open-plans or load that plan to work on it."
+  - Content must include a line `## Short ID` and on the next line the **5-character Notion ticket code** (e.g. `ABCDE`). open-plans matches if the current branch name equals a `## Branch` value in the plan, or if the current branch **contains** that Short ID.
+- **Open the plan in Cursor:** After writing the plan file, open it in the editor (e.g. run `cursor <absolute-path-to-plan>` or the equivalent so the file opens in Cursor; if that is not available, show the path clearly so the user can open it).
+- In the resume: ticket title + short ID, one line "what it is", and: "**Plan + branch.** Plan written to `~/.cursor/plans/<filename>.md`. Switch to (or create) the ticket branch, open a new Agent window, and run open-plans to load the plan."
 
-**B. Super easy — clear next steps**  
+**B. Easy — summarize precisely the next steps**
+
 - No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Next steps:**" followed by a short, ordered list of concrete steps the user should do to resolve it (no extra conversation needed).
 
-**C. Not super easy, not really code-related, no git branch**  
-- No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Use a dedicated conversation.**" Then provide a **ready-to-paste prompt** the user can paste into a new Agent chat to continue (e.g. context + goal + what's already known).
+**C. Else — prompt for another agent**
+
+- No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Use a dedicated conversation.**" Then provide a **ready-to-paste prompt** the user can paste into a new Agent chat (context + goal + what's already known).
 
 ## 6. Final output
 
-- List the N tickets with their super-synthetic resume (A, B, or C) and ticket URL.
-- If fewer than N tickets were available after the ignore list (or after the Notion filter), say how many were found and process only those.
+After **all** subagents have returned (and you have already displayed each ticket's resume as it completed):
+
+- Provide a consolidated list of the N tickets with their super-synthetic resume (A, B, or C) and ticket URL, so the user has everything in one place.
+- If fewer than N tickets were available after the ignore list, existing plans, or the Notion filter, say how many were found and process only those.
 - If the Notion MCP is unavailable, say so and stop.
 - Remind the user they can say "ignore [ticket]" to add it to the ignore list for future runs.
