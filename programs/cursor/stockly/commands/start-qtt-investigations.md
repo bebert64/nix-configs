@@ -1,5 +1,5 @@
 ---
-description: Pick top pending Quality Tech tickets from Notion, investigate in parallel, and output a super-synthetic resume per ticket
+description: Start Quality Tech Ticket investigations — pick pending tickets from Notion, investigate in parallel, output super-synthetic resumes
 ---
 
 Run this workflow to select unassigned Quality Tech tickets (status "0 - Pending Workforce", Teams Intl ≠ Partner Inputs_Front), prioritize them, and have subagents investigate. Produce a **super-synthetic resume** for each ticket.
@@ -46,8 +46,8 @@ Apply the ignore list (section 1): remove any page whose `id` is in the ignore s
 
 For each of the top N tickets, launch a **subagent** (Task tool) with:
 
-- The ticket’s Notion page URL (from the `url` field of each result).
-- Instruction: “Investigate this Quality Tech ticket. Do not guess if information is missing — report what’s missing and ask questions. Output either: (1) clarifying questions for the user, or (2) an action plan. If you write an action plan, the user will work on a branch whose name includes the ticket’s Notion short ID (the 5-character code at the start of the ticket title, e.g. `ABCDE`). Write the plan so it can be picked up by the open-plans command: save it as a plan file with a `## Branch` section whose value is the suggested branch name (e.g. `ABCDE-short-description`).”
+- The ticket's Notion page URL (from the `url` field of each result).
+- Instruction: "Investigate this Quality Tech ticket. Do not guess if information is missing — report what's missing and ask questions. Output either: (1) clarifying questions for the user, or (2) an action plan. If you write an action plan, the user will work on a branch whose name includes the ticket's Notion short ID (the 5-character code at the start of the ticket title, e.g. `ABCDE`). Write the plan so it can be picked up by the open-plans command: save it as a plan file with a `## Branch` section whose value is the suggested branch name (e.g. `ABCDE-short-description`)."
 
 Let each subagent return: questions **or** an action plan (and optionally a suggested branch name and plan path).
 
@@ -59,13 +59,13 @@ For each ticket, after the subagent responds, produce exactly one of these outco
 - Create the plan file so **open-plans** will match it:
   - Path: `~/.cursor/plans/<short-id>-<slug>.md` (e.g. `~/.cursor/plans/ABCDE-fix-login.md`).
   - Content must include a line `## Branch` and on the next line the **exact branch name** the user will use (e.g. `ABCDE-fix-login`). Match the format used by open-plans (it matches the current git branch to the value after `## Branch`).
-- In the resume: ticket title + short ID, one line “what it is”, and: “**Plan + branch.** Plan written to `~/.cursor/plans/<filename>.md`. Create branch `<suggested-branch>`, open a new Agent window, and run open-plans or load that plan to work on it.”
+- In the resume: ticket title + short ID, one line "what it is", and: "**Plan + branch.** Plan written to `~/.cursor/plans/<filename>.md`. Create branch `<suggested-branch>`, open a new Agent window, and run open-plans or load that plan to work on it."
 
 **B. Super easy — clear next steps**  
-- No plan file. In the resume: ticket title + short ID, one line “what it is”, and: “**Next steps:**” followed by a short, ordered list of concrete steps the user should do to resolve it (no extra conversation needed).
+- No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Next steps:**" followed by a short, ordered list of concrete steps the user should do to resolve it (no extra conversation needed).
 
 **C. Not super easy, not really code-related, no git branch**  
-- No plan file. In the resume: ticket title + short ID, one line “what it is”, and: “**Use a dedicated conversation.**” Then provide a **ready-to-paste prompt** the user can paste into a new Agent chat to continue (e.g. context + goal + what’s already known).
+- No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Use a dedicated conversation.**" Then provide a **ready-to-paste prompt** the user can paste into a new Agent chat to continue (e.g. context + goal + what's already known).
 
 ## 6. Final output
 
