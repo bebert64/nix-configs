@@ -1,0 +1,14 @@
+---
+description: Where to put Cursor artifacts (rules, commands, skills) — nix-configs vs repo-local
+alwaysApply: true
+---
+
+All shared Cursor artifacts live in the **nix-configs** repo (`programs/cursor/`):
+
+- **Commands** (global and Stockly-specific): `programs/cursor/commands/` → symlinked to `~/.cursor/commands` (local machines only, not SSH hosts)
+- **Global rules**: `programs/cursor/rules/global/` → symlinked to `~/.cursor/rules`
+- **Stockly-specific rules**: `programs/cursor/rules/stockly/` → symlinked to `~/Stockly/.cursor/rules`
+
+**Do not** place shared artifacts under **`Stockly/Main/.cursor/`**: that directory is shared with all devs and tracked in Stockly's main repo.
+
+Use repo-local (`<workspace_root>/.cursor/`) only for artifacts that are specific to the current project's tech stack or repo structure, not for general Stockly-wide conventions.
