@@ -88,6 +88,8 @@ There are three scopes:
 3. **If there is any doubt, ask the user.**
 4. If you decide autonomously, tell the user where you placed it and why.
 
+**Do not** place Stockly-only rules, commands, or skills in `Stockly/Main/.cursor`: that directory is shared with all devs and tracked in the main repo. Use `Stockly/.cursor` instead (e.g. `/home/romain/Stockly/.cursor/rules/`, `.../commands/`).
+
 ## Step 4: Create or update
 
 1. Create the file following the appropriate format above.

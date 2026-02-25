@@ -26,7 +26,15 @@ in
       "jellyfin/guitar/access-token" = { };
       "jellyfin/media/access-token" = { };
       "radio-france/api-key" = { };
-      "stockly/main-db-uri" = { };
+      "stockly/dbs/backoffice" = { };
+      "stockly/dbs/buckets" = { };
+      "stockly/dbs/files" = { };
+      "stockly/dbs/invoices" = { };
+      "stockly/dbs/operations" = { };
+      "stockly/dbs/repackages" = { };
+      "stockly/dbs/shipments" = { };
+      "stockly/dbs/stocks" = { };
+      "stockly/dbs/supply-messages" = { };
     };
   };
 
