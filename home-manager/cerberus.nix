@@ -45,6 +45,7 @@
         mkdir -p /home/romain/Stockly/.cursor
         ln -sfT /home/romain/nix-configs/programs/cursor/rules/global /home/romain/.cursor/rules
         ln -sfT /home/romain/nix-configs/programs/cursor/rules/stockly /home/romain/Stockly/.cursor/rules
+        ln -sf /home/romain/nix-configs/programs/cursor/scripts/parse_qtt.py /home/romain/Stockly/.cursor/parse_qtt.py
       '';
     };
 

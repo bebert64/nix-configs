@@ -1,0 +1,9 @@
+# Quality Tech Tickets (QTT) — Filter for start-qtt-investigations
+
+When querying the Notion database "[DB] Quality Tech Tickets" to pick pending tickets for investigation:
+
+- **Filter on Status Intl only** for "pending": use **Status Intl** = "0 - Pending Workforce" (not the "Status" property). Status Intl is the source of truth for whether a ticket is still pending (e.g. "🟣 3 - Done" means done).
+- Also apply: Assignee empty, Teams Intl does NOT contain "Partner Inputs_Front".
+- **Priority order:** By Severity (SEV1 first, then SEV2 … SEV5 last), then by Updated At descending. SEV4 must rank before SEV5. The Notion API sort by Severity may not return that order, so use **page_size 100** and rely on the parser (`parse_qtt.py`) to re-sort.
+
+Data source ID: `d6cdb24f-62ac-4581-9503-c6035d22babf`. Database ID: `ebea444c-2ed2-4ed6-b6c4-76ec272de766`.

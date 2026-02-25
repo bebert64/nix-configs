@@ -2,7 +2,9 @@
 description: Start Quality Tech Ticket investigations — pick pending tickets from Notion, investigate in parallel, output super-synthetic resumes
 ---
 
-Run this workflow to select unassigned Quality Tech tickets (status "0 - Pending Workforce", Teams Intl ≠ Partner Inputs_Front), prioritize them, and have subagents investigate. Produce a **super-synthetic resume** for each ticket.
+Run this workflow to select unassigned Quality Tech tickets (**Status Intl** = "0 - Pending Workforce", Teams Intl ≠ Partner Inputs_Front), prioritize them, and have subagents investigate. Produce a **super-synthetic resume** for each ticket.
+
+**Important:** Use **Status Intl** (not "Status") for "pending" — Status Intl is the source of truth; a ticket can have Status = "0 - Pending Workforce" but Status Intl = "Done" and must be excluded.
 
 ## 0. How many tickets
 
@@ -18,7 +20,7 @@ Run this workflow to select unassigned Quality Tech tickets (status "0 - Pending
 - **Adding to the list:** If at any point (in this run or a follow-up) the user says they want to ignore a ticket (e.g. "ignore this one", "skip ABCDE", "add to ignore list"), append that ticket's Notion page ID to the file on a new line. Confirm to the user. The next run of this command will then skip it.
 - If the file doesn't exist, create it when first adding an ID; otherwise proceed with an empty ignore set.
 
-**Prune the ignore list (each run):** So the list doesn't grow indefinitely, at the start of each run — after reading the ignore file — prune it. For each page ID in the file, use the Notion API (e.g. `retrieve-a-page`) to check whether that page still exists and would still match the selection criteria (assignee empty, status "0 - Pending Workforce", Teams Intl not "Partner Inputs_Front"). If the page is missing (e.g. 404 / object_not_found), or it exists but no longer matches (e.g. now has an assignee, or status changed, or Teams Intl is Partner Inputs_Front), remove that ID from the ignore file. Write the file back. Then proceed with the pruned list. That way entries for deleted, assigned, or otherwise no-longer-eligible tickets are dropped automatically.
+**Prune the ignore list (each run):** So the list doesn't grow indefinitely, at the start of each run — after reading the ignore file — prune it. For each page ID in the file, use the Notion API (e.g. `retrieve-a-page`) to check whether that page still exists and would still match the selection criteria (assignee empty, **Status Intl** = "0 - Pending Workforce", Teams Intl not "Partner Inputs_Front"). If the page is missing (e.g. 404 / object_not_found), or it exists but no longer matches (e.g. now has an assignee, or Status Intl changed, or Teams Intl is Partner Inputs_Front), remove that ID from the ignore file. Write the file back. Then proceed with the pruned list.
 
 ## 2. Notion database
 
@@ -29,18 +31,16 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 ## 3. Filter and sort
 
-Query the data source with:
+**Notion MCP:** Call `API-query-data-source` (user-Notion) with:
 
-- **Filter:** All of:
-  - Assignee is empty (people, `is_empty: true`)
-  - Status = "0 - Pending Workforce" (select; option id `54ae61a7-3a83-4cda-aac2-d0b44d71b0da` or name match)
-  - Teams Intl does NOT contain "Partner Inputs_Front" (multi_select: empty is OK; if not empty, must not contain that option — id `b9a27f92-bb7a-42fc-8590-0f13340fc994`)
-- **Sort:** 
-  1. Severity ascending (SEV1 first, SEV5 last — use property "Severity" and order so SEV1 is first)
-  2. Then most recent first (e.g. "Updated At" or "Created At" descending)
-- **Page size:** Fetch enough to have **N + size(ignore list)** candidates (e.g. at least N + 20, or 50 cap) so that after excluding ignored IDs you still have at least N. Apply sort in memory if the API does not support the full sort.
+- **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
+- **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}, {"property": "Assignee", "people": {"is_empty": true}}, {"or": [{"property": "Teams Intl", "multi_select": {"is_empty": true}}, {"property": "Teams Intl", "multi_select": {"does_not_contain": "Partner Inputs_Front"}}]}]}`
+- **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Updated At", "direction": "descending"}]`
+- **page_size:** Use **100** (or more). The Notion API sort by Severity may not return SEV4 before SEV5; the parser re-sorts by Severity (SEV1 first, SEV5 last) then Updated At descending. Fetching enough results ensures SEV4 tickets (higher priority) are in the set and the parser will order them correctly.
 
-Apply the ignore list (section 1): remove any page whose `id` is in the ignore set. Take the **top N** tickets from the remaining list.
+The tool returns a message like "Large output has been written to: .../agent-tools/<uuid>.txt" — copy that full path and pass it to the parser.
+
+**Get top N and apply ignore list:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 /home/romain/Stockly/.cursor/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It reads the JSON from the Notion query result file, filters (Status Intl = Pending workforce, Assignee empty, Teams Intl not Partner Inputs_Front), sorts by Severity then Updated At, prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set and take the first **N** tickets from the remaining list (if the parser was run with a large N, you already have a sorted list; drop ignored IDs and take first N).
 
 ## 4. Investigate in parallel
 
