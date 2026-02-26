@@ -109,11 +109,10 @@ in
       ".cursor/extensions/stockly.monokai-stockly-1.0.0".source = ./MonokaiStockly;
     };
     activation = {
-      symlinkCursorCommands = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      symlinkCursor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ln -sfT ${nixPrograms}/cursor/commands ${homeDir}/.cursor/commands
-      '';
-      symlinkCursorRules = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ln -sfT ${nixPrograms}/cursor/rules/global ${homeDir}/.cursor/rules
+        ln -sfT ${nixPrograms}/cursor/skills ${homeDir}/.cursor/skills
       '';
     };
   };
