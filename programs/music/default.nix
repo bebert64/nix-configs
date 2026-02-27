@@ -10,7 +10,7 @@ let
   modifier = config.xsession.windowManager.i3.config.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
-  playerctl = "${pkgs.playerctl}/bin/playerctl";
+  playerctl = "${pkgs.playerctl}/bin/playerctl --ignore-player=firefox,chromium";
   openDir = "${pkgs.writeScriptBin "open-dir" ''
     base_dir=${config.byDb.paths.nasBase}/Musique
     selection=$(

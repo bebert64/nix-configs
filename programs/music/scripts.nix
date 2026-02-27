@@ -1,7 +1,7 @@
 { pkgs }:
 let
   inherit (pkgs) writeScriptBin;
-  playerctl = "${pkgs.playerctl}/bin/playerctl";
+  playerctl = "${pkgs.playerctl}/bin/playerctl --ignore-player=firefox,chromium";
 in
 {
   playerctlMove = "${writeScriptBin "playerctl-move" ''
@@ -11,7 +11,7 @@ in
       "strawberry") ${playerctl} position $2$1;;
       *) ${playerctl} position $(expr $(${playerctl} position | cut -d . -f 1) $1 $2);;
     esac
-  ''}/bin/${playerctl}-move";
+  ''}/bin/playerctl-move";
 
   playerctlRestartOrPrevious = "${writeScriptBin "playerctl-restart-or-previous" ''
     CURRENT_PLAYER=$(${playerctl} --list-all | head -n 1)
