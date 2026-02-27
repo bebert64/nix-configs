@@ -67,7 +67,30 @@
           mum = "merge --ff-only upstream/${gitConfig.mainOrMaster}";
           pfl = "push --force-with-lease";
           pl = "pull";
-          pmp = "!git pull && git momp";
+          # Merge the branch's base (main or branch.<name>.base). When base is unset we prompt once; empty = main, then we set base and merge.
+          pmp = ''
+            !f() {
+              git fetch origin
+              current=$(git rev-parse --abbrev-ref HEAD)
+              base=$(git config branch."''$current".base)
+              if [ -z "''$base" ]; then
+                read -p "Branch to merge [${gitConfig.mainOrMaster}]: " base
+                base="''${base:-${gitConfig.mainOrMaster}}"
+                git config branch."''$current".base "''$base"
+              fi
+              base_ref=$(git rev-parse "origin/''$base" 2>/dev/null)
+              if [ -z "''$base_ref" ]; then
+                echo "Branch origin/''$base not found."
+                return 1
+              fi
+              base_mb=$(git merge-base HEAD "origin/''$base" 2>/dev/null)
+              if [ -z "''$base_mb" ]; then
+                echo "origin/''$base is not in this branch's history."
+                return 1
+              fi
+              git pull && git merge --no-edit "origin/''$base" && git push
+            }; f
+          '';
           ps = "push -u";
           r = "rebase";
           rc = "rebase --continue";
