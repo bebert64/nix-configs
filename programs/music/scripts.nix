@@ -13,6 +13,18 @@ in
     esac
   ''}/bin/playerctl-move";
 
+  playerctlPlayPause = "${writeScriptBin "playerctl-play-pause" ''
+    ${playerctl} play-pause
+  ''}/bin/playerctl-play-pause";
+
+  playerctlStop = "${writeScriptBin "playerctl-stop" ''
+    ${playerctl} stop
+  ''}/bin/playerctl-stop";
+
+  playerctlStopAll = "${writeScriptBin "playerctl-stop-all" ''
+    ${playerctl} -a stop
+  ''}/bin/playerctl-stop-all";
+
   playerctlRestartOrPrevious = "${writeScriptBin "playerctl-restart-or-previous" ''
     CURRENT_PLAYER=$(${playerctl} --list-all | head -n 1)
 

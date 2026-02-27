@@ -31,6 +31,9 @@ let
   ''}/bin/open-dir";
   inherit (import ./scripts.nix { inherit pkgs; })
     playerctlMove
+    playerctlPlayPause
+    playerctlStop
+    playerctlStopAll
     playerctlRestartOrPrevious
     ;
 in
@@ -130,9 +133,9 @@ in
           "Right" = "exec ${playerctlMove} + 10";
           "Up" = "exec ${playerctl} volume 0.1+";
           "Down" = "exec ${playerctl} volume 0.1-";
-          "space" = "exec ${playerctl} play-pause, mode default";
-          "s" = "exec ${playerctl} stop, mode default";
-          "${modifier}+s" = "exec ${playerctl} -a stop, mode default";
+          "space" = "exec ${playerctlPlayPause}, mode default";
+          "s" = "exec ${playerctlStop}, mode default";
+          "${modifier}+s" = "exec ${playerctlStopAll}, mode default";
           "l" = "workspace $ws10, exec strawberry, mode default";
           "o" = "workspace $ws10, exec spotify, mode default";
           "r" = "exec choose-radios, mode default";
