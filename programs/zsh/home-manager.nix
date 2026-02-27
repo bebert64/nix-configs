@@ -144,6 +144,16 @@ in
         cd "${paths.nixConfigs}/$@"
       }
 
+      s() {
+        if [[ "$1" == "wk" ]]; then
+          command s wk "''${@:2}" -w=b
+        elif [[ "$1" == "tk" ]] && [[ " $* " == *" wk "* ]]; then
+          command s "$@" -w=b
+        else
+          command s "$@"
+        fi
+      }
+
       sync-wallpapers() {
         rsync -avh --exclude "Fond pour téléphone" ${paths.nasBase}/Wallpapers/ ${homeDir}/wallpapers
         rsync -avh ${homeDir}/wallpapers/ ${paths.nasBase}/Wallpapers

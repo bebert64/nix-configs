@@ -5,6 +5,7 @@ alwaysApply: true
 
 ## Stockly CLI
 
+- `s` is an alias for `cargo run` in `dev_tools/StocklyCli` (available when in the Main repo).
 - Use `s wk <TICKET_IDENTIFIER>` (Notion URL, ShortId, or UUID) to start working on a task. This creates a branch, pushes it, opens a PR, links it to the Notion ticket, and updates the ticket status to "Started".
   - `-w` flag: create a dedicated git worktree instead of switching branches
   - `--only-helps` flag: if the PR only partially addresses the ticket
