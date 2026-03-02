@@ -29,3 +29,4 @@ alwaysApply: true
 
 - **Implementation plan formatting**: Use numbered top-level steps (1., 2., 3.) and lettered sub-points (A, B, C) so that implementation items are labeled 1.A, 1.B, 2.A, 2.B, etc.
 - **Always include the git branch**: Before creating a plan, run `git branch --show-current` and include a `## Branch` line at the top of the plan body.
+- When creating a plan or investigation file under `~/.cursor/plans/`, include `## Short ID` and optional `## Category` / `## Status` in the content; if `~/.cursor/plans/_index.json` exists, update it to add or refresh the corresponding project entry (schema described in the tasks command).
