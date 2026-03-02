@@ -25,6 +25,7 @@ in
       wke1 = "i3-msg workspace 11:󰸉";
       wke2 = "i3-msg workspace 12:󰸉";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
+      dc = "db_cli";
 
       # Nix
       update = "run-in-nix-repo nix-switch";
@@ -127,21 +128,48 @@ in
         cd "$base/$@"
       }
 
-      unalias dc 2>/dev/null
-      dc() {
-        cd ${paths.mainWorktree}
-        cargo run -p db_cli -- "$@"
-        cd -
+      _cdm_complete() {
+        local base git_root
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [[ "$git_root" == *"/nix-configs"* ]] || [[ "$git_root" == *"/nix-configs_"* ]]; then
+          base="${paths.nixConfigs}"
+        else
+          base="${paths.mainWorktree}"
+        fi
+        _files -W "$base" -/
       }
-
-      compdef '_files -W "${paths.mainWorktree}" -/' cdm
+      compdef _cdm_complete cdm
       cdm() {
-        cd "${paths.mainWorktree}/$@"
+        local base git_root
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [[ "$git_root" == *"/nix-configs"* ]] || [[ "$git_root" == *"/nix-configs_"* ]]; then
+          base="${paths.nixConfigs}"
+        else
+          base="${paths.mainWorktree}"
+        fi
+        cd "$base/$@"
       }
 
-      compdef '_files -W "${paths.nixConfigs}" -/' cdn
+      _cdn_complete() {
+        local base git_root
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [[ "$git_root" == *"/nix-configs"* ]] || [[ "$git_root" == *"/nix-configs_"* ]]; then
+          base="$git_root"
+        else
+          base="${paths.nixConfigs}"
+        fi
+        _files -W "$base" -/
+      }
+      compdef _cdn_complete cdn
       cdn() {
-        cd "${paths.nixConfigs}/$@"
+        local base git_root
+        git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+        if [[ "$git_root" == *"/nix-configs"* ]] || [[ "$git_root" == *"/nix-configs_"* ]]; then
+          base="$git_root"
+        else
+          base="${paths.nixConfigs}"
+        fi
+        cd "$base/$@"
       }
 
       s() {
