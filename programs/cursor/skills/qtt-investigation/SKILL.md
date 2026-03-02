@@ -29,7 +29,7 @@ When the fix or feature requires any amount of code (backend, frontend, config, 
 
 - Write an action plan and prepare for a branch.
 - Create the plan file at ~/.cursor/plans/SHORTID-SLUG.md (e.g. ~/.cursor/plans/ABCDE-fix-login.md). Use the ticket 5-character Short ID and a short slug.
-- Plan content must include a line "## Short ID" and on the next line the 5-character Notion ticket code (e.g. ABCDE). open-plans matches when the current branch contains that Short ID or equals a "## Branch" value in the plan.
+- Plan content must include a line "## Short ID" and on the next line the 5-character Notion ticket code (e.g. ABCDE), and "## Category" with "qtt" on the next line. open-plans matches when the current branch contains that Short ID or equals a "## Branch" value in the plan. If `~/.cursor/plans/_index.json` exists, update it to include this plan (see tasks command for schema).
 - Suggest a branch name if useful. After writing the plan, open it in the editor or show the path clearly.
 - **Inform and continue:** In your reply, briefly report progress (e.g. plan path, root cause, what you’re doing next). Do not stop and wait for the user — immediately create the environment and start coding on the new branch. Only stop and return to the user (outcome A + plan path) if key information is missing or a blocking decision is needed.
 
