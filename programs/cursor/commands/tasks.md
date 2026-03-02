@@ -18,7 +18,10 @@ Show all projects (short_id) that have at least one plan or investigation in `~/
   - **Status** (from `## Status` in content or leave blank).
   - **Summary**: from the latest file (by mtime or by timestamp in filename) — e.g. title (first `#` line), and the `## Resume` section or first 200–300 characters if no Resume.
   - **Files**: list of paths (clickable or raw). For each, a copy-pastable command: `cursor ~/.cursor/plans/<filename>` (or full path).
-- Present in a clear, scannable way (e.g. one block per short_id). Include a single copy-pastable block with one `cursor ...` command per file (or per latest file per short_id) so the user can open files easily.
+  - **One-liners to start working** (display immediately after this block, not at the end of the list):
+    - If the `Main_<short_id>_*` git worktree (directory) does **not** exist: `s wk <notion_url>` (use the project's Notion page URL). If the worktree already exists, omit this line.
+    - In all cases: open the worktree on cerberus via Remote-SSH, same pattern as **open-cerberus** (`programs/cursor/default.nix`): `cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/<worktree_dir> & disown` where `<worktree_dir>` is the project's worktree directory (e.g. `Main_<short_id>` or `Main_<short_id>_<suffix>`). Use the actual directory name when known (e.g. from index or from listing `Main_*` on cerberus).
+- Present in a clear, scannable way (e.g. one block per short_id). Each block is self-contained and includes its one-liners right after the file commands.
 
 ## 3. Cleanup (Notion Done) — optional
 
@@ -37,7 +40,3 @@ When creating or updating `_index.json`, use this shape so tasks and other comma
 
 - **projects**: array of `{ "short_id", "category?", "status?", "files": [ { "path": "basename or relative", "type": "plan"|"investigation" } ], "notion_page_id?", "branch?", "updated_at?" }`.
 - Agent can derive this from the directory when the index is missing; when writing a new plan or investigation, append or update the corresponding project entry and write the file back.
-
-## 5. Migration note (one-time)
-
-If the user still has files in `~/.cursor/saved-investigations/`, they can migrate by moving each `{short_id}-{timestamp}.md` to `~/.cursor/plans/{short_id}-investigation-{timestamp}.md`, then removing the empty `saved-investigations/` directory. After that, run **tasks** once to rebuild or create `_index.json` from the plans directory.
