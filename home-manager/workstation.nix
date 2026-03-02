@@ -104,6 +104,9 @@
       };
 
       byDbPkgs = {
+        db-cli = {
+          enable = true;
+        };
         video-manager = {
           enable = true;
           stash = homeManagerBydbConfig.stashApiConfig;

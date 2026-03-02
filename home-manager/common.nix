@@ -170,8 +170,6 @@ in
       packages = (
         with pkgs;
         [
-          nixd
-          nixfmt-rfc-style
           p7zip
           rsync
           screen
