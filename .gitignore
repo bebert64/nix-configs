@@ -1,4 +1,5 @@
 .cursor/
+.direnv/
 .vscode/
 test.sh
 result
