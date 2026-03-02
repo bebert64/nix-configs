@@ -27,6 +27,9 @@ alwaysApply: true
 
 ## Plans
 
+These rules apply **whenever** you create or write a plan or investigation file under `~/.cursor/plans/` — including when the user did not explicitly ask for a "plan" (e.g. plan mode, or you decide to persist a plan). Do not skip them.
+
 - **Implementation plan formatting**: Use numbered top-level steps (1., 2., 3.) and lettered sub-points (A, B, C) so that implementation items are labeled 1.A, 1.B, 2.A, 2.B, etc.
-- **Always include the git branch**: Before creating a plan, run `git branch --show-current` and include a `## Branch` line at the top of the plan body.
-- When creating a plan or investigation file under `~/.cursor/plans/`, include `## Short ID` and optional `## Category` / `## Status` in the content; if `~/.cursor/plans/_index.json` exists, update it to add or refresh the corresponding project entry (schema described in the tasks command).
+- **Always include the git branch**: Before creating a plan, run `git branch --show-current` and include a `## Branch` line at the top of the plan body (use the actual branch name).
+- **Required in every plan/investigation file**: `## Short ID` (next line: the 5-character ticket code or identifier) and `## Category` (next line: one of `qtt`, `review`, `tech-task`, or another category). Optional: `## Status`.
+- **Index**: If `~/.cursor/plans/_index.json` exists, update it: ensure there is a project entry with `short_id`, `category`, and `files` containing `{ "path": "<basename>.md", "type": "plan"|"investigation" }`; set `notion_page_id` if the plan is tied to a Notion ticket, and `updated_at` (ISO date). Merge with existing projects array; do not overwrite the whole file with a single project.
