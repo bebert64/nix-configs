@@ -56,7 +56,7 @@ let
   ''}/bin/open-local";
   openCerberus = "${pkgs.writeScriptBin "open-cerberus" ''
     selection=$(
-      ssh cerberus bash -s -- ~/Stockly < ${listCodeProjects} 2>/dev/null | \
+      ssh cerberus bash -s -- /home/romain/Stockly < ${listCodeProjects} 2>/dev/null | \
       ${rofi} -theme-str 'window {width: 30%;}'
     )
     if [[ $selection ]]; then
@@ -126,7 +126,8 @@ in
       "${modifier}+Shift+v" = "workspace $ws3; exec ${openCerberus}";
       "${modifier}+Mod1+v" = "workspace $ws3; exec ${openSalon}";
       "${modifier}+Control+n" = "workspace $ws3; exec ${openNixLocal}";
-      "${modifier}+Shift+n" = "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/nix-configs";
+      "${modifier}+Shift+n" =
+        "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/nix-configs";
       "${modifier}+Mod1+n" = "workspace $ws3; exec ${openNixSalon}";
     };
   };
