@@ -102,6 +102,7 @@
             inherit
               by-db
               home-manager
+              nixpkgs
               pkgsUnstable
               sops-nix
               stockly-computers

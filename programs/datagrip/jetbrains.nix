@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 
 let
-  jaJetfilterBaseUrl = "https://ipfs.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i";
+  jaJetfilterBaseUrl = "https://ipfs.filebase.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i";
   jaNetfilter = pkgs.stdenv.mkDerivation {
     # https://jetbra.in/s
     name = "ja-netfilter";
