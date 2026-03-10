@@ -9,7 +9,8 @@ let
   inherit (pkgs) writeScriptBin;
   inherit (lib) makeBinPath;
   nasIp = "192.168.1.3";
-  nasIpAndVolume = "${nasIp}:/volume1/NAS";
+  nasVolume = "/volume1/NAS";
+  nasIpAndVolume = "${nasIp}:${nasVolume}";
   nasMountPoint = "/mnt/NAS";
   homeDir = config.byDb.hmUser.home.homeDirectory;
   homeMountDir = "${homeDir}/mnt/";
@@ -23,22 +24,39 @@ let
       echo "NAS is not mounted"
     fi
   '';
+  checkNasAvailable = pkgs.writeShellScript "check-nas-available" ''
+    PATH=${makeBinPath [ pkgs.nfs-utils pkgs.coreutils pkgs.gnugrep ]}
+    timeout 2 showmount -e ${nasIp} --no-headers 2>/dev/null | grep -q '${nasVolume}'
+  '';
 in
 {
 
-  fileSystems."${nasMountPoint}" = {
-    device = "${nasIpAndVolume}";
-    fsType = "nfs";
-    options = [
-      "noexec"
-      "noauto"
-      "soft"
-      "timeo=30"
-      "retrans=3"
-      "x-systemd.automount"
-      "x-systemd.idle-timeout=300"
-      "x-systemd.mount-timeout=10s"
-    ];
+  systemd.automounts = [
+    {
+      where = nasMountPoint;
+      wantedBy = [ "multi-user.target" ];
+      automountConfig.TimeoutIdleSec = "300";
+    }
+  ];
+
+  systemd.mounts = [
+    {
+      what = nasIpAndVolume;
+      where = nasMountPoint;
+      type = "nfs";
+      options = "noexec,noauto,soft,timeo=30,retrans=3";
+      requires = [ "check-nas-available.service" ];
+      after = [ "check-nas-available.service" ];
+      mountConfig.TimeoutSec = "10s";
+    }
+  ];
+
+  systemd.services.check-nas-available = {
+    description = "Check that the NAS at ${nasIp} exports ${nasVolume}";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = checkNasAvailable;
+    };
   };
 
   environment.systemPackages = [
