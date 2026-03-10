@@ -11,8 +11,12 @@
     hostname = "charybdis.stockly.tech";
     port = 23;
   };
+  orthos = {
+    host = "orthos";
+    hostname = "orthos.stockly.tech";
+  };
   common-stockly = {
-    host = "cerberus charybdis";
+    host = "cerberus charybdis orthos";
     user = "romain";
     localForwards = [
       {
@@ -25,34 +29,34 @@
       }
       {
         # Auth grpc
-        bind.port = 1226;
+        bind.port = 3079;
         host = {
           address = "localhost";
-          port = 1226;
+          port = 3079;
         };
       }
       {
         # Auth http
-        bind.port = 1227;
+        bind.port = 3080;
         host = {
           address = "localhost";
-          port = 1227;
+          port = 3080;
         };
       }
       {
         # Files grpc
-        bind.port = 1234;
+        bind.port = 3109;
         host = {
           address = "localhost";
-          port = 1234;
+          port = 3109;
         };
       }
       {
         # Files http
-        bind.port = 1235;
+        bind.port = 3110;
         host = {
           address = "localhost";
-          port = 1235;
+          port = 3110;
         };
       }
       {
@@ -65,58 +69,58 @@
       }
       {
         # Repackages grpc
-        bind.port = 1232;
+        bind.port = 3034;
         host = {
           address = "localhost";
-          port = 1232;
+          port = 3034;
         };
       }
       {
         # Repackages http
-        bind.port = 1233;
+        bind.port = 3035;
         host = {
           address = "localhost";
-          port = 1233;
+          port = 3035;
         };
       }
       {
         # Shipments grpc
-        bind.port = 1230;
+        bind.port = 3039;
         host = {
           address = "localhost";
-          port = 1230;
+          port = 3039;
         };
       }
       {
         # Shipments http
-        bind.port = 1231;
+        bind.port = 3040;
         host = {
           address = "localhost";
-          port = 1231;
+          port = 3040;
         };
       }
       {
         # Stocks grpc
-        bind.port = 1225;
+        bind.port = 3024;
         host = {
           address = "localhost";
-          port = 1225;
+          port = 3024;
         };
       }
       {
         # Invoices grpc
-        bind.port = 1237;
+        bind.port = 3054;
         host = {
           address = "localhost";
-          port = 1237;
+          port = 3054;
         };
       }
       {
         # Invoices http
-        bind.port = 1249;
+        bind.port = 3055;
         host = {
           address = "localhost";
-          port = 1249;
+          port = 3055;
         };
       }
       {
@@ -153,18 +157,18 @@
       }
       {
         # Backoffice Service grpc
-        bind.port = 1228;
+        bind.port = 3084;
         host = {
           address = "localhost";
-          port = 1228;
+          port = 3084;
         };
       }
       {
         # Backoffice Service http
-        bind.port = 1229;
+        bind.port = 3085;
         host = {
           address = "localhost";
-          port = 1229;
+          port = 3085;
         };
       }
       {
@@ -177,18 +181,18 @@
       }
       {
         # Consumer Backoffice Service grpc
-        bind.port = 1238;
+        bind.port = 3114;
         host = {
           address = "localhost";
-          port = 1238;
+          port = 3114;
         };
       }
       {
         # Consumer Backoffice Service http
-        bind.port = 1239;
+        bind.port = 3115;
         host = {
           address = "localhost";
-          port = 1239;
+          port = 3115;
         };
       }
       {
@@ -213,6 +217,22 @@
         host = {
           address = "localhost";
           port = 1251;
+        };
+      }
+      {
+        # supply_messages gRPC
+        bind.port = 3074;
+        host = {
+          address = "localhost";
+          port = 3074;
+        };
+      }
+      {
+        # supply_messages HTTP
+        bind.port = 3075;
+        host = {
+          address = "localhost";
+          port = 3075;
         };
       }
     ];

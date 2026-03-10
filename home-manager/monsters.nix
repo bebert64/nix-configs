@@ -37,7 +37,7 @@
           #!/usr/bin/env bash
           cd /home/romain/nix-configs || exit 1
           git pull || exit 1
-          home-manager switch --flake '.#romain@cerberus' --show-trace
+          home-manager switch --flake '.#monsters' --show-trace --option accept-flake-config true
         '')
       ];
       activation.symlinkCursor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

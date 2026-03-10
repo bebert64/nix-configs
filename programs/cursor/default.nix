@@ -54,15 +54,15 @@ let
       cursor ${paths.codeRoot}/$selection
     fi
   ''}/bin/open-local";
-  openCerberus = "${pkgs.writeScriptBin "open-cerberus" ''
+  openOrthos = "${pkgs.writeScriptBin "open-orthos" ''
     selection=$(
-      ssh cerberus bash -s -- /home/romain/Stockly < ${listCodeProjects} 2>/dev/null | \
+      ssh orthos bash -s -- /home/romain/Stockly < ${listCodeProjects} 2>/dev/null | \
       ${rofi} -theme-str 'window {width: 30%;}'
     )
     if [[ $selection ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/$selection
+      cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/$selection
     fi
-  ''}/bin/open-cerberus";
+  ''}/bin/open-orthos";
   openSalon = "${pkgs.writeScriptBin "open-salon" ''
     selection=$(
       ssh salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null | \
@@ -123,11 +123,11 @@ in
     };
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+v" = "workspace $ws3; exec ${openLocal}";
-      "${modifier}+Shift+v" = "workspace $ws3; exec ${openCerberus}";
+      "${modifier}+Shift+v" = "workspace $ws3; exec ${openOrthos}";
       "${modifier}+Mod1+v" = "workspace $ws3; exec ${openSalon}";
       "${modifier}+Control+n" = "workspace $ws3; exec ${openNixLocal}";
       "${modifier}+Shift+n" =
-        "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/nix-configs";
+        "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/nix-configs";
       "${modifier}+Mod1+n" = "workspace $ws3; exec ${openNixSalon}";
     };
   };
