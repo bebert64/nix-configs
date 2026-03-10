@@ -1,7 +1,45 @@
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 let
   homeManagerBydbConfig = config.byDb;
   exitMode = homeManagerBydbConfig.i3.exitMode;
+  jq = "${pkgs.jq}/bin/jq";
+  i3msg = "${pkgs.i3}/bin/i3-msg";
+  moveWorkspaceToOutput =
+    direction:
+    assert direction == "left" || direction == "right";
+    "${pkgs.writeShellScript "move-workspace-to-output-${direction}" ''
+      set -euo pipefail
+
+      outputs=$(${i3msg} -t get_outputs | ${jq} -r '[.[] | select(.active)] | sort_by(.rect.x) | .[].name')
+      current_output=$(${i3msg} -t get_workspaces | ${jq} -r '.[] | select(.focused) | .output')
+
+      output_array=()
+      current_idx=-1
+      idx=0
+      while IFS= read -r name; do
+        output_array+=("$name")
+        if [ "$name" = "$current_output" ]; then
+          current_idx=$idx
+        fi
+        idx=$((idx + 1))
+      done <<< "$outputs"
+
+      target_idx=$((current_idx ${if direction == "left" then "- 1" else "+ 1"}))
+      if [ "$target_idx" -lt 0 ] || [ "$target_idx" -ge "''${#output_array[@]}" ]; then
+        exit 0
+      fi
+
+      target_output="''${output_array[$target_idx]}"
+      ${i3msg} move workspace to output "$target_output"
+
+      sleep 0.1
+      ${i3msg} focus output "$target_output"
+    ''}";
 in
 {
   options.byDb.i3.exitMode = lib.mkOption {
@@ -67,9 +105,8 @@ in
             "${modifier}+Shift+Ctrl+9" = "move container to workspace number $ws19";
             "${modifier}+Shift+Ctrl+0" = "move container to workspace number $ws20";
 
-            # Move workspace to different output
-            "${modifier}+Mod1+Left" = "move workspace to output left";
-            "${modifier}+Mod1+Right" = "move workspace to output right";
+            "${modifier}+Mod1+Left" = "exec ${moveWorkspaceToOutput "left"}";
+            "${modifier}+Mod1+Right" = "exec ${moveWorkspaceToOutput "right"}";
 
             # Used to display empty workspaces, allowing to see the wallpapers
             "${modifier}+i" = "workspace $ws19; workspace $ws20";
