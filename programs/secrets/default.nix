@@ -43,6 +43,7 @@ in
   };
 
   programs.zsh = {
+    enable = true;
     initContent = ''
       compdef '_files -W "${symlinkPath}" -/' sops-read
 

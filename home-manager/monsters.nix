@@ -9,6 +9,7 @@
     ../programs/git
     ../programs/neovim
     ../programs/ranger
+    ../programs/secrets
   ];
 
   options.byDb.paths.nixPrograms = lib.mkOption {
