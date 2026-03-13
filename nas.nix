@@ -24,12 +24,23 @@ let
       echo "NAS is not mounted"
     fi
   '';
-  checkNasAvailable = pkgs.writeShellScript "check-nas-available" ''
-    PATH=${makeBinPath [ pkgs.nfs-utils pkgs.coreutils pkgs.gnugrep ]}
-    timeout 2 showmount -e ${nasIp} --no-headers 2>/dev/null | grep -q '${nasVolume}'
-  '';
+  checkNasAvailable =
+    let
+      timeout = "${pkgs.coreutils}/bin/timeout";
+      bash = "${pkgs.bash}/bin/bash";
+      showmount = "${pkgs.nfs-utils}/bin/showmount";
+      grep = "${pkgs.gnugrep}/bin/grep";
+    in
+    pkgs.writeShellScript "check-nas-available" ''
+      ${timeout} -k 0.5 1 ${bash} -c \
+        "exec 3<>/dev/tcp/${nasIp}/2049" 2>/dev/null \
+        && ${showmount} -e ${nasIp} --no-headers 2>/dev/null \
+          | ${grep} -q '${nasVolume}'
+    '';
 in
 {
+
+  boot.supportedFilesystems = [ "nfs" ];
 
   systemd.automounts = [
     {
@@ -44,7 +55,7 @@ in
       what = nasIpAndVolume;
       where = nasMountPoint;
       type = "nfs";
-      options = "noexec,noauto,soft,timeo=30,retrans=3";
+      options = "noexec,noauto,soft,timeo=30,retrans=3,retry=0";
       requires = [ "check-nas-available.service" ];
       after = [ "check-nas-available.service" ];
       mountConfig.TimeoutSec = "10s";
@@ -56,6 +67,7 @@ in
     serviceConfig = {
       Type = "oneshot";
       ExecStart = checkNasAvailable;
+      TimeoutStartSec = "3s";
     };
   };
 
