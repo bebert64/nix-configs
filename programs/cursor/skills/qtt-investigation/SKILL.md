@@ -27,6 +27,7 @@ After investigating, choose exactly one of the three outcomes below and produce 
 
 When the fix or feature requires any amount of code (backend, frontend, config, script), however small:
 
+- **Front-end gate:** If the required code is mostly front-end, DO NOT start coding. Inform the user (report root cause, which files/areas are involved, and why it's front-end) and stop. Only proceed with coding if the ticket is a back-end (or non-front-end) change.
 - Write an action plan and prepare for a branch.
 - Create the plan file at ~/.cursor/plans/SHORTID-SLUG.md (e.g. ~/.cursor/plans/ABCDE-fix-login.md). Use the ticket 5-character Short ID and a short slug.
 - Plan content must include a line "## Short ID" and on the next line the 5-character Notion ticket code (e.g. ABCDE), and "## Category" with "qtt" on the next line. open-plans matches when the current branch contains that Short ID or equals a "## Branch" value in the plan. If `~/.cursor/plans/_index.json` exists, update it to include this plan (see tasks command for schema).
