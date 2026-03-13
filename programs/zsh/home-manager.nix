@@ -25,7 +25,7 @@ in
       wke1 = "i3-msg workspace 11:󰸉";
       wke2 = "i3-msg workspace 12:󰸉";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
-      dc = "db_cli";
+      dc = "db-cli";
 
       # Nix
       update = "run-in-nix-repo nix-switch";
