@@ -8,6 +8,7 @@ All shared Cursor artifacts live in the **nix-configs** repo (`programs/cursor/`
 - **Commands** (global and Stockly-specific): `programs/cursor/commands/` → symlinked to `~/.cursor/commands` (local machines only, not SSH hosts)
 - **Global rules**: `programs/cursor/rules/global/` → symlinked to `~/.cursor/rules`
 - **Stockly-specific rules**: `programs/cursor/rules/stockly/` → symlinked to `~/Stockly/.cursor/rules`
+- **Skills**: `programs/cursor/skills/` → symlinked to `~/.cursor/skills`
 
 **Do not** place shared artifacts under **`Stockly/Main/.cursor/`**: that directory is shared with all devs and tracked in Stockly's main repo.
 

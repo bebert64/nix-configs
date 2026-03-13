@@ -11,4 +11,5 @@ The user wants a code review of ALL changes introduced by the current PR branch 
    - Missing or incorrect error handling
    - Performance concerns
    - Any TODO/FIXME left behind
+   - Naming, comments, and code organization: read the conventions from `~/.cursor/skills/code-polish/SKILL.md` and check against them
 3. Be concise. Group feedback by file. Highlight the most important issues first.
