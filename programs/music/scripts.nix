@@ -25,6 +25,18 @@ in
     ${playerctl} -a stop
   ''}/bin/playerctl-stop-all";
 
+  playerctlNext = "${writeScriptBin "playerctl-next" ''
+    ${playerctl} next
+  ''}/bin/playerctl-next";
+
+  playerctlVolumeUp = "${writeScriptBin "playerctl-volume-up" ''
+    ${playerctl} volume 0.1+
+  ''}/bin/playerctl-volume-up";
+
+  playerctlVolumeDown = "${writeScriptBin "playerctl-volume-down" ''
+    ${playerctl} volume 0.1-
+  ''}/bin/playerctl-volume-down";
+
   playerctlRestartOrPrevious = "${writeScriptBin "playerctl-restart-or-previous" ''
     CURRENT_PLAYER=$(${playerctl} --list-all | head -n 1)
 

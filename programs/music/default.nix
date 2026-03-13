@@ -35,6 +35,9 @@ let
     playerctlStop
     playerctlStopAll
     playerctlRestartOrPrevious
+    playerctlNext
+    playerctlVolumeUp
+    playerctlVolumeDown
     ;
 in
 {
@@ -128,11 +131,11 @@ in
       {
         ${music_mode} = {
           "${modifier}+Left" = " exec ${playerctlRestartOrPrevious}";
-          "${modifier}+Right" = "exec ${playerctl} next";
+          "${modifier}+Right" = "exec ${playerctlNext}";
           "Left" = "exec ${playerctlMove} - 10";
           "Right" = "exec ${playerctlMove} + 10";
-          "Up" = "exec ${playerctl} volume 0.1+";
-          "Down" = "exec ${playerctl} volume 0.1-";
+          "Up" = "exec ${playerctlVolumeUp}";
+          "Down" = "exec ${playerctlVolumeDown}";
           "space" = "exec ${playerctlPlayPause}, mode default";
           "s" = "exec ${playerctlStop}, mode default";
           "${modifier}+s" = "exec ${playerctlStopAll}, mode default";
