@@ -1,11 +1,13 @@
 {
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 {
   imports = [
     ../programs/btop
+    ../programs/claude-code
     ../programs/git
     ../programs/neovim
     ../programs/ranger

@@ -8,11 +8,11 @@
 {
   imports = [
     ./common.nix
-    ../programs/ranger/gui.nix
-    ../programs/chromium
     ../programs/autorandr
     ../programs/avidemux
     ../programs/calculator
+    ../programs/chromium
+    ../programs/claude-code
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
@@ -26,6 +26,7 @@
     ../programs/picom
     ../programs/plex-desktop
     ../programs/polybar
+    ../programs/ranger/gui.nix
     ../programs/rofi
     ../programs/slack
     ../programs/sqlfluff
