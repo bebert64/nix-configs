@@ -21,7 +21,7 @@ You're helping the user get started on reviewing a PR. Follow these steps.
   - **API-retrieve-a-page** with that `page_id` to get the page (title, properties).
   - **API-get-block-children** with `block_id` = that same page ID to get the page body (blocks).
   - **API-retrieve-a-comment** with `block_id` = that page ID to get comments on the page (paginate with `start_cursor` if needed).
-- **If the ticket title indicates it is a review ticket** (e.g. "FNGAG: Review @EN4QK: ..."), identify the **source ticket's shortId** (e.g. EN4QK) from the title, then **also read the source ticket**: find that ticket (e.g. via Notion search or relation from the review ticket), retrieve its page, block children, and comments. The **main shortId** for steps 3–5 is this source ticket's shortId. Most of the time the review ticket has 0 comments and no added value (empty or template-only body); in those cases **do not mention the review ticket in the summary**—summarize only the source ticket.
+- **If the ticket title indicates it is a review ticket** (e.g. "FNGAG: Review @EN4QK: ..."), identify the **source ticket's shortId** (e.g. EN4QK) from the title, then **also read the source ticket**: find that ticket (e.g. via Notion search or relation from the review ticket), retrieve its page, block children, and comments. The **main shortId** for steps 3–6 is this source ticket's shortId. Most of the time the review ticket has 0 comments and no added value (empty or template-only body); in those cases **do not mention the review ticket in the summary**—summarize only the source ticket.
 - From the ticket content (or the source ticket's content when it's a review ticket), **find the GitHub PR URL** (link in the body, or in a "PR" / "GitHub" / "Link" property). You will need it for the next steps.
 - Summarize for the user:
   - **Ticket title and goal**: what the ticket asks for (for review tickets with no added value: only the source ticket's title and goal).
@@ -47,7 +47,17 @@ You're helping the user get started on reviewing a PR. Follow these steps.
   - **Main changes**: which parts of the codebase are touched (e.g. service, module, API, UI); briefly remind how that area usually works if it helps, then how this PR changes it and how that relates to the ticket.
   - **GitHub PR comments**: main points from both issue and review comments (questions, requested changes, resolutions).
 
-## 5. Alignment and conclusion
+## 5. Suggested reading order
+
+Using the PR diff (file list + change sizes), suggest an order in which the reviewer should read the changed files. The goal is comprehension, not just size.
+
+- **List the key files explicitly**, ordered for reading. These are the files where the substantive logic change happens. Ordering rules:
+  - Start with files that establish context needed to understand the rest (e.g. new types/structs, schema changes, shared helpers), even if they are smaller diffs.
+  - Then list the files with the main behavioral changes, ordered so each one builds on what was read before.
+  - For each file, add a one-line note: what the reader will learn from it and roughly how big the diff is.
+- **Mention derivative files as a group** (don't list each one unless helpful). These are files that changed only as a mechanical consequence of the key changes (e.g. new call-sites, import updates, test fixtures, generated code, simple wiring). A single sentence like "N other files contain straightforward wiring / call-site updates" is enough.
+
+## 6. Alignment and conclusion
 
 - Compare the PR to the ticket (for review tickets: to the **source** ticket) and to **both** Notion and GitHub comments:
   - Does the PR address what the ticket (or source ticket) asks for?
@@ -55,21 +65,21 @@ You're helping the user get started on reviewing a PR. Follow these steps.
   - Are GitHub review/issue comments addressed or still open?
 - Give a short **conclusion**: does it globally seem to solve the problem or not, and why (2–4 sentences). Call out obvious gaps or mismatches if any.
 
-## 6. Save the investigation
+## 7. Save the investigation
 
-Persist the review so it can be found later. (1) Ensure `~/.cursor/plans/` exists (create the directory if it does not). (2) Write one `.md` file there with filename `{short_id}-review-{date}T{time}.md` (e.g. `EN4QK-review-2025-02-27T143052.md`; use ISO date and time without colons). File content: a header with `# {ticket title}`, `Short ID: {short_id}`, `## Category` and on the next line `review`, `Notion: {notion_url}`, `Notion page ID: {id}` (the page ID from the ticket URL), `Investigation date: {iso-date}`; then `## Resume` and a short summary of the review (ticket goal, PR intent, conclusion); then `## Full investigation` and the full content from steps 2–5 (ticket summary, PR summary, alignment, conclusion). **open-plans** opens all files for this short_id when run on the branch; **tasks** lists it with other plans/investigations. (3) If `~/.cursor/plans/_index.json` exists, update it to include this new file (see tasks command for index schema).
+Persist the review so it can be found later. (1) Ensure `~/.cursor/plans/` exists (create the directory if it does not). (2) Write one `.md` file there with filename `{short_id}-review-{date}T{time}.md` (e.g. `EN4QK-review-2025-02-27T143052.md`; use ISO date and time without colons). File content: a header with `# {ticket title}`, `Short ID: {short_id}`, `## Category` and on the next line `review`, `Notion: {notion_url}`, `Notion page ID: {id}` (the page ID from the ticket URL), `Investigation date: {iso-date}`; then `## Resume` and a short summary of the review (ticket goal, PR intent, suggested reading order, conclusion); then `## Full investigation` and the full content from steps 2–6 (ticket summary, PR summary, reading order, alignment, conclusion). **open-plans** opens all files for this short_id when run on the branch; **tasks** lists it with other plans/investigations. (3) If `~/.cursor/plans/_index.json` exists, update it to include this new file (see tasks command for index schema).
 
-## 7. One-liners to open the PR branch
+## 8. One-liners to open the PR branch
 
-Offer these two one-liners (replace `<notion_url>` with the ticket URL from step 1; replace `<branch_name>` with the PR branch name, e.g. `EN4QK-BoMessagesSentToSupplierArenTLinkedToThread`, which matches the worktree directory name after running the Cerberus one-liner):
+Offer these two one-liners (replace `<notion_url>` with the ticket URL from step 1; replace `<branch_name>` with the PR branch name, e.g. `EN4QK-BoMessagesSentToSupplierArenTLinkedToThread`, which matches the worktree directory name after running the Orthos one-liner):
 
-- **On Cerberus** (cd to Main repo, pull, then create worktree and switch to PR branch):
-  1. `cdm`
-  2. `git pull`
-  3. `s wk <notion_url> -w=b`
-- **On your machine** (open the worktree on Cerberus via Remote-SSH, detached from the terminal; worktrees are under `/home/romain/Stockly/` and named `Main_<branch_name>`):
+- **On Orthos** (cd to Main repo, pull, then create worktree and switch to PR branch):
   ```bash
-  cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/Main_<branch_name> & disown
+  cdm && git pull && s wk <notion_url> -w=b
+  ```
+- **On your machine** (open the worktree on Orthos via Remote-SSH, detached from the terminal; worktrees are under `/home/romain/Stockly/` and named `Main_<branch_name>`):
+  ```bash
+  cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/Main_<branch_name> & disown
   ```
 
 Keep the whole answer scannable (clear headings, short bullets). If something is missing (e.g. Notion inaccessible, `gh` not available), say what you used and what you could not use.

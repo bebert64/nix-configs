@@ -20,7 +20,7 @@ Show all projects (short_id) that have at least one plan or investigation in `~/
   - **Files**: list of paths (clickable or raw). For each, a copy-pastable command: `cursor ~/.cursor/plans/<filename>` (or full path).
   - **One-liners to start working** (display immediately after this block, not at the end of the list):
     - If the `Main_<short_id>_*` git worktree (directory) does **not** exist: `s wk <notion_url>` (use the project's Notion page URL). If the worktree already exists, omit this line.
-    - In all cases: open the worktree on cerberus via Remote-SSH, same pattern as **open-cerberus** (`programs/cursor/default.nix`): `cursor --folder-uri=vscode-remote://ssh-remote+cerberus/home/romain/Stockly/<worktree_dir> & disown` where `<worktree_dir>` is the project's worktree directory (e.g. `Main_<short_id>` or `Main_<short_id>_<suffix>`). Use the actual directory name when known (e.g. from index or from listing `Main_*` on cerberus).
+    - In all cases: open the worktree on orthos via Remote-SSH, same pattern as **open-orthos** (`programs/cursor/default.nix`): `cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/<worktree_dir> & disown` where `<worktree_dir>` is the project's worktree directory (e.g. `Main_<short_id>` or `Main_<short_id>_<suffix>`). Use the actual directory name when known (e.g. from index or from listing `Main_*` on orthos).
 - Present in a clear, scannable way (e.g. one block per short_id). Each block is self-contained and includes its one-liners right after the file commands.
 
 ## 3. Cleanup (Notion Done) — optional
