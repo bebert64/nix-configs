@@ -1,0 +1,21 @@
+{
+  "env": {
+    "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
+  },
+  "permissions": {
+    "deny": [
+      "Read(//mnt/NAS/**)",
+      "Read(//home/romain/mnt/NAS/**)",
+      "Edit(//mnt/NAS/**)",
+      "Edit(//home/romain/mnt/NAS/**)",
+      "Write(//mnt/NAS/**)",
+      "Write(//home/romain/mnt/NAS/**)",
+      "Bash(* /mnt/NAS*)",
+      "Bash(* /home/romain/mnt/NAS*)",
+      "Bash(* ~/mnt/NAS*)"
+    ]
+  },
+  "model": "opusplan",
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
+}

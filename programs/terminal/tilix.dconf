@@ -1,9 +1,9 @@
 [/]
 enable-wide-handle=true
 quake-specific-monitor=0
-sidebar-on-right=false
-terminal-title-show-when-single=false
-terminal-title-style='none'
+sidebar-on-right=true
+terminal-title-show-when-single=true
+terminal-title-style='normal'
 theme-variant='dark'
 use-tabs=true
 warn-vte-config-issue=false
