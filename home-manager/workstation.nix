@@ -13,6 +13,7 @@
     ../programs/calculator
     ../programs/chromium
     ../programs/claude-code
+    ../programs/claude-code/perso-specific.nix
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip

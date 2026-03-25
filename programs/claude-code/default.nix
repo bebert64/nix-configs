@@ -7,6 +7,7 @@
 }:
 let
   homeDir = config.home.homeDirectory;
+  nixPrograms = config.byDb.paths.nixPrograms;
   symlinkPath = config.sops.defaultSymlinkPath;
   claudeWithVoice = pkgs.writeShellScriptBin "claude" ''
     # PulseAudio forwarding for Claude Code voice mode on monsters
@@ -27,7 +28,32 @@ in
     activation = {
       symlinkClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" "setupSecrets" ] ''
         mkdir -p ${homeDir}/.claude
-        ln -sf ${config.byDb.paths.nixPrograms}/claude-code/settings.json ${homeDir}/.claude/settings.json
+        ln -sf ${nixPrograms}/claude-code/settings.json ${homeDir}/.claude/settings.json
+
+        # Global rules (Claude Code recurses into subdirectories)
+        mkdir -p ${homeDir}/.claude/rules
+        ln -sfT ${nixPrograms}/claude-code/rules/global ${homeDir}/.claude/rules/global
+
+        # Global skills (each skill dir individually)
+        mkdir -p ${homeDir}/.claude/skills
+        for skill in ${nixPrograms}/claude-code/skills/global/*/; do
+          ln -sfT "$skill" ${homeDir}/.claude/skills/$(basename "$skill")
+        done
+
+        # Global commands (each .md file individually)
+        mkdir -p ${homeDir}/.claude/commands
+        for cmd in ${nixPrograms}/claude-code/commands/global/*.md; do
+          ln -sfT "$cmd" ${homeDir}/.claude/commands/$(basename "$cmd")
+        done
+
+        # Global docs (each item individually to allow merging with stockly docs)
+        mkdir -p ${homeDir}/.claude/docs
+        for item in ${nixPrograms}/claude-code/docs/global/*/; do
+          ln -sfT "$item" ${homeDir}/.claude/docs/$(basename "$item")
+        done
+        for item in ${nixPrograms}/claude-code/docs/global/*.md; do
+          [ -f "$item" ] && ln -sfT "$item" ${homeDir}/.claude/docs/$(basename "$item")
+        done
 
         NOTION_TOKEN="$(cat ${symlinkPath}/stockly/mcp/notion-token)"
         SENTRY_TOKEN="$(cat ${symlinkPath}/stockly/mcp/sentry-token)"
