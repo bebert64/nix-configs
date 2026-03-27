@@ -46,14 +46,8 @@ in
           ln -sfT "$cmd" ${homeDir}/.claude/commands/$(basename "$cmd")
         done
 
-        # Global docs (each item individually to allow merging with stockly docs)
+        # Docs directory (individual items added by machine-specific nix files)
         mkdir -p ${homeDir}/.claude/docs
-        for item in ${nixPrograms}/claude-code/docs/global/*/; do
-          ln -sfT "$item" ${homeDir}/.claude/docs/$(basename "$item")
-        done
-        for item in ${nixPrograms}/claude-code/docs/global/*.md; do
-          [ -f "$item" ] && ln -sfT "$item" ${homeDir}/.claude/docs/$(basename "$item")
-        done
 
         NOTION_TOKEN="$(cat ${symlinkPath}/stockly/mcp/notion-token)"
         SENTRY_TOKEN="$(cat ${symlinkPath}/stockly/mcp/sentry-token)"

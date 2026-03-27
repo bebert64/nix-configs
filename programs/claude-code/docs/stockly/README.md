@@ -4,22 +4,20 @@ Reference documentation for Stockly development. Read the relevant doc before di
 
 ## Architecture
 
-- `architecture/overview.md` — System map, service boundaries, tech stack (TODO: bootstrap from repo)
-- `architecture/service-map.md` — Which service does what, how they communicate (TODO: bootstrap from repo)
+- `architecture/overview.md` — System map, service boundaries, tech stack, monorepo layout
+- `architecture/service-map.md` — Which service does what, how they communicate, data flow
 
 ## Services
 
 Service-specific docs with key modules, entry points, patterns, and gotchas. Add incrementally as you work on each service.
 
-- `services/operations.md` — (TODO)
-- `services/stocks.md` — (TODO)
-- `services/integrations.md` — (TODO)
+- `services/operations.md` — Crate structure, module layout, gRPC services, database overview
 
 ## Patterns
 
-- `patterns/error-handling.md` — Fail vs Error with real Stockly examples (TODO: extract from rules + code)
-- `patterns/proto-design.md` — Three-layer pattern, additionals, validated() (TODO: extract from rules + code)
-- `patterns/testing.md` — How to write/run tests, fixtures, integration setup (TODO)
+- `patterns/error-handling.md` — Error vs Fail two-level Result, `try_or_wrap!`, exhaustive matching, real examples
+- `patterns/proto-design.md` — Three-layer pattern, additionals, `validated()`, PreValidated, RPC design
+- `patterns/testing.md` — Unit tests, integration tests, tintes, test helpers, naming
 
 ## Runbooks
 
