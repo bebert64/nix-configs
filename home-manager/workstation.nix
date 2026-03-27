@@ -121,7 +121,7 @@
             cookiePath = "${homeDir}/.config/by_db/guitar-tutorials-yt-dlp-cookie.txt";
           };
           firefox = {
-            guitarTutoFolder = "toolbar/Guitar tutos";
+            guitarTutoFolder = "toolbar/Downloads/Guitar tutos";
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/guitar-tutorials-firefox-sync-client.secret";
             };
@@ -158,7 +158,7 @@
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
             };
-            wallpapersFolder = "toolbar/Wallpaper/Download";
+            wallpapersFolder = "toolbar/Downloads/Wallpaper/Download";
           };
         };
       };
