@@ -30,17 +30,13 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 ## 3. Filter and sort
 
-**Notion MCP — query with status filter, then paginate if needed:** The API filter is applied server-side so you fetch only pending tickets (~38), not the full database. The parser still applies Assignee empty and Teams Intl ≠ Partner Inputs_Front.
-
-- **Filter (property + type):** Use **Status Intl** with **select** and **equals**. This returns ~38 rows. Do not use "Status" or "status" — the source of truth is Status Intl.
-- Also apply: Assignee empty, Teams Intl does NOT contain "Partner Inputs_Front".
-- **Priority order:** By Severity (SEV1 first, then SEV2 … SEV5 last), then by Updated At descending. SEV4 must rank before SEV5. The Notion API sort by Severity may not return that order, so use **page_size 100** and rely on the parser (`parse_qtt.py`) to re-sort.
+**Notion MCP — query with filter, then paginate if needed:**
 
 1. **First request:** Call `API-query-data-source` (user-Notion) with:
    - **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
    - **page_size:** **100**
    - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Updated At", "direction": "descending"}]`
-   - **filter:** `{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}`
+   - **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}, {"property": "Assignee", "people": {"is_empty": true}}]}`
 
    The tool returns a message like "Large output has been written to: .../agent-tools/<uuid>.txt". Read that file; the JSON has `results`, `next_cursor`, and `has_more`.
 
@@ -48,18 +44,11 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 3. **Merge:** Build a single JSON object: `{"results": <all collected page objects>}`. Write it to a file (e.g. the path of the first response file, or a new path under agent-tools) so the parser can read it.
 
-4. **Parser:** The Notion API sort by Severity may not return SEV4 before SEV5; the parser re-sorts by Severity (SEV1 first, SEV5 last) then Updated At descending. Pass the **merged** file path to the parser.
-
-**Get top N and apply ignore list and existing plans:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It reads the JSON from the Notion query result file, filters (Status Intl = Pending workforce, Assignee empty, Teams Intl not Partner Inputs_Front), sorts by Severity then Updated At, prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.cursor/plans/` (filename starting with `<short_id>-`, e.g. plan or investigation). Take the first **N** tickets from the remaining list (if the parser was run with a large N, you already have a sorted list; drop ignored and already-planned, then take first N).
+4. **Get top N and apply ignore list and existing plans:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.cursor/plans/` (filename starting with `<short_id>-`, e.g. plan or investigation). Take the first **N** tickets from the remaining list.
 
 ## 4. Investigate in parallel
 
-For each of the top N tickets, launch a **subagent** (Task tool) with this prompt:
-
-1. **Read and follow** the instructions in **`.cursor/skills/qtt-investigation/SKILL.md`** (path relative to workspace root). That skill defines how to investigate a Quality Tech ticket and the three possible outcomes (code → plan file; easy → next steps; else → ready-to-paste prompt).
-2. **Then investigate** the ticket at the given Notion page URL.
-
-When calling the Task tool, pass a single prompt that: (a) tells the subagent to read and follow `.cursor/skills/qtt-investigation/SKILL.md`, then (b) gives the ticket's Notion page URL (from the `url` field of the result) and asks to investigate that ticket.
+For each of the top N tickets, launch a **subagent** (Task tool) with a prompt that invokes the **`investigate`** skill and passes the ticket's Notion page URL (from the `url` field of the result).
 
 Let each subagent return: clarifying questions **or** one of the three outcomes (A: plan path + branch; B: next steps; C: ready-to-paste prompt).
 
@@ -67,25 +56,7 @@ Let each subagent return: clarifying questions **or** one of the three outcomes 
 
 ## 5. Super-synthetic resume per ticket
 
-For each ticket, **as soon as** its subagent responds, produce exactly one of these three outcomes in a short, scannable block. The subagent should have chosen based on: **code will be needed** → A; **else, if easy** → B; **else** → C.
-
-**A. Code will be needed (plan + branch)**
-
-- Any amount of code, small or big, is fine. Create the plan file so **open-plans** will match it when the user is on the ticket's branch (the branch name is created by Stockly tooling and always includes the Short ID):
-  - Path: `~/.cursor/plans/<short-id>-<slug>.md` (e.g. `~/.cursor/plans/ABCDE-fix-login.md`).
-  - Content must include a line `## Short ID` and on the next line the **5-character Notion ticket code** (e.g. `ABCDE`). open-plans matches if the current branch name equals a `## Branch` value in the plan, or if the current branch **contains** that Short ID.
-- **Open the plan in Cursor:** After writing the plan file, open it in the editor (e.g. run `cursor <absolute-path-to-plan>` or the equivalent so the file opens in Cursor; if that is not available, show the path clearly so the user can open it).
-- In the resume: ticket title + short ID, one line "what it is", and: "**Plan + branch.** Plan written to `~/.cursor/plans/<filename>.md`. Switch to (or create) the ticket branch, open a new Agent window, and run open-plans to load the plan."
-
-**B. Easy — summarize precisely the next steps**
-
-- No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Next steps:**" followed by a short, ordered list of concrete steps the user should do to resolve it (no extra conversation needed).
-
-**C. Else — prompt for another agent**
-
-- No plan file. In the resume: ticket title + short ID, one line "what it is", and: "**Use a dedicated conversation.**" Then provide a **ready-to-paste prompt** the user can paste into a new Agent chat (context + goal + what's already known).
-
-**After producing and displaying the resume for a ticket:** Persist the investigation result so the user can review it later (e.g. after closing the window or in a new agent). (1) Ensure `~/.cursor/plans/` exists (create the directory if it does not). (2) Write one `.md` file there with filename `{short_id}-investigation-{date}T{time}.md` (e.g. `ABCDE-investigation-2025-02-26T143052.md`; use ISO date and time without colons). File content: a header with `# {ticket title}`, `Short ID: {short_id}`, `## Category` and on the next line `qtt`, `Notion: {notion_url}`, `Notion page ID: {id}` (use the parser result `id` field), `Investigation date: {iso-date}`; then `## Resume` and the super-synthetic resume block you just displayed; then `## Full investigation` and the full subagent response. (3) If `~/.cursor/plans/_index.json` exists, update it to include this new file (see tasks command for index schema). This allows tasks to list summaries and clean up Done tickets.
+As soon as a subagent returns, display a short scannable block: ticket title + short ID, one line "what it is", then the outcome summary (A/B/C as defined in the `investigate` skill).
 
 ## 6. Final output
 
