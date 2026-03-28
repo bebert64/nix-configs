@@ -23,6 +23,7 @@
           nativeBuildInputs = with pkgs; [
             nixd
             nixfmt-rfc-style
+            gh
           ];
         };
       }

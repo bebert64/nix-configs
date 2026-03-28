@@ -29,6 +29,7 @@ in
       symlinkClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" "setupSecrets" ] ''
         mkdir -p ${homeDir}/.claude
         ln -sf ${nixPrograms}/claude-code/settings.json ${homeDir}/.claude/settings.json
+        ln -sf ${nixPrograms}/claude-code/CLAUDE.md ${homeDir}/.claude/CLAUDE.md
 
         # Global rules (Claude Code recurses into subdirectories)
         mkdir -p ${homeDir}/.claude/rules
@@ -38,12 +39,6 @@ in
         mkdir -p ${homeDir}/.claude/skills
         for skill in ${nixPrograms}/claude-code/skills/global/*/; do
           ln -sfT "$skill" ${homeDir}/.claude/skills/$(basename "$skill")
-        done
-
-        # Global commands (each .md file individually)
-        mkdir -p ${homeDir}/.claude/commands
-        for cmd in ${nixPrograms}/claude-code/commands/global/*.md; do
-          ln -sfT "$cmd" ${homeDir}/.claude/commands/$(basename "$cmd")
         done
 
         # Docs directory (individual items added by machine-specific nix files)
