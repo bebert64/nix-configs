@@ -1,11 +1,11 @@
 ---
-name: qtt-investigation
-description: Investigates a Quality Tech ticket (Notion). Use when the user asks to investigate a QTT, a Quality Tech ticket, a Notion ticket URL, or when following up on a ticket from the start-qtt-investigations workflow. Produces one of three outcomes: action plan (code), next steps (easy), or ready-to-paste prompt for another agent.
+name: investigate
+description: Investigates a Notion ticket. Use when the user asks to investigate a QTT, a Quality Tech ticket, a Notion ticket URL, or when following up on a ticket from the start-qtt-investigations workflow. Produces one of three outcomes: action plan (code), next steps (easy), or ready-to-paste prompt for another agent.
 ---
 
-# Quality Tech Ticket investigation
+# Investigate a Notion ticket
 
-Investigate the ticket from the given Notion page URL (or from context). Do not guess when information is missing; report what is missing and ask clarifying questions.
+Investigate the ticket from the given Notion page URL. Do not guess when information is missing; report what is missing and ask clarifying questions.
 
 ## Before choosing an outcome
 
@@ -13,9 +13,8 @@ Investigate the ticket from the given Notion page URL (or from context). Do not 
 
 **You must attempt to read the ticket page and all comments before doing any other investigation.** Do not infer the ticket from code or Sentry alone.
 
-- **How:** Use whatever works: Notion MCP (retrieve page + comments), browser, or ask the user to paste the ticket body and comments if you have no access.
-- **If you cannot access Notion:** Say so explicitly at the start of your response and ask the user to paste the ticket content and comments (or key human diagnostic). Do not proceed to outcome A/B/C as if you had read them; either get the content or output clarifying questions.
-- **In your output:** State whether you read the comments, and if a human left a diagnostic, quote or summarize it and say how your conclusion follows from or differs from it. If you skipped comments (e.g. no access and user didn’t paste), say so clearly.
+- **How:** Use the Notion MCP (retrieve page + comments). If the MCP is not available, stop there and warn the user. Do NOT move to the next phase.
+- **In your output:** State whether you read the comments, and if a human left a diagnostic, quote or summarize it and say how your conclusion follows from or differs from it.
 
 ### Then: use human diagnostic as the lead
 
@@ -29,13 +28,13 @@ When the fix or feature requires any amount of code (backend, frontend, config, 
 
 - **Front-end gate:** If the required code is mostly front-end, DO NOT start coding. Inform the user (report root cause, which files/areas are involved, and why it's front-end) and stop. Only proceed with coding if the ticket is a back-end (or non-front-end) change.
 - Write an action plan and prepare for a branch.
-- Create the plan file at ~/.cursor/plans/SHORTID-SLUG.md (e.g. ~/.cursor/plans/ABCDE-fix-login.md). Use the ticket 5-character Short ID and a short slug.
-- Plan content must include a line "## Short ID" and on the next line the 5-character Notion ticket code (e.g. ABCDE), and "## Category" with "qtt" on the next line. open-plans matches when the current branch contains that Short ID or equals a "## Branch" value in the plan. If `~/.cursor/plans/_index.json` exists, update it to include this plan (see tasks command for schema).
+- Create the plan file at ~/.claude/plans/SHORTID-SLUG.md (e.g. ~/.claude/plans/ABCDE-fix-login.md). Use the ticket 5-character Short ID and a short slug.
+- Plan content must include a line "## Short ID" and on the next line the 5-character Notion ticket code (e.g. ABCDE), and "## Category" with "Investigation" on the next line. If `~/.claude/plans/_index.json` exists, update it to include this plan (see tasks skill for schema).
 - Suggest a branch name if useful. After writing the plan, open it in the editor or show the path clearly.
 - **Inform and continue:** In your reply, briefly report progress (e.g. plan path, root cause, what you’re doing next). Do not stop and wait for the user — immediately create the environment and start coding on the new branch. Only stop and return to the user (outcome A + plan path) if key information is missing or a blocking decision is needed.
 
-1. **Prepare the environment:** Run `cd /home/romain/Stockly/Main && s wk <notion_url> -w=b`. This creates a git branch, a PR, and a git worktree at `/home/romain/Stockly/Main_<ShortId>`, where ShortId is the 5-character code from the ticket URL/name.
-2. **Move to the worktree** and get the nix shell: `cd /home/romain/Stockly/Main_<ShortId> && direnv allow`.
+1. **Prepare the environment:** Run `cd /home/romain/Stockly/Main && s wk <notion_url> -w=b`. This creates a git branch, a PR, and a git worktree. The exact path to the worktree will be given in the output of the 's wk' command.
+2. **Move to the worktree** and get the nix shell: `cd /path/to/the/worktree/that/was/just/created && direnv allow`.
 3. **Implement** the solution in that worktree. Follow the Rust Verification Loop from agent-workflow (compile check after each change, clippy + tests after each logical unit).
 4. **Review style**: Run the review-style skill in fix mode to catch style violations.
 5. **Commit as you go:** Commit after each part of the solution is implemented, verified, and style-fixed. No single big commit at the end, unless the whole change is very small.
@@ -55,7 +54,3 @@ When the ticket is not straightforward and is not primarily a code change (e.g. 
 - Do not create a plan file.
 - Prepare a ready-to-paste prompt for another Agent chat: context, goal, and what is already known.
 - Return to caller: Indicate outcome C and the ready-to-paste prompt.
-
-## If you need more info first
-
-If the ticket is unclear or key information is missing, output clarifying questions instead of picking an outcome. Do not guess.
