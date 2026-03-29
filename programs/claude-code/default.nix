@@ -35,11 +35,8 @@ in
         mkdir -p ${homeDir}/.claude/rules
         ln -sfT ${nixPrograms}/claude-code/rules/global ${homeDir}/.claude/rules/global
 
-        # Global skills (each skill dir individually)
-        mkdir -p ${homeDir}/.claude/skills
-        for skill in ${nixPrograms}/claude-code/skills/global/*/; do
-          ln -sfT "$skill" ${homeDir}/.claude/skills/$(basename "$skill")
-        done
+        # Skills (whole dir — all skills available everywhere)
+        ln -sfT ${nixPrograms}/claude-code/skills ${homeDir}/.claude/skills
 
         # Docs directory (individual items added by machine-specific nix files)
         mkdir -p ${homeDir}/.claude/docs
