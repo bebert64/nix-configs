@@ -35,6 +35,7 @@ in
       "stockly/dbs/shipments" = { };
       "stockly/dbs/stocks" = { };
       "stockly/dbs/supply-messages" = { };
+      "mcp/asana-token" = { };
       "stockly/mcp/notion-token" = { };
       "stockly/mcp/sentry-token" = { };
     };
