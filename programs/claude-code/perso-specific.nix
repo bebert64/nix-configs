@@ -1,24 +1,18 @@
 { config, lib, pkgs, ... }:
 let
   homeDir = config.home.homeDirectory;
-  nixPrograms = config.byDb.paths.nixPrograms;
   symlinkPath = config.sops.defaultSymlinkPath;
 in
 {
   home.activation.symlinkClaudePerso = lib.hm.dag.entryAfter [ "symlinkClaudeSettings" ] ''
-    # Perso skills
-    for skill in ${nixPrograms}/claude-code/skills/perso/*/; do
-      ln -sfT "$skill" ${homeDir}/.claude/skills/$(basename "$skill")
-    done
-
     # Perso MCP servers
-    ASANA_TOKEN="$(cat ${symlinkPath}/mcp/asana-token)"
+    ASANA_TOKEN="$(cat ${symlinkPath}/code/mcp/asana-token)"
     MCP_CONFIG=$(${pkgs.jq}/bin/jq -n \
       --arg asana_token "$ASANA_TOKEN" \
       '{mcpServers: {
         asana: {
           command: "npx",
-          args: ["-y", "@roychri/mcp-server-asana"],
+          args: ["-y", "@n0zer0d4y/asana-project-ops"],
           env: {ASANA_ACCESS_TOKEN: $asana_token}
         }
       }}')
