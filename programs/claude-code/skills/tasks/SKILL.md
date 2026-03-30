@@ -23,18 +23,7 @@ Show all projects (short_id) that have at least one plan or investigation in `~/
     - In all cases: open the worktree on orthos via Remote-SSH, same pattern as **open-orthos** (`programs/cursor/default.nix`): `cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/<worktree_dir> & disown` where `<worktree_dir>` is the project's worktree directory (e.g. `Main_<short_id>` or `Main_<short_id>_<suffix>`). Use the actual directory name when known (e.g. from index or from listing `Main_*` on orthos).
 - Present in a clear, scannable way (e.g. one block per short_id). Each block is self-contained and includes its one-liners right after the file commands.
 
-## 3. Cleanup (Notion Done) — optional
-
-Do **not** fetch all tickets with status Done from Notion. Use **one request per short_id** that has a Notion page ID in its file(s).
-
-- **Status Intl value for done:** `🟣 3 - Done` (exact string from the Notion database; use it when comparing).
-- Collect (short_id, notion_page_id) from plan/investigation files: for each short_id, parse **Notion page ID** from the latest file (line `Notion page ID: ...` in the header). If a file has no Notion page ID, skip that short_id for cleanup.
-- For each such page_id, call **API-retrieve-a-page** (user-Notion) with that page_id. From the response, read the **Status Intl** property (the select's `name` value).
-- If it equals `🟣 3 - Done`, delete all files in `~/.cursor/plans/` whose filename starts with that short_id (e.g. `ABCDE-`, so `ABCDE-fix-login.md`, `ABCDE-investigation-*.md`, `ABCDE-review-*.md`, etc.).
-- Update `~/.cursor/plans/_index.json` to remove the deleted entries (or rebuild the index from the directory after deletions).
-- Report how many tickets were cleaned up (which short_ids).
-
-## 4. Index schema (for reference)
+## 3. Index schema (for reference)
 
 When creating or updating `_index.json`, use this shape so tasks and other commands can read it:
 
