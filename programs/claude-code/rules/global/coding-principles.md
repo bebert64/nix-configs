@@ -30,9 +30,3 @@ Leverage the type system to make bugs un-writable. Design interfaces so develope
 - **Filter closest to the data source** — SQL `WHERE` clauses are cheaper than Rust-side filtering.
 - **Prefer references** over cloning. Unnecessary clones often indicate a design issue.
 - **Use sorted arrays** for repeated lookups instead of linear scans.
-- **Optimize for the happy path** — the common case should be fast; edge cases can be slower.
-
-## Tests are examples
-
-- First tests **must** cover primary use cases, not edge cases. Tests serve as documentation for how the code is intended to be used.
-- Documentation and examples are code — they must be equally well thought out. To justify their presence, they must be a significant improvement over simply reading the code.

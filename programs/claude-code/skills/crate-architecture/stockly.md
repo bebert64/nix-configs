@@ -1,15 +1,8 @@
----
-name: stockly-crate-architecture
-description: Stockly monorepo crate architecture and scaffolding patterns. Use when creating a new Rust crate, Node package, or integration in the Stockly repo, or when the user asks about crate layout, file structure, or where to place a new crate.
----
+# Stockly Monorepo — Crate Architecture
 
-# Stockly Crate Architecture
+> **Scope**: Stockly monorepo (`~/Stockly/Main`).
 
-> **Scope**: This skill is specific to the **Stockly monorepo** (`~/stockly/Main`).
-
-When creating a new crate, follow the patterns below. After scaffolding, register the crate in the Cargo workspace (Rust) or `pnpm-workspace.yaml` (Node).
-
-**Ask when in doubt.** Several decisions can be subtle: standalone crate vs sub-crate of an existing service, separate Schema crate vs schema kept in the service, library vs deployable unit, sibling crate vs internal sub-crate. If the answer isn't clear-cut from context, ask the user rather than guessing.
+After scaffolding, register the crate in the Cargo workspace (Rust) or — for Node — no registration needed (`pnpm-workspace.yaml` auto-discovers via `**` globs).
 
 ---
 
@@ -123,10 +116,9 @@ workspace = true
 ```
 
 Key points:
-- `edition = "2024"` (current standard).
 - `publish = false` always.
 - `[lints] workspace = true` always.
-- `workspace` field: relative path to repo root (e.g. `workspace = "../.."` for `<service>/Service/`, `workspace = ".."` for `Buckets/`).
+- `workspace` field: relative path to repo root (e.g. `workspace = "../.."` for `<service>/Service/`).
 - Prefer `workspace = true` dependencies declared in the root `Cargo.toml`'s `[workspace.dependencies]`. Add new workspace deps there if the crate is used from multiple places.
 - Proto crates have `[build-dependencies]` with `grpc_helpers_codegen`.
 
@@ -147,35 +139,7 @@ Key points:
 
 ---
 
-## 6. Workspace registration
-
-### Rust
-
-Add the crate path to the `members` array in the root `Cargo.toml`:
-
-```toml
-members = [
-    # ...existing members...
-    "path/to/NewCrate",
-]
-```
-
-If the crate should be available as a workspace dependency for other crates, also add it to `[workspace.dependencies]`:
-
-```toml
-[workspace.dependencies]
-new_crate = { path = "path/to/NewCrate" }
-```
-
-### Node
-
-Node packages are auto-discovered via `pnpm-workspace.yaml` glob patterns (`**`), no manual registration needed.
-
----
-
-## 7. Scaffolding checklist
-
-When creating a new crate:
+## 6. Scaffolding checklist
 
 1. **Determine the category** (§1) and correct location
 2. **Create the directory** with the right casing (PascalCase for crate dirs)
@@ -183,5 +147,5 @@ When creating a new crate:
 4. **If deployable**: create `scd/Makefile` (and optionally `scd/dev.mk`, `scd/prod.mk`, `scd/ci.mk`), `environment.json`
 5. **If Schema crate**: create `migrations/`, symlink `diesel.toml -> ../../diesel.toml`, create `src/schema.rs`
 6. **If proto crate**: create `build.rs` with `grpc_helpers_codegen::proto_crate(...)`, place `.proto` file in parent dir
-7. **Register in workspace**: add to root `Cargo.toml` members (and `[workspace.dependencies]` if shared)
-8. **Verify**: `cargo check -p <package_name>` to ensure it compiles
+7. **Register in workspace** (see main skill)
+8. **Verify** (see main skill)

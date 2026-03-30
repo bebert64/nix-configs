@@ -100,6 +100,20 @@ Write an English template body (and subject line) using Tera syntax that:
 - Uses proper Tera control flow (`{% if %}`, `{% for %}`) for optional or
   list-based data.
 
+#### Writing rules
+
+- **Answer first**: if the message contains any requests or questions, place them at the very top.
+- **Be concise but precise**: say exactly what's needed, nothing more.
+- **Avoid direct instructions**: don't tell the consumer what to do in imperative form.
+- **Frame rights as solutions, not constraints**: instead of "You have 14 days to notify us", say "If you have an issue, you can notify us until xx/xx (12 days)".
+- **Show empathy**: acknowledge the consumer's situation where relevant.
+- **Product references**: if the order has only 1 article, do not mention article names, product names, or EAN — refer to it as "Your order" only.
+- **Use emojis instead of bullet points** for lists.
+- **Add at most 2 emojis** to the message to make it warmer — not more.
+- **Tracking URL**: when sharing a link to track the order:
+  - Non-problematic case (e.g. standard shipping update): share the **consumer backoffice URL**.
+  - Problematic case (e.g. delivery issue, complaint): share the **tracking URL** directly.
+
 ### 4. Validate
 
 Before presenting the draft:
