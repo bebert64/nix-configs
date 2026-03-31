@@ -4,19 +4,14 @@ let
   nixPrograms = config.byDb.paths.nixPrograms;
 in
 {
-  imports = [ ./default.nix ];
+  imports = [ ./common.nix ];
 
   home.activation.symlinkClaudeStockly = lib.hm.dag.entryAfter [ "symlinkClaudeSettings" ] ''
     # Stockly rules
     ln -sfT ${nixPrograms}/claude-code/rules/stockly ${homeDir}/.claude/rules/stockly
 
-    # Stockly docs (each item individually to merge with global docs)
-    for item in ${nixPrograms}/claude-code/docs/stockly/*/; do
-      ln -sfT "$item" ${homeDir}/.claude/docs/$(basename "$item")
-    done
-    for item in ${nixPrograms}/claude-code/docs/stockly/*.md; do
-      [ -f "$item" ] && ln -sfT "$item" ${homeDir}/.claude/docs/$(basename "$item")
-    done
+    # Stockly docs
+    ln -sfT ${nixPrograms}/claude-code/docs/stockly ${homeDir}/.claude/docs/stockly
 
   '';
 }

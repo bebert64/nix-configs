@@ -4,7 +4,7 @@ let
   homeDir = config.home.homeDirectory;
 in
 {
-  imports = [ ./default.nix ];
+  imports = [ ./common.nix ];
 
   programs.zsh = {
     enable = true;
