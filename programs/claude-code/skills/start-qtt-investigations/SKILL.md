@@ -16,8 +16,8 @@ Run this workflow to select unassigned Quality Tech tickets (**Status Intl** = "
 
 - **File:** `/home/romain/Stockly/.cursor/ignored-quality-tickets.txt`
 - **Format:** One Notion page ID per line (the `id` field from the API, e.g. `0000fd7f-2f85-49c5-8cd8-a61f0b731b47`). No header. Strip whitespace; skip empty lines.
-- **Before selecting tickets:** Read this file if it exists. Build a set of ignored page IDs. When building the candidate list (after filter and sort), exclude any page whose `id` is in that set. **Also exclude** any ticket that already has a corresponding plan or investigation in `~/.cursor/plans/` (see below). Then take the first **N** remaining.
-- **Exclude tickets that already have a plan or investigation:** List files in `~/.cursor/plans/` (`.md` only). A ticket (with short_id e.g. `ABCDE`) is considered to have one if there is a file whose name starts with `<short_id>-` (e.g. `ABCDE-fix-login.md`, `ABCDE-investigation-2025-02-26T143052.md`), or a plan file whose content contains a `## Short ID` section with that same short_id. Exclude those tickets from the list before taking the top N.
+- **Before selecting tickets:** Read this file if it exists. Build a set of ignored page IDs. When building the candidate list (after filter and sort), exclude any page whose `id` is in that set. **Also exclude** any ticket that already has a corresponding plan or investigation in `~/.claude/plans/` (see below). Then take the first **N** remaining.
+- **Exclude tickets that already have a plan or investigation:** List files in `~/.claude/plans/` (`.md` only). A ticket (with short_id e.g. `ABCDE`) is considered to have one if there is a file whose name starts with `<short_id>-` (e.g. `ABCDE-fix-login.md`, `ABCDE-investigation-2025-02-26T143052.md`), or a plan file whose content contains a `## Short ID` section with that same short_id. Exclude those tickets from the list before taking the top N.
 - **Adding to the list:** If at any point (in this run or a follow-up) the user says they want to ignore a ticket (e.g. "ignore this one", "skip ABCDE", "add to ignore list"), append that ticket's Notion page ID to the file on a new line. Confirm to the user. The next run of this command will then skip it.
 - If the file doesn't exist, create it when first adding an ID; otherwise proceed with an empty ignore set.
 
@@ -35,7 +35,7 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 1. **First request:** Call `API-query-data-source` (user-Notion) with:
    - **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
    - **page_size:** **100**
-   - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Updated At", "direction": "descending"}]`
+   - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Created At", "direction": "descending"}]`
    - **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}, {"property": "Assignee", "people": {"is_empty": true}}]}`
 
    The tool returns a message like "Large output has been written to: .../agent-tools/<uuid>.txt". Read that file; the JSON has `results`, `next_cursor`, and `has_more`.
@@ -44,7 +44,7 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 3. **Merge:** Build a single JSON object: `{"results": <all collected page objects>}`. Write it to a file (e.g. the path of the first response file, or a new path under agent-tools) so the parser can read it.
 
-4. **Get top N and apply ignore list and existing plans:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.cursor/plans/` (filename starting with `<short_id>-`, e.g. plan or investigation). Take the first **N** tickets from the remaining list.
+4. **Get top N and apply ignore list and existing plans:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.claude/plans/` (filename starting with `<short_id>-`, e.g. plan or investigation). Take the first **N** tickets from the remaining list.
 
 ## 4. Investigate in parallel
 

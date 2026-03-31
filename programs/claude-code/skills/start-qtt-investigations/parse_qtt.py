@@ -65,13 +65,13 @@ def severity_rank(sev_value):
             return v
     return 5
 
-def get_updated(props):
-    u = props.get("Updated At") or props.get("updated_at") or props.get("Last edited time") or {}
-    if isinstance(u, dict) and "last_edited_time" in u:
-        return u["last_edited_time"]
-    if isinstance(u, dict) and "date" in u and u["date"] and "start" in u["date"]:
-        return u["date"]["start"]
-    return ""
+def get_created(props, page):
+    """Get Created At from properties, falling back to page-level created_time."""
+    c = props.get("Created At") or props.get("created_at") or {}
+    if isinstance(c, dict) and "created_time" in c:
+        return c["created_time"]
+    # Fallback to page-level created_time
+    return page.get("created_time", "")
 
 # Filter: Status Intl = Pending workforce only; assignee empty; Teams Intl not "Partner Inputs_Front"
 PENDING_WORKFORCE = "0 - Pending Workforce"
@@ -99,16 +99,16 @@ for p in pages:
         "title": title,
         "short_id": short_id,
         "severity": get_severity(props),
-        "updated": get_updated(props),
+        "created": get_created(props, p),
         "props": props,
     })
 
-# Sort: Severity (SEV1 first, SEV4 before SEV5), then Updated descending
+# Sort: Severity (SEV1 first, SEV4 before SEV5), then Created At descending (newest first)
 from datetime import datetime
 
 def sort_key(c):
     rank = severity_rank(c["severity"])
-    ts = c["updated"] or ""
+    ts = c["created"] or ""
     try:
         dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
         return (rank, -dt.timestamp())
