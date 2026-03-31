@@ -14,7 +14,7 @@ in
         local base="/home/romain/Stockly"
 
         if [[ -z "$short_id" ]]; then
-          ssh -t orthos "cd '$base/Main' && claude; exec \$SHELL"
+          ssh -t orthos "printf '\033]2;* Claude Code (orthos: Main)\007' && cd '$base/Main' && claude; exec \$SHELL"
           return
         fi
 
@@ -24,14 +24,16 @@ in
         fi
 
         ssh -t orthos "
-          dir=\$(find '$base' -maxdepth 1 -type d -name 'Main_''${short_id}-*' | head -1)
+          dir=\$(find '$base' -maxdepth 1 -type d -name 'Main_$short_id-*' | head -1)
           if [[ -z \"\$dir\" ]]; then
-            echo \"Error: no directory found for short ID '''${short_id}'\" >&2
+            echo \"Error: no directory found for short ID '$short_id'\" >&2
             exit 1
           fi
+          printf '\033]2;* Claude Code (orthos: %s)\007' \"\$(basename \"\$dir\" | sed 's/^Main_//')\"
           cd \"\$dir\" && claude; exec \$SHELL
         "
       }
+      alias co='claude-orthos'
     '';
   };
 
