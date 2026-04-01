@@ -83,7 +83,9 @@ in
           systemctl --user restart polybar
 
           pkill xidlehook || echo "xidlehook already killed"
-          xidlehook --timer ${toString (homeManagerBydbConfig.minutesBeforeLock * 60 - 60)} '${preLockNotify}/bin/pre-lock-notify' ' ' --timer 60 'lock' ' ' &
+          xidlehook --timer ${
+            toString ((homeManagerBydbConfig.minutesBeforeLock - 1) * 60)
+          } '${preLockNotify}/bin/pre-lock-notify' ' ' --timer 60 'lock' ' ' &
         '';
       killXidlehook = ''pkill xidlehook || echo "xidlehook already killed"'';
       lockMode = "Lock: l[o]ck, [d]on't sleep";
@@ -114,7 +116,7 @@ in
         startup = [
           {
             command = "xidlehook --timer ${
-              toString (homeManagerBydbConfig.minutesBeforeLock * 60 - 60)
+              toString ((homeManagerBydbConfig.minutesBeforeLock - 1) * 60)
             } '${preLockNotify}/bin/pre-lock-notify' ' ' --timer 60 'lock-wait-sleep' ' ' &";
             notification = false;
           }
