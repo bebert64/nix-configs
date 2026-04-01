@@ -9,6 +9,15 @@ let
   homeDir = config.home.homeDirectory;
   nixPrograms = config.byDb.paths.nixPrograms;
   symlinkPath = config.sops.defaultSymlinkPath;
+  notifyHook = pkgs.writeShellScript "claude-notify" ''
+    TITLE="Claude @ $(${pkgs.hostname}/bin/hostname)"
+    BODY="Answer ready on $(${pkgs.git}/bin/git branch --show-current 2>/dev/null || echo 'no branch')"
+    if [[ -n "$SSH_CLIENT" ]]; then
+      ${pkgs.openssh}/bin/ssh -p 2222 -o ConnectTimeout=3 -o BatchMode=yes localhost ${pkgs.libnotify}/bin/notify-send "$TITLE" "$BODY" || true
+    else
+      ${pkgs.libnotify}/bin/notify-send "$TITLE" "$BODY"
+    fi
+  '';
   claudeWithVoice = pkgs.writeShellScriptBin "claude" ''
     # PulseAudio forwarding for Claude Code voice mode on monsters
     if [ -S /tmp/pulse-forward ]; then
@@ -40,7 +49,7 @@ in
 
         # Hooks
         mkdir -p ${homeDir}/.claude/hooks
-        ln -sf ${nixPrograms}/claude-code/hooks/notify.sh ${homeDir}/.claude/hooks/notify.sh
+        ln -sf ${notifyHook} ${homeDir}/.claude/hooks/notify.sh
 
         # Docs directory (individual items added by machine-specific nix files)
         mkdir -p ${homeDir}/.claude/docs
