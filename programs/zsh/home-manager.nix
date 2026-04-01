@@ -58,7 +58,10 @@ in
       }
 
       nix-switch() {
-        inhibit-and-sleep 'env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# && sudo env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .#'
+        inhibit-and-sleep \
+          'env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# && ''\
+          '${pkgs.libnotify}/bin/notify-send -u critical "nix-switch" "Build done — sudo password needed to switch" && ''\
+          'sudo env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .#'
       }
 
       run-in-nix-repo() {

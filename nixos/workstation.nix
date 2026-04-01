@@ -66,6 +66,15 @@
         '';
       };
 
+      security.polkit.extraConfig = ''
+        polkit.addRule(function(action, subject) {
+          if (action.id.indexOf("org.freedesktop.login1.suspend") === 0 &&
+              subject.isInGroup("users")) {
+            return polkit.Result.YES;
+          }
+        });
+      '';
+
       programs = {
         dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;
