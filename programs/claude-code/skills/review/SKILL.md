@@ -28,7 +28,8 @@ If all empty, report "No changes to review" and stop.
 ### 2. Filter out non-reviewable files
 
 Skip entirely:
-- Generated files (e.g., proto-generated `*.rs`)
+
+- Generated files (e.g., proto-generated `*.rs` files in `protobuf_gen/` directories, `schema.rs`)
 - Lock files: `Cargo.lock`, `pnpm-lock.yaml`
 - Non-code: `*.md`, `*.json`, `*.yaml`, `*.yml`
 
@@ -108,7 +109,3 @@ Present a structured report grouped by file:
 3. Present a recap using the same grouped format, describing each item as a completed fix
 
 ---
-
-## Built-in Conventions
-
-Always checked regardless of which rule files are loaded. Read `conventions.md` in this skill directory for the full checklist.

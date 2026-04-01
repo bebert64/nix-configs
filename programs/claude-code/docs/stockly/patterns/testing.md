@@ -2,15 +2,19 @@
 
 How tests are structured in the Stockly monorepo.
 
+## General
+
+First tests **must** cover primary use cases, not edge cases. Tests serve as documentation for how the code is intended to be used.
+
 ## Test Types
 
-| Type | Location | Harness | Purpose |
-|------|----------|---------|---------|
-| Unit tests | `#[cfg(test)] mod tests` in `src/`, or `src/**/tests.rs` | `#[test]` / `cargo test` | Fast, isolated logic tests |
-| Integration tests | `tests/*.rs` at crate root | `#[test]` / `cargo test` | Public API tests (separate compilation unit) |
-| `tintes` binaries | `tintes/main.rs` + `[[bin]]` in `Cargo.toml` | `cargo run --bin <name>_tintes` | Env-backed smoke tests (not `#[test]` harness) |
-| Post-deployment tests | `post_deployment_tests/` | `cargo test` | Run after deploy against live service |
-| PostgreSQL function tests | `tunit_`-prefixed PL/pgSQL functions | `smake reset-database` | pgTAP assertions in DB |
+| Type                      | Location                                                 | Harness                         | Purpose                                        |
+| ------------------------- | -------------------------------------------------------- | ------------------------------- | ---------------------------------------------- |
+| Unit tests                | `#[cfg(test)] mod tests` in `src/`, or `src/**/tests.rs` | `#[test]` / `cargo test`        | Fast, isolated logic tests                     |
+| Integration tests         | `tests/*.rs` at crate root                               | `#[test]` / `cargo test`        | Public API tests (separate compilation unit)   |
+| `tintes` binaries         | `tintes/main.rs` + `[[bin]]` in `Cargo.toml`             | `cargo run --bin <name>_tintes` | Env-backed smoke tests (not `#[test]` harness) |
+| Post-deployment tests     | `post_deployment_tests/`                                 | `cargo test`                    | Run after deploy against live service          |
+| PostgreSQL function tests | `tunit_`-prefixed PL/pgSQL functions                     | `smake reset-database`          | pgTAP assertions in DB                         |
 
 ## Unit Test Conventions
 
