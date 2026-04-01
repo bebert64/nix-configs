@@ -24,6 +24,7 @@ in
   home-manager = {
     users.${nixosUserConfig.name} = {
       byDb = {
+        batteryNotifier.enable = true;
         wifi.enable = true;
         nixConfigsRelativePath = "nix-config";
         isHeadphonesOnCommand = "pactl info | grep \"Default Sink.*Headphones\"";

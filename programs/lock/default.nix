@@ -9,6 +9,7 @@ let
   inherit (pkgs)
     alock
     jq
+    libnotify
     xidlehook
     writeScriptBin
     ;
@@ -51,6 +52,11 @@ in
         exec systemctl suspend
       '';
 
+      preLockNotify = writeScriptBin "pre-lock-notify" ''
+        #!${pkgs.runtimeShell}
+        ${libnotify}/bin/notify-send -u normal "Locking soon" "Screen will lock in 1 minute"
+      '';
+
       lockScript =
         scriptName: cmd:
         writeScriptBin scriptName ''
@@ -77,7 +83,7 @@ in
           systemctl --user restart polybar
 
           pkill xidlehook || echo "xidlehook already killed"
-          xidlehook --timer ${toString (homeManagerBydbConfig.minutesBeforeLock * 60)} 'lock' ' ' &
+          xidlehook --timer ${toString (homeManagerBydbConfig.minutesBeforeLock * 60 - 60)} '${preLockNotify}/bin/pre-lock-notify' ' ' --timer 60 'lock' ' ' &
         '';
       killXidlehook = ''pkill xidlehook || echo "xidlehook already killed"'';
       lockMode = "Lock: l[o]ck, [d]on't sleep";
@@ -85,6 +91,7 @@ in
     {
       home.packages = [
         alock
+        preLockNotify
         xidlehook
         (lockScript "lock" ''
           ${killXidlehook}
@@ -107,8 +114,8 @@ in
         startup = [
           {
             command = "xidlehook --timer ${
-              toString (homeManagerBydbConfig.minutesBeforeLock or 3 * 60)
-            } 'lock-wait-sleep' ' ' &";
+              toString (homeManagerBydbConfig.minutesBeforeLock * 60 - 60)
+            } '${preLockNotify}/bin/pre-lock-notify' ' ' --timer 60 'lock-wait-sleep' ' ' &";
             notification = false;
           }
         ];
