@@ -17,5 +17,17 @@
   },
   "model": "opusplan",
   "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/romain/.claude/hooks/notify.sh"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -32,8 +32,6 @@
         foreground = "#f7768e";
         frame_color = "#f7768e";
         timeout = 0;
-        origin = "center";
-        offset = "0x0";
       };
     };
   };

@@ -20,6 +20,14 @@
         bind.address = "/tmp/pulse-forward";
         host.address = "/run/user/1000/pulse/native";
       }
+      {
+        # Reverse SSH tunnel for notifications (notify-send back to local machine)
+        bind.port = 2222;
+        host = {
+          address = "localhost";
+          port = 22;
+        };
+      }
     ];
   };
   common-stockly = {

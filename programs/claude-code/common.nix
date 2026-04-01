@@ -38,6 +38,10 @@ in
         # Skills (whole dir — all skills available everywhere)
         ln -sfT ${nixPrograms}/claude-code/skills ${homeDir}/.claude/skills
 
+        # Hooks
+        mkdir -p ${homeDir}/.claude/hooks
+        ln -sf ${nixPrograms}/claude-code/hooks/notify.sh ${homeDir}/.claude/hooks/notify.sh
+
         # Docs directory (individual items added by machine-specific nix files)
         mkdir -p ${homeDir}/.claude/docs
 
