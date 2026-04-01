@@ -11,8 +11,9 @@
         frame_width = 1;
         frame_color = "#414868";
         separator_color = "frame";
-        padding = 100;
-        horizontal_padding = 100;
+        width = 600;
+        padding = 50;
+        horizontal_padding = 50;
       };
 
       urgency_low = {
@@ -31,7 +32,7 @@
         background = "#1a1b26";
         foreground = "#f7768e";
         frame_color = "#f7768e";
-        timeout = 0;
+        timeout = 90;
       };
     };
   };
