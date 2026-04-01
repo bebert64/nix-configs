@@ -9,6 +9,7 @@
   imports = [
     ./common.nix
     ../programs/autorandr
+    ../programs/battery-notifier
     ../programs/avidemux
     ../programs/calculator
     ../programs/chromium
@@ -17,6 +18,7 @@
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
+    ../programs/dunst
     ../programs/ferdium
     ../programs/firefox
     ../programs/flameshot

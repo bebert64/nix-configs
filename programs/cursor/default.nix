@@ -55,19 +55,23 @@ let
     fi
   ''}/bin/open-local";
   openOrthos = "${pkgs.writeScriptBin "open-orthos" ''
-    selection=$(
-      ssh orthos bash -s -- /home/romain/Stockly < ${listCodeProjects} 2>/dev/null | \
-      ${rofi} -theme-str 'window {width: 30%;}'
-    )
+    dirs=$(timeout 5 ssh -o ConnectTimeout=5 orthos bash -s -- /home/romain/Stockly < ${listCodeProjects} 2>/dev/null)
+    if [[ $? -ne 0 ]]; then
+      ${pkgs.libnotify}/bin/notify-send -u critical "open-orthos" "orthos is unreachable"
+      exit 1
+    fi
+    selection=$(echo "$dirs" | ${rofi} -theme-str 'window {width: 30%;}')
     if [[ $selection ]]; then
       cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/$selection
     fi
   ''}/bin/open-orthos";
   openSalon = "${pkgs.writeScriptBin "open-salon" ''
-    selection=$(
-      ssh salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null | \
-      ${rofi} -theme-str 'window {width: 20%;}'
-    )
+    dirs=$(timeout 5 ssh -o ConnectTimeout=5 salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null)
+    if [[ $? -ne 0 ]]; then
+      ${pkgs.libnotify}/bin/notify-send -u critical "open-salon" "salon is unreachable"
+      exit 1
+    fi
+    selection=$(echo "$dirs" | ${rofi} -theme-str 'window {width: 20%;}')
     if [[ $selection ]]; then
       cursor --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code/$selection
     fi
@@ -86,9 +90,14 @@ let
     fi
   ''}/bin/open-nix-local";
   openNixSalon = "${pkgs.writeScriptBin "open-nix-salon" ''
+    salon_dirs=$(timeout 5 ssh -o ConnectTimeout=5 salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null)
+    if [[ $? -ne 0 ]]; then
+      ${pkgs.libnotify}/bin/notify-send -u critical "open-nix-salon" "salon is unreachable"
+      exit 1
+    fi
     selection=$(
       (echo "nix-configs only"
-       ssh salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null | grep -v /
+       echo "$salon_dirs" | grep -v /
       ) | ${rofi} -theme-str 'window {width: 20%;}'
     )
     if [[ "$selection" == "nix-configs only" ]]; then
