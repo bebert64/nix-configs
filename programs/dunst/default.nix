@@ -11,6 +11,8 @@
         frame_width = 1;
         frame_color = "#414868";
         separator_color = "frame";
+        width = 600;
+        height = 600;
         padding = 10;
         horizontal_padding = 12;
       };
