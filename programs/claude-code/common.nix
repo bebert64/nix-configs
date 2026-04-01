@@ -13,7 +13,7 @@ let
     TITLE="Claude @ $(${pkgs.hostname}/bin/hostname)"
     BODY="Answer ready on $(${pkgs.git}/bin/git branch --show-current 2>/dev/null || echo 'no branch')"
     if [[ -n "$SSH_CLIENT" ]]; then
-      ${pkgs.openssh}/bin/ssh -p 2222 -o ConnectTimeout=3 -o BatchMode=yes localhost ${pkgs.libnotify}/bin/notify-send "$TITLE" "$BODY" || true
+      ${pkgs.openssh}/bin/ssh -p 2222 -o ConnectTimeout=3 -o BatchMode=yes localhost "${pkgs.libnotify}/bin/notify-send '$TITLE' '$BODY'" || true
     else
       ${pkgs.libnotify}/bin/notify-send "$TITLE" "$BODY"
     fi
