@@ -12,10 +12,6 @@ let
   homeDir = config.home.homeDirectory;
   formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
   hasLock = options.byDb ? minutesBeforeLock;
-  nixSwitchCmd =
-    "env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# "
-    + "&& ${pkgs.libnotify}/bin/notify-send -u critical \"nix-switch\" \"Build done — sudo password needed to switch\" "
-    + "&& sudo env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .#";
 in
 {
   config.programs.zsh = {
@@ -62,7 +58,9 @@ in
       }
 
       nix-switch() {
-        inhibit-and-sleep ${lib.escapeShellArg nixSwitchCmd}
+        inhibit-and-sleep 'env -u LD_LIBRARY_PATH nixos-rebuild build --flake .#' || return 1
+        ${pkgs.libnotify}/bin/notify-send -u critical 'nix-switch' 'Build done — sudo password needed to switch'
+        inhibit-and-sleep 'sudo env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .#'
       }
 
       run-in-nix-repo() {
