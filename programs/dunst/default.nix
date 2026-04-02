@@ -28,6 +28,11 @@
         timeout = 8;
       };
 
+      spotify = {
+        appname = "Spotify";
+        skip_display = true;
+      };
+
       urgency_critical = {
         background = "#1a1b26";
         foreground = "#f7768e";
