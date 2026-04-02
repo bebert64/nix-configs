@@ -21,6 +21,7 @@
     in
     {
       boot = {
+        # Used to cross-compile for the Raspberry Pi
         binfmt.emulatedSystems = [ "aarch64-linux" ];
       };
 
@@ -56,10 +57,6 @@
       };
 
       environment = {
-        etc."direnv/direnv.toml".text = ''
-          [global]
-          hide_env_diff = true
-        '';
         sessionVariables = {
           NIXOS_OZONE_WL = "1";
           MOZ_ENABLE_WAYLAND = "1";
@@ -81,9 +78,9 @@
       '';
 
       programs = {
-        dconf.enable = true;
+        dconf.enable = true; # Necessary for some GTK settings to get properly saved
         light.enable = true;
-        nix-ld.enable = true;
+        nix-ld.enable = true; # Necessary for rust-analyzer to function in cursor
         sway = {
           enable = true;
           package = pkgs.swayfx;
@@ -96,8 +93,9 @@
           layout = "fr";
           variant = "";
         };
-        udisks2.enable = true;
+        udisks2.enable = true; # automount usb keys and drives
         gnome.gnome-keyring.enable = true;
+        # Enable the bluetooth daemon.
         blueman.enable = nixosBydbConfig.bluetooth.enable;
       };
 
@@ -113,6 +111,7 @@
           MemoryHigh = nixosBydbConfig.nixHighRam;
           MemoryMax = nixosBydbConfig.nixMaxRam;
         };
+
         user.services.polkit-gnome-authentication-agent-1 = {
           description = "polkit-gnome-authentication-agent-1";
           wantedBy = [ "graphical-session.target" ];
@@ -127,5 +126,6 @@
           };
         };
       };
+
     };
 }
