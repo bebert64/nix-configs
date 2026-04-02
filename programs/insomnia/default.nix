@@ -5,7 +5,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
   insomnia =
     {
       fetchurl,
@@ -38,7 +38,7 @@ let
 in
 {
   home.packages = [ (pkgs.callPackage insomnia { }) ];
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+i" = "workspace $ws13; exec insomnia-stockly";
     };

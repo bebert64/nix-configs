@@ -5,11 +5,11 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
 in
 {
   home.packages = [ pkgs.slack ];
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
       "$ws4" = [ { class = "Slack"; } ];
     };

@@ -9,7 +9,7 @@ let
   inherit (types) str;
   inherit (config.lib.formats.rasi) mkLiteral;
   openRofiInDedicatedWorkspace = "${pkgs.writeScriptBin "open-rofi-in-dedicated-workspace" ''
-    i3-msg "workspace 9:󱓞; exec rofi -show drun -show-icons"
+    ${pkgs.sway}/bin/swaymsg "workspace 9:󱓞; exec rofi -show drun -show-icons"
   ''}/bin/open-rofi-in-dedicated-workspace";
 in
 {
@@ -23,6 +23,7 @@ in
   config = {
     programs.rofi = {
       enable = true;
+      package = pkgs.rofi-wayland;
       font = "Iosevka Nerd Font 10";
       extraConfig = {
         show-icons = true;
@@ -156,6 +157,6 @@ in
         };
     };
 
-    xsession.windowManager.i3.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
+    wayland.windowManager.sway.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
   };
 }

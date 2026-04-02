@@ -5,11 +5,11 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
   rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   sshr = "${pkgs.writeScriptBin "sshr" ''
-    tilix -p Ranger -e "ssh $1 -t ranger"
+    kitty --title "Ranger" -e sh -c "ssh $1 -t ranger"
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
@@ -26,10 +26,10 @@ in
 {
   imports = [ ./default.nix ];
 
-  home.packages = [ pkgs.xclip ];
+  home.packages = [ pkgs.wl-clipboard ];
 
-  xsession.windowManager.i3.config.keybindings = lib.mkOptionDefault {
-    "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "${modifier}+Control+r" = "workspace $ws7; exec kitty -e ranger";
     "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
   };
 }

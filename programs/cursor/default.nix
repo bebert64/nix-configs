@@ -6,7 +6,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
   paths = config.byDb.paths;
   homeDir = config.home.homeDirectory;
   nixPrograms = paths.nixPrograms;
@@ -126,7 +126,7 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
       "$ws3" = [ { class = "Cursor"; } ];
     };

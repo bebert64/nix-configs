@@ -8,7 +8,6 @@
 {
   imports = [
     ./common.nix
-    ../programs/autorandr
     ../programs/battery-notifier
     ../programs/avidemux
     ../programs/calculator
@@ -18,23 +17,23 @@
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
-    ../programs/dunst
     ../programs/ferdium
     ../programs/firefox
     ../programs/flameshot
-    ../programs/i3
     ../programs/insomnia
+    ../programs/kanshi
+    ../programs/kitty
     ../programs/lock
+    ../programs/mako
     ../programs/music
-    ../programs/picom
     ../programs/plex-desktop
-    ../programs/polybar
     ../programs/ranger/gui.nix
     ../programs/rofi
     ../programs/slack
     ../programs/sqlfluff
-    ../programs/terminal
+    ../programs/sway
     ../programs/theme
+    ../programs/waybar
     ../programs/udiskie
     ../programs/vdhcoapp
     by-db.module.x86_64-linux
@@ -74,8 +73,8 @@
         packages =
           (with pkgs; [
             anydesk
-            arandr # GUI to configure screens positions (need to kill autorandr)
             evince # pdf reader
+            grim # Wayland screenshot tool, used for example by flameshot and conky
             filezilla
             fusee-interfacee-tk
             gnome-keyring
@@ -87,6 +86,7 @@
             ntfs3g
             pavucontrol # pulse audio volume controle
             polkit_gnome
+            swww # wallpaper daemon for Wayland
             vlc
           ])
           ++ lib.optionals homeManagerBydbConfig.wifi.enable (

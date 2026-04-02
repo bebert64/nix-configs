@@ -5,7 +5,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
   homeDir = config.home.homeDirectory;
   datagripProjectsDir = "${homeDir}/datagrip-projects";
   nixDatagripDir = "${config.byDb.paths.nixPrograms}/datagrip/datasources";
@@ -26,7 +26,7 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
       "$ws6" = [ { class = "jetbrains-datagrip"; } ];
     };

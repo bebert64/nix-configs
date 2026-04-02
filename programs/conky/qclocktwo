@@ -1,15 +1,14 @@
 conky.config = {
     background=false,
     own_window=true,
-    own_window_type="override",
+    own_window_type="normal",
     own_window_class="Conky",
-    own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
+    wayland_layer="background",
+    out_to_wayland=true,
 	own_window_colour = '#224466',
     alignment="top_left",
     gap_x=60,
     gap_y=80,
-    use_xft=true,
-    xftalpha=0.3,
     update_interval=1,
     uppercase=true,
     double_buffer=true,
@@ -19,9 +18,7 @@ conky.config = {
     default_color="96A0DF",
     color1="333333",
     font="OpenDyslexicAlta Nerd Font:size=24",
-    border_outer_margin=0,
-
-    xinerama_head=2  
+    border_outer_margin=0
 }
 
 conky.text = [[

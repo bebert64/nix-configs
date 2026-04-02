@@ -5,12 +5,12 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
 in
 {
   home.packages = [ pkgs.ferdium ];
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
       "$ws5" = [
         { class = "ferdium"; }

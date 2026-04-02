@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   home.packages = [ pkgs.avidemux ];
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
       "$ws11" = [ { class = "avidemux"; } ];
     };

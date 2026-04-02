@@ -7,7 +7,7 @@
 let
   inherit (config.byDb) setHeadphonesCommand setSpeakerCommand;
   homeDir = config.home.homeDirectory;
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
   playerctl = "${pkgs.playerctl}/bin/playerctl --ignore-player=firefox,chromium";
@@ -106,22 +106,22 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
       "$ws10" = [ { class = "Strawberry|Spotify"; } ];
     };
 
     keybindings = lib.mkOptionDefault {
-      XF86AudioRaiseVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status";
-      XF86AudioLowerVolume = "exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status";
-      XF86AudioMute = "exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status";
-      XF86AudioMicMute = "exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status";
+      XF86AudioRaiseVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ +10%";
+      XF86AudioLowerVolume = "exec pactl set-sink-volume @DEFAULT_SINK@ -10%";
+      XF86AudioMute = "exec pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      XF86AudioMicMute = "exec pactl set-source-mute @DEFAULT_SOURCE@ toggle";
       "${modifier}+m" = "mode \"${music_mode}\"";
     };
 
     modes =
       let
-        # We define small scripts because if the command contains commas, i3-msg doesn't parse it correctly
+        # We define small scripts because if the command contains commas, swaymsg doesn't parse it correctly
         pactl_cmd =
           cmd: cmdName:
           "${pkgs.writeScriptBin "${cmdName}" ''

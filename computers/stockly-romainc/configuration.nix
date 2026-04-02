@@ -5,7 +5,7 @@ let
 in
 {
   imports = [
-    ../../nixos/workstation.nix
+    ../../nixos/wayland-workstation.nix
     ./hardware-configuration.nix
   ];
 
@@ -37,8 +37,7 @@ in
       };
       byDbPkgs.save-autorandr-config = {
         enable = true;
-        autorandrConfigsPath = "${homeManagerBydbConfig.paths.nixPrograms}/autorandr.nix";
-        defaultBars = "eDP-1-tray-off HDMI-1-battery";
+        kanshiConfigsPath = "${homeManagerBydbConfig.paths.nixPrograms}/kanshi/default.nix";
       };
     };
   };

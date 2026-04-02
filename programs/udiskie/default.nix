@@ -17,10 +17,9 @@ in
       '';
     };
   };
-  xsession.windowManager.i3.config.startup = [
+  wayland.windowManager.sway.config.startup = [
     {
       command = "udiskie --tray";
-      notification = false;
     }
   ];
 }

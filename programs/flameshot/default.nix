@@ -6,7 +6,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
   rofi = config.rofi.defaultCmd;
   rofiScreenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
     selection="$(echo -en \
@@ -43,7 +43,7 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
       "${modifier}+Print" = "exec ${rofiScreenshots}";
     };

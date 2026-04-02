@@ -22,8 +22,8 @@ in
       extended = common.extendedHistory;
     };
     shellAliases = {
-      wke1 = "i3-msg workspace 11:󰸉";
-      wke2 = "i3-msg workspace 12:󰸉";
+      wke1 = "swaymsg workspace 11:󰸉";
+      wke2 = "swaymsg workspace 12:󰸉";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
       dc = "db-cli";
 

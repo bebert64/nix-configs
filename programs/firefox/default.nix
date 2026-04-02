@@ -1,6 +1,6 @@
 { config, lib, ... }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  modifier = config.byDb.modifier;
 in
 {
   programs.firefox = {
@@ -18,7 +18,7 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
       "${modifier}+Control+f" = "workspace $ws2; exec firefox";
       "${modifier}+Control+s" =
