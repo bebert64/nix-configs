@@ -5,7 +5,7 @@ let
 in
 {
   imports = [
-    ../../nixos/wayland-workstation.nix
+    ../../nixos/workstation.nix
     ./hardware-configuration.nix
   ];
 

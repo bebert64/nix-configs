@@ -18,12 +18,9 @@
   config =
     let
       nixosBydbConfig = config.byDb;
-      homeDir = nixosBydbConfig.hmUser.home.homeDirectory;
     in
     {
-      # Bootloader.
       boot = {
-        # Used to cross-compile for the Raspberry Pi
         binfmt.emulatedSystems = [ "aarch64-linux" ];
       };
 
@@ -59,11 +56,18 @@
       };
 
       environment = {
-        # Hide direnv diff when entering a directory
         etc."direnv/direnv.toml".text = ''
           [global]
           hide_env_diff = true
         '';
+        sessionVariables = {
+          NIXOS_OZONE_WL = "1";
+          MOZ_ENABLE_WAYLAND = "1";
+          QT_QPA_PLATFORM = "wayland";
+          SDL_VIDEODRIVER = "wayland";
+          XDG_SESSION_TYPE = "wayland";
+          XDG_CURRENT_DESKTOP = "sway";
+        };
       };
 
       security.polkit.extraConfig = ''
@@ -77,36 +81,31 @@
       '';
 
       programs = {
-        dconf.enable = true; # Necessary for some GTK settings to get properly saved
+        dconf.enable = true;
         light.enable = true;
-        nix-ld.enable = true; # Necessary for rust-analyzer to function in cursor
+        nix-ld.enable = true;
+        sway = {
+          enable = true;
+          package = pkgs.swayfx;
+          wrapperFeatures.gtk = true;
+        };
       };
 
       services = {
-        # X11 Configuration
-        xserver = {
-          enable = true;
-          desktopManager = {
-            session = [
-              {
-                name = "home-manager";
-                start = ''
-                  ${pkgs.runtimeShell} ${homeDir}/.hm-xsession &
-                  waitPID=$!
-                '';
-              }
-            ];
-          };
-          windowManager.i3.package = pkgs.i3-gaps;
-          xkb = {
-            layout = "fr";
-            variant = "";
-          };
+        xserver.xkb = {
+          layout = "fr";
+          variant = "";
         };
-        udisks2.enable = true; # automount usb keys and drives
-        gnome.gnome-keyring.enable = true; # seahorse can be used as a GTK app for this
-        # Enable the bluetooth daemon.
+        udisks2.enable = true;
+        gnome.gnome-keyring.enable = true;
         blueman.enable = nixosBydbConfig.bluetooth.enable;
+      };
+
+      xdg.portal = {
+        enable = true;
+        wlr.enable = true;
+        extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+        config.common.default = "*";
       };
 
       systemd = {
@@ -114,7 +113,6 @@
           MemoryHigh = nixosBydbConfig.nixHighRam;
           MemoryMax = nixosBydbConfig.nixMaxRam;
         };
-
         user.services.polkit-gnome-authentication-agent-1 = {
           description = "polkit-gnome-authentication-agent-1";
           wantedBy = [ "graphical-session.target" ];
@@ -129,6 +127,5 @@
           };
         };
       };
-
     };
 }
