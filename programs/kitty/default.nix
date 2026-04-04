@@ -7,7 +7,8 @@
       size = 11;
     };
     settings = {
-      background_opacity = "0.95";
+      background_opacity = "0.8";
+      hide_window_decorations = "no";
       window_padding_width = 8;
       tab_bar_style = "powerline";
       tab_powerline_style = "slanted";
