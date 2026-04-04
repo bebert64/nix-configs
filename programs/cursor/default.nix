@@ -11,21 +11,27 @@ let
   homeDir = config.home.homeDirectory;
   nixPrograms = paths.nixPrograms;
   rofi = config.rofi.defaultCmd;
-  listCodeProjects = pkgs.writeScript "list-code-projects" ''
+  # Lists worktree display names: "Main" stays "Main", "Main_foo" becomes "foo"
+  listWorktreeNames = pkgs.writeScript "list-worktree-names" ''
     #!/usr/bin/env bash
     cd "$1" && {
       for d in Main Main_*; do
         [ -d "$d" ] && echo "$d"
       done
+    } | LC_ALL=C sort -fu | sed 's/^Main_//'
+  '';
+  listSubdirs = pkgs.writeScript "list-subdirs" ''
+    #!/usr/bin/env bash
+    # $1 = full path to worktree; lists "Root" plus any subdir containing .vscode
+    echo "Root"
+    cd "$1" && \
       fd -t d -0 \
         --exec-batch bash -c '
           for d in "$@"; do
             [[ -d "$d/.vscode" ]] && printf "%s\n" "$d"
           done
           exit 0
-        ' _ | sed 's|^./||'
-    } | grep -E '^Main(_[^/]*)?' \
-      | LC_ALL=C sort -fu
+        ' _ | sed 's|^./||' | LC_ALL=C sort -f
   '';
   writeNixWorkspace = pkgs.writeScript "write-nix-workspace" ''
     #!/usr/bin/env bash
@@ -45,68 +51,73 @@ let
     EOF
     echo "$workspace_file"
   '';
-  openLocal = "${pkgs.writeScriptBin "open-local" ''
-    selection=$(
-      ${listCodeProjects} ${paths.codeRoot} 2>/dev/null | \
-      ${rofi} -theme-str 'window {width: 20%;}'
-    )
-    if [[ $selection ]]; then
-      cursor ${paths.codeRoot}/$selection
-    fi
-  ''}/bin/open-local";
-  openOrthos = "${pkgs.writeScriptBin "open-orthos" ''
-    dirs=$(timeout 5 ssh -o ConnectTimeout=5 orthos bash -s -- /home/romain/Stockly < ${listCodeProjects} 2>/dev/null)
-    if [[ $? -ne 0 ]]; then
-      ${pkgs.libnotify}/bin/notify-send -u critical "open-orthos" "orthos is unreachable"
-      exit 1
-    fi
-    selection=$(echo "$dirs" | ${rofi} -theme-str 'window {width: 30%;}')
-    if [[ $selection ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/$selection
-    fi
-  ''}/bin/open-orthos";
-  openSalon = "${pkgs.writeScriptBin "open-salon" ''
-    dirs=$(timeout 5 ssh -o ConnectTimeout=5 salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null)
-    if [[ $? -ne 0 ]]; then
-      ${pkgs.libnotify}/bin/notify-send -u critical "open-salon" "salon is unreachable"
-      exit 1
-    fi
-    selection=$(echo "$dirs" | ${rofi} -theme-str 'window {width: 20%;}')
-    if [[ $selection ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code/$selection
-    fi
-  ''}/bin/open-salon";
-  openNixLocal = "${pkgs.writeScriptBin "open-nix-local" ''
-    selection=$(
-      (echo "nix-configs only"
-       ${listCodeProjects} ${paths.codeRoot} 2>/dev/null | grep -v /
-      ) | ${rofi} -theme-str 'window {width: 20%;}'
-    )
-    if [[ "$selection" == "nix-configs only" ]]; then
-      cursor ${paths.nixConfigs}
-    elif [[ $selection ]]; then
-      workspace_file=$(${writeNixWorkspace} ${paths.nixConfigs} ${paths.codeRoot}/$selection)
-      cursor "$workspace_file"
-    fi
-  ''}/bin/open-nix-local";
-  openNixSalon = "${pkgs.writeScriptBin "open-nix-salon" ''
-    salon_dirs=$(timeout 5 ssh -o ConnectTimeout=5 salon bash -s -- /home/romain/code < ${listCodeProjects} 2>/dev/null)
-    if [[ $? -ne 0 ]]; then
-      ${pkgs.libnotify}/bin/notify-send -u critical "open-nix-salon" "salon is unreachable"
-      exit 1
-    fi
-    selection=$(
-      (echo "nix-configs only"
-       echo "$salon_dirs" | grep -v /
-      ) | ${rofi} -theme-str 'window {width: 20%;}'
-    )
-    if [[ "$selection" == "nix-configs only" ]]; then
-      cursor --folder-uri=vscode-remote://ssh-remote+salon/home/romain/code/nix-configs
-    elif [[ $selection ]]; then
-      workspace_file=$(ssh salon bash -s -- /home/romain/code/nix-configs /home/romain/code/$selection < ${writeNixWorkspace})
-      cursor --file-uri="vscode-remote://ssh-remote+salon$workspace_file"
-    fi
-  ''}/bin/open-nix-salon";
+  mkOpenScript =
+    {
+      scriptName,
+      host ? null,
+      basePath,
+      rofiWidth ? "20%",
+      nixConfigsPath ? null,
+    }:
+    let
+      isRemote = host != null;
+      isNix = nixConfigsPath != null;
+      fetchNames =
+        if isRemote
+        then "timeout 5 ssh -o ConnectTimeout=5 ${host} bash -s -- ${basePath} < ${listWorktreeNames} 2>/dev/null"
+        else "${listWorktreeNames} ${basePath} 2>/dev/null";
+      fetchSubdirs =
+        if isRemote
+        then "ssh ${host} bash -s -- ${basePath}/$worktree < ${listSubdirs} 2>/dev/null"
+        else "${listSubdirs} ${basePath}/$worktree 2>/dev/null";
+      nameMenuInput =
+        if isNix
+        then ''(echo "nix-configs only"; echo "$names") | ''
+        else ''echo "$names" | '';
+      nameCheck =
+        if isNix
+        then ''
+          if [[ "$name" == "nix-configs only" ]]; then
+            ${if isRemote then "cursor --folder-uri=vscode-remote://ssh-remote+${host}${nixConfigsPath}" else "cursor ${nixConfigsPath}"}
+          elif [[ -n "$name" ]]; then''
+        else ''
+          if [[ -n "$name" ]]; then'';
+      openTarget =
+        if isNix then
+          if isRemote
+          then ''
+            workspace_file=$(ssh ${host} bash -s -- ${nixConfigsPath} "$path" < ${writeNixWorkspace})
+            cursor --file-uri="vscode-remote://ssh-remote+${host}$workspace_file"''
+          else ''
+            workspace_file=$(${writeNixWorkspace} ${nixConfigsPath} "$path")
+            cursor "$workspace_file"''
+        else if isRemote
+          then "cursor --folder-uri=vscode-remote://ssh-remote+${host}/$path"
+          else ''cursor "$path"'';
+    in
+    "${pkgs.writeScriptBin scriptName ''
+      names=$(${fetchNames})
+      ${lib.optionalString isRemote ''
+      if [[ $? -ne 0 ]]; then
+        ${pkgs.libnotify}/bin/notify-send -u critical "${scriptName}" "${host} is unreachable"
+        exit 1
+      fi
+      ''}name=$(${nameMenuInput}${rofi} -theme-str 'window {width: ${rofiWidth};}')
+      ${nameCheck}
+        [[ "$name" == "Main" ]] && worktree="Main" || worktree="Main_$name"
+        subdirs=$(${fetchSubdirs})
+        subdir=$(echo "$subdirs" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+        if [[ -z "$subdir" ]]; then exit 0; fi
+        path="${basePath}/$worktree"
+        [[ "$subdir" != "Root" ]] && path="$path/$subdir"
+        ${openTarget}
+      fi
+    ''}/bin/${scriptName}";
+  openLocal    = mkOpenScript { scriptName = "open-local";     basePath = paths.codeRoot; };
+  openOrthos   = mkOpenScript { scriptName = "open-orthos";    host = "orthos"; basePath = "/home/romain/Stockly"; rofiWidth = "30%"; };
+  openSalon    = mkOpenScript { scriptName = "open-salon";     host = "salon";  basePath = "/home/romain/code"; };
+  openNixLocal = mkOpenScript { scriptName = "open-nix-local"; basePath = paths.codeRoot;          nixConfigsPath = paths.nixConfigs; };
+  openNixSalon = mkOpenScript { scriptName = "open-nix-salon"; host = "salon";  basePath = "/home/romain/code"; nixConfigsPath = "/home/romain/code/nix-configs"; };
 in
 {
   home = {

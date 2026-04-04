@@ -50,8 +50,18 @@ let
 
       cd '${cfg.flakePath}'
       OWNER=$(stat -c "%U" '.')
+      GIT_BRANCH=$(su "$OWNER" -c "git branch --show-current")
+      export GIT_BRANCH
 
       DIRTY_FILES=$( (${lib.boolToString cfg.stashUnstash} && su "$OWNER" -c "git status --porcelain=v1" | grep -v 'flake.lock') || true)
+
+      if [ "$DIRTY_FILES" != "" ]; then
+        echo "Dirty repository, stashing changes..."
+        su "$OWNER" -c "git stash"
+      fi
+
+      echo "Pulling latest changes..."
+      su "$OWNER" -c "git pull"
 
       echo "Updating flake inputs..."
       SUM=$(md5sum flake.lock)
@@ -70,17 +80,19 @@ let
         exit
       fi
 
+      if [ "$UPDATE_STATUS" = "0" ]; then
+        echo "Syncing with remote..."
+        su "$OWNER" -c "git pull --rebase"
+        echo "Pushing updated flake inputs..."
+        su "$OWNER" -c "git push"
+      fi
+
       set +e
       if [ "$UPDATE_STATUS" = "0" ] && (
-        if [ "$DIRTY_FILES" != "" ]; then
-          echo "Dirty repository, stashing changes..."
-          su "$OWNER" -c "git stash"
-        fi
-
         echo "Rebuilding..."
         git config --global --add safe.directory '${cfg.flakePath}'
         git config --global --add safe.directory '${cfg.flakePath}/.git'
-        nixos-rebuild --flake '.' "$REBUILD_OPERATION"
+        nixos-rebuild --flake '.' "$REBUILD_OPERATION" --impure
       ); then
         ICON="update-low"
         TITLE="Auto-update succeeded"

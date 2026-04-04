@@ -25,6 +25,12 @@
         binfmt.emulatedSystems = [ "aarch64-linux" ];
       };
 
+      system.nixos.tags =
+        let
+          branch = builtins.getEnv "GIT_BRANCH";
+        in
+        lib.optional (branch != "") branch;
+
       fonts = {
         packages = [
           pkgs.dejavu_fonts
