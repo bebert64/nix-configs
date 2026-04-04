@@ -36,15 +36,19 @@ in
 
         # Global skills (each skill dir individually)
         mkdir -p ${homeDir}/.claude/skills
+        shopt -s nullglob
         for skill in ${nixPrograms}/claude-code/skills/global/*/; do
-          ln -sfT "$skill" ${homeDir}/.claude/skills/$(basename "$skill")
+          ln -sfT "$skill" "${homeDir}/.claude/skills/$(basename "$skill")"
         done
+        shopt -u nullglob
 
         # Global commands (each .md file individually)
         mkdir -p ${homeDir}/.claude/commands
+        shopt -s nullglob
         for cmd in ${nixPrograms}/claude-code/commands/global/*.md; do
-          ln -sfT "$cmd" ${homeDir}/.claude/commands/$(basename "$cmd")
+          ln -sfT "$cmd" "${homeDir}/.claude/commands/$(basename "$cmd")"
         done
+        shopt -u nullglob
 
         # Docs directory (individual items added by machine-specific nix files)
         mkdir -p ${homeDir}/.claude/docs
