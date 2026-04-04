@@ -1,5 +1,4 @@
 {
-  pkgs,
   config,
   lib,
   ...
@@ -8,7 +7,13 @@ let
   modifier = config.byDb.modifier;
 in
 {
-  home.packages = [ pkgs.chromium ];
+  programs.chromium = {
+    enable = true;
+    commandLineArgs = [
+      "--force-dark-mode"
+      "--enable-features=WebUIDarkMode"
+    ];
+  };
 
   wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
