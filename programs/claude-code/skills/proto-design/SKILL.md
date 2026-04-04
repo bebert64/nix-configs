@@ -1,3 +1,7 @@
+---
+description: Stockly gRPC proto design patterns — three-layer architecture, TryFrom conversions, PreValidated IDs, RPC input/output principles. Use when designing, implementing, or reviewing proto types and RPC handlers in the Stockly monorepo.
+---
+
 # Proto Design Patterns
 
 How Stockly structures gRPC services and the conversion between proto and Rust types.

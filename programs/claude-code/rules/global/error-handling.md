@@ -1,30 +1,39 @@
 # Error Handling: Error vs Fail
 
-Stockly uses a **two-level Result** pattern to distinguish infrastructure errors from business failures.
+The user uses a **two-level Result** pattern to distinguish infrastructure errors from business failures.
 
 ## The Pattern
 
 ```rust
-pub(crate) fn perform(input: Input) -> InternalResult<Result<Success, Fail>> { ... }
+pub(crate) fn perform(input: Input) -> ErrorResult<Result<Success, Fail>> { ... }
 ```
 
-- **Outer `InternalResult<...>`** — `Err` = `InternalError` = the function has unexpected behavior or fails to uphold its guarantees. The code must be fixed.
+- **Outer `ErrorResult<...>`** — `Err` = infrastructure/unexpected error = the function has unexpected behavior or fails to uphold its guarantees. The code must be fixed.
 - **Inner `Result<T, Fail>`** — `Err` = `Fail` = expected rejection (invalid inputs, business rule violations, entity not found, etc.)
 
 The term **`Error`** is strictly reserved for bugs/infrastructure. For all expected rejection cases, the type is named **`Fail`**, never `Error`.
 
-## `InternalError` (the Error side)
+## The Error crate — `InternalError` vs `DonError`
 
-Defined in `lib/rust/InternalError`. Wraps `anyhow::Error` with JSON context and Sentry integration:
+Two crates implement this pattern with identical semantics and near-identical API. Use whichever is available in the repo you're working in:
+
+| | Stockly monorepo | Personal repos |
+|---|---|---|
+| **Crate** | `lib/rust/InternalError` | `don_error` |
+| **Error type** | `InternalError` | `DonError` |
+| **Result alias** | `InternalResult<T>` | `DonResult<T>` |
+
+Both wrap `anyhow::Error` with structured JSON context. `don_error` is a simplified subset — the same concepts apply, but with a smaller API surface.
 
 ```rust
-pub struct InternalError {
-    inner: Box<InternalErrorInner>,  // anyhow::Error + BTreeMap<String, serde_json::Value>
-}
+// Stockly
 pub type InternalResult<T> = Result<T, InternalError>;
+
+// Personal repos
+pub type DonResult<T> = Result<T, DonError>;
 ```
 
-Created via `err_msg("...")`, `err_ctx!({ field })`, or the `?` operator on functions returning `InternalResult`.
+Created via `err_msg("...")`, `err_ctx!({ field })`, or the `?` operator on functions returning the matching result type.
 
 ## `Fail` (the business side)
 
@@ -40,6 +49,7 @@ pub(crate) enum Fail {
 ```
 
 Variants carry structured data explaining what went wrong. Common patterns:
+
 - `MissingInDatabase<T>` — entity ID not found after validation
 - `FieldInvalidity<T>` — input field validation failure
 - Struct variants with multiple fields for complex business conditions
@@ -57,7 +67,7 @@ let order_lines = try_or_wrap!(
 );
 ```
 
-The `?` handles the outer `InternalResult`, `try_or_wrap!` handles the inner `Result<_, Fail>`.
+The `?` handles the outer result (`InternalResult` / `DonResult`), `try_or_wrap!` handles the inner `Result<_, Fail>`.
 
 ## Exhaustive Fail Matching
 
@@ -99,7 +109,7 @@ pub(crate) enum Fail {
 
 `#[from]` generates `From<Inner>` for that variant, enabling `try_or_wrap!` to convert automatically.
 
-## RPC Layer
+## RPC Layer (Stockly only)
 
 In gRPC handlers, the signature is typically:
 
