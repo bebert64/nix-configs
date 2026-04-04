@@ -68,6 +68,10 @@ impl TryFrom<&proto::DemanderTakeConfig> for DemanderTakeConfig {
 
 Always destructure `unknown_fields: _` and `cached_size: _` from proto types.
 
+## Validation crate API
+
+A full reference of all public items in the `validation` crate is available at `~/.claude/docs/stockly/validation.md`. **Check there before exploring the source.**
+
 ## PreValidated vs Validated IDs
 
 - `PreValidated<T>`: format is valid (e.g., positive i32), but NOT verified to exist in DB. Used in RPC request parsing.

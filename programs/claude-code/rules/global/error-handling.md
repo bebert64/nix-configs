@@ -15,7 +15,9 @@ The term **`Error`** is strictly reserved for bugs/infrastructure. For all expec
 
 ## The Error crate — `InternalError` vs `DonError`
 
-Two crates implement this pattern with identical semantics and near-identical API. Use whichever is available in the repo you're working in:
+Two crates implement this pattern with identical semantics and near-identical API. Use whichever is available in the repo you're working in. Full API references (all public items + doc strings) are available — **check these before exploring the source**:
+- `~/.claude/docs/don_error.md`
+- `~/.claude/docs/stockly/internal_error.md`
 
 | | Stockly monorepo | Personal repos |
 |---|---|---|
