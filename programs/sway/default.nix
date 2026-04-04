@@ -67,61 +67,61 @@ in
 
         keybindings = lib.mkOptionDefault {
           # Workspace definition
-          "${modifier}+1" = "workspace number $ws1";
-          "${modifier}+2" = "workspace number $ws2";
-          "${modifier}+3" = "workspace number $ws3";
-          "${modifier}+4" = "workspace number $ws4";
-          "${modifier}+5" = "workspace number $ws5";
-          "${modifier}+6" = "workspace number $ws6";
-          "${modifier}+7" = "workspace number $ws7";
-          "${modifier}+8" = "workspace number $ws8";
-          "${modifier}+9" = "workspace number $ws9";
-          "${modifier}+0" = "workspace number $ws10";
-          "${modifier}+Ctrl+1" = "workspace number $ws11";
-          "${modifier}+Ctrl+2" = "workspace number $ws12";
-          "${modifier}+Ctrl+3" = "workspace number $ws13";
-          "${modifier}+Ctrl+4" = "workspace number $ws14";
-          "${modifier}+Ctrl+5" = "workspace number $ws15";
-          "${modifier}+Ctrl+6" = "workspace number $ws16";
-          "${modifier}+Ctrl+7" = "workspace number $ws17";
-          "${modifier}+Ctrl+8" = "workspace number $ws18";
-          "${modifier}+Ctrl+9" = "workspace number $ws19";
-          "${modifier}+Ctrl+0" = "workspace number $ws20";
+          "${modifier}+1" = "workspace number 1";
+          "${modifier}+2" = "workspace number 2";
+          "${modifier}+3" = "workspace number 3";
+          "${modifier}+4" = "workspace number 4";
+          "${modifier}+5" = "workspace number 5";
+          "${modifier}+6" = "workspace number 6";
+          "${modifier}+7" = "workspace number 7";
+          "${modifier}+8" = "workspace number 8";
+          "${modifier}+9" = "workspace number 9";
+          "${modifier}+0" = "workspace number 10";
+          "${modifier}+Ctrl+1" = "workspace number 11";
+          "${modifier}+Ctrl+2" = "workspace number 12";
+          "${modifier}+Ctrl+3" = "workspace number 13";
+          "${modifier}+Ctrl+4" = "workspace number 14";
+          "${modifier}+Ctrl+5" = "workspace number 15";
+          "${modifier}+Ctrl+6" = "workspace number 16";
+          "${modifier}+Ctrl+7" = "workspace number 17";
+          "${modifier}+Ctrl+8" = "workspace number 18";
+          "${modifier}+Ctrl+9" = "workspace number 19";
+          "${modifier}+Ctrl+0" = "workspace number 20";
 
           # Workspace move container to
-          "${modifier}+Shift+1" = "move container to workspace number $ws1";
-          "${modifier}+Shift+2" = "move container to workspace number $ws2";
-          "${modifier}+Shift+3" = "move container to workspace number $ws3";
-          "${modifier}+Shift+4" = "move container to workspace number $ws4";
-          "${modifier}+Shift+5" = "move container to workspace number $ws5";
-          "${modifier}+Shift+6" = "move container to workspace number $ws6";
-          "${modifier}+Shift+7" = "move container to workspace number $ws7";
-          "${modifier}+Shift+8" = "move container to workspace number $ws8";
-          "${modifier}+Shift+9" = "move container to workspace number $ws9";
-          "${modifier}+Shift+0" = "move container to workspace number $ws10";
-          "${modifier}+Shift+Ctrl+1" = "move container to workspace number $ws11";
-          "${modifier}+Shift+Ctrl+2" = "move container to workspace number $ws12";
-          "${modifier}+Shift+Ctrl+3" = "move container to workspace number $ws13";
-          "${modifier}+Shift+Ctrl+4" = "move container to workspace number $ws14";
-          "${modifier}+Shift+Ctrl+5" = "move container to workspace number $ws15";
-          "${modifier}+Shift+Ctrl+6" = "move container to workspace number $ws16";
-          "${modifier}+Shift+Ctrl+7" = "move container to workspace number $ws17";
-          "${modifier}+Shift+Ctrl+8" = "move container to workspace number $ws18";
-          "${modifier}+Shift+Ctrl+9" = "move container to workspace number $ws19";
-          "${modifier}+Shift+Ctrl+0" = "move container to workspace number $ws20";
+          "${modifier}+Shift+1" = "move container to workspace number 1";
+          "${modifier}+Shift+2" = "move container to workspace number 2";
+          "${modifier}+Shift+3" = "move container to workspace number 3";
+          "${modifier}+Shift+4" = "move container to workspace number 4";
+          "${modifier}+Shift+5" = "move container to workspace number 5";
+          "${modifier}+Shift+6" = "move container to workspace number 6";
+          "${modifier}+Shift+7" = "move container to workspace number 7";
+          "${modifier}+Shift+8" = "move container to workspace number 8";
+          "${modifier}+Shift+9" = "move container to workspace number 9";
+          "${modifier}+Shift+0" = "move container to workspace number 10";
+          "${modifier}+Shift+Ctrl+1" = "move container to workspace number 11";
+          "${modifier}+Shift+Ctrl+2" = "move container to workspace number 12";
+          "${modifier}+Shift+Ctrl+3" = "move container to workspace number 13";
+          "${modifier}+Shift+Ctrl+4" = "move container to workspace number 14";
+          "${modifier}+Shift+Ctrl+5" = "move container to workspace number 15";
+          "${modifier}+Shift+Ctrl+6" = "move container to workspace number 16";
+          "${modifier}+Shift+Ctrl+7" = "move container to workspace number 17";
+          "${modifier}+Shift+Ctrl+8" = "move container to workspace number 18";
+          "${modifier}+Shift+Ctrl+9" = "move container to workspace number 19";
+          "${modifier}+Shift+Ctrl+0" = "move container to workspace number 20";
 
           "${modifier}+Mod1+Left" = "exec ${moveWorkspaceToOutput "left"}";
           "${modifier}+Mod1+Right" = "exec ${moveWorkspaceToOutput "right"}";
 
           # Used to display empty workspaces, allowing to see the wallpapers
-          "${modifier}+i" = "workspace $ws19; workspace $ws20";
+          "${modifier}+i" = "workspace number 19; workspace number 20";
 
           # Modes
           "${modifier}+Shift+e" = "mode \"${exitMode}\"";
         };
 
         startup = [
-          { command = "swaymsg workspace $ws1"; }
+          { command = "swaymsg workspace number 1"; }
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
           { command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets"; }
           { command = "swww-daemon"; }
@@ -146,6 +146,12 @@ in
 
         # Needed to keep the default bar from being displayed (we use waybar)
         bars = [ ];
+
+        input = {
+          "type:keyboard" = {
+            xkb_layout = "fr";
+          };
+        };
 
         gaps = {
           inner = 4;
