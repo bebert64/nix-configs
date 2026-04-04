@@ -30,8 +30,8 @@ in
       minutesFromLockToSleep = 10;
       lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
       screens = {
-        primary = "HDMI-1";
-        secondary = "HDMI-2";
+        primary = "HDMI-A-1";
+        secondary = "HDMI-A-2";
       };
       isHeadphonesOnCommand = "pactl get-default-sink | grep alsa_output.pci-0000_00_1b.0.analog-stereo";
       setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
