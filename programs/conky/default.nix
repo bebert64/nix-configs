@@ -13,7 +13,6 @@
   wayland.windowManager.sway.config.startup = [
     {
       command = "conky -c ${./qclocktwo} -d";
-      notification = false;
     }
   ];
 }
