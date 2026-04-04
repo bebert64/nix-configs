@@ -31,6 +31,20 @@ let
     "19" = "19:󰸉";
     "20" = "20:󰸉";
   };
+  showWallpapers =
+    let
+      primary = homeManagerBydbConfig.screens.primary;
+      secondary = homeManagerBydbConfig.screens.secondary;
+    in
+    "${pkgs.writeShellScript "show-wallpapers" ''
+      set -euo pipefail
+      ${swaymsg} focus output ${primary}
+      ${swaymsg} workspace "${ws."19"}"
+      ${lib.optionalString (secondary != "") ''
+        ${swaymsg} focus output ${secondary}
+        ${swaymsg} workspace "${ws."20"}"
+      ''}
+    ''}";
   moveWorkspaceToOutput =
     direction:
     assert direction == "left" || direction == "right";
@@ -136,7 +150,7 @@ in
           "${modifier}+Mod1+Right" = "exec ${moveWorkspaceToOutput "right"}";
 
           # Used to display empty workspaces, allowing to see the wallpapers
-          "${modifier}+i" = "workspace \"${ws."19"}\"" + lib.optionalString (homeManagerBydbConfig.screens.secondary != "") "; workspace \"${ws."20"}\"";
+          "${modifier}+i" = "exec ${showWallpapers}";
 
           # Modes
           "${modifier}+Shift+e" = "mode \"${exitMode}\"";
