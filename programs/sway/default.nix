@@ -183,6 +183,9 @@ in
       };
 
       extraConfig = ''
+        for_window [app_id="kitty"] border normal 2
+        for_window [app_id="kitty"] opacity 0.8
+
         workspace "${ws."10"}" gaps inner 80
         workspace "${ws."19"}" output ${homeManagerBydbConfig.screens.primary}
         workspace "${ws."20"}" output ${homeManagerBydbConfig.screens.secondary}
