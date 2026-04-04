@@ -2,16 +2,18 @@
 {
   services.mako = {
     enable = true;
-    font = "monospace 10";
-    backgroundColor = "#1a1b26";
-    textColor = "#c0caf5";
-    borderColor = "#414868";
-    borderRadius = 6;
-    borderSize = 1;
-    padding = "10,12";
-    defaultTimeout = 8000;
-    anchor = "bottom-right";
-    margin = "10";
+    settings = {
+      font = "monospace 10";
+      background-color = "#1a1b26";
+      text-color = "#c0caf5";
+      border-color = "#414868";
+      border-radius = 6;
+      border-size = 1;
+      padding = "10,12";
+      default-timeout = 8000;
+      anchor = "bottom-right";
+      margin = "10";
+    };
     extraConfig = ''
       [urgency=low]
       default-timeout=5000
