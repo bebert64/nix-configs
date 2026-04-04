@@ -9,7 +9,7 @@ let
   rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   sshr = "${pkgs.writeScriptBin "sshr" ''
-    kitty --title "Ranger" -e sh -c "ssh $1 -t ranger"
+    kitty --title "Ranger" +kitten ssh $1 -t ranger
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(

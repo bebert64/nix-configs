@@ -51,6 +51,10 @@
         description = "The secondary screen";
       };
     };
+    isHeadphonesOnCommand = lib.mkOption {
+      type = lib.types.str;
+      description = "Command that returns whether headphones are the current output";
+    };
     setHeadphonesCommand = lib.mkOption {
       type = lib.types.str;
       description = "Command to redirect the sound output to headphones";
