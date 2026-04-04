@@ -31,7 +31,11 @@ in
       update = "run-in-nix-repo nix-switch";
       update-dirty = "run-in-nix-repo-dirty nix-switch";
       update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
-      update-raspi4 = "run-in-nix-repo 'inhibit-and-sleep nixos-rebuild build --flake .#raspi4 && nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4'";
+      update-raspi4 = "run-in-nix-repo '"
+        + "b=$(git branch --show-current); "
+        + "GIT_BRANCH=$b inhibit-and-sleep nixos-rebuild build --flake .#raspi4 --impure"
+        + " && GIT_BRANCH=$b nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4 --impure"
+        + "'";
 
       # Cargo
       tfw = "run-in-code-repo 'cargo fmt -- --config \"${formatOptions}\" && cargo test'";
@@ -58,10 +62,12 @@ in
       }
 
       nix-switch() {
+        local git_branch
+        git_branch=$(git branch --show-current)
         inhibit-and-sleep \
-          'env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# && ''\
-          '${pkgs.libnotify}/bin/notify-send -u critical "nix-switch" "Build done — sudo password needed to switch" && ''\
-          'sudo env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .#'
+          "GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# --impure && "\
+          "${pkgs.libnotify}/bin/notify-send -u critical 'nix-switch' 'Build done — sudo password needed to switch' && "\
+          "sudo GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .# --impure"
       }
 
       run-in-nix-repo() {
