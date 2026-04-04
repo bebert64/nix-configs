@@ -136,14 +136,14 @@ in
           "${modifier}+Mod1+Right" = "exec ${moveWorkspaceToOutput "right"}";
 
           # Used to display empty workspaces, allowing to see the wallpapers
-          "${modifier}+i" = "workspace \"${ws."19"}\"; workspace \"${ws."20"}\"";
+          "${modifier}+i" = "workspace \"${ws."19"}\"" + lib.optionalString (homeManagerBydbConfig.screens.secondary != "") "; workspace \"${ws."20"}\"";
 
           # Modes
           "${modifier}+Shift+e" = "mode \"${exitMode}\"";
         };
 
         startup = [
-          { command = "swaymsg workspace \"${ws."1"}\""; }
+          { command = "swaymsg rename workspace to \"${ws."1"}\""; }
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
           { command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets"; }
           { command = "swww-daemon"; }
@@ -189,7 +189,7 @@ in
 
         workspace "${ws."10"}" gaps inner 80
         workspace "${ws."19"}" output ${homeManagerBydbConfig.screens.primary}
-        workspace "${ws."20"}" output ${homeManagerBydbConfig.screens.secondary}
+        ${lib.optionalString (homeManagerBydbConfig.screens.secondary != "") "workspace \"${ws."20"}\" output ${homeManagerBydbConfig.screens.secondary}"}
 
         blur enable
         blur_passes 2
@@ -197,6 +197,7 @@ in
         corner_radius 8
         shadows enable
         default_dim_inactive 0.1
+        layer_effects "conky" blur enable
       '';
     };
   };
