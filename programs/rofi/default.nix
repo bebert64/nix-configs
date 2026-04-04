@@ -23,7 +23,7 @@ in
   config = {
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi-wayland;
+      package = pkgs.rofi;
       font = "Iosevka Nerd Font 10";
       extraConfig = {
         show-icons = true;
