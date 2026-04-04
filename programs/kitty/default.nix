@@ -8,6 +8,7 @@
     };
     settings = {
       background_opacity = "0.8";
+      editor = "nvim";
       hide_window_decorations = "no";
       window_padding_width = 8;
       tab_bar_style = "powerline";
