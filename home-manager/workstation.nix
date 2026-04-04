@@ -24,6 +24,7 @@
     ../programs/kanshi
     ../programs/kitty
     ../programs/lock
+    ../programs/terminal
     ../programs/mako
     ../programs/music
     ../programs/plex-desktop

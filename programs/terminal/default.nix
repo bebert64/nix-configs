@@ -1,6 +1,6 @@
-{ ... }:
+{ lib, ... }:
 {
   wayland.windowManager.sway.config = {
-    terminal = "kitty";
+    terminal = lib.mkForce "kitty";
   };
 }

@@ -3,7 +3,7 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "Iosevka Nerd Font";
+      name = "FiraCode Nerd Font Propo Med";
       size = 11;
     };
     settings = {
