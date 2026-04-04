@@ -3,8 +3,8 @@
   programs.kitty = {
     enable = true;
     font = {
-      name = "FiraCode Nerd Font";
-      size = 11;
+      name = "FiraCode Nerd Font Med";
+      size = 10;
     };
     settings = {
       background_opacity = "0.8";
