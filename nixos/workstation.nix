@@ -95,6 +95,13 @@
       };
 
       services = {
+        greetd = {
+          enable = true;
+          settings.default_session = {
+            command = "${pkgs.swayfx}/bin/sway";
+            user = nixosBydbConfig.user.name;
+          };
+        };
         xserver.xkb = {
           layout = "fr";
           variant = "";

@@ -44,8 +44,4 @@ in
     interfaces.enp3s0.wakeOnLan.enable = true;
   };
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "romain";
-  };
 }
