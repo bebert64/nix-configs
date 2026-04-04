@@ -125,6 +125,8 @@ in
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
           { command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets"; }
           { command = "swww-daemon"; }
+          # kanshi starts before Sway is fully ready; restart it once the compositor is up
+          { command = "systemctl --user restart kanshi"; always = true; }
         ]
         ++ lib.optional homeManagerBydbConfig.wifi.enable { command = "nm-applet"; }
         ++ lib.optional homeManagerBydbConfig.bluetooth.enable { command = "blueman-applet"; };
