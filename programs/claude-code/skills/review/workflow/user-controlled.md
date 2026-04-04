@@ -8,7 +8,7 @@ The orchestrator runs one review round per user request and reports findings onl
 2. Load `.claude/reviews/<branch-name>.json` if it exists
 3. Re-validate each approved item against the current code (see Re-validation below)
 4. Filter out still-valid approved items from findings
-5. Present remaining findings to the user using this format:
+5. Present remaining findings to the user using this format. `FIXABLE: yes` findings (from this PR's diff) come first, grouped by file. `FIXABLE: no` findings (outside the diff) are collected into a clearly separated section at the end — never mixed in with the regular findings:
 
    ```
    ## path/to/file.rs
@@ -34,7 +34,16 @@ The orchestrator runs one review round per user request and reports findings onl
 
    - X must-fix across Y files
    - Z nits across W files
+
+   ---
+
+   ⚠ Outside this PR's diff — NOT from your current changes (likely a pre-existing issue; verify before acting):
+
+   - path/to/file.rs:42 [Must-fix · Rule: naming] <brief description>
+   - path/to/file.rs:99 [Nit · Rule: comments] <brief description>
    ```
+
+   Omit the warning section if there are no `FIXABLE: no` findings.
 6. Wait for user action — they may approve findings, request another round, or stop
 
 ## Approved findings file

@@ -6,10 +6,11 @@ The orchestrator runs repeated rounds of review and applies fixes automatically,
 
 1. Run a full review round — all batches × all applicable themes in parallel (see SKILL.md)
 2. Collect and deduplicate findings
-3. If no findings at the current de-escalation level → **stop** (see Termination)
-4. Apply all findings as code fixes
-5. Commit: `git commit -m "review: round N fixes"`
-6. Increment round counter → go to step 1
+3. Split findings: set aside all `FIXABLE: no` findings into a running accumulator (never fix these, just collect across rounds)
+4. If no `FIXABLE: yes` findings at the current de-escalation level → **stop** (see Termination)
+5. Apply all `FIXABLE: yes` findings as code fixes
+6. Commit: `git commit -m "review: round N fixes"`
+7. Increment round counter → go to step 1
 
 ## De-escalation rules
 
@@ -37,4 +38,10 @@ Review complete after N rounds.
   Round 2: Y findings fixed
   ...
   Round N: 0 findings — done
+
+⚠ Findings outside this PR's diff (not auto-fixed — likely from a previous PR, verify before acting):
+  path/to/file.rs:42 [Rule: naming] <brief description>
+  ...
 ```
+
+If the accumulator is empty, omit the warning section entirely.

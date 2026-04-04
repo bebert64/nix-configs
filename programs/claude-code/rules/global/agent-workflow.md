@@ -44,6 +44,10 @@ After modifying Rust code, verify in this order:
 
 On failure: read the error → fix → re-run → loop until green. Only escalate to the user if stuck after 2-3 attempts.
 
+## After the verification loop
+
+Once fully green, run `/review once`. Style and naming rules live exclusively in the review skill — the coding agent has no other access to them. All findings are applied automatically.
+
 ## Development Setup
 
 When running any `cargo` command, ALWAYS use `--quiet`. Try the command directly first — do NOT preemptively run direnv. Only if it fails with `cargo: command not found`, run:

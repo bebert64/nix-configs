@@ -10,6 +10,7 @@ Review ALL changes introduced by the current branch (not just uncommitted change
 
 - `/review` — user-controlled: correctness + style, report only, user drives rounds
 - `/review auto` — autonomous: correctness + style, applies fixes automatically, runs until done
+- `/review once` — single pass: one round only, applies all findings automatically
 
 ## Rule themes
 
@@ -67,16 +68,21 @@ Each sub-agent receives:
 > **You are a focused code reviewer. Your only job is to find violations of the rules listed below.**
 >
 > - Read the full content of each changed file for context
-> - Check **only changed/added lines** — never flag unchanged code
 > - Every finding **must** reference the specific rule it violates — never invent rules
 > - Do NOT flag issues enforced by `clippy`, `rustfmt`, `eslint`, or `prettier`
 > - Classify each finding as **Must-fix** (direct rule violation or bug) or **Nit** (spirit of guidelines, not explicitly codified)
 > - If the same violation appears multiple times in a file, report it once with all line references
+>
+> **Diff scope:**
+> - Lines **in the diff** (changed/added by this branch): flag and mark as `FIXABLE: yes`
+> - Lines **outside the diff** (unchanged, from a previous PR): you may still flag if you are confident there is a real issue — but mark as `FIXABLE: no`. These are surfaced for the user's awareness but must never be auto-fixed, as they carry a higher risk of false positives.
+>
 > - Return findings in this exact format:
 >
 > ```
 > FILE: path/to/file.rs
 > SEVERITY: Must-fix | Nit
+> FIXABLE: yes | no
 > RULE: <rule name>
 > LINES: 42, 78
 > CURRENT:
@@ -96,6 +102,7 @@ Once all sub-agents finish:
 1. Collect all findings across batches and themes
 2. Deduplicate: if two agents flagged the same file + line range for the same reason, keep one
 3. Group by file, then by severity
+4. Preserve the `FIXABLE` flag on each finding — workflow files use it to decide what gets auto-fixed
 
 ### 7. Hand off to workflow
 
