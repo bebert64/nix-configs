@@ -4,15 +4,16 @@ description: Run final checks and prepare PR for merge
 
 The user is ready to finalize a PR. Run validation and draft the merge description.
 
-## 1. Identify modified crates
+## 1. Identify context
 
 1. Run `git branch --show-current` to get the current branch.
-2. Run `git diff --name-only master...HEAD` to list all files changed in this PR.
-3. From the changed file paths, determine which workspace crates have been modified (map paths to crate directories listed in the root `Cargo.toml` `[workspace] members`).
+2. Run `git rev-parse --abbrev-ref origin/HEAD | sed 's|origin/||'` to detect the default branch (e.g. `main` or `master`). Use this as `<base>` in all subsequent git commands.
+3. Run `git diff --name-only <base>...HEAD` to list all files changed in this PR.
+4. Check whether a root `Cargo.toml` exists. If it does, this is a Rust workspace — from the changed file paths, determine which workspace crates have been modified by cross-referencing with the `[workspace] members` list. Only crates present there are subject to Cargo checks; ignore other changed files (e.g. TypeScript, config). If no `Cargo.toml` exists, skip steps 2–4 entirely.
 
-## 2. Run checks on each modified crate
+## 2. Run checks on each modified Rust crate
 
-For each modified crate, run the following commands **sequentially**. Stop at the first failure.
+For each modified Rust crate, run the following commands **sequentially**. Stop at the first failure.
 
 1. `cargo machete -p <crate_name>` — check for unused dependencies
 2. `cargo clippy -p <crate_name>` — lints
@@ -33,9 +34,11 @@ If any command fails, **stop immediately**, report which crate and which check f
 
 ## 5. Draft PR description
 
-1. Run `git log --oneline master..HEAD` to see all commits in the PR.
-2. Review the full diff (`git diff master...HEAD`) for context.
-3. Generate the PR description using the template at `.github/pull_request_template.md`: fill in everything you can (especially "What it does", inferred from branch name, modified files, and context); only leave placeholders for what you truly don't know (e.g. ticket URL, commit SHA).
+1. Run `git log --oneline <base>..HEAD` to see all commits in the PR.
+2. Review the full diff (`git diff <base>...HEAD`) for context.
+3. Check whether `.github/pull_request_template.md` exists:
+   - **If it exists**: fill in the template (especially "What it does", inferred from branch name, modified files, and context); only leave placeholders for what you truly don't know (e.g. ticket URL, commit SHA).
+   - **If it doesn't exist**: write a concise freeform description that lists the main points that changed, grouped logically if there are multiple concerns.
 4. Present the description to the user for review/editing.
 
 ## 6. Look for learnable patterns
