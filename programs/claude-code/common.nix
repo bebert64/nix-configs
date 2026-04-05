@@ -18,6 +18,10 @@ let
       ${pkgs.libnotify}/bin/notify-send "$TITLE" "$BODY"
     fi
   '';
+  settingsJson = pkgs.runCommand "claude-settings.json" { } ''
+    ${pkgs.jq}/bin/jq '.hooks.Stop[0].hooks[0].command = "bash ${notifyHook}"' \
+      ${nixPrograms}/claude-code/settings.json > $out
+  '';
   claudeWithVoice = pkgs.writeShellScriptBin "claude" ''
     # PulseAudio forwarding for Claude Code voice mode on monsters
     if [ -S /tmp/pulse-forward ]; then
@@ -37,7 +41,7 @@ in
     activation = {
       symlinkClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" "setupSecrets" ] ''
         mkdir -p ${homeDir}/.claude
-        ln -sf ${nixPrograms}/claude-code/settings.json ${homeDir}/.claude/settings.json
+        ln -sf ${settingsJson} ${homeDir}/.claude/settings.json
         ln -sf ${nixPrograms}/claude-code/CLAUDE.md ${homeDir}/.claude/CLAUDE.md
 
         # Global rules (Claude Code recurses into subdirectories)
