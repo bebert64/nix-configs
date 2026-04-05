@@ -59,15 +59,11 @@ Skip entirely:
 - Lock files: `Cargo.lock`, `pnpm-lock.yaml`
 - Non-code: `*.md`, `*.json`, `*.yaml`, `*.yml`
 
-### 3. Load codebase context
-
-Check if `git remote get-url origin` points to a known codebase and read `${CLAUDE_SKILL_DIR}/<codebase>.md` if it exists — it may add file filters, a guideline table, and additional checks.
-
-### 4. Compute file batches
+### 3. Compute file batches
 
 Group the filtered files into batches so that each batch contains at most **~700 changed lines** (additions + deletions combined). Small PRs will produce a single batch; large PRs will produce several.
 
-### 5. Launch sub-agents
+### 4. Launch sub-agents
 
 For each combination of **(batch × theme)**, launch a sub-agent via the Task tool. Run up to 4 sub-agents concurrently.
 
@@ -107,7 +103,7 @@ Each sub-agent receives:
 >
 > Return an empty response if you find nothing.
 
-### 6. Aggregate findings
+### 5. Aggregate findings
 
 Once all sub-agents finish:
 
@@ -116,6 +112,6 @@ Once all sub-agents finish:
 3. Group by file, then by severity
 4. Preserve the `FIXABLE` flag on each finding — workflow files use it to decide what gets auto-fixed
 
-### 7. Hand off to workflow
+### 6. Hand off to workflow
 
 Pass aggregated findings to the active workflow — see `workflow/user-controlled.md` or `workflow/autonomous.md`.
