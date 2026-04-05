@@ -18,10 +18,20 @@ let
       ${pkgs.libnotify}/bin/notify-send "$TITLE" "$BODY"
     fi
   '';
-  settingsJson = pkgs.runCommand "claude-settings.json" { } ''
-    ${pkgs.jq}/bin/jq '.hooks.Stop[0].hooks[0].command = "bash ${notifyHook}"' \
-      ${nixPrograms}/claude-code/settings.json > $out
-  '';
+  settingsJson = pkgs.writeText "claude-settings.json" (builtins.toJSON (
+    (builtins.fromJSON (builtins.readFile ./settings.json)) // {
+      hooks.Stop = [
+        {
+          hooks = [
+            {
+              type = "command";
+              command = "bash ${notifyHook}";
+            }
+          ];
+        }
+      ];
+    }
+  ));
   claudeWithVoice = pkgs.writeShellScriptBin "claude" ''
     # PulseAudio forwarding for Claude Code voice mode on monsters
     if [ -S /tmp/pulse-forward ]; then
