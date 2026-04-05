@@ -16,8 +16,6 @@
     ]
   },
   "model": "opusplan",
-  "voiceEnabled": true,
-  "skipDangerousModePermissionPrompt": true,
   "hooks": {
     "Stop": [
       {
@@ -29,5 +27,7 @@
         ]
       }
     ]
-  }
+  },
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
 }

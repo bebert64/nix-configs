@@ -29,6 +29,18 @@ Rule files live in `${CLAUDE_SKILL_DIR}/rules/`. They are grouped into themes. E
 
 ### 1. Gather the diffs
 
+**If a commit reference was passed as an argument** (e.g. `/review once abc1234` or `/review once abc1234..def5678`):
+
+```bash
+git show <ref>              # single commit
+# or
+git diff <range>            # explicit range like abc1234..def5678
+```
+
+Use only that diff — do not include unstaged/staged changes or the full branch diff.
+
+**Otherwise** (no argument — reviewing the full branch):
+
 Determine the base branch (usually `main` or `master`):
 
 ```bash
