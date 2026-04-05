@@ -73,7 +73,7 @@ For each combination of **(batch × theme)**, launch a sub-agent via the Task to
 
 Each sub-agent receives:
 - The diff for its file batch (full file content + diff hunks for context)
-- The rule files for its theme (read from `${CLAUDE_SKILL_DIR}/rules/`)
+- The **paths** to rule files for its theme (e.g. `${CLAUDE_SKILL_DIR}/rules/naming.md`) — the sub-agent reads them itself; do NOT read rule files in the orchestrator's context
 - The mode (`review` or `auto`)
 - This instruction set:
 

@@ -4,6 +4,9 @@
 }:
 let
   homeDir = config.home.homeDirectory;
+  nixConfigs = config.byDb.paths.nixConfigs;
+  nixConfigsBase = builtins.baseNameOf nixConfigs;
+  nixConfigsParent = builtins.dirOf nixConfigs;
 in
 {
   programs.zsh = {
@@ -16,6 +19,19 @@ in
 
         if [[ "$dir" == "${homeDir}" ]]; then
           echo "Home"
+          return
+        fi
+
+        if [[ "$dir" == "${nixConfigs}" || "$dir" == "${nixConfigs}/"* ]]; then
+          local branch
+          branch="$(git branch --show-current 2>/dev/null)"
+          [[ -n "$branch" ]] && echo "$branch" || echo "Home"
+          return
+        fi
+
+        if [[ "$dir" == "${nixConfigsParent}/${nixConfigsBase}_"* ]]; then
+          local rel="''${dir#${nixConfigsParent}/${nixConfigsBase}_}"
+          echo "''${rel%%/*}"
           return
         fi
 

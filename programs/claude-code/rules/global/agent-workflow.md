@@ -49,7 +49,8 @@ On failure: read the error → fix → re-run → loop until green. Only escalat
 Once fully green:
 
 1. **Commit your changes** with a descriptive message that clearly names what you implemented (e.g. `feat: add X`, `fix: resolve Y`). Do not batch unrelated changes into one commit.
-2. **Run `/review once <commit>`** passing the hash(es) of the commit(s) you just created — e.g. `/review once abc1234` for one commit or `/review once abc1234..def5678` for a range. Style and naming rules live exclusively in the review skill — the coding agent has no other access to them. All findings are applied automatically.
+2. **Push immediately after every commit**: `git push` (or `git push -u origin <branch>` if no upstream is set yet).
+3. **Run `/review once <commit>`** passing the hash(es) of the commit(s) you just created — e.g. `/review once abc1234` for one commit or `/review once abc1234..def5678` for a range. Style and naming rules live exclusively in the review skill — the coding agent has no other access to them. All findings are applied automatically.
 
 ## Development Setup
 

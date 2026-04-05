@@ -9,7 +9,7 @@ The orchestrator runs repeated rounds of review and applies fixes automatically,
 3. Split findings: set aside all `FIXABLE: no` findings into a running accumulator (never fix these, just collect across rounds)
 4. If no `FIXABLE: yes` findings at the current de-escalation level → **stop** (see Termination)
 5. Apply all `FIXABLE: yes` findings as code fixes
-6. Commit: `git commit -m "review: round N fixes"`
+6. Commit and push: `git commit -m "review: round N fixes"` then `git push`
 7. Increment round counter → go to step 1
 
 ## De-escalation rules
