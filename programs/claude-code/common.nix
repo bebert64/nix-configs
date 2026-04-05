@@ -25,7 +25,7 @@ let
           hooks = [
             {
               type = "command";
-              command = "bash ${notifyHook}";
+              command = "bash ${homeDir}/.claude/hooks/notify.sh";
             }
           ];
         }
