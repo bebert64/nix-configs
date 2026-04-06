@@ -9,7 +9,5 @@ in
   home.activation.symlinkClaudeStockly = lib.hm.dag.entryAfter [ "symlinkClaudeSettings" ] ''
     # Stockly rules
     ln -sfT ${nixPrograms}/claude-code/rules/stockly ${homeDir}/.claude/rules/stockly
-
-
   '';
 }
