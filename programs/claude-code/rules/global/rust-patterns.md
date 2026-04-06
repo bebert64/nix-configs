@@ -20,10 +20,7 @@ paths:
 
 ## Imports
 
-- Imports must be grouped using `use { ... }` syntax.
-- Visibility (`pub`) doesn't affect grouping — `use` and `pub use` from the same group should NOT have a newline between them.
 - **Never use more than one `super::`** (e.g., `super::super::...`). Use `crate::explicit::path` instead for anything beyond immediate parent.
-- **Use wildcard import for `don_error`**: Always `use don_error::*;` — do not import specific items individually.
 
 ## Safety
 
@@ -37,11 +34,6 @@ paths:
 
 - Diesel: always use full `schema::table_name::column` path. Never import tables into scope (no `use schema::table_name;` or `use schema::table_name::dsl::*;`). For `#[derive(Selectable)]`, explicitly specify `#[diesel(table_name = schema::table_name)]`.
 - **Join cardinality**: when doing joins (inner or left), check the relationship cardinality. Non-1:1 joins produce duplicate rows that can corrupt aggregations — handle with `GROUP BY`, deduplication, or restructuring the query.
-
-## Cargo.toml conventions
-
-- **`[package]` fields** must be alphabetically ordered: `authors`, `default-run` (if multiple bins), `edition` (currently `"2024"`), `name`, `publish` (`false`), `version` (`"1.0.0"`), `workspace` (relative path to workspace `Cargo.toml`).
-- **`[features]`** must be alphabetically sorted and `snake_case` named.
 
 ## Project tooling
 

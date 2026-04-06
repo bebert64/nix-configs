@@ -13,8 +13,7 @@
     ../programs/avidemux
     ../programs/calculator
     ../programs/chromium
-    ../programs/claude-code
-    ../programs/claude-code/perso-specific.nix
+    ../programs/claude-code/workstation.nix
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip

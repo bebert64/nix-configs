@@ -31,7 +31,8 @@ in
       update = "run-in-nix-repo nix-switch";
       update-dirty = "run-in-nix-repo-dirty nix-switch";
       update-clean = "run-in-nix-repo 'sudo nix-collect-garbage -d && nix-switch'";
-      update-raspi4 = "run-in-nix-repo '"
+      update-raspi4 =
+        "run-in-nix-repo '"
         + "b=$(git branch --show-current); "
         + "GIT_BRANCH=$b inhibit-and-sleep nixos-rebuild build --flake .#raspi4 --impure"
         + " && GIT_BRANCH=$b nixos-rebuild switch --target-host raspi4 --sudo --ask-sudo-password --flake .#raspi4 --impure"

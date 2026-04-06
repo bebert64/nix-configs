@@ -4,6 +4,9 @@
 }:
 let
   homeDir = config.home.homeDirectory;
+  inherit (config.byDb.paths) nixConfigs;
+  nixConfigsBase = builtins.baseNameOf nixConfigs;
+  nixConfigsParent = builtins.dirOf nixConfigs;
 in
 {
   programs.zsh = {
@@ -19,18 +22,31 @@ in
           return
         fi
 
+        if [[ "$dir" == "${nixConfigs}" || "$dir" == "${nixConfigs}/"* ]]; then
+          local branch
+          branch="$(git branch --show-current 2>/dev/null)"
+          [[ -n "$branch" ]] && echo "$branch" || echo "Home"
+          return
+        fi
+
+        if [[ "$dir" == "${nixConfigsParent}/${nixConfigsBase}_"* ]]; then
+          local rel="''${dir#${nixConfigsParent}/${nixConfigsBase}_}"
+          echo "''${rel%%/*}"
+          return
+        fi
+
         if [[ "$dir" == "${homeDir}/Stockly"* ]]; then
           if [[ "$dir" == "${homeDir}/Stockly" ]]; then
-            echo "Stockly - Home"
+            echo "Home"
           else
             local rel="''${dir#${homeDir}/Stockly/}"
             local top="''${rel%%/*}"
             if [[ "$top" == "Main" ]]; then
-              echo "Stockly - Main"
+              echo "Main"
             elif [[ "$top" == Main_* ]]; then
-              echo "Stockly - ''${top#Main_}"
+              echo "''${top#Main_}"
             else
-              echo "Stockly - $top"
+              echo "$top"
             fi
           fi
           return
@@ -38,20 +54,20 @@ in
 
         if [[ "$dir" == "${homeDir}/code"* ]]; then
           if [[ "$dir" == "${homeDir}/code" ]]; then
-            echo "Perso - Home"
+            echo "Home"
           else
             local rel="''${dir#${homeDir}/code/}"
             local top="''${rel%%/*}"
             if [[ "$top" == "nix-configs" ]]; then
-              echo "Nix - Home"
+              echo "Home"
             elif [[ "$top" == nix-configs_* ]]; then
-              echo "Nix - ''${top#nix-configs_}"
+              echo "''${top#nix-configs_}"
             elif [[ "$top" == "Main" ]]; then
-              echo "Perso - Code"
+              echo "Code"
             elif [[ "$top" == Main_* ]]; then
-              echo "Perso - ''${top#Main_}"
+              echo "''${top#Main_}"
             else
-              echo "Perso - $top"
+              echo "$top"
             fi
           fi
           return
@@ -75,7 +91,17 @@ in
 
       _auto_title_preexec() {
         local title="$1"
-        [[ "$title" == claude* ]] && title="* Claude Code"
+        if [[ "$title" == claude-orthos* ]]; then
+          local args="''${title#claude-orthos}"
+          args="''${args# }"
+          if [[ -n "$args" ]]; then
+            print -Pn "\e]2;Claude (orthos: $args)\a"
+          else
+            print -Pn "\e]2;Claude (orthos: Main)\a"
+          fi
+          return
+        fi
+        [[ "$title" == claude* ]] && title="Claude"
         print -Pn "\e]2;$title$(_title_suffix)\a"
       }
 

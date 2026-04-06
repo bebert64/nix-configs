@@ -11,8 +11,9 @@
         frame_width = 1;
         frame_color = "#414868";
         separator_color = "frame";
-        padding = 10;
-        horizontal_padding = 12;
+        width = 600;
+        padding = 50;
+        horizontal_padding = 50;
       };
 
       urgency_low = {
@@ -27,11 +28,16 @@
         timeout = 8;
       };
 
+      spotify = {
+        appname = "Spotify";
+        skip_display = true;
+      };
+
       urgency_critical = {
         background = "#1a1b26";
         foreground = "#f7768e";
         frame_color = "#f7768e";
-        timeout = 0;
+        timeout = 90;
       };
     };
   };

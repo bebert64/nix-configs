@@ -29,16 +29,6 @@ When the Id comes from an external source and has NOT been validated, wrap it in
 
 Never pass around domain values as raw `String` or `&str` when a typed wrapper exists. Use the structured type from the appropriate crate (e.g., `countries::Language`, `countries::Alpha3`, `countries::Currency`). Parse raw strings into the typed wrapper at the serialization boundary and propagate the typed value through the rest of the code.
 
-## Visibility and Privacy
-
-Apply visibility in this priority order:
-
-1. **Private** (default) -- leave everything private unless you need otherwise.
-2. **`pub(crate)`** -- when you need access outside the module without re-exporting.
-3. **`pub`** -- only when the item is part of the crate's public API. Avoid `pub` otherwise because it suppresses `unused` warnings.
-
-**Avoid** `pub(super)` and `pub(in path)` -- they increase refactoring cost.
-
 ## Error vs Fail: Two-Level Result Pattern
 
 Use two levels of `Result` to distinguish infrastructure errors from business failures:
@@ -65,11 +55,3 @@ Always match every `Fail` variant explicitly. Do NOT use catch-all (`_`) pattern
 ### Exception for wrapping Fails
 
 You may wrap a `Fail` unconditionally into another `Fail` (without matching each variant) **if and only if** every new fail case of the called function would always also be a fail of the current function. Use `#[derive(derive_more::From)]` or the `try_or_wrap!` macro for this.
-
-## Destructure Structs Without `..`
-
-By default, destructure structs without the `..` rest pattern, especially in function arguments. This forces handling or acknowledging every field when the struct is updated. Skip destructuring only if you would need to rename a significant number of fields for clarity or conflict.
-
-## Avoid `#[allow(unused)]` on Fail Fields
-
-When Fail variant fields are only used in the Debug implementation, do NOT suppress the unused warning with `#[allow(unused)]`. Instead, use the fields explicitly when converting the Fail to an RPC status -- this produces better error messages and ensures the data is relevant.

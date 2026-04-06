@@ -18,8 +18,6 @@ Always follow the additionals pattern for gRPC services:
 2. Clean structs/enums in additionals (with `From`/`Into` to raw proto)
 3. Applicative/service structs (in service layer, convert to clean types)
 
-**Naming convention**: Clean structs use the "default" names (e.g., `RenderAndSendMessageRequest`). Proto types are the "dirty" ones and should be aliased if needed (e.g., `ProtoRenderAndSendMessageRequest`).
-
 **`.validated()` method**: Add a convenience method on proto types for clean conversion. Must always be a simple wrapper around `TryFrom` — never duplicate validation logic:
 ```rust
 impl proto::MyRequest {
@@ -30,10 +28,6 @@ impl proto::MyRequest {
 ```
 
 In RPC handlers, use `req.validated()` instead of `(&*req).try_into().on_field("request")`.
-
-## Proto generation
-
-To regenerate proto Rust code after modifying a `.proto` file, just run `cargo check` in the service where the protos are defined. The `build.rs` will handle regeneration automatically.
 
 ## Model IDs
 
@@ -64,7 +58,3 @@ To regenerate proto Rust code after modifying a `.proto` file, just run `cargo c
 
 - **`From<Fail> for RpcStatus`**: implement this conversion to enable `try_or_wrap!` in the RPC's `perform` function for legitimate caller-side failures (e.g., entity not found after pre-validation passed).
 - **gRPC metadata limit**: hard limit of 16384 bytes for status code + error message through gRPC metadata channels.
-
-### Response structure
-
-- **Recap struct**: when an RPC returns complex results, create a named `Recap` struct with properly named fields in the application code. Convert it to the corresponding proto `Recap` in the RPC layer. This keeps application logic clean and makes the return value self-documenting.

@@ -6,32 +6,13 @@ paths:
 
 ## Naming
 
-- Field names, enum/type names, and variant names: `snake_case`.
-- Boolean fields start with `has_`, `is_`, or `does_`.
-- Timestamps end with `_at` and must always be stored as `timestamptz` in UTC.
-- Dates end with `_date`. Months end with `_month` and must be truncated to a date format.
-- Avoid bare `date`, `month`, `type`, `id`, `name` as column names — always prefix with what they identify (e.g., `deal_closed_at`, `order_type`), or access through a table alias.
-- Cross-service FK columns: prefix with the service name.
-- When migrating to a new field that replaces an old one, give the new field its intended final name and suffix the old field.
-
-## Aliasing
-
-- Table alias: first letter of each word (e.g., `ol` for `order_lines`, `dd` for `delivery_disputes`).
-
-## Formatting
-
-- Each selected column on its own row. Exception: `SELECT *` may be on one row.
-- `DISTINCT` on the same row as `SELECT`.
-- Fields listed before aggregates/window functions; grouping fields first.
-- Standard SQL keywords and function names: `CAPITALIZED`. Custom function names: `snake_case`.
-- Lines max 100 characters.
-- Prefer `--` comments over `/* */`.
-- Newlines are cheap, brain time is expensive — optimize for correctness, readability, then performance.
+- Timestamps must always be stored as `timestamptz` in UTC.
+- Month columns must be truncated to a date format.
+- Do not use acronyms if the column name is under 64 characters. If it exceeds 64 characters, abbreviate and add a `COMMENT ON` statement with the full unabbreviated name.
 
 ## Joins
 
 - Always explicit: `INNER JOIN`, `LEFT JOIN`, etc. Never use implicit joins. Never bare `JOIN` (it defaults to `INNER` but isn't explicit).
-- Join condition: `JOIN` table first, `FROM` table second in the `ON` clause.
 
 ## WHERE
 
@@ -41,7 +22,6 @@ paths:
 
 ## Comparisons
 
-- Prefer `!=` over `<>` — more common across languages and reads as "not equal".
 - For nullable values: prefer `IS DISTINCT FROM` over `!=`, because `NULL` trumps anything with `=`/`!=`.
 - In triggers comparing `OLD` to `NEW`: always use `IS DISTINCT FROM` — columns may become nullable in the future.
 - The underscore `_` in `LIKE` matches any single character. To match a literal underscore, escape as `\_`.
@@ -50,17 +30,7 @@ paths:
 
 - For every new function `my_function`, add a unit test function `tunit_my_function` using pgTAP `IS(computed, expected, description)` assertions.
 - Use `plpgsql` language over `sql` (even though the syntax is more verbose) for consistency and better error handling.
-- Simplify repetitive `CASE` statements where possible.
-- Indent `CASE` statements: align `CASE` with `END`, and `WHEN` with `WHEN` and `ELSE`.
 - Prefer explicit date functions over `date_part` over `EXTRACT`.
-
-## Creating tables
-
-- `id` should be the first column when present.
-- Do not use acronyms if the column name is under 64 characters. If it exceeds 64 characters, abbreviate and add a `COMMENT ON` statement with the full unabbreviated name.
-- Column declaration order: `"name" type nullability check`.
-- Keep related columns close to each other.
-- History tables: name as `${table_name}_${column_name}_history`.
 
 ## Indexes
 

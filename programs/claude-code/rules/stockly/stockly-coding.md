@@ -6,7 +6,6 @@ paths:
 ## `intl!` macro
 
 - `intl!` takes the same args as `format!`, so never wrap `format!()` inside `intl!()` — use `intl!("...", args)` directly.
-- Sentry aggregates events by title. Variable parts (IDs, counts, etc.) in `intl!` messages break aggregation. Put variable details in parentheses — text in parentheses is excluded from aggregation. E.g. `"Email has too many attachments ({count}, limit is {max})"` aggregates on "Email has too many attachments" while keeping details visible.
 
 ## Float comparisons
 

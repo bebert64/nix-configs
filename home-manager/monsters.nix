@@ -6,8 +6,7 @@
 {
   imports = [
     ../programs/btop
-    ../programs/claude-code
-    ../programs/claude-code/stockly-specific.nix
+    ../programs/claude-code/monsters.nix
     ../programs/git
     ../programs/neovim
     ../programs/ranger
