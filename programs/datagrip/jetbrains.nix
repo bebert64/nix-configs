@@ -1,13 +1,13 @@
 { pkgs, lib, ... }:
 
 let
-  jaJetfilterBaseUrl = "https://ipfs.filebase.io/ipfs/bafybeih65no5dklpqfe346wyeiak6wzemv5d7z2ya7nssdgwdz4xrmdu6i";
+  jaJetfilterBaseUrl = "https://3.jetbra.in";
   jaNetfilter = pkgs.stdenv.mkDerivation {
     # https://jetbra.in/s
     name = "ja-netfilter";
     src = pkgs.fetchzip {
-      url = "${jaJetfilterBaseUrl}/files/jetbra-8f6785eac5e6e7e8b20e6174dd28bb19d8da7550.zip";
-      hash = "sha256-FvjwrmRE9xXkDIIkOyxVEFdycYa/t2Z0EgBueV+26BQ=";
+      url = "${jaJetfilterBaseUrl}/files/jetbra-5a50fc03d68a014f893b7fc3aa465380d59f9095.zip";
+      hash = "sha256-iCtLAmJ1uBU2VtU/EbgASI5Ws9pUJUpWxOB6xsZjgVs=";
     };
     installPhase = ''
       mkdir -p $out
@@ -25,7 +25,7 @@ let
 
       src = pkgs.fetchurl {
         url = jaJetfilterBaseUrl;
-        hash = "sha256-/ojbOi/nXxnMEMbz9RDyVz01/a/20SW9GxG/Wvjzmic=";
+        hash = "sha256-cQc/LU13zDlv7f0ymBg7OBUJ7ISc+/TDrLpubQzAn1o=";
       };
       dontUnpack = true;
 

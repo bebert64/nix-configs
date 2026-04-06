@@ -349,17 +349,17 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1775148523,
-        "narHash": "sha256-u/r/NVP+wcsKhcV5xu3mDkdog7Sxme6zkdOyeqd8384=",
-        "ref": "refs/heads/master",
-        "rev": "bcf5871a379a5a181dce6671e5b503d3ea234f16",
-        "revCount": 311,
+        "lastModified": 1775475586,
+        "narHash": "sha256-KL1FV+e5Jg8/sCt6BTzFhYCHF/hBSQ8X0ydrFblxqI0=",
+        "ref": "refs/heads/fix/ipfs-gateway-dweb",
+        "rev": "1fd32abe70040cd512734bf63cb30d33de86c934",
+        "revCount": 313,
         "type": "git",
-        "url": "ssh://git@github.com/Stockly/Computers.git"
+        "url": "file:///tmp/Computers"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/Stockly/Computers.git"
+        "url": "file:///tmp/Computers"
       }
     },
     "systems": {
