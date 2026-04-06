@@ -4,7 +4,7 @@
 }:
 let
   homeDir = config.home.homeDirectory;
-  nixConfigs = config.byDb.paths.nixConfigs;
+  inherit (config.byDb.paths) nixConfigs;
   nixConfigsBase = builtins.baseNameOf nixConfigs;
   nixConfigsParent = builtins.dirOf nixConfigs;
 in
