@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -13,13 +14,19 @@
     ../programs/secrets
   ];
 
-  options.byDb.paths.nixPrograms = lib.mkOption {
-    type = lib.types.str;
+  options.byDb.paths = {
+    nixConfigs = lib.mkOption { type = lib.types.str; };
+    nixPrograms = lib.mkOption {
+      type = lib.types.str;
+      internal = true;
+      readOnly = true;
+      default = "${config.byDb.paths.nixConfigs}/programs";
+    };
   };
 
   config = {
     byDb = {
-      paths.nixPrograms = "/home/romain/nix-configs/programs";
+      paths.nixConfigs = "/home/romain/nix-configs";
       git = {
         user = {
           name = "RomainC";
