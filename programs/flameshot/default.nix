@@ -6,7 +6,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  inherit (config.xsession.windowManager.i3.config) modifier;
   rofi = config.rofi.defaultCmd;
   rofiScreenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
     selection="$(echo -en \

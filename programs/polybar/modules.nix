@@ -18,7 +18,7 @@
     let
       homeManagerBydbConfig = config.byDb;
       homeDir = config.home.homeDirectory;
-      colors = homeManagerBydbConfig.polybar.colors;
+      inherit (homeManagerBydbConfig.polybar) colors;
       displayTitle = "${pkgs.writeScriptBin "playerctl-display-title" ''
         PATH=${
           lib.makeBinPath [

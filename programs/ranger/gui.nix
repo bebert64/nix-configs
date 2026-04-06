@@ -5,7 +5,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  inherit (config.xsession.windowManager.i3.config) modifier;
   rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   sshr = "${pkgs.writeScriptBin "sshr" ''

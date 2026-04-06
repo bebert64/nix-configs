@@ -54,7 +54,7 @@
           extraSpecialArgs ? { },
         }:
         nixpkgs.lib.nixosSystem {
-          modules = modules;
+          inherit modules;
           specialArgs = {
             inherit
               home-manager

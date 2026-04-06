@@ -7,7 +7,7 @@
 }:
 let
   homeDir = config.home.homeDirectory;
-  nixPrograms = config.byDb.paths.nixPrograms;
+  inherit (config.byDb.paths) nixPrograms;
   symlinkPath = config.sops.defaultSymlinkPath;
   claudeWithVoice = pkgs.writeShellScriptBin "claude" ''
     # PulseAudio forwarding for Claude Code voice mode on monsters

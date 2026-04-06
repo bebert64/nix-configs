@@ -59,8 +59,8 @@
         users.${userConfig.name} = {
           byDb = {
             user = {
-              name = userConfig.name;
-              description = userConfig.description;
+              inherit (userConfig) name;
+              inherit (userConfig) description;
             };
             git = {
               user = {

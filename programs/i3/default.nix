@@ -6,7 +6,7 @@
 }:
 let
   homeManagerBydbConfig = config.byDb;
-  exitMode = homeManagerBydbConfig.i3.exitMode;
+  inherit (homeManagerBydbConfig.i3) exitMode;
   jq = "${pkgs.jq}/bin/jq";
   i3msg = "${pkgs.i3}/bin/i3-msg";
   moveWorkspaceToOutput =

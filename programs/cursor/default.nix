@@ -6,10 +6,10 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
-  paths = config.byDb.paths;
+  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) paths;
   homeDir = config.home.homeDirectory;
-  nixPrograms = paths.nixPrograms;
+  inherit (paths) nixPrograms;
   rofi = config.rofi.defaultCmd;
   # Lists worktree display names: "Main" stays "Main", "Main_foo" becomes "foo"
   listWorktreeNames = pkgs.writeScript "list-worktree-names" ''

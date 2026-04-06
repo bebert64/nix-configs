@@ -6,7 +6,7 @@
 let
   homeDir = config.home.homeDirectory;
   stashDir = "${homeDir}/.stash";
-  stash = pkgs.stash;
+  inherit (pkgs) stash;
 in
 {
   home = {

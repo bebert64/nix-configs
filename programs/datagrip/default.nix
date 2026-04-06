@@ -5,7 +5,7 @@
   ...
 }:
 let
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  inherit (config.xsession.windowManager.i3.config) modifier;
   homeDir = config.home.homeDirectory;
   datagripProjectsDir = "${homeDir}/datagrip-projects";
   nixDatagripDir = "${config.byDb.paths.nixPrograms}/datagrip/datasources";

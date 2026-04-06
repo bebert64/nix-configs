@@ -14,7 +14,7 @@ let
     writeScriptBin
     ;
   homeManagerBydbConfig = config.byDb;
-  modifier = config.xsession.windowManager.i3.config.modifier;
+  inherit (config.xsession.windowManager.i3.config) modifier;
 in
 {
   options.byDb = {
