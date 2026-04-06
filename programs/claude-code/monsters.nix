@@ -10,8 +10,6 @@ in
     # Stockly rules
     ln -sfT ${nixPrograms}/claude-code/rules/stockly ${homeDir}/.claude/rules/stockly
 
-    # Stockly docs
-    ln -sfT ${nixPrograms}/claude-code/docs/stockly ${homeDir}/.claude/docs/stockly
 
   '';
 }

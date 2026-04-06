@@ -65,8 +65,8 @@ in
         mkdir -p ${homeDir}/.claude/hooks
         ln -sf ${notifyHook} ${homeDir}/.claude/hooks/notify.sh
 
-        # Docs directory (individual items added by machine-specific nix files)
-        mkdir -p ${homeDir}/.claude/docs
+        # Docs
+        ln -sfT ${nixPrograms}/claude-code/docs ${homeDir}/.claude/docs
 
         NOTION_TOKEN="$(cat ${symlinkPath}/stockly/mcp/notion-token)"
         SENTRY_TOKEN="$(cat ${symlinkPath}/stockly/mcp/sentry-token)"
