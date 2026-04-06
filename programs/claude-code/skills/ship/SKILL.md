@@ -7,122 +7,133 @@ description: >
 
 # Ship
 
-Implement a task end-to-end and self-review until the code is production-ready, without interrupting the user mid-way.
+Implement a task end-to-end and self-review until production-ready, without interrupting the user.
 
-**Never invoke this skill on your own initiative.** It applies fixes, commits code, and runs for multiple rounds. It must only run when the user has explicitly asked for unattended end-to-end delivery.
-
----
-
-## Phase 1 — Clarification (mandatory, never skip)
-
-The goal of this phase is to reach a state where every implementation decision is pinned down before a single line of code is written. Ambiguity now becomes a blocker mid-run.
-
-### 1A — Check for an existing plan
-
-If the user invoked `/ship <plan-file>` or referenced a specific plan:
-
-1. Read the plan file in full.
-2. Treat it as having gone through Phase 1 already — **do not re-ask things the plan already answers**.
-3. Still read the relevant code to verify the plan's assumptions are still valid (the plan may be stale).
-4. Only ask questions about genuine remaining gaps or newly-discovered contradictions.
-
-If no plan was provided, proceed to 1B from scratch.
-
-### 1B — Explore & identify unknowns
-
-Follow `agent-workflow.md`: read the relevant code, understand the current behaviour, and enumerate every open question. No question is too small — an unanswered detail during a long autonomous run will force an interruption or produce wrong code.
-
-Typical categories to cover:
-- **Scope**: exactly which files / services / features are in scope? What is explicitly out of scope?
-- **Behaviour**: edge cases, error cases, what happens when X is missing or invalid?
-- **Design decisions**: if multiple valid approaches exist, which one?
-- **Constraints**: performance, backwards-compatibility, migration needs, feature flags?
-- **Validation**: how will "done" be verified? Are there existing tests to run?
-
-### 1C — Decide whether to ask or proceed
-
-After exploration, apply the following decision rule for each open point:
-
-- **Can you make this decision confidently from the code, context, or prior conversation?** → Document the decision in the plan and proceed. Do not ask.
-- **Is this genuinely ambiguous and would a wrong call require significant rework?** → Add it to the question list.
-
-**If the question list is empty, skip straight to Phase 2 — do not invent questions or ask for confirmation on things that are already clear.**
-
-If there are questions, write them as a numbered list grouped by category and ask once. On receiving answers, apply this filter before proceeding:
-
-For each answer, ask yourself: *"If I started coding right now, could this answer lead to a wrong implementation decision?"* If yes, the answer is not precise enough. Push back:
-
-- If an answer is vague ("just do whatever makes sense"), name the specific options you see and ask the user to pick one.
-- If an answer contradicts something in the codebase ("we don't use X here"), surface the contradiction explicitly.
-- If an answer defers a decision ("you decide"), confirm you are truly empowered to decide, then document your choice in the plan and flag it in Phase 5.
-
-Do not start Phase 2 until every answer is actionable — but equally, do not wait for answers that were never needed.
+**Never invoke this skill on your own initiative.** It commits code and runs for multiple rounds. It must only run when the user explicitly asks for unattended end-to-end delivery.
 
 ---
 
-## Phase 2 — Write the plan file
+## Orchestrator model
 
-Before writing any code, create a plan file at `~/.claude/plans/<short-id>-ship.md` (use the ticket/branch short ID, or a slug of the task if none exists).
+Ship runs as a **pure orchestrator**. All heavy work is delegated to sub-agents:
 
-The plan file must contain:
+- A **planning sub-agent** (Phase 1) explores the codebase, creates or verifies the plan, and surfaces questions.
+- **Implementation sub-agents**, one per chunk (Phase 3), run in parallel and each own their full implement → verify → commit loop.
+- The **review skill** (Phase 4) handles self-review with its own sub-agents.
 
-```
-## Branch
-<current git branch>
-
-## Short ID
-<ticket code or task slug>
-
-## Category
-<qtt | review | tech-task | other>
-
-## Status
-In progress
-
-## Goal
-<one paragraph: what this implements and why>
-
-## Steps
-1. [DONE/IN PROGRESS/TODO] <step description>
-   A. [DONE/IN PROGRESS/TODO] <sub-step>
-   B. ...
-2. ...
-
-## Key decisions
-- <decision made in Phase 1 that is non-obvious>
-
-## Open points
-- <anything that could not be resolved and was deferred>
-```
-
-Update `~/.claude/plans/_index.json` as required by the plans rules in `ai-behavior.md`.
-
-**Keep the plan updated throughout execution.** After completing each step or sub-step, mark it `DONE` and update `Status`. This is the recovery checkpoint — if the run is interrupted, the next agent reads this file and resumes from the first non-`DONE` step.
+The orchestrator never reads source files, never writes code, and keeps its context lean. Its only jobs are: dispatching agents, forwarding questions to the user, tracking the chunk dependency graph, and reporting at the end.
 
 ---
 
-## Phase 3 — Implement & verify
+## Phase 0 — Gate check (only when no plan is referenced)
 
-Follow the standard `agent-workflow.md` implementation loop. After each logical unit:
+If the user provided a **textual description** rather than a plan file path:
 
-1. Run compile check.
-2. Run clippy.
-3. Run affected tests.
-4. Fix any failures before moving on.
-5. Mark the corresponding plan step `DONE`.
-6. Commit with a descriptive message.
+Before launching any sub-agent, produce a brief recap directly in the conversation (hard cap: **15 lines**):
 
-Never batch multiple logical units into one commit. Never commit code that doesn't compile.
+- What will be built — features, components, services, scope **in**
+- What will **not** be built — explicit exclusions, deferred work, out-of-scope
+- Any apparent ambiguity phrased as a direct question (max 3)
+
+**Wait for the user to confirm or correct this recap before continuing.**
+
+This is the only mandatory human gate in the workflow. Its purpose is to catch scope misreadings (wrong architecture, missing half of the task) before any code is written. Keep it tight — this is a checkpoint, not a design review.
+
+If a plan file was referenced, skip Phase 0 entirely.
+
+---
+
+## Phase 1 — Planning sub-agent
+
+Dispatch a single **Plan-type sub-agent** with the following instructions:
+
+> You are the planning agent for a ship workflow. Your job is to produce a complete, implementation-ready plan. Do NOT write any code.
+>
+> **If a plan file already exists for this branch** (check `~/.claude/plans/_index.json` using the branch short ID):
+> 1. Read the plan in full.
+> 2. Read the relevant source files to verify its assumptions are still valid.
+> 3. Identify any remaining gaps, stale steps, or contradictions.
+> 4. Return the (possibly updated) plan path and a list of open questions (may be empty).
+>
+> **If no plan exists**:
+> 1. Read `AGENTS.md` at the repo root, then the relevant service's `AGENTS.md` if it exists.
+> 2. Read `~/.claude/docs/README.md` and relevant docs.
+> 3. Read ALL relevant source files (existing behaviour, data structures, API surface, tests).
+> 4. Identify every open question, covering at minimum these categories:
+>    - **Scope**: exactly which files / services / features are in? What is explicitly out?
+>    - **Behaviour**: edge cases, error cases, what happens when X is missing or invalid?
+>    - **Design decisions**: if multiple valid approaches exist, which one?
+>    - **Constraints**: performance, backwards-compatibility, migration needs, feature flags?
+>    - **Validation**: how will "done" be verified? Are there existing tests to run?
+> 5. Write a plan file at `~/.claude/plans/<short-id>-ship.md` following the format in the plans rules.
+> 6. The plan **must** include a `## Chunks` section that groups implementation steps into independently-shippable units, each sized for a single sub-agent pass (1–3 files, clear inputs/outputs), with an explicit dependency graph.
+> 7. Update `~/.claude/plans/_index.json`.
+> 8. Return the plan file path and a list of open questions (may be empty).
+>
+> **Question discipline**: only surface questions where a wrong call would require significant rework. Omit anything answerable from the code or prior conversation.
+
+Once the planning sub-agent returns:
+
+- If there are **no questions**: proceed immediately to Phase 2.
+- If there are **questions**: ask them to the user as a single numbered list grouped by category. On receiving answers, apply this filter to each answer before passing anything to the planning sub-agent:
+
+  > *"If I started coding right now, could this answer lead to a wrong implementation decision?"*
+
+  If yes, the answer is not precise enough. Push back before proceeding:
+
+  - **Vague answer** ("just do whatever makes sense") → name the specific options you see and ask the user to pick one.
+  - **Answer contradicts the codebase** ("we don't use X here") → surface the contradiction explicitly.
+  - **Deferred decision** ("you decide") → confirm you are truly empowered to decide, then document your choice in the plan and flag it in Phase 5.
+
+  Do not forward answers to the planning sub-agent until every answer is actionable. Then pass all answers in one shot — do not loop back to the user a second time unless a genuinely new contradiction is discovered.
+
+---
+
+## Phase 2 — Execution plan
+
+Read the `## Chunks` section of the plan. Build a dependency graph. Identify the first wave (chunks with no unmet dependencies).
+
+Do not dispatch any implementation agents yet — just confirm the execution order in your own reasoning.
+
+---
+
+## Phase 3 — Implementation (parallel sub-agents)
+
+Dispatch implementation sub-agents wave by wave, respecting the dependency graph. Run up to **4 agents concurrently** per wave.
+
+Each sub-agent receives:
+- The full plan text (so it has context on the overall goal and all prior decisions)
+- Its specific chunk: which steps to implement, which files to create/modify, which prior steps' outputs it depends on
+- Standard instructions:
+
+> 1. `git pull` first.
+> 2. Read all files you will modify before touching them.
+> 3. Implement the chunk as described.
+> 4. After each file change: `cargo check --quiet -p <crate>` (or equivalent for non-Rust).
+> 5. After the full chunk: run clippy and affected tests.
+> 6. Fix all failures before committing.
+> 7. Commit each logical unit separately — never batch unrelated changes into one commit. Never commit code that doesn't compile. Then `git push`.
+> 8. Report: commit hash, any deviations from the plan, any decisions made.
+>
+> Use `isolation: worktree` so parallel agents don't conflict.
+
+After each wave completes, read the sub-agent reports, update the plan step statuses to `DONE` in the plan file, then dispatch the next wave. **The plan file is the recovery checkpoint** — if the run is interrupted, a future agent reads it and resumes from the first non-`DONE` step.
+
+If a sub-agent reports a failure it cannot resolve, pause and surface it to the user before continuing.
 
 ---
 
 ## Phase 4 — Self-review
 
-Once the verification loop is fully green, invoke `/review auto`.
+Once all chunks are committed and pushed, update the plan `Status` to `Review`, then invoke:
 
-The review skill runs multiple focused sub-agent rounds, applies fixes automatically, and de-escalates until no findings remain. Do not interrupt the user during this phase.
+```
+/review auto
+```
 
-Update the plan `Status` to `Review` before starting, then `Done` when complete.
+The review skill dispatches its own sub-agents per file batch and theme, applies all fixable findings automatically, and runs until no findings remain. Do not interrupt the user during this phase.
+
+Update plan `Status` to `Done` when the review is clean.
 
 ---
 
@@ -131,7 +142,7 @@ Update the plan `Status` to `Review` before starting, then `Done` when complete.
 Present a concise summary to the user:
 
 - **What was implemented** (link to plan file for full detail)
-- **Verification**: compile / clippy / tests — pass/fail
-- **Review**: how many rounds ran, what categories of issues were fixed
-- **Decisions made autonomously** during the run (from "you decide" answers in Phase 1)
-- **Open points** that could not be auto-fixed and require a judgement call
+- **Verification**: compile / clippy / tests — pass or fail
+- **Review**: categories of issues found and fixed
+- **Decisions made autonomously** during the run (non-obvious calls not covered by the user's answers)
+- **Open points** that could not be auto-fixed and need a judgement call
