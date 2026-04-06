@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stockly-computers = {
-      url = "git+ssh://git@github.com/Stockly/Computers.git";
+      url = "git+file:///tmp/Computers";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server = {
