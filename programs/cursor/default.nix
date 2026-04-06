@@ -11,14 +11,16 @@ let
   homeDir = config.home.homeDirectory;
   inherit (paths) nixPrograms;
   rofi = config.rofi.defaultCmd;
-  # Lists worktree display names: "Main" stays "Main", "Main_foo" becomes "foo"
+  # Lists worktree display names: prefix stays as-is, prefix_foo becomes "foo"
+  # $1 = base path, $2 = prefix (default: Main)
   listWorktreeNames = pkgs.writeScript "list-worktree-names" ''
     #!/usr/bin/env bash
+    prefix="''${2:-Main}"
     cd "$1" && {
-      for d in Main Main_*; do
+      for d in "$prefix" "''${prefix}_"*; do
         [ -d "$d" ] && echo "$d"
       done
-    } | LC_ALL=C sort -fu | sed 's/^Main_//'
+    } | LC_ALL=C sort -fu | sed "s/^''${prefix}_//"
   '';
   listSubdirs = pkgs.writeScript "list-subdirs" ''
     #!/usr/bin/env bash
@@ -33,67 +35,39 @@ let
           exit 0
         ' _ | sed 's|^./||' | LC_ALL=C sort -f
   '';
-  writeNixWorkspace = pkgs.writeScript "write-nix-workspace" ''
-    #!/usr/bin/env bash
-    nix_configs_path="$1"
-    code_worktree_path="$2"
-    workspace_dir="$HOME/.cursor/workspaces"
-    mkdir -p "$workspace_dir"
-    worktree_name=$(basename "$code_worktree_path")
-    workspace_file="$workspace_dir/nix-with-$worktree_name.code-workspace"
-    cat > "$workspace_file" << EOF
-    {
-      "folders": [
-        {"path": "$nix_configs_path"},
-        {"path": "$code_worktree_path"}
-      ]
-    }
-    EOF
-    echo "$workspace_file"
-  '';
   mkOpenScript =
     {
       scriptName,
       host ? null,
       basePath,
       rofiWidth ? "20%",
-      nixConfigsPath ? null,
+      worktreePrefix ? "Main",
+      skipSubdirs ? false,
     }:
     let
       isRemote = host != null;
-      isNix = nixConfigsPath != null;
       fetchNames =
         if isRemote
-        then "timeout 5 ssh -o ConnectTimeout=5 ${host} bash -s -- ${basePath} < ${listWorktreeNames} 2>/dev/null"
-        else "${listWorktreeNames} ${basePath} 2>/dev/null";
+        then "timeout 5 ssh -o ConnectTimeout=5 ${host} bash -s -- ${basePath} ${worktreePrefix} < ${listWorktreeNames} 2>/dev/null"
+        else "${listWorktreeNames} ${basePath} ${worktreePrefix} 2>/dev/null";
       fetchSubdirs =
         if isRemote
         then "ssh ${host} bash -s -- ${basePath}/$worktree < ${listSubdirs} 2>/dev/null"
         else "${listSubdirs} ${basePath}/$worktree 2>/dev/null";
-      nameMenuInput =
-        if isNix
-        then ''(echo "nix-configs only"; echo "$names") | ''
-        else ''echo "$names" | '';
-      nameCheck =
-        if isNix
-        then ''
-          if [[ "$name" == "nix-configs only" ]]; then
-            ${if isRemote then "cursor --folder-uri=vscode-remote://ssh-remote+${host}${nixConfigsPath}" else "cursor ${nixConfigsPath}"}
-          elif [[ -n "$name" ]]; then''
-        else ''
-          if [[ -n "$name" ]]; then'';
       openTarget =
-        if isNix then
-          if isRemote
-          then ''
-            workspace_file=$(ssh ${host} bash -s -- ${nixConfigsPath} "$path" < ${writeNixWorkspace})
-            cursor --file-uri="vscode-remote://ssh-remote+${host}$workspace_file"''
-          else ''
-            workspace_file=$(${writeNixWorkspace} ${nixConfigsPath} "$path")
-            cursor "$workspace_file"''
-        else if isRemote
-          then "cursor --folder-uri=vscode-remote://ssh-remote+${host}/$path"
-          else ''cursor "$path"'';
+        if isRemote
+        then "cursor --folder-uri=vscode-remote://ssh-remote+${host}/$path"
+        else ''cursor "$path"'';
+      subdirBlock = ''
+        subdirs=$(${fetchSubdirs})
+        subdir=$(echo "$subdirs" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+        if [[ -z "$subdir" ]]; then exit 0; fi
+        path="${basePath}/$worktree"
+        [[ "$subdir" != "Root" ]] && path="$path/$subdir"
+      '';
+      directBlock = ''
+        path="${basePath}/$worktree"
+      '';
     in
     "${pkgs.writeScriptBin scriptName ''
       names=$(${fetchNames})
@@ -102,22 +76,18 @@ let
         ${pkgs.libnotify}/bin/notify-send -u critical "${scriptName}" "${host} is unreachable"
         exit 1
       fi
-      ''}name=$(${nameMenuInput}${rofi} -theme-str 'window {width: ${rofiWidth};}')
-      ${nameCheck}
-        [[ "$name" == "Main" ]] && worktree="Main" || worktree="Main_$name"
-        subdirs=$(${fetchSubdirs})
-        subdir=$(echo "$subdirs" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
-        if [[ -z "$subdir" ]]; then exit 0; fi
-        path="${basePath}/$worktree"
-        [[ "$subdir" != "Root" ]] && path="$path/$subdir"
+      ''}name=$(echo "$names" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+      if [[ -n "$name" ]]; then
+        [[ "$name" == "${worktreePrefix}" ]] && worktree="${worktreePrefix}" || worktree="${worktreePrefix}_$name"
+        ${if skipSubdirs then directBlock else subdirBlock}
         ${openTarget}
       fi
     ''}/bin/${scriptName}";
   openLocal    = mkOpenScript { scriptName = "open-local";     basePath = paths.codeRoot; };
   openOrthos   = mkOpenScript { scriptName = "open-orthos";    host = "orthos"; basePath = "/home/romain/Stockly"; rofiWidth = "30%"; };
   openSalon    = mkOpenScript { scriptName = "open-salon";     host = "salon";  basePath = "/home/romain/code"; };
-  openNixLocal = mkOpenScript { scriptName = "open-nix-local"; basePath = paths.codeRoot;          nixConfigsPath = paths.nixConfigs; };
-  openNixSalon = mkOpenScript { scriptName = "open-nix-salon"; host = "salon";  basePath = "/home/romain/code"; nixConfigsPath = "/home/romain/code/nix-configs"; };
+  openNixLocal = mkOpenScript { scriptName = "open-nix-local"; basePath = paths.codeRoot;          worktreePrefix = "nix-configs"; skipSubdirs = true; };
+  openNixSalon = mkOpenScript { scriptName = "open-nix-salon"; host = "salon";  basePath = "/home/romain/code"; worktreePrefix = "nix-configs"; skipSubdirs = true; };
 in
 {
   home = {
