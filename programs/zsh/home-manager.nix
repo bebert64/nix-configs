@@ -89,7 +89,7 @@ in
       run-in-nix-repo() {
         local dir=$(_nix-repo-dir)
         cd "$dir"
-        git pull || return 1
+        [[ "$dir" == "${paths.nixConfigs}" ]] && { git pull || return 1; }
         (eval "$*")
         cd -
       }

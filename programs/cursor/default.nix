@@ -47,17 +47,20 @@ let
     let
       isRemote = host != null;
       fetchNames =
-        if isRemote
-        then "timeout 5 ssh -o ConnectTimeout=5 ${host} bash -s -- ${basePath} ${worktreePrefix} < ${listWorktreeNames} 2>/dev/null"
-        else "${listWorktreeNames} ${basePath} ${worktreePrefix} 2>/dev/null";
+        if isRemote then
+          "timeout 5 ssh -o ConnectTimeout=5 ${host} bash -s -- ${basePath} ${worktreePrefix} < ${listWorktreeNames} 2>/dev/null"
+        else
+          "${listWorktreeNames} ${basePath} ${worktreePrefix} 2>/dev/null";
       fetchSubdirs =
-        if isRemote
-        then "ssh ${host} bash -s -- ${basePath}/$worktree < ${listSubdirs} 2>/dev/null"
-        else "${listSubdirs} ${basePath}/$worktree 2>/dev/null";
+        if isRemote then
+          "ssh ${host} bash -s -- ${basePath}/$worktree < ${listSubdirs} 2>/dev/null"
+        else
+          "${listSubdirs} ${basePath}/$worktree 2>/dev/null";
       openTarget =
-        if isRemote
-        then "cursor --folder-uri=vscode-remote://ssh-remote+${host}/$path"
-        else ''cursor "$path"'';
+        if isRemote then
+          "cursor --folder-uri=vscode-remote://ssh-remote+${host}/$path"
+        else
+          ''cursor "$path"'';
       subdirBlock = ''
         subdirs=$(${fetchSubdirs})
         subdir=$(echo "$subdirs" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
@@ -72,10 +75,10 @@ let
     "${pkgs.writeScriptBin scriptName ''
       names=$(${fetchNames})
       ${lib.optionalString isRemote ''
-      if [[ $? -ne 0 ]]; then
-        ${pkgs.libnotify}/bin/notify-send -u critical "${scriptName}" "${host} is unreachable"
-        exit 1
-      fi
+        if [[ $? -ne 0 ]]; then
+          ${pkgs.libnotify}/bin/notify-send -u critical "${scriptName}" "${host} is unreachable"
+          exit 1
+        fi
       ''}name=$(echo "$names" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
       if [[ -n "$name" ]]; then
         [[ "$name" == "${worktreePrefix}" ]] && worktree="${worktreePrefix}" || worktree="${worktreePrefix}_$name"
@@ -83,11 +86,34 @@ let
         ${openTarget}
       fi
     ''}/bin/${scriptName}";
-  openLocal    = mkOpenScript { scriptName = "open-local";     basePath = paths.codeRoot; };
-  openOrthos   = mkOpenScript { scriptName = "open-orthos";    host = "orthos"; basePath = "/home/romain/Stockly"; rofiWidth = "30%"; };
-  openSalon    = mkOpenScript { scriptName = "open-salon";     host = "salon";  basePath = "/home/romain/code"; };
-  openNixLocal = mkOpenScript { scriptName = "open-nix-local"; basePath = paths.codeRoot;          worktreePrefix = "nix-configs"; skipSubdirs = true; };
-  openNixSalon = mkOpenScript { scriptName = "open-nix-salon"; host = "salon";  basePath = "/home/romain/code"; worktreePrefix = "nix-configs"; skipSubdirs = true; };
+  openLocal = mkOpenScript {
+    scriptName = "open-local";
+    basePath = paths.codeRoot;
+  };
+  openOrthos = mkOpenScript {
+    scriptName = "open-orthos";
+    host = "orthos";
+    basePath = "/home/romain/Stockly";
+    rofiWidth = "30%";
+  };
+  openSalon = mkOpenScript {
+    scriptName = "open-salon";
+    host = "salon";
+    basePath = "/home/romain/code";
+  };
+  openNixLocal = mkOpenScript {
+    scriptName = "open-nix-local";
+    basePath = paths.codeRoot;
+    worktreePrefix = "nix-configs";
+    skipSubdirs = true;
+  };
+  openNixSalon = mkOpenScript {
+    scriptName = "open-nix-salon";
+    host = "salon";
+    basePath = "/home/romain/code";
+    worktreePrefix = "nix-configs";
+    skipSubdirs = true;
+  };
 in
 {
   home = {
