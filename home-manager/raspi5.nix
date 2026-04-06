@@ -16,8 +16,8 @@
     let
       homeManagerBydbConfig = config.byDb;
       homeDir = config.home.homeDirectory;
-      secrets = homeManagerBydbConfig.secrets;
-      paths = homeManagerBydbConfig.paths;
+      inherit (homeManagerBydbConfig) secrets;
+      inherit (homeManagerBydbConfig) paths;
       stashDir = "${homeDir}/.stash";
       stashBackupDir = "${paths.nasBase}/Comics/Fini/Planet of the Apes/14 Planet of the Apes issues/Elseworlds/stash_backup";
     in
@@ -138,9 +138,9 @@
             enable = true;
             runAt = "*-*-* 00:00:00";
           };
-          postgres = homeManagerBydbConfig.postgres;
-          stashApiConfig = homeManagerBydbConfig.stashApiConfig;
-          shortcutsDirs = homeManagerBydbConfig.shortcutsDirs;
+          inherit (homeManagerBydbConfig) postgres;
+          inherit (homeManagerBydbConfig) stashApiConfig;
+          inherit (homeManagerBydbConfig) shortcutsDirs;
           parallelDownloads = "4";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.shortcutsDb // {

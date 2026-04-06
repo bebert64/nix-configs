@@ -62,20 +62,22 @@ in
   };
 
   # Authelia needs to read sops-managed secret files
-  sops.secrets."authelia/jwt_secret" = {
-    owner = autheliaUser;
-    group = autheliaUser;
-  };
-  sops.secrets."authelia/session_secret" = {
-    owner = autheliaUser;
-    group = autheliaUser;
-  };
-  sops.secrets."authelia/storage_encryption_key" = {
-    owner = autheliaUser;
-    group = autheliaUser;
-  };
-  sops.secrets."authelia/users_database" = {
-    owner = autheliaUser;
-    group = autheliaUser;
+  sops.secrets = {
+    "authelia/jwt_secret" = {
+      owner = autheliaUser;
+      group = autheliaUser;
+    };
+    "authelia/session_secret" = {
+      owner = autheliaUser;
+      group = autheliaUser;
+    };
+    "authelia/storage_encryption_key" = {
+      owner = autheliaUser;
+      group = autheliaUser;
+    };
+    "authelia/users_database" = {
+      owner = autheliaUser;
+      group = autheliaUser;
+    };
   };
 }

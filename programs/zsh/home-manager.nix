@@ -8,7 +8,7 @@
 let
   common = import ./common.nix;
   homeManagerBydbConfig = config.byDb;
-  paths = homeManagerBydbConfig.paths;
+  inherit (homeManagerBydbConfig) paths;
   homeDir = config.home.homeDirectory;
   formatOptions = "comment_width=120,condense_wildcard_suffixes=false,format_code_in_doc_comments=true,format_macro_bodies=true,hex_literal_case=Upper,imports_granularity=One,normalize_doc_attributes=true,wrap_comments=true";
   hasLock = options.byDb ? minutesBeforeLock;

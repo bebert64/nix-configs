@@ -7,7 +7,7 @@
 }:
 let
   homeDir = config.home.homeDirectory;
-  nixPrograms = config.byDb.paths.nixPrograms;
+  inherit (config.byDb.paths) nixPrograms;
   symlinkPath = config.sops.defaultSymlinkPath;
   notifyHook = pkgs.writeShellScript "claude-notify" ''
     TITLE="Claude @ $(${pkgs.hostname}/bin/hostname)"

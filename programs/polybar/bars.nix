@@ -2,7 +2,7 @@
 {
   services.polybar.settings =
     let
-      colors = config.byDb.polybar.colors;
+      inherit (config.byDb.polybar) colors;
     in
     {
       mainbar = {

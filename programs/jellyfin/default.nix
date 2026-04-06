@@ -10,7 +10,7 @@ let
   jellyfinInstance2 = "media";
 
   mkJellyfinService =
-    instanceName: port:
+    instanceName:
     let
       dataDir = "${homeDir}/.local/share/${instanceName}";
       configDir = "${homeDir}/.config/${instanceName}";
@@ -43,8 +43,8 @@ in
 
   systemd.user = {
     enable = true;
-    services.${jellyfinInstance1} = mkJellyfinService jellyfinInstance1 8096;
-    services.${jellyfinInstance2} = mkJellyfinService jellyfinInstance2 8097;
+    services.${jellyfinInstance1} = mkJellyfinService jellyfinInstance1;
+    services.${jellyfinInstance2} = mkJellyfinService jellyfinInstance2;
   };
 
 }

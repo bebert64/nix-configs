@@ -65,7 +65,7 @@
   config =
     let
       homeManagerBydbConfig = config.byDb;
-      paths = homeManagerBydbConfig.paths;
+      inherit (homeManagerBydbConfig) paths;
       homeDir = config.home.homeDirectory;
     in
     {
@@ -131,9 +131,9 @@
         };
         shortcuts = {
           app.enable = true;
-          postgres = homeManagerBydbConfig.postgres;
-          stashApiConfig = homeManagerBydbConfig.stashApiConfig;
-          shortcutsDirs = homeManagerBydbConfig.shortcutsDirs;
+          inherit (homeManagerBydbConfig) postgres;
+          inherit (homeManagerBydbConfig) stashApiConfig;
+          inherit (homeManagerBydbConfig) shortcutsDirs;
           parallelDownloads = "4";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.shortcutsDb // {

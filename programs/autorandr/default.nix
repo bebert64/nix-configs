@@ -278,7 +278,7 @@ in
 
   xsession.windowManager.i3.config =
     let
-      modifier = config.xsession.windowManager.i3.config.modifier;
+      inherit (config.xsession.windowManager.i3.config) modifier;
     in
     {
       keybindings = lib.mkOptionDefault {

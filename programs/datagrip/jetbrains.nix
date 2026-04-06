@@ -71,7 +71,7 @@ let
     }
   ) { };
   withJaNetfilter = builtins.mapAttrs (
-    name: product:
+    _: product:
     product.overrideAttrs (oldAttrs: {
       postFixup = (oldAttrs.postFixup or "") + ''
         set -eo pipefail

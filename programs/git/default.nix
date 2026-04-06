@@ -24,7 +24,7 @@
     {
       enable = true;
       settings = {
-        user = gitConfig.user;
+        inherit (gitConfig) user;
         pull.rebase = "true";
         core = {
           commentchar = "%";
