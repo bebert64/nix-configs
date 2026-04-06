@@ -9,30 +9,18 @@ The user is ready to finalize a PR. Run validation and draft the merge descripti
 1. Run `git branch --show-current` to get the current branch.
 2. Run `git rev-parse --abbrev-ref origin/HEAD | sed 's|origin/||'` to detect the default branch (e.g. `main` or `master`). Use this as `<base>` in all subsequent git commands.
 3. Run `git diff --name-only <base>...HEAD` to list all files changed in this PR.
-4. Check whether a root `Cargo.toml` exists. If it does, this is a Rust workspace — from the changed file paths, determine which workspace crates have been modified by cross-referencing with the `[workspace] members` list. Only crates present there are subject to Cargo checks; ignore other changed files (e.g. TypeScript, config). If no `Cargo.toml` exists, skip steps 2–4 entirely.
+4. From the changed file list, determine which language-specific checks apply:
+   - **Rust**: a root `Cargo.toml` exists → follow `rust.md`
+   - **Nix**: any changed file has a `.nix` extension → follow `nix.md`
+   - Both may apply.
 
-## 2. Run checks on each modified Rust crate
+## 2. Run language-specific checks
 
-For each modified Rust crate, run the following commands **sequentially**. Stop at the first failure.
+Follow the instructions in `rust.md` and/or `nix.md` as determined above.
 
-1. `cargo machete -p <crate_name>` — check for unused dependencies
-2. `cargo clippy -p <crate_name>` — lints
-3. `cargo test -p <crate_name>` — unit tests
+If any check fails, **stop immediately**, report which check failed, and show the relevant error output. Do not continue to the next steps.
 
-## 3. Run autofix and verify
-
-1. `make autofix` — formatting
-2. Verify no files changed after autofix (`git diff --name-only`). If files changed, formatting was not correct before — report which files were modified.
-
-## 4. Whole-workspace checks
-
-Run on the whole workspace (use a long timeout, e.g. ~15 minutes; full-repo checks are slow):
-1. `cargo check`
-2. `cargo check --tests`
-
-If any command fails, **stop immediately**, report which crate and which check failed, and show the relevant error output. Do not continue to the next steps.
-
-## 5. Draft PR description
+## 3. Draft PR description
 
 1. Run `git log --oneline <base>..HEAD` to see all commits in the PR.
 2. Review the full diff (`git diff <base>...HEAD`) for context.
@@ -41,7 +29,7 @@ If any command fails, **stop immediately**, report which crate and which check f
    - **If it doesn't exist**: write a concise freeform description that lists the main points that changed, grouped logically if there are multiple concerns.
 4. Present the description to the user for review/editing.
 
-## 6. Look for learnable patterns
+## 4. Look for learnable patterns
 
 After drafting the PR description, review the full PR diff one more time with a "learning" lens. Look for:
 
