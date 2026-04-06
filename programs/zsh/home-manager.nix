@@ -71,14 +71,31 @@ in
           "sudo GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .# --impure"
       }
 
+      _nix-repo-dir() {
+        local cwd="$PWD"
+        local base="${paths.nixConfigs}"
+        local parent="$(dirname "$base")"
+        local name="$(basename "$base")"
+        # If we're inside a nix-configs worktree, use it
+        if [[ "$cwd" == "$parent/$name" || "$cwd" == "$parent/$name/"* || \
+              "$cwd" == "$parent/''${name}_"* ]]; then
+          # Extract the worktree root (parent/name or parent/name_suffix)
+          local rel="''${cwd#$parent/}"
+          echo "$parent/''${rel%%/*}"
+        else
+          echo "$base"
+        fi
+      }
       run-in-nix-repo() {
-        cd ${paths.nixConfigs}
-        git pull || return 1
+        local dir=$(_nix-repo-dir)
+        cd "$dir"
+        [[ "$dir" == "${paths.nixConfigs}" ]] && { git pull || return 1; }
         (eval "$*")
         cd -
       }
       run-in-nix-repo-dirty() {
-        cd ${paths.nixConfigs}
+        local dir=$(_nix-repo-dir)
+        cd "$dir"
         (eval "$*")
         cd -
       }
