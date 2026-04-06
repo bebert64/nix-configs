@@ -8,4 +8,4 @@ Run the following commands **sequentially**. Stop at the first failure.
 2. `deadnix <files>` — unused variables and dead code, passing each changed `.nix` file as an argument
 3. `nixfmt --check <files>` — verify formatting, passing each changed `.nix` file as an argument
 
-If any command fails, **stop immediately**, report which check failed, and show the relevant error output. Do not continue to the next steps.
+If any command fails, do not continue to the next check. If the fix is mechanical, apply it silently and re-run from the failed check. Only surface failures that require a decision from the user.
