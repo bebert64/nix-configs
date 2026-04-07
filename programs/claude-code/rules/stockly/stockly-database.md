@@ -22,3 +22,7 @@ paths:
 
 - **Always use transactions** for DB operations (unless it would keep the transaction open too long or introduce bigger issues). Use helpers from DieselHelpers.
 - **Use retryable transactions when there are no side effects**: If the closure can be safely re-executed (no external API calls, no non-idempotent side effects), use `with_serializable_and_retries` instead of `with_read_committed`. It retries on serialization failures automatically.
+
+## Join helpers
+
+- **Use `inner_join_to_demanders`** when joining the `orders` table to the `demanders` table. This helper encapsulates the join path and keeps queries consistent across the codebase. Do not manually write the join.

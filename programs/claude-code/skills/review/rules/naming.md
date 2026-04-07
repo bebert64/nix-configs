@@ -18,3 +18,4 @@
 - **Function naming**: active voice for actions (`cancel_purchase`, `register_purchase_cancellation`). Computation-based for queries (`first_parcel_item_of_purchase`).
 - **Struct naming**: the fully qualified name (path + struct name) conveys what object it represents. Fields convey properties. Do not introduce new concepts unless naming the set of properties directly would be unreasonably long.
 - It is rare (~1%) that you should introduce new concepts when writing code. Use descriptive names referring to already-existing concepts.
+- **Full concept names over abbreviations**: Prefer full concept names in identifiers (struct fields, DB columns, RPC names), even when longer. Abbreviations are acceptable only when universally understood in context (e.g., `id`, `url`, `db`). Exception: DB identifiers near PostgreSQL's 63-char limit — abbreviate and add a `COMMENT ON` with the full name.

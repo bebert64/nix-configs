@@ -61,3 +61,22 @@ struct MyWrapper {
 
 wrapper.some_inner_method()  // calls InnerType method directly
 ```
+
+# Entry API: prefer `.or_default()`
+
+Use `.entry(key).or_default()` instead of `.entry(key).or_insert(Vec::new())` or `.or_insert(HashMap::new())` when the default value is `Default::default()`.
+
+# Named constants for domain-specific values
+
+Extract delay, timeout, and threshold literals into named `const` values when they have domain-specific semantics or are used in more than one place. Include a comment explaining *why* the value is what it is:
+
+```rust
+// Communicated to customers in messages
+const PUBLIC_SENDING_DELAY: TimeDelta = TimeDelta::days(10);
+// Internal deadline — longer than public to reduce "close to deadline" complaints
+const INTERNAL_SENDING_DELAY: TimeDelta = TimeDelta::days(14);
+```
+
+# Input struct for many same-type arguments
+
+When a function takes several arguments that share a type (e.g. multiple `String`, multiple `bool`), group the domain arguments into a named struct so that each field is labeled — makes accidental swaps easier to spot in review. Keep infrastructure arguments (`db`, loggers) as separate parameters.
