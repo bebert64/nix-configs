@@ -27,6 +27,7 @@ If any check fails, **stop immediately**, report which check failed, and show th
 3. Check whether `.github/pull_request_template.md` exists:
    - **If it exists**: fill in the template (especially "What it does", inferred from branch name, modified files, and context); only leave placeholders for what you truly don't know (e.g. ticket URL, commit SHA).
    - **If it doesn't exist**: write a concise freeform description that lists the main points that changed, grouped logically if there are multiple concerns.
+   - **"Resolves" line format**: use a markdown link with the short ID as display text: `Resolves [X7TMY](https://www.notion.so/stockly/X7TMY-Ops-Issue-with-Buckets-feedback-3290c6326ae880178b83d53081bfe6cc)`.
 4. Present the description to the user for review/editing.
 
 ## 4. Look for learnable patterns
