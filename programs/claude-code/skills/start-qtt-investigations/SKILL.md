@@ -1,23 +1,23 @@
 ---
-description: Start Quality Tech Ticket investigations — pick pending tickets from Notion, investigate in parallel, output super-synthetic resumes
+description: Start Quality Tech Ticket investigations — pick pending tickets from Notion, investigate in parallel, write investigation files
 ---
 
-Run this workflow to select unassigned Quality Tech tickets (**Status Intl** = "0 - Pending Workforce", Teams Intl ≠ Partner Inputs_Front), prioritize them, and have subagents investigate. Produce a **super-synthetic resume** for each ticket.
+Run this workflow to select unassigned Quality Tech tickets (**Status Intl** = "0 - Pending Workforce", Teams Intl ≠ Partner Inputs_Front), prioritize them, and have subagents investigate each one. Every investigation produces a file in `~/.claude/investigations/`.
 
 **Important:** Use **Status Intl** (not "Status") for "pending" — Status Intl is the source of truth; a ticket can have Status = "0 - Pending Workforce" but Status Intl = "Done" and must be excluded.
 
 ## 0. How many tickets
 
 - If the user specified a number in their message (e.g. "pick 5 tickets", "just 1"), use that.
-- Otherwise ask: "How many tickets do you want to work on? (default 3)" and use their answer, or 3 if they don't care.
-- Call this number **N**. You will fetch candidates, exclude ignored ones and tickets that already have a corresponding plan, then take the top **N** and run subagents for those.
+- Otherwise use the default: **6**.
+- Call this number **N**. This is the target number of **non-frontend** investigation files to produce. Frontend tickets don't count toward N — see section 5 for details.
 
 ## 1. Ignore list (local) and cleanup
 
 - **File:** `/home/romain/Stockly/.cursor/ignored-quality-tickets.txt`
 - **Format:** One Notion page ID per line (the `id` field from the API, e.g. `0000fd7f-2f85-49c5-8cd8-a61f0b731b47`). No header. Strip whitespace; skip empty lines.
-- **Before selecting tickets:** Read this file if it exists. Build a set of ignored page IDs. When building the candidate list (after filter and sort), exclude any page whose `id` is in that set. **Also exclude** any ticket that already has a corresponding plan or investigation in `~/.claude/plans/` (see below). Then take the first **N** remaining.
-- **Exclude tickets that already have a plan or investigation:** List files in `~/.claude/plans/` (`.md` only). A ticket (with short_id e.g. `ABCDE`) is considered to have one if there is a file whose name starts with `<short_id>-` (e.g. `ABCDE-fix-login.md`, `ABCDE-investigation-2025-02-26T143052.md`), or a plan file whose content contains a `## Short ID` section with that same short_id. Exclude those tickets from the list before taking the top N.
+- **Before selecting tickets:** Read this file if it exists. Build a set of ignored page IDs. When building the candidate list (after filter and sort), exclude any page whose `id` is in that set. **Also exclude** any ticket that already has a corresponding investigation in `~/.claude/investigations/` (see below). Then take the first **N** remaining.
+- **Exclude tickets that already have an investigation:** List files in `~/.claude/investigations/` (`.md` only). A ticket (with short_id e.g. `ABCDE`) is considered to have one if there is a file whose name starts with `<short_id>-` (e.g. `ABCDE-fix-login.md`). Also check `~/.claude/plans/` for backward compat. Exclude those tickets from the list before taking the top N.
 - **Adding to the list:** If at any point (in this run or a follow-up) the user says they want to ignore a ticket (e.g. "ignore this one", "skip ABCDE", "add to ignore list"), append that ticket's Notion page ID to the file on a new line. Confirm to the user. The next run of this command will then skip it.
 - If the file doesn't exist, create it when first adding an ID; otherwise proceed with an empty ignore set.
 
@@ -44,26 +44,48 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 3. **Merge:** Build a single JSON object: `{"results": <all collected page objects>}`. Write it to a file (e.g. the path of the first response file, or a new path under agent-tools) so the parser can read it.
 
-4. **Get top N and apply ignore list and existing plans:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 3. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.claude/plans/` (filename starting with `<short_id>-`, e.g. plan or investigation). Take the first **N** tickets from the remaining list.
+4. **Get top N and apply ignore list and existing investigations:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 6. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.claude/investigations/` or `~/.claude/plans/` (filename starting with `<short_id>-`). Take the first **N** tickets from the remaining list.
 
-## 4. Investigate in parallel
+## 4. Detect special cases
 
-For each of the top N tickets, launch a **subagent** (Task tool) with a prompt that invokes the **`investigate`** skill and passes the ticket's Notion page URL (from the `url` field of the result).
+Before launching subagents, check each ticket against the special case rules below. If a ticket matches, the subagent will receive an additional instruction file path to guide its investigation.
 
-Let each subagent return: clarifying questions **or** one of the three outcomes (A: plan path + branch; B: next steps; C: ready-to-paste prompt).
+**Special case definitions** are stored in `${CLAUDE_SKILL_DIR}/special-cases/`. Each file there describes: (a) how to identify the ticket (title pattern, keywords, etc.) and (b) specific investigation instructions.
 
-**Stream results:** As soon as the **first** subagent (or any subagent) returns, **immediately** produce and display that ticket's super-synthetic resume (section 5) to the user — do not wait for the others. As each further subagent returns, produce and display that ticket's resume in turn. When **all** subagents have returned, output the final section (section 6). This way the user sees results as they complete instead of waiting for the slowest one.
+**Current special cases:**
 
-## 5. Super-synthetic resume per ticket
+| Pattern | File | How to identify |
+|---------|------|-----------------|
+| Check on consumer_backoffice sentries | `inspect-cbo-sentries.md` | Title (after the short_id prefix) matches "Check on consumer_backoffice sentries" (case-insensitive) |
 
-As soon as a subagent returns, display a short scannable block: ticket title + short ID, one line "what it is", then the outcome summary (A/B/C as defined in the `investigate` skill).
+For each ticket, check if its title matches any special case pattern. If it does, record the path `${CLAUDE_SKILL_DIR}/special-cases/<filename>` to pass to the subagent.
 
-## 6. Final output
+## 5. Investigate in parallel (with frontend backfill)
+
+Launch subagents for the top **N** candidate tickets. For each, launch a **subagent** (Task tool) with a prompt that invokes the **`investigate`** skill and passes:
+- The ticket's Notion page URL (from the `url` field of the result)
+- The ticket's short_id
+- If a special case was detected: the path to the special-case instruction file (e.g. `"Special case instructions: read <path> before investigating."`)
+
+**Critical:** The investigate skill will ONLY write an investigation file — it will never start coding or create branches.
+
+**Notification:** Send a notification to the user as soon as each subagent finishes (e.g. "Investigation done: ABCDE — <outcome type>").
+
+**Frontend backfill:** N is the target number of non-frontend investigations. Each time a subagent returns with outcome `frontend-ticket`, pick the next candidate from the remaining pool (after ignore list and existing investigations) and launch a new subagent for it. Continue until you have **N non-frontend** investigation files or you run out of candidates.
+
+**Stream results:** As soon as any subagent returns, **immediately** produce and display that ticket's super-synthetic resume (section 6) to the user — do not wait for the others.
+
+## 6. Super-synthetic resume per ticket
+
+As soon as a subagent returns, display a short scannable block: ticket title + short ID, one line "what it is", then the outcome type and a one-line summary of the investigation file content.
+
+## 7. Final output
 
 After **all** subagents have returned (and you have already displayed each ticket's resume as it completed):
 
-- Provide a consolidated list of the N tickets with their super-synthetic resume (A, B, or C) and ticket URL, so the user has everything in one place.
-- If fewer than N tickets were available after the ignore list, existing plans, or the Notion filter, say how many were found and process only those.
+- Provide a consolidated list of all investigated tickets (including frontend ones) with their super-synthetic resume and ticket URL, so the user has everything in one place. Clearly separate frontend tickets from the rest.
+- State how many non-frontend investigations were produced vs. the target N.
+- If fewer than N non-frontend tickets were available after the ignore list, existing investigations, or the Notion filter, say how many were found and process only those.
 - If the Notion MCP is unavailable, say so and stop.
 - Remind the user they can say "ignore [ticket]" to add it to the ignore list for future runs.
-- Remind the user they can run **/tasks** to see all projects (grouped by short_id, with category, summary, copy-pastable commands to open files) and to clean up plans/investigations for tickets whose Status Intl is done.
+- Remind the user they can run **/tasks** to see all projects (grouped by short_id, with category, summary, copy-pastable commands to open files) and to clean up investigations for tickets whose Status Intl is done.

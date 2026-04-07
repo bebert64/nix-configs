@@ -118,7 +118,7 @@ def sort_key(c):
 candidates.sort(key=sort_key)
 
 # Top N (default 3) from parser argv
-n = int(sys.argv[2]) if len(sys.argv) > 2 else 3
+n = int(sys.argv[2]) if len(sys.argv) > 2 else 6
 top = candidates[:n]
 print(f"candidates_count={len(candidates)}", file=sys.stderr)
 for i, t in enumerate(top):
