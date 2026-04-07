@@ -9,6 +9,19 @@ let
   homeDir = config.home.homeDirectory;
   inherit (config.byDb.paths) nixPrograms;
   symlinkPath = config.sops.defaultSymlinkPath;
+  autoApprovePlansHook = pkgs.writeShellScript "claude-auto-approve-plans" ''
+    ${pkgs.jq}/bin/jq -re '
+      if (.tool_input.file_path // "" | test("\\.claude/plans/")) then
+        {
+          hookSpecificOutput: {
+            hookEventName: "PreToolUse",
+            permissionDecision: "allow",
+            permissionDecisionReason: "Auto-allow edits to .claude/plans/"
+          }
+        }
+      else empty end
+    '
+  '';
   notifyHook = pkgs.writeShellScript "claude-notify" ''
     TITLE="Claude @ $(${pkgs.hostname}/bin/hostname)"
     BODY="Answer ready on $(${pkgs.git}/bin/git branch --show-current 2>/dev/null || echo 'no branch')"
@@ -22,16 +35,29 @@ let
     builtins.toJSON (
       (builtins.fromJSON (builtins.readFile ./settings.json))
       // {
-        hooks.Stop = [
-          {
-            hooks = [
-              {
-                type = "command";
-                command = "bash ${homeDir}/.claude/hooks/notify.sh";
-              }
-            ];
-          }
-        ];
+        hooks = {
+          Stop = [
+            {
+              hooks = [
+                {
+                  type = "command";
+                  command = "${notifyHook}";
+                }
+              ];
+            }
+          ];
+          PermissionRequest = [
+            {
+              matcher = "Edit|Write";
+              hooks = [
+                {
+                  type = "command";
+                  command = "${autoApprovePlansHook}";
+                }
+              ];
+            }
+          ];
+        };
       }
     )
   );
@@ -63,10 +89,6 @@ in
 
         # Skills (whole dir — all skills available everywhere)
         ln -sfT ${nixPrograms}/claude-code/skills ${homeDir}/.claude/skills
-
-        # Hooks
-        mkdir -p ${homeDir}/.claude/hooks
-        ln -sf ${notifyHook} ${homeDir}/.claude/hooks/notify.sh
 
         # Docs
         ln -sfT ${nixPrograms}/claude-code/docs ${homeDir}/.claude/docs
