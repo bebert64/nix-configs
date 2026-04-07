@@ -3,6 +3,16 @@
     "CLAUDE_CODE_DISABLE_TERMINAL_TITLE": "1"
   },
   "permissions": {
+    "allow": [
+      "Edit(/home/romain/.claude/plans/**)",
+      "Write(/home/romain/.claude/plans/**)",
+      "Bash(rm /home/romain/.claude/plans/*)",
+      "Bash(rm -f /home/romain/.claude/plans/*)",
+      "Edit(/home/romain/.claude/investigations/**)",
+      "Write(/home/romain/.claude/investigations/**)",
+      "Bash(rm /home/romain/.claude/investigations/*)",
+      "Bash(rm -f /home/romain/.claude/investigations/*)"
+    ],
     "deny": [
       "Read(//mnt/NAS/**)",
       "Read(//home/romain/mnt/NAS/**)",

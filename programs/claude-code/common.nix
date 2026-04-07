@@ -11,12 +11,15 @@ let
   symlinkPath = config.sops.defaultSymlinkPath;
   autoApprovePlansHook = pkgs.writeShellScript "claude-auto-approve-plans" ''
     ${pkgs.jq}/bin/jq -re '
-      if (.tool_input.file_path // "" | test("\\.claude/plans/")) then
+      # Edit/Write use .tool_input.file_path, Bash uses .tool_input.command
+      (.tool_input.file_path // .tool_input.command // "") as $target |
+      if ($target | test("\\.claude/(plans|investigations)/")) then
         {
           hookSpecificOutput: {
-            hookEventName: "PreToolUse",
-            permissionDecision: "allow",
-            permissionDecisionReason: "Auto-allow edits to .claude/plans/"
+            hookEventName: "PermissionRequest",
+            decision: {
+              behavior: "allow"
+            }
           }
         }
       else empty end
@@ -48,7 +51,7 @@ let
           ];
           PermissionRequest = [
             {
-              matcher = "Edit|Write";
+              matcher = "Edit|Write|Bash";
               hooks = [
                 {
                   type = "command";
