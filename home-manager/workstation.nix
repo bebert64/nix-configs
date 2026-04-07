@@ -9,6 +9,7 @@
   imports = [
     ./common.nix
     ../programs/autorandr
+    ../programs/autossh-orthos
     ../programs/battery-notifier
     ../programs/avidemux
     ../programs/calculator

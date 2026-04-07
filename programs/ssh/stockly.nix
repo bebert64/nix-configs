@@ -14,16 +14,6 @@
   orthos = {
     host = "orthos";
     hostname = "orthos.stockly.tech";
-    remoteForwards = [
-      {
-        # Reverse SSH tunnel for notifications (notify-send back to local machine)
-        bind.port = 2222;
-        host = {
-          address = "localhost";
-          port = 22;
-        };
-      }
-    ];
   };
   common-stockly = {
     host = "cerberus charybdis orthos";
