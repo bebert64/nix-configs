@@ -24,9 +24,18 @@ def get_title(props):
     return ""
 
 def get_assignee(props):
-    a = props.get("Assignee") or props.get("assignee") or {}
-    if isinstance(a, dict) and "people" in a:
-        return a["people"]
+    # Try named keys first, then fall back to scanning for any people-type property
+    # (the Notion DB has the assignee field with an empty-string name "")
+    for key in ("Assignee", "assignee", ""):
+        a = props.get(key)
+        if isinstance(a, dict) and "people" in a and a.get("type") == "people":
+            return a["people"]
+    # Fallback: find any people-type property that isn't "Followers"
+    for key, v in props.items():
+        if key.lower() == "followers":
+            continue
+        if isinstance(v, dict) and v.get("type") == "people" and "people" in v:
+            return v["people"]
     return []
 
 def get_teams_intl(props):

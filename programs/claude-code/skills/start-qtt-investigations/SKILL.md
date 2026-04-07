@@ -36,7 +36,8 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
    - **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
    - **page_size:** **100**
    - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Created At", "direction": "descending"}]`
-   - **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "0 - Pending Workforce"}}, {"property": "Assignee", "people": {"is_empty": true}}]}`
+   - **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "🔴 0 - Pending Workforce"}}, {"property": "n%3COR", "people": {"is_empty": true}}]}`
+     > **Note:** The Status Intl values have emoji prefixes (🔴, 🔵, etc.). The assignee property has an empty-string name in Notion, so we filter by its property ID (`n%3COR`) instead of by name. The parser also filters out assigned tickets as a safety net.
 
    The tool returns a message like "Large output has been written to: .../agent-tools/<uuid>.txt". Read that file; the JSON has `results`, `next_cursor`, and `has_more`.
 
