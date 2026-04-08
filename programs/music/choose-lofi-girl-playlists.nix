@@ -83,11 +83,11 @@ in
       CACHE_FILE="$CACHE_DIR/playlists.tsv"
 
       # On very first run, we must fetch synchronously
-      if [[ ! -f "$CACHE_FILE" ]]; then
+      if [[ ! -s "$CACHE_FILE" ]]; then
         ${refreshScript}/bin/refresh-lofi-girl-playlists
       fi
 
-      if [[ ! -f "$CACHE_FILE" ]]; then
+      if [[ ! -s "$CACHE_FILE" ]]; then
         notify-send "Lofi Girl" "Failed to fetch playlists"
         exit 1
       fi
