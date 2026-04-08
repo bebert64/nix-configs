@@ -130,8 +130,14 @@
               fi
               base_ref=$(git rev-parse "origin/''$base" 2>/dev/null)
               if [ -z "''$base_ref" ]; then
-                echo "Branch origin/''$base not found."
-                return 1
+                echo "Branch origin/''$base not found (probably merged)."
+                read -p "Use ${gitConfig.mainOrMaster} as parent instead? [Y/n]: " answer
+                case "''$answer" in
+                  [nN]*) return 1 ;;
+                esac
+                base="${gitConfig.mainOrMaster}"
+                git config branch."''$current".base "''$base"
+                base_ref=$(git rev-parse "origin/''$base" 2>/dev/null)
               fi
               base_mb=$(git merge-base HEAD "origin/''$base" 2>/dev/null)
               if [ -z "''$base_mb" ]; then
