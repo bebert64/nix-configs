@@ -18,6 +18,20 @@ in
       type = str;
       default = "rofi -i -dmenu -no-custom -p \"\"";
     };
+    gridThemeStr = mkOption {
+      type = str;
+      default = builtins.concatStringsSep " " [
+        "-theme-str 'window {width: 800px;}'"
+        "-theme-str 'listview {columns: 4; lines: 3; fixed-columns: true; flow: horizontal; spacing: 10px;}'"
+        "-theme-str 'element {orientation: vertical; padding: 10px;}'"
+        "-theme-str 'element-icon {size: 96px; horizontal-align: 0.5;}'"
+        "-theme-str 'element-text {horizontal-align: 0.5;}'"
+      ];
+    };
+    gridCmd = mkOption {
+      type = str;
+      default = "rofi -i -dmenu -no-custom -p \"\" ${config.rofi.gridThemeStr}";
+    };
   };
 
   config = {

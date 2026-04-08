@@ -37,6 +37,8 @@ in
       "stockly/dbs/supply-messages" = { };
       "stockly/mcp/notion-token" = { };
       "stockly/mcp/sentry-token" = { };
+      "spotify/client_id" = { };
+      "spotify/client_secret" = { };
     };
   };
 
