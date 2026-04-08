@@ -41,6 +41,30 @@ diesel::insert_into(schema::my_table::table)
     .execute(conn)?;
 ```
 
+## Prefer `load_iter` over `get_results().into_iter()`
+
+When iterating over query results to collect into a `HashMap`, filter, or transform, use `.load_iter::<T, DefaultLoadingMode>(db)?.process_results(|iter| ...)` instead of `.get_results(db)?.into_iter()`. `load_iter` streams rows without allocating an intermediate `Vec`. `process_results` (from `itertools::Itertools`) unwraps the `Result` layer so you can work with a plain iterator inside the closure.
+
+**Good:**
+
+```rust
+schema::my_table::table
+    .select((MyId::as_select(), MyData::as_select()))
+    .load_iter::<(MyId, MyData), DefaultLoadingMode>(db)?
+    .process_results(|iter| iter.map(|(id, data)| (id, data)).collect::<HashMap<_, _>>())?
+```
+
+**Bad:**
+
+```rust
+schema::my_table::table
+    .select((MyId::as_select(), MyData::as_select()))
+    .get_results(db)?
+    .into_iter()
+    .map(|(id, data)| (id, data))
+    .collect::<HashMap<_, _>>()
+```
+
 ## Inline `Queryable`/`Selectable` structs for single-use queries
 
 When a query result shape is used in exactly one function, define the `#[derive(Queryable, Selectable)]` struct inside the function body rather than at module scope:
