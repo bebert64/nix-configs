@@ -24,9 +24,7 @@ def get_title(props):
     return ""
 
 def get_assignee(props):
-    # Try named keys first, then fall back to scanning for any people-type property
-    # (the Notion DB has the assignee field with an empty-string name "")
-    for key in ("Assignee", "assignee", ""):
+    for key in ("Assignee", "assignee"):
         a = props.get(key)
         if isinstance(a, dict) and "people" in a and a.get("type") == "people":
             return a["people"]
