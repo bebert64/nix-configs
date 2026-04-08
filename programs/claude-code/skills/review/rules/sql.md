@@ -1,4 +1,4 @@
-## SQL Conventions
+## SQL Conventions (raw SQL only — not Diesel queries)
 
 ### Naming
 

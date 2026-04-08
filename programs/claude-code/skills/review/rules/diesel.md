@@ -19,6 +19,28 @@ my_table::table
     )))
 ```
 
+## Batch updates via `INSERT ... ON CONFLICT ... DO UPDATE`
+
+When updating multiple rows with per-row values, use a single `insert_into(...).values(vec).on_conflict(...).do_update().set(...)` instead of looping individual `diesel::update` calls. This issues one SQL statement instead of N. Use `diesel::pg::upsert::excluded(column)` to reference the would-be-inserted value in the SET clause.
+
+Postgres checks NOT NULL constraints _before_ reaching the `ON CONFLICT` clause, so all NOT NULL columns need a value in `.values(...)` even if the row already exists and the upsert will only update a subset. Use literal stubs with a comment:
+
+```rust
+diesel::insert_into(schema::my_table::table)
+    .values(
+        inputs.iter().map(|input| (
+            schema::my_table::id.eq(input.id),
+            schema::my_table::real_column.eq(input.real_value),
+            // Stub: postgres checks NOT NULL before reaching ON CONFLICT
+            schema::my_table::other_not_null_col.eq(1),
+        )).collect::<Vec<_>>(),
+    )
+    .on_conflict(schema::my_table::id)
+    .do_update()
+    .set(schema::my_table::real_column.eq(excluded(schema::my_table::real_column)))
+    .execute(conn)?;
+```
+
 ## Inline `Queryable`/`Selectable` structs for single-use queries
 
 When a query result shape is used in exactly one function, define the `#[derive(Queryable, Selectable)]` struct inside the function body rather than at module scope:

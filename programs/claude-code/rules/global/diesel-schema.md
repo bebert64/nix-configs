@@ -48,20 +48,3 @@ users::table
 
 When creating diesel migrations, do **NOT** generate `down.sql` files. Only create the `up.sql` file. Down migrations are not used in this project.
 
-## ON CONFLICT upserts and NOT NULL stubs
-
-Postgres checks NOT NULL constraints _before_ reaching the `ON CONFLICT` clause, so all NOT NULL columns need a value in the `.values(...)` even if the row already exists and the upsert will only update a subset. Use literal stubs with a comment:
-
-```rust
-diesel::insert_into(schema::my_table::table)
-    .values((
-        schema::my_table::id.eq(target_id),
-        schema::my_table::real_column.eq(real_value),
-        // Stub: postgres checks NOT NULL before reaching ON CONFLICT
-        schema::my_table::other_not_null_col.eq(1),
-    ))
-    .on_conflict(schema::my_table::id)
-    .do_update()
-    .set(schema::my_table::real_column.eq(real_value))
-    .execute(conn)?;
-```
