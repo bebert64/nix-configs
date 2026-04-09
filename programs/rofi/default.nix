@@ -9,7 +9,8 @@ let
   inherit (types) str;
   inherit (config.lib.formats.rasi) mkLiteral;
   openRofiInDedicatedWorkspace = "${pkgs.writeScriptBin "open-rofi-in-dedicated-workspace" ''
-    i3-msg "workspace 9:󱓞; exec rofi -show drun -show-icons"
+    i3-msg "workspace 9:󱓞"
+    rofi -show drun -show-icons ${config.rofi.gridThemeStr}
   ''}/bin/open-rofi-in-dedicated-workspace";
 in
 {
@@ -18,11 +19,32 @@ in
       type = str;
       default = "rofi -i -dmenu -no-custom -p \"\"";
     };
+    gridThemeStr = mkOption {
+      type = str;
+      default = builtins.concatStringsSep " " [
+        "-theme-str 'window {width: 800px;}'"
+        "-theme-str 'listview {columns: 4; lines: 4; fixed-columns: true; flow: horizontal; spacing: 10px;}'"
+        "-theme-str 'element {orientation: vertical; padding: 10px;}'"
+        "-theme-str 'element-icon {size: 96px; horizontal-align: 0.5;}'"
+        "-theme-str 'element-text {horizontal-align: 0.5;}'"
+      ];
+    };
+    gridCmd = mkOption {
+      type = str;
+      default = "rofi -i -dmenu -no-custom -p \"\" ${config.rofi.gridThemeStr}";
+    };
   };
 
   config = {
     programs.rofi = {
       enable = true;
+      package = pkgs.rofi.override {
+        rofi-unwrapped = pkgs.rofi-unwrapped.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            rm -rf $out/share/applications
+          '';
+        });
+      };
       font = "Iosevka Nerd Font 10";
       extraConfig = {
         show-icons = true;
@@ -157,5 +179,44 @@ in
     };
 
     xsession.windowManager.i3.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
+
+    xdg.desktopEntries =
+      let
+        hidden = name: {
+          inherit name;
+          noDisplay = true;
+          exec = "";
+          type = "Application";
+        };
+      in
+      {
+        btop = hidden "btop++";
+        "org.gnome.Calculator" = hidden "Calculator";
+        "chromium-browser" = hidden "Chromium";
+        conky = hidden "conky";
+        cursor = hidden "Cursor";
+        "cursor-url-handler" = hidden "Cursor URL Handler";
+        datagrip = hidden "DataGrip";
+        ferdium = hidden "Ferdium";
+        firefox = hidden "Firefox";
+        "org.flameshot.Flameshot" = hidden "Flameshot";
+        "org.gtk.Settings" = hidden "GTK Settings";
+        gvim = hidden "GVim";
+        nvim = hidden "Neovim wrapper";
+        nixos-manual = hidden "NixOS Manual";
+        picom = hidden "picom";
+        "plex-desktop" = hidden "Plex";
+        cups = hidden "Print Settings";
+        qt5ct = hidden "Qt5 Settings";
+        ranger = hidden "ranger";
+        slack = hidden "Slack";
+        spotify = hidden "Spotify";
+        "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
+        "com.gexperts.Tilix" = hidden "Tilix";
+        vim = hidden "Vim";
+        code = hidden "Visual Studio Code";
+        "code-url-handler" = hidden "Visual Studio Code - URL Handler";
+        xterm = hidden "XTerm";
+      };
   };
 }
