@@ -180,41 +180,43 @@ in
 
     xsession.windowManager.i3.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
 
-    xdg.desktopEntries = let
-      hidden = name: {
-        inherit name;
-        noDisplay = true;
-        exec = "";
-        type = "Application";
+    xdg.desktopEntries =
+      let
+        hidden = name: {
+          inherit name;
+          noDisplay = true;
+          exec = "";
+          type = "Application";
+        };
+      in
+      {
+        btop = hidden "btop++";
+        "org.gnome.Calculator" = hidden "Calculator";
+        "chromium-browser" = hidden "Chromium";
+        conky = hidden "conky";
+        cursor = hidden "Cursor";
+        "cursor-url-handler" = hidden "Cursor URL Handler";
+        datagrip = hidden "DataGrip";
+        ferdium = hidden "Ferdium";
+        firefox = hidden "Firefox";
+        "org.flameshot.Flameshot" = hidden "Flameshot";
+        "org.gtk.Settings" = hidden "GTK Settings";
+        gvim = hidden "GVim";
+        nvim = hidden "Neovim wrapper";
+        nixos-manual = hidden "NixOS Manual";
+        picom = hidden "picom";
+        "plex-desktop" = hidden "Plex";
+        cups = hidden "Print Settings";
+        qt5ct = hidden "Qt5 Settings";
+        ranger = hidden "ranger";
+        slack = hidden "Slack";
+        spotify = hidden "Spotify";
+        "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
+        "com.gexperts.Tilix" = hidden "Tilix";
+        vim = hidden "Vim";
+        code = hidden "Visual Studio Code";
+        "code-url-handler" = hidden "Visual Studio Code - URL Handler";
+        xterm = hidden "XTerm";
       };
-    in {
-      btop = hidden "btop++";
-      "org.gnome.Calculator" = hidden "Calculator";
-      "chromium-browser" = hidden "Chromium";
-      conky = hidden "conky";
-      cursor = hidden "Cursor";
-      "cursor-url-handler" = hidden "Cursor URL Handler";
-      datagrip = hidden "DataGrip";
-      ferdium = hidden "Ferdium";
-      firefox = hidden "Firefox";
-      "org.flameshot.Flameshot" = hidden "Flameshot";
-      "org.gtk.Settings" = hidden "GTK Settings";
-      gvim = hidden "GVim";
-      nvim = hidden "Neovim wrapper";
-      nixos-manual = hidden "NixOS Manual";
-      picom = hidden "picom";
-      "plex-desktop" = hidden "Plex";
-      cups = hidden "Print Settings";
-      qt5ct = hidden "Qt5 Settings";
-      ranger = hidden "ranger";
-      slack = hidden "Slack";
-      spotify = hidden "Spotify";
-      "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
-      "com.gexperts.Tilix" = hidden "Tilix";
-      vim = hidden "Vim";
-      code = hidden "Visual Studio Code";
-      "code-url-handler" = hidden "Visual Studio Code - URL Handler";
-      xterm = hidden "XTerm";
-    };
   };
 }

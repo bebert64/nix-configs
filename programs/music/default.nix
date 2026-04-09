@@ -40,7 +40,10 @@ let
     ;
 in
 {
-  imports = [ ./choose-radios.nix ./choose-lofi-girl-playlists.nix ];
+  imports = [
+    ./choose-radios.nix
+    ./choose-lofi-girl-playlists.nix
+  ];
 
   home.packages = with pkgs; [
     strawberry
