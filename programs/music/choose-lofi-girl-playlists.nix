@@ -80,20 +80,20 @@ let
         continue
       fi
 
-      LINE=$(echo "$DATA" | ${jq} -r '"\(.name)\t\(.id)\t\(.images[0].url // "")"')
+      LINE=$(echo "$DATA" | ${jq} -r '"\(.name)\t\(.id)\t\(.images[0].url // "")\t\(.followers.total // 0)"')
       echo "$LINE" >> "$CACHE_FILE.tmp"
     done <<< "$KNOWN_IDS"
 
-    # Sort by name and replace cache
-    sort -t$'\t' -k1,1 "$CACHE_FILE.tmp" > "$CACHE_FILE.tmp2" && mv "$CACHE_FILE.tmp2" "$CACHE_FILE"
+    # Sort by followers (descending) and replace cache
+    sort -t$'\t' -k4,4 -rn "$CACHE_FILE.tmp" > "$CACHE_FILE.tmp2" && mv "$CACHE_FILE.tmp2" "$CACHE_FILE"
     rm -f "$CACHE_FILE.tmp"
 
     # Download cover images (skip already cached)
-    while IFS=$'\t' read -r name id image_url; do
+    while IFS=$'\t' read -r name id image_url _followers; do
       if [[ -n "$image_url" && ! -f "$CACHE_DIR/$id.jpg" ]]; then
-        ${curl} -s -o "$CACHE_DIR/$id.raw" "$image_url"
-        ${pkgs.imagemagick}/bin/convert "$CACHE_DIR/$id.raw" "$CACHE_DIR/$id.jpg"
-        rm -f "$CACHE_DIR/$id.raw"
+        ${curl} -s -o "$CACHE_DIR/$id.download" "$image_url"
+        ${pkgs.imagemagick}/bin/magick "$CACHE_DIR/$id.download" "$CACHE_DIR/$id.jpg"
+        rm -f "$CACHE_DIR/$id.download"
       fi
     done < "$CACHE_FILE"
   '';
@@ -122,7 +122,7 @@ in
 
       # Build rofi menu from cache
       MENU_INPUT=""
-      while IFS=$'\t' read -r name id image_url; do
+      while IFS=$'\t' read -r name id image_url _followers; do
         ICON_PATH="$CACHE_DIR/$id.jpg"
         if [[ -f "$ICON_PATH" ]]; then
           MENU_INPUT+="$name\0icon\x1f$ICON_PATH\n"
@@ -138,7 +138,7 @@ in
       fi
 
       # Find the playlist ID matching the selection
-      PLAYLIST_ID=$(while IFS=$'\t' read -r name id image_url; do
+      PLAYLIST_ID=$(while IFS=$'\t' read -r name id image_url _followers; do
         if [[ "$name" == "$SELECTION" ]]; then
           echo "$id"
           break
