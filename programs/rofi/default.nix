@@ -38,11 +38,13 @@ in
   config = {
     programs.rofi = {
       enable = true;
-      package = pkgs.rofi.overrideAttrs (old: {
-        postInstall = (old.postInstall or "") + ''
-          rm -rf $out/share/applications
-        '';
-      });
+      package = pkgs.rofi.override {
+        rofi-unwrapped = pkgs.rofi-unwrapped.overrideAttrs (old: {
+          postInstall = (old.postInstall or "") + ''
+            rm -rf $out/share/applications
+          '';
+        });
+      };
       font = "Iosevka Nerd Font 10";
       extraConfig = {
         show-icons = true;
