@@ -181,6 +181,7 @@ in
         type = "Application";
       };
     in {
+      # Utility apps with no reason to launch from rofi
       picom = hidden "picom";
       rofi = hidden "Rofi";
       "rofi-theme-selector" = hidden "Rofi Theme Selector";
@@ -188,6 +189,25 @@ in
       ranger = hidden "ranger";
       btop = hidden "btop++";
       nvim = hidden "Neovim wrapper";
+      # Apps that have their own i3 shortcuts
+      "chromium-browser" = hidden "Chromium";
+      cursor = hidden "Cursor";
+      "cursor-url-handler" = hidden "Cursor URL Handler";
+      firefox = hidden "Firefox";
+      datagrip = hidden "DataGrip";
+      slack = hidden "Slack";
+      ferdium = hidden "Ferdium";
+      "plex-desktop" = hidden "Plex";
+      insomnia = hidden "Insomnia";
+      "org.flameshot.Flameshot" = hidden "Flameshot";
+      "org.gnome.Calculator" = hidden "Calculator";
+      "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
+      spotify = hidden "Spotify";
+      # System-level apps from Computers flake
+      code = hidden "Visual Studio Code";
+      "code-url-handler" = hidden "Visual Studio Code - URL Handler";
+      vim = hidden "Vim";
+      xterm = hidden "XTerm";
     };
   };
 }
