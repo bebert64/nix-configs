@@ -191,8 +191,13 @@ in
       in
       {
         btop = hidden "btop++";
+        "chromium-browser" = {
+          name = "Chromium";
+          noDisplay = true;
+          exec = "chromium %U";
+          type = "Application";
+        };
         "org.gnome.Calculator" = hidden "Calculator";
-        "chromium-browser" = hidden "Chromium";
         conky = hidden "conky";
         cursor = hidden "Cursor";
         "cursor-url-handler" = hidden "Cursor URL Handler";
