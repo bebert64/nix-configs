@@ -100,7 +100,7 @@ jq '[.[] | select(.properties.Recap.formula.string | startswith("☑️ Availabl
 
 extract_page_ids "$WORK_DIR/active_qtt.json" "$WORK_DIR/active_qtt_ids.json"
 
-log "Found $(jq 'length' "$WORK_DIR/active_tech_ids.json") available Tech Tasks ($(jq 'length' "$WORK_DIR/unavailable_tech_ids.json") not available)"
+log "Found $(jq 'length' "$WORK_DIR/active_tech_ids.json") available Tech Tasks (out of $(jq 'length' "$WORK_DIR/active_tech.json") active)"
 log "Found $(jq 'length' "$WORK_DIR/active_qtt_ids.json") active QTT tickets"
 
 # --- Fetch existing TODO entries ---
