@@ -37,6 +37,7 @@
     ../programs/theme
     ../programs/udiskie
     ../programs/vdhcoapp
+    ../programs/notion-todo-sync
     by-db.module.x86_64-linux
   ];
 
