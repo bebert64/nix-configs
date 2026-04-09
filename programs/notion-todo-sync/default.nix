@@ -23,7 +23,7 @@ in
     home.packages = [ notionTodoSync ];
 
     programs.zsh.initContent = ''
-      alias todo-sync="systemctl --user start notion-todo-sync"
+      alias sync-todo="systemctl --user start notion-todo-sync"
     '';
 
     systemd.user.services.notion-todo-sync = {
