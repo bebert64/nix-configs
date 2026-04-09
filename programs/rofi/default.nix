@@ -38,6 +38,11 @@ in
   config = {
     programs.rofi = {
       enable = true;
+      package = pkgs.rofi.overrideAttrs (old: {
+        postInstall = (old.postInstall or "") + ''
+          rm -rf $out/share/applications
+        '';
+      });
       font = "Iosevka Nerd Font 10";
       extraConfig = {
         show-icons = true;
@@ -200,8 +205,6 @@ in
       cups = hidden "Print Settings";
       qt5ct = hidden "Qt5 Settings";
       ranger = hidden "ranger";
-      rofi = hidden "Rofi";
-      "rofi-theme-selector" = hidden "Rofi Theme Selector";
       slack = hidden "Slack";
       spotify = hidden "Spotify";
       "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
