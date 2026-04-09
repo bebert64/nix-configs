@@ -97,9 +97,6 @@ query_notion_db "$QTT_DB" "$MCP_TOKEN" "$qtt_filter" "new" "$WORK_DIR/active_qtt
 # Tech Tasks: only keep available tickets (Recap starts with "☑️ Available")
 jq '[.[] | select(.properties.Recap.formula.string | startswith("☑️ Available")) | .id]' \
   "$WORK_DIR/active_tech.json" > "$WORK_DIR/active_tech_ids.json"
-# Also collect unavailable tech task IDs for cleanup
-jq '[.[] | select(.properties.Recap.formula.string | startswith("☑️ Available") | not) | .id]' \
-  "$WORK_DIR/active_tech.json" > "$WORK_DIR/unavailable_tech_ids.json"
 
 extract_page_ids "$WORK_DIR/active_qtt.json" "$WORK_DIR/active_qtt_ids.json"
 
@@ -173,47 +170,19 @@ jq -r '.[]' "$WORK_DIR/active_qtt_ids.json" | while read -r page_id; do
   fi
 done
 
-# --- Remove TODOs for done/dropped/unavailable tickets ---
+# --- Archive TODOs whose source is no longer in the active lists ---
+# No need to query done/dropped separately: if a TODO's source isn't in the
+# active+available lists, it moved to a status we don't care about — archive it.
 
-log "Fetching completed/dropped Tech Tasks..."
-done_tech_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
-  "and": [
-    {"property": "Assignee", "people": {"contains": $uid}},
-    {"or": [
-      {"property": "Status Intl", "select": {"equals": "🟣 3 - Done"}},
-      {"property": "Status Intl", "select": {"equals": "⚪ -1 - Dropped"}}
-    ]}
-  ]
-}')
-query_notion_db "$TECH_TASKS_DB" "$MCP_TOKEN" "$done_tech_filter" "new" "$WORK_DIR/done_tech.json"
+# Merge active tech (available only) + active QTT into one list
+jq -n --slurpfile tech "$WORK_DIR/active_tech_ids.json" --slurpfile qtt "$WORK_DIR/active_qtt_ids.json" \
+  '$tech[0] + $qtt[0]' > "$WORK_DIR/all_active_ids.json"
 
-log "Fetching completed/dropped QTT tickets..."
-done_qtt_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
-  "and": [
-    {"property": "Assignee", "people": {"contains": $uid}},
-    {"or": [
-      {"property": "Status Intl", "select": {"equals": "🟣 3 - Done"}},
-      {"property": "Status Intl", "select": {"equals": "⚪ -1 - Dropped"}}
-    ]}
-  ]
-}')
-query_notion_db "$QTT_DB" "$MCP_TOKEN" "$done_qtt_filter" "new" "$WORK_DIR/done_qtt.json"
-
-# Collect all IDs that should NOT have a TODO:
-# done/dropped tech + done/dropped QTT + unavailable tech
-jq -n \
-  --slurpfile done_tech "$WORK_DIR/done_tech.json" \
-  --slurpfile done_qtt "$WORK_DIR/done_qtt.json" \
-  --slurpfile unavail "$WORK_DIR/unavailable_tech_ids.json" \
-  '[($done_tech[0][] | .id), ($done_qtt[0][] | .id), $unavail[0][]]' \
-  > "$WORK_DIR/remove_ids.json"
-
-# Archive existing TODOs whose source is in the remove list
 jq -c '.[]' "$WORK_DIR/todo_map.json" | while read -r todo_entry; do
   todo_id=$(echo "$todo_entry" | jq -r '.todo_id')
   source_id=$(echo "$todo_entry" | jq -r '.source_id')
 
-  if jq -e --arg id "$source_id" 'index($id)' "$WORK_DIR/remove_ids.json" > /dev/null 2>&1; then
+  if ! jq -e --arg id "$source_id" 'index($id)' "$WORK_DIR/all_active_ids.json" > /dev/null 2>&1; then
     log "Archiving TODO $todo_id (source $source_id no longer active/available)"
     curl -s -X PATCH "https://api.notion.com/v1/pages/${todo_id}" \
       -H "Authorization: Bearer ${PERSONAL_TOKEN}" \
