@@ -207,7 +207,12 @@ in
       code = hidden "Visual Studio Code";
       "code-url-handler" = hidden "Visual Studio Code - URL Handler";
       vim = hidden "Vim";
+      gvim = hidden "GVim";
       xterm = hidden "XTerm";
+      "org.gtk.Settings" = hidden "GTK Settings";
+      "com.gexperts.Tilix" = hidden "Tilix";
+      cups = hidden "Print Settings";
+      nixos-manual = hidden "NixOS Manual";
     };
   };
 }
