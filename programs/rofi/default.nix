@@ -181,38 +181,35 @@ in
         type = "Application";
       };
     in {
-      # Utility apps with no reason to launch from rofi
-      picom = hidden "picom";
-      rofi = hidden "Rofi";
-      "rofi-theme-selector" = hidden "Rofi Theme Selector";
-      conky = hidden "conky";
-      ranger = hidden "ranger";
       btop = hidden "btop++";
-      nvim = hidden "Neovim wrapper";
-      # Apps that have their own i3 shortcuts
+      "org.gnome.Calculator" = hidden "Calculator";
       "chromium-browser" = hidden "Chromium";
+      conky = hidden "conky";
       cursor = hidden "Cursor";
       "cursor-url-handler" = hidden "Cursor URL Handler";
-      firefox = hidden "Firefox";
       datagrip = hidden "DataGrip";
-      slack = hidden "Slack";
       ferdium = hidden "Ferdium";
-      "plex-desktop" = hidden "Plex";
-      insomnia = hidden "Insomnia";
+      firefox = hidden "Firefox";
       "org.flameshot.Flameshot" = hidden "Flameshot";
-      "org.gnome.Calculator" = hidden "Calculator";
-      "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
+      "org.gtk.Settings" = hidden "GTK Settings";
+      gvim = hidden "GVim";
+      nvim = hidden "Neovim wrapper";
+      nixos-manual = hidden "NixOS Manual";
+      picom = hidden "picom";
+      "plex-desktop" = hidden "Plex";
+      cups = hidden "Print Settings";
+      qt5ct = hidden "Qt5 Settings";
+      ranger = hidden "ranger";
+      rofi = hidden "Rofi";
+      "rofi-theme-selector" = hidden "Rofi Theme Selector";
+      slack = hidden "Slack";
       spotify = hidden "Spotify";
-      # System-level apps from Computers flake
+      "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
+      "com.gexperts.Tilix" = hidden "Tilix";
+      vim = hidden "Vim";
       code = hidden "Visual Studio Code";
       "code-url-handler" = hidden "Visual Studio Code - URL Handler";
-      vim = hidden "Vim";
-      gvim = hidden "GVim";
       xterm = hidden "XTerm";
-      "org.gtk.Settings" = hidden "GTK Settings";
-      "com.gexperts.Tilix" = hidden "Tilix";
-      cups = hidden "Print Settings";
-      nixos-manual = hidden "NixOS Manual";
     };
   };
 }

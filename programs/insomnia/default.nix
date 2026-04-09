@@ -1,11 +1,8 @@
 {
   pkgs,
-  lib,
-  config,
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
   insomnia =
     {
       fetchurl,
@@ -38,12 +35,4 @@ let
 in
 {
   home.packages = [ (pkgs.callPackage insomnia { }) ];
-  xsession.windowManager.i3.config = {
-    keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+i" = "workspace $ws13; exec insomnia-stockly";
-    };
-    assigns = {
-      "$ws13" = [ { class = "insomnia|Insomnia"; } ];
-    };
-  };
 }
