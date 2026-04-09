@@ -111,6 +111,9 @@ in
             # Used to display empty workspaces, allowing to see the wallpapers
             "${modifier}+i" = "workspace $ws19; workspace $ws20";
 
+            # Notifications
+            "${modifier}+Escape" = "exec dunstctl close-all";
+
             # Modes
             "${modifier}+Shift+e" = "mode \"${exitMode}\"";
           };
