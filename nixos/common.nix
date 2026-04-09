@@ -11,6 +11,7 @@
   imports = [
     home-manager.nixosModules.home-manager
     ../nas.nix
+    ../programs/syncthing
     ../programs/zsh/nixos.nix
   ];
 
