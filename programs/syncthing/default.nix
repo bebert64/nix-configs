@@ -13,8 +13,8 @@ let
   deviceIds = {
     bureau = "REPLACE-ME";
     salon = "REPLACE-ME";
-    raspi4 = "REPLACE-ME";
-    stockly-romainc = "REPLACE-ME";
+    raspi4 = "5CQXE76-VF5NYUC-MPHH4MI-TC4FRHU-4CAMAXT-I7FGEIX-GIDSASJ-OMTT6AV";
+    stockly-romainc = "NBWSZFL-ATUO5NW-DICUY5X-A7PCCMJ-Y4PCIQB-RVL6WKP-XMHGSVT-5ZXDRQV";
   };
 
   hostName = config.networking.hostName;
