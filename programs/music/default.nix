@@ -9,7 +9,7 @@ let
   homeDir = config.home.homeDirectory;
   inherit (config.xsession.windowManager.i3.config) modifier;
   rofi = config.rofi.defaultCmd;
-  music_mode = "Music: [r]adio [d]ir [l]aunch r[e]set";
+  music_mode = "Music: [r]adio [d]ir [l]aunch [g]irl r[e]set";
   openDir = "${pkgs.writeScriptBin "open-dir" ''
     base_dir=${config.byDb.paths.nasBase}/Musique
     selection=$(
@@ -40,7 +40,10 @@ let
     ;
 in
 {
-  imports = [ ./choose-radios.nix ];
+  imports = [
+    ./choose-radios.nix
+    ./choose-lofi-girl-playlists.nix
+  ];
 
   home.packages = with pkgs; [
     strawberry
@@ -141,6 +144,7 @@ in
           "l" = "workspace $ws10, exec strawberry, mode default";
           "o" = "workspace $ws10, exec spotify, mode default";
           "r" = "exec choose-radios, mode default";
+          "g" = "exec choose-lofi-girl-playlists, mode default";
           "d" = "exec ${openDir}, mode default";
           # Allows to restart strawberry after it has crashed
           "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
