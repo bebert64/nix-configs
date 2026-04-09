@@ -172,5 +172,22 @@ in
     };
 
     xsession.windowManager.i3.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
+
+    xdg.desktopEntries = let
+      hidden = name: {
+        inherit name;
+        noDisplay = true;
+        exec = "";
+        type = "Application";
+      };
+    in {
+      picom = hidden "picom";
+      rofi = hidden "Rofi";
+      "rofi-theme-selector" = hidden "Rofi Theme Selector";
+      conky = hidden "conky";
+      ranger = hidden "ranger";
+      btop = hidden "btop++";
+      nvim = hidden "Neovim wrapper";
+    };
   };
 }
