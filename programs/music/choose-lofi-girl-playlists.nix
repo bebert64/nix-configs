@@ -147,13 +147,16 @@ in
 
       if [[ -n "$PLAYLIST_ID" ]]; then
         PLAYERCTL="${pkgs.playerctl}/bin/playerctl -p spotify"
+        WAS_SHUFFLED=$($PLAYERCTL shuffle 2>/dev/null || echo "Off")
         $PLAYERCTL stop || true
         $PLAYERCTL shuffle On || true
         ${pkgs.dbus}/bin/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify \
           /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri \
           "string:spotify:playlist:$PLAYLIST_ID"
-        sleep 2
-        $PLAYERCTL next
+        if [[ "$WAS_SHUFFLED" != "On" ]]; then
+          sleep 2
+          $PLAYERCTL next
+        fi
       fi
     '')
   ];
