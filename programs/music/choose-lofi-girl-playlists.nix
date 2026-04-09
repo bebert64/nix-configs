@@ -91,7 +91,9 @@ let
     # Download cover images (skip already cached)
     while IFS=$'\t' read -r name id image_url; do
       if [[ -n "$image_url" && ! -f "$CACHE_DIR/$id.jpg" ]]; then
-        ${curl} -s -o "$CACHE_DIR/$id.jpg" "$image_url"
+        ${curl} -s -o "$CACHE_DIR/$id.raw" "$image_url"
+        ${pkgs.imagemagick}/bin/convert "$CACHE_DIR/$id.raw" "$CACHE_DIR/$id.jpg"
+        rm -f "$CACHE_DIR/$id.raw"
       fi
     done < "$CACHE_FILE"
   '';
