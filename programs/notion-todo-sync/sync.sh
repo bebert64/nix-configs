@@ -98,6 +98,11 @@ query_notion_db "$QTT_DB" "$MCP_TOKEN" "$qtt_filter" "new" "$WORK_DIR/active_qtt
 jq '[.[] | select(.properties.Recap.formula.string | startswith("☑️ Available")) | .id]' \
   "$WORK_DIR/active_tech.json" > "$WORK_DIR/active_tech_ids.json"
 
+# Build a map of tech task ID → ROI display string
+jq '[.[] | select(.properties.Recap.formula.string | startswith("☑️ Available")) |
+  {key: .id, value: (.properties.roi_display.formula.string // null)}
+] | from_entries' "$WORK_DIR/active_tech.json" > "$WORK_DIR/tech_roi_map.json"
+
 extract_page_ids "$WORK_DIR/active_qtt.json" "$WORK_DIR/active_qtt_ids.json"
 
 log "Found $(jq 'length' "$WORK_DIR/active_tech_ids.json") available Tech Tasks (out of $(jq 'length' "$WORK_DIR/active_tech.json") active)"
@@ -128,9 +133,9 @@ log "Found $(jq 'length' "$WORK_DIR/todo_map.json") existing TODO entries with s
 # --- Create new TODO entries for tickets not yet tracked ---
 
 create_todo() {
-  local source_id="$1" area_label="$2"
+  local source_id="$1" area_label="$2" roi="${3:-}"
   local body_file="$WORK_DIR/create_body.json"
-  jq -n --arg db "$TODO_DB" --arg src_id "$source_id" --arg area "$area_label" '{
+  jq -n --arg db "$TODO_DB" --arg src_id "$source_id" --arg area "$area_label" --arg roi "$roi" '{
     parent: {database_id: $db},
     properties: {
       title: {
@@ -142,7 +147,7 @@ create_todo() {
       Area: {select: {name: $area}},
       Status: {status: {name: "New"}}
     }
-  }' > "$body_file"
+  } | if $roi != "" then .properties.ROI = {rich_text: [{type: "text", text: {content: $roi}}]} else . end' > "$body_file"
   curl -s -X POST "https://api.notion.com/v1/pages" \
     -H "Authorization: Bearer ${PERSONAL_TOKEN}" \
     -H "Notion-Version: 2022-06-28" \
@@ -152,11 +157,12 @@ create_todo() {
 
 # Create TODOs for active tech tasks
 jq -r '.[]' "$WORK_DIR/active_tech_ids.json" | while read -r page_id; do
+  roi=$(jq -r --arg id "$page_id" '.[$id] // empty' "$WORK_DIR/tech_roi_map.json")
   if jq -e --arg id "$page_id" 'index($id)' "$WORK_DIR/existing_source_ids.json" > /dev/null 2>&1; then
     log "Skipping Tech Task $page_id (already in TODO)"
   else
-    log "Creating TODO for Tech Task $page_id"
-    create_todo "$page_id" "🎯 Tech Task"
+    log "Creating TODO for Tech Task $page_id (ROI: ${roi:-n/a})"
+    create_todo "$page_id" "🎯 Tech Task" "$roi"
   fi
 done
 
@@ -167,6 +173,24 @@ jq -r '.[]' "$WORK_DIR/active_qtt_ids.json" | while read -r page_id; do
   else
     log "Creating TODO for QTT $page_id"
     create_todo "$page_id" "🍬 Quality Tech Ticket"
+  fi
+done
+
+# --- Update ROI on existing Tech Task TODOs ---
+
+# Build a map of source_id → todo_id for tech task TODOs
+jq '[.[] | select(.source_id != null)] | map({key: .source_id, value: .todo_id}) | from_entries' \
+  "$WORK_DIR/todo_map.json" > "$WORK_DIR/source_to_todo.json"
+
+jq -r 'to_entries[] | select(.value != null) | "\(.key)\t\(.value)"' "$WORK_DIR/tech_roi_map.json" | while IFS=$'\t' read -r source_id roi; do
+  todo_id=$(jq -r --arg id "$source_id" '.[$id] // empty' "$WORK_DIR/source_to_todo.json")
+  if [[ -n "$todo_id" && -n "$roi" ]]; then
+    log "Updating ROI on TODO $todo_id: $roi"
+    curl -s -X PATCH "https://api.notion.com/v1/pages/${todo_id}" \
+      -H "Authorization: Bearer ${PERSONAL_TOKEN}" \
+      -H "Notion-Version: 2022-06-28" \
+      -H "Content-Type: application/json" \
+      -d "$(jq -n --arg roi "$roi" '{properties: {ROI: {rich_text: [{type: "text", text: {content: $roi}}]}}}')" > /dev/null
   fi
 done
 
