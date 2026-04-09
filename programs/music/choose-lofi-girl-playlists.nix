@@ -4,16 +4,19 @@
   ...
 }:
 let
-  inherit (pkgs) writeScriptBin;
+  inherit (pkgs) writeScriptBin libnotify;
   rofiGrid = config.rofi.gridCmd;
   jq = "${pkgs.jq}/bin/jq";
   curl = "${pkgs.curl}/bin/curl";
+  notifySend = "${libnotify}/bin/notify-send";
 
   clientIdPath = config.sops.secrets."spotify/client_id".path;
   clientSecretPath = config.sops.secrets."spotify/client_secret".path;
+  refreshTokenPath = config.sops.secrets."spotify/refresh_token".path;
   userId = "chilledcow";
   cacheDir = "$HOME/.cache/lofi-girl-playlists";
-  cacheTtlSeconds = toString (24 * 3600); # 24 hours
+  cacheTtlSeconds = toString (7 * 24 * 3600); # 7 days
+  searchLimit = "10"; # Spotify API max for search
 
   refreshScript = writeScriptBin "refresh-lofi-girl-playlists" ''
     CACHE_DIR="${cacheDir}"
@@ -27,46 +30,63 @@ let
 
     CLIENT_ID=$(cat ${clientIdPath})
     CLIENT_SECRET=$(cat ${clientSecretPath})
+    REFRESH_TOKEN=$(cat ${refreshTokenPath})
 
     TOKEN=$(${curl} -s -X POST https://accounts.spotify.com/api/token \
       -H "Content-Type: application/x-www-form-urlencoded" \
-      -d "grant_type=client_credentials&client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET" \
+      -d "grant_type=refresh_token&refresh_token=$REFRESH_TOKEN&client_id=$CLIENT_ID&client_secret=$CLIENT_SECRET" \
       | ${jq} -r '.access_token')
 
     if [[ -z "$TOKEN" || "$TOKEN" == "null" ]]; then
       exit 1
     fi
 
-    ALL_PLAYLISTS="[]"
-    OFFSET=0
-    LIMIT=50
-
-    while true; do
-      PAGE=$(${curl} -s "https://api.spotify.com/v1/users/${userId}/playlists?limit=$LIMIT&offset=$OFFSET" \
-        -H "Authorization: Bearer $TOKEN")
-
-      ITEMS=$(echo "$PAGE" | ${jq} '.items')
-      COUNT=$(echo "$ITEMS" | ${jq} 'length')
-
-      if [[ "$COUNT" -eq 0 ]]; then
-        break
-      fi
-
-      ALL_PLAYLISTS=$(echo "$ALL_PLAYLISTS $ITEMS" | ${jq} -s '.[0] + .[1]')
-      OFFSET=$((OFFSET + LIMIT))
-
-      TOTAL=$(echo "$PAGE" | ${jq} '.total')
-      if [[ "$OFFSET" -ge "$TOTAL" ]]; then
-        break
+    # Collect all known playlist IDs: from existing cache + from cached images
+    KNOWN_IDS=""
+    if [[ -s "$CACHE_FILE" ]]; then
+      KNOWN_IDS=$(cut -f2 "$CACHE_FILE")
+    fi
+    for img in "$CACHE_DIR"/*.jpg; do
+      [[ -f "$img" ]] || continue
+      ID=$(basename "$img" .jpg)
+      if ! echo "$KNOWN_IDS" | grep -qx "$ID"; then
+        KNOWN_IDS="$KNOWN_IDS"$'\n'"$ID"
       fi
     done
 
-    # Write cache: name\tid\timage_url, sorted by track count
-    echo "$ALL_PLAYLISTS" | ${jq} -r '
-      sort_by(-.tracks.total)
-      | .[]
-      | "\(.name)\t\(.id)\t\(.images[0].url // "")"
-    ' > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
+    # Discover new playlists via search
+    for OFFSET in $(seq 0 ${searchLimit} 200); do
+      PAGE=$(${curl} -s "https://api.spotify.com/v1/search?q=lofi+girl&type=playlist&limit=${searchLimit}&offset=$OFFSET" \
+        -H "Authorization: Bearer $TOKEN")
+      NEW_IDS=$(echo "$PAGE" | ${jq} -r '.playlists.items[]? | select(.owner.id == "${userId}") | .id')
+      for ID in $NEW_IDS; do
+        if ! echo "$KNOWN_IDS" | grep -qx "$ID"; then
+          KNOWN_IDS="$KNOWN_IDS"$'\n'"$ID"
+        fi
+      done
+    done
+
+    # Remove empty lines
+    KNOWN_IDS=$(echo "$KNOWN_IDS" | sed '/^$/d' | sort -u)
+
+    # Fetch each playlist individually and build the TSV
+    > "$CACHE_FILE.tmp"
+    while IFS= read -r PLAYLIST_ID; do
+      DATA=$(${curl} -s "https://api.spotify.com/v1/playlists/$PLAYLIST_ID" \
+        -H "Authorization: Bearer $TOKEN")
+
+      OWNER=$(echo "$DATA" | ${jq} -r '.owner.id // ""')
+      if [[ "$OWNER" != "${userId}" ]]; then
+        continue
+      fi
+
+      LINE=$(echo "$DATA" | ${jq} -r '"\(.name)\t\(.id)\t\(.images[0].url // "")"')
+      echo "$LINE" >> "$CACHE_FILE.tmp"
+    done <<< "$KNOWN_IDS"
+
+    # Sort by name and replace cache
+    sort -t$'\t' -k1,1 "$CACHE_FILE.tmp" > "$CACHE_FILE.tmp2" && mv "$CACHE_FILE.tmp2" "$CACHE_FILE"
+    rm -f "$CACHE_FILE.tmp"
 
     # Download cover images (skip already cached)
     while IFS=$'\t' read -r name id image_url; do
@@ -88,7 +108,7 @@ in
       fi
 
       if [[ ! -s "$CACHE_FILE" ]]; then
-        notify-send "Lofi Girl" "Failed to fetch playlists"
+        ${notifySend} "Lofi Girl" "Failed to fetch playlists"
         exit 1
       fi
 
@@ -124,7 +144,13 @@ in
       done < "$CACHE_FILE")
 
       if [[ -n "$PLAYLIST_ID" ]]; then
+        PLAYERCTL="${pkgs.playerctl}/bin/playerctl -p spotify"
+        $PLAYERCTL stop || true
         xdg-open "spotify:playlist:$PLAYLIST_ID"
+        sleep 2
+        $PLAYERCTL shuffle On
+        $PLAYERCTL next
+        $PLAYERCTL play
       fi
     '')
   ];

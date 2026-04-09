@@ -39,6 +39,7 @@ in
       "stockly/mcp/sentry-token" = { };
       "spotify/client_id" = { };
       "spotify/client_secret" = { };
+      "spotify/refresh_token" = { };
     };
   };
 
