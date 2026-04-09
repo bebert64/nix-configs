@@ -88,8 +88,8 @@ log "Fetching active QTT tickets..."
 qtt_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
   "and": [
     {"property": "Assignee", "people": {"contains": $uid}},
-    {"property": "Status", "select": {"does_not_equal": "4 - Done"}},
-    {"property": "Status", "select": {"does_not_equal": "-1 - Dropped"}}
+    {"property": "Status Intl", "select": {"does_not_equal": "🟣 3 - Done"}},
+    {"property": "Status Intl", "select": {"does_not_equal": "⚪ -1 - Dropped"}}
   ]
 }')
 query_notion_db "$QTT_DB" "$MCP_TOKEN" "$qtt_filter" "new" "$WORK_DIR/active_qtt.json"
@@ -186,8 +186,8 @@ done_qtt_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
   "and": [
     {"property": "Assignee", "people": {"contains": $uid}},
     {"or": [
-      {"property": "Status", "select": {"equals": "4 - Done"}},
-      {"property": "Status", "select": {"equals": "-1 - Dropped"}}
+      {"property": "Status Intl", "select": {"equals": "🟣 3 - Done"}},
+      {"property": "Status Intl", "select": {"equals": "⚪ -1 - Dropped"}}
     ]}
   ]
 }')
