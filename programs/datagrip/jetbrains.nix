@@ -1,12 +1,16 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-  jaJetfilterBaseUrl = "https://3.jetbra.in";
-  jaNetfilter = pkgs.stdenv.mkDerivation {
+  ja-jetfilter-base-url = "https://3.jetbra.in";
+  ja-netfilter = pkgs.stdenv.mkDerivation {
     # https://jetbra.in/s
     name = "ja-netfilter";
     src = pkgs.fetchzip {
-      url = "${jaJetfilterBaseUrl}/files/jetbra-5a50fc03d68a014f893b7fc3aa465380d59f9095.zip";
+      url = "${ja-jetfilter-base-url}/files/jetbra-5a50fc03d68a014f893b7fc3aa465380d59f9095.zip";
       hash = "sha256-iCtLAmJ1uBU2VtU/EbgASI5Ws9pUJUpWxOB6xsZjgVs=";
     };
     installPhase = ''
@@ -18,60 +22,45 @@ let
     "pycharm" = "PC";
     "idea" = "II";
   };
-  jetbrainsKeys = pkgs.callPackage (
+  jetbrains-keys = pkgs.callPackage (
     { pkgs, stdenvNoCC }:
     stdenvNoCC.mkDerivation {
       name = "jetbrains-keys";
 
       src = pkgs.fetchurl {
-        url = jaJetfilterBaseUrl;
+        url = ja-jetfilter-base-url;
         hash = "sha256-cQc/LU13zDlv7f0ymBg7OBUJ7ISc+/TDrLpubQzAn1o=";
       };
       dontUnpack = true;
 
-      installPhase =
-        let
-          runtimeInputs = with pkgs; [
+      env = {
+        jetbrains_keys_bin_path = lib.makeBinPath (
+          with pkgs;
+          [
             jq
             xclip
             iconv
-          ];
-        in
-        ''
-          runHook preInstall
+          ]
+        );
+        ja_netfilter_base_url = ja-jetfilter-base-url;
+      };
 
-          mkdir -p $out/bin
-          cat "$src" | grep "let jbKeys = " | sed -E 's/^[^{]*(\{.*\})+.*$/\1/' > "$out/jetbrains-keys.json"
-          cat <<EOF >> "$out/bin/jetbrains-keys"
-          #!/usr/bin/env bash
-          set -euo pipefail
-          export PATH="${lib.makeBinPath runtimeInputs}:\$PATH"
-          PRODUCT_CODE="\''${1-}"
-          if [ -z "\$PRODUCT_CODE" ]; then
-            xdg-open "${jaJetfilterBaseUrl}"
-          else
-            ACTIVATION_OUTPUT_FILE="\''${2-}"
-            if [ -n "\$ACTIVATION_OUTPUT_FILE" ]; then echo "Product code: \$PRODUCT_CODE"; fi
-            ACTIVATION_CODE=\$(jq -r ".\$PRODUCT_CODE.[]" "$out/jetbrains-keys.json")
-            if [ -z "\$ACTIVATION_OUTPUT_FILE" ]; then
-              echo \$ACTIVATION_CODE
-              xclip -selection clipboard <<< "\$ACTIVATION_CODE"
-            else
-              mkdir -p "\$(dirname "\$ACTIVATION_OUTPUT_FILE")"
-              (printf "\xff\xff" && (printf "<certificate-key>\n\$ACTIVATION_CODE" | iconv --from-code UTF-8 --to-code UCS2)) > "\$ACTIVATION_OUTPUT_FILE"
-            fi
-          fi
-          EOF
-          chmod 555 "$out/bin/jetbrains-keys"
-          chmod 444 "$out/jetbrains-keys.json"
-          chmod 555 "$out"
+      installPhase = ''
+        runHook preInstall
 
-          runHook postInstall
-        '';
+        mkdir -p $out/bin
+        cat "$src" | grep "let jbKeys = " | sed -E 's/^[^{]*(\{.*\})+.*$/\1/' > "$out/jetbrains-keys.json"
+        substituteAll ${./jetbrains-keys.sh} "$out/bin/jetbrains-keys"
+        chmod 555 "$out/bin/jetbrains-keys"
+        chmod 444 "$out/jetbrains-keys.json"
+        chmod 555 "$out"
+
+        runHook postInstall
+      '';
     }
   ) { };
-  withJaNetfilter = builtins.mapAttrs (
-    _: product:
+  with-ja-netfilter = builtins.mapAttrs (
+    name: product:
     product.overrideAttrs (oldAttrs: {
       postFixup = (oldAttrs.postFixup or "") + ''
         set -eo pipefail
@@ -82,12 +71,12 @@ let
         --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
         --add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED
 
-        -javaagent:${jaNetfilter}/ja-netfilter.jar=jetbrains
+        -javaagent:${ja-netfilter}/ja-netfilter.jar=jetbrains
         EOF
       '';
     })
   ) pkgs.jetbrains;
-  withAutoActivation = builtins.mapAttrs (
+  with-auto-activation = builtins.mapAttrs (
     name: product:
     product.overrideAttrs (oldAttrs: {
       postFixup = (oldAttrs.postFixup or "") + ''
@@ -99,18 +88,20 @@ let
             or ''$(${pkgs.jq}/bin/jq -r '.productCode' "$PRODUCT_INFO_JSON")''
             )
         }"
-        APPDATA="\$HOME/.config/JetBrains/$(${pkgs.jq}/bin/jq -r '.dataDirectoryName' $PRODUCT_INFO_JSON)"
+        APPDATA=$(${pkgs.jq}/bin/jq -r '.dataDirectoryName' $PRODUCT_INFO_JSON)
+        APPDATA="\$HOME/.config/JetBrains/$APPDATA"
+        APPDATA_DIR_WITHOUT_VERSION=$(echo "$APPDATA" | sed -E 's/20[0-9.]+$//')
         KEY_FILE_PREFIX=$(${pkgs.jq}/bin/jq -r '.launch[].launcherPath' $PRODUCT_INFO_JSON)
         KEY_FILE_PREFIX=$(basename $KEY_FILE_PREFIX)
         KEY_FILE_PREFIX=''${KEY_FILE_PREFIX%.*}
-        sed -i "2i${jetbrainsKeys}/bin/jetbrains-keys '$PRODUCT_CODE' \"$APPDATA/$KEY_FILE_PREFIX.key\"" "$out/$pname/$IDE_BIN_PATH"
+        sed -i "2i${jetbrains-keys}/bin/jetbrains-keys '$PRODUCT_CODE' \"$APPDATA/$KEY_FILE_PREFIX.key\" \"$APPDATA_DIR_WITHOUT_VERSION\" " "$out/$pname/$IDE_BIN_PATH"
       '';
     })
-  ) withJaNetfilter;
+  ) with-ja-netfilter;
 in
 
-withAutoActivation
+with-auto-activation
 // {
-  noAutoActivation = withJaNetfilter;
-  inherit jetbrainsKeys;
+  no-auto-activation = with-ja-netfilter;
+  inherit jetbrains-keys;
 }

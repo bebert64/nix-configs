@@ -9,7 +9,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/75e64f8ebde8e90df2643e5b82677b93ba33d922"; # pinned to 2.1.87, revert to "github:nixos/nixpkgs/nixos-unstable" once fixed
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable"; # pinned to 2.1.87, revert to "github:nixos/nixpkgs/nixos-unstable" once fixed
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,7 +23,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     stockly-computers = {
-      url = "git+file:///tmp/Computers";
+      url = "git+ssh://git@github.com/Stockly/Computers.git";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server = {
