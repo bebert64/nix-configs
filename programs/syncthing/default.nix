@@ -17,7 +17,7 @@ let
     stockly-romainc = "NBWSZFL-ATUO5NW-DICUY5X-A7PCCMJ-Y4PCIQB-RVL6WKP-XMHGSVT-5ZXDRQV";
   };
 
-  hostName = config.networking.hostName;
+  inherit (config.networking) hostName;
 
   # Only include devices that have a real ID (not placeholder)
   configuredDevices = lib.filterAttrs (_: id: id != "REPLACE-ME") deviceIds;
@@ -33,7 +33,7 @@ in
       configDir = "${homeDir}/.config/syncthing";
       openDefaultPorts = true;
       settings = {
-        devices = lib.mapAttrs (_name: id: { id = id; }) otherDevices;
+        devices = lib.mapAttrs (_name: id: { inherit id; }) otherDevices;
         folders = {
           "claude-plans" = {
             path = plansDir;
