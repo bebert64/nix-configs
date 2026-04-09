@@ -9,56 +9,67 @@ TODO_DB="cdf5bb4b-4437-4533-a8cb-170b4f0e1186"
 MCP_TOKEN=$(cat "$MCP_TOKEN_FILE")
 PERSONAL_TOKEN=$(cat "$PERSONAL_TOKEN_FILE")
 
+WORK_DIR=$(mktemp -d)
+trap 'rm -rf "$WORK_DIR"' EXIT
+
 log() {
-  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" >&2
 }
 
-# Query a Notion database with pagination. Returns all results as a JSON array.
-# $1: database ID, $2: token, $3: filter JSON
+# Query a Notion database with pagination. Writes results to $5 (output file).
+# $1: database ID, $2: token, $3: filter JSON, $4: "old"|"new", $5: output file
 query_notion_db() {
-  local db_id="$1" token="$2" filter="$3"
-  local all_results="[]" has_more="true" cursor=""
+  local db_id="$1" token="$2" filter="$3" api_version="${4:-old}" out_file="$5"
+  local has_more="true" cursor=""
+  local endpoint notion_version
+
+  if [[ "$api_version" == "new" ]]; then
+    endpoint="https://api.notion.com/v1/data_sources/${db_id}/query"
+    notion_version="2025-09-03"
+  else
+    endpoint="https://api.notion.com/v1/databases/${db_id}/query"
+    notion_version="2022-06-28"
+  fi
+
+  echo '[]' > "$out_file"
 
   while [[ "$has_more" == "true" ]]; do
-    local body
+    local body_file="$WORK_DIR/body.json"
     if [[ -n "$cursor" ]]; then
-      body=$(jq -n --argjson filter "$filter" --arg cursor "$cursor" \
-        '{filter: $filter, start_cursor: $cursor, page_size: 100}')
+      jq -n --argjson filter "$filter" --arg cursor "$cursor" \
+        '{filter: $filter, start_cursor: $cursor, page_size: 100}' > "$body_file"
     else
-      body=$(jq -n --argjson filter "$filter" \
-        '{filter: $filter, page_size: 100}')
+      jq -n --argjson filter "$filter" \
+        '{filter: $filter, page_size: 100}' > "$body_file"
     fi
 
-    local response
-    response=$(curl -s -X POST "https://api.notion.com/v1/databases/${db_id}/query" \
+    local resp_file="$WORK_DIR/response.json"
+    curl -s -X POST "$endpoint" \
       -H "Authorization: Bearer ${token}" \
-      -H "Notion-Version: 2022-06-28" \
+      -H "Notion-Version: ${notion_version}" \
       -H "Content-Type: application/json" \
-      -d "$body")
+      -d @"$body_file" > "$resp_file"
 
     # Check for API errors
-    if echo "$response" | jq -e '.object == "error"' > /dev/null 2>&1; then
-      log "ERROR: Notion API error: $(echo "$response" | jq -r '.message')"
+    if jq -e '.object == "error"' "$resp_file" > /dev/null 2>&1; then
+      log "ERROR: Notion API error: $(jq -r '.message' "$resp_file")"
       return 1
     fi
 
-    local page_results
-    page_results=$(echo "$response" | jq '.results')
-    all_results=$(jq -n --argjson a "$all_results" --argjson b "$page_results" '$a + $b')
-    has_more=$(echo "$response" | jq -r '.has_more')
-    cursor=$(echo "$response" | jq -r '.next_cursor // empty')
-  done
+    # Append results
+    jq -n --slurpfile existing "$out_file" --slurpfile page "$resp_file" \
+      '$existing[0] + $page[0].results' > "$out_file.tmp"
+    mv "$out_file.tmp" "$out_file"
 
-  echo "$all_results"
+    has_more=$(jq -r '.has_more' "$resp_file")
+    cursor=$(jq -r '.next_cursor // empty' "$resp_file")
+  done
 }
 
-# Extract page ID and title from query results
-# $1: JSON array of pages
-extract_pages() {
-  echo "$1" | jq -r '[.[] | {
-    id: .id,
-    title: ([.properties | to_entries[] | select(.value.type == "title") | .value.title[] | .plain_text] | join(""))
-  }]'
+# Extract page IDs from query results file, write to output file
+# $1: input file (full results), $2: output file (id-only array)
+extract_page_ids() {
+  jq -r '[.[].id]' "$1" > "$2"
 }
 
 # --- Fetch active source tickets (not Done, not Dropped) ---
@@ -67,27 +78,27 @@ log "Fetching active Tech Tasks..."
 tech_tasks_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
   "and": [
     {"property": "Assignee", "people": {"contains": $uid}},
-    {"property": "Status Intl", "status": {"does_not_equal": "🟣 3 - Done"}},
-    {"property": "Status Intl", "status": {"does_not_equal": "⚪ -1 - Dropped"}}
+    {"property": "Status Intl", "select": {"does_not_equal": "🟣 3 - Done"}},
+    {"property": "Status Intl", "select": {"does_not_equal": "⚪ -1 - Dropped"}}
   ]
 }')
-active_tech_tasks=$(query_notion_db "$TECH_TASKS_DB" "$MCP_TOKEN" "$tech_tasks_filter")
+query_notion_db "$TECH_TASKS_DB" "$MCP_TOKEN" "$tech_tasks_filter" "new" "$WORK_DIR/active_tech.json"
 
 log "Fetching active QTT tickets..."
 qtt_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
   "and": [
     {"property": "Assignee", "people": {"contains": $uid}},
-    {"property": "Status", "status": {"does_not_equal": "4 - Done"}},
-    {"property": "Status", "status": {"does_not_equal": "-1 - Dropped"}}
+    {"property": "Status", "select": {"does_not_equal": "4 - Done"}},
+    {"property": "Status", "select": {"does_not_equal": "-1 - Dropped"}}
   ]
 }')
-active_qtt=$(query_notion_db "$QTT_DB" "$MCP_TOKEN" "$qtt_filter")
+query_notion_db "$QTT_DB" "$MCP_TOKEN" "$qtt_filter" "new" "$WORK_DIR/active_qtt.json"
 
-active_tech_pages=$(extract_pages "$active_tech_tasks")
-active_qtt_pages=$(extract_pages "$active_qtt")
+extract_page_ids "$WORK_DIR/active_tech.json" "$WORK_DIR/active_tech_ids.json"
+extract_page_ids "$WORK_DIR/active_qtt.json" "$WORK_DIR/active_qtt_ids.json"
 
-log "Found $(echo "$active_tech_pages" | jq 'length') active Tech Tasks"
-log "Found $(echo "$active_qtt_pages" | jq 'length') active QTT tickets"
+log "Found $(jq 'length' "$WORK_DIR/active_tech_ids.json") active Tech Tasks"
+log "Found $(jq 'length' "$WORK_DIR/active_qtt_ids.json") active QTT tickets"
 
 # --- Fetch existing TODO entries ---
 
@@ -98,46 +109,47 @@ todo_filter='{
     {"property": "Area", "select": {"equals": "🍬 Quality Tech Ticket"}}
   ]
 }'
-existing_todos=$(query_notion_db "$TODO_DB" "$PERSONAL_TOKEN" "$todo_filter")
+query_notion_db "$TODO_DB" "$PERSONAL_TOKEN" "$todo_filter" "old" "$WORK_DIR/existing_todos.json"
 
 # Extract source page IDs from TODO titles (page mentions)
-# Each TODO title should contain a mention with a page ID pointing to the source ticket
-existing_todo_map=$(echo "$existing_todos" | jq '[.[] | {
+jq '[.[] | {
   todo_id: .id,
   source_id: ([.properties | to_entries[] | select(.value.type == "title") | .value.title[] | select(.type == "mention") | .mention.page.id] | first),
   status: (.properties.Status.status.name // null)
-}] | map(select(.source_id != null))')
+}] | map(select(.source_id != null))' "$WORK_DIR/existing_todos.json" > "$WORK_DIR/todo_map.json"
 
-existing_source_ids=$(echo "$existing_todo_map" | jq -r '[.[].source_id] | join("\n")')
+jq -r '[.[].source_id]' "$WORK_DIR/todo_map.json" > "$WORK_DIR/existing_source_ids.json"
 
-log "Found $(echo "$existing_todo_map" | jq 'length') existing TODO entries with source links"
+log "Found $(jq 'length' "$WORK_DIR/todo_map.json") existing TODO entries with source links"
 
 # --- Create new TODO entries for tickets not yet tracked ---
 
 create_todo() {
   local source_id="$1" area_label="$2"
+  local body_file="$WORK_DIR/create_body.json"
+  jq -n --arg db "$TODO_DB" --arg src_id "$source_id" --arg area "$area_label" '{
+    parent: {database_id: $db},
+    properties: {
+      title: {
+        title: [{
+          type: "mention",
+          mention: {page: {id: $src_id}}
+        }]
+      },
+      Area: {select: {name: $area}},
+      Status: {status: {name: "New"}}
+    }
+  }' > "$body_file"
   curl -s -X POST "https://api.notion.com/v1/pages" \
     -H "Authorization: Bearer ${PERSONAL_TOKEN}" \
     -H "Notion-Version: 2022-06-28" \
     -H "Content-Type: application/json" \
-    -d "$(jq -n --arg db "$TODO_DB" --arg src_id "$source_id" --arg area "$area_label" '{
-      parent: {database_id: $db},
-      properties: {
-        title: {
-          title: [{
-            type: "mention",
-            mention: {page: {id: $src_id}}
-          }]
-        },
-        Area: {select: {name: $area}},
-        Status: {status: {name: "New"}}
-      }
-    }')" > /dev/null
+    -d @"$body_file" > /dev/null
 }
 
 # Create TODOs for active tech tasks
-echo "$active_tech_pages" | jq -r '.[].id' | while read -r page_id; do
-  if echo "$existing_source_ids" | grep -q "$page_id"; then
+jq -r '.[]' "$WORK_DIR/active_tech_ids.json" | while read -r page_id; do
+  if jq -e --arg id "$page_id" 'index($id)' "$WORK_DIR/existing_source_ids.json" > /dev/null 2>&1; then
     log "Skipping Tech Task $page_id (already in TODO)"
   else
     log "Creating TODO for Tech Task $page_id"
@@ -146,8 +158,8 @@ echo "$active_tech_pages" | jq -r '.[].id' | while read -r page_id; do
 done
 
 # Create TODOs for active QTT tickets
-echo "$active_qtt_pages" | jq -r '.[].id' | while read -r page_id; do
-  if echo "$existing_source_ids" | grep -q "$page_id"; then
+jq -r '.[]' "$WORK_DIR/active_qtt_ids.json" | while read -r page_id; do
+  if jq -e --arg id "$page_id" 'index($id)' "$WORK_DIR/existing_source_ids.json" > /dev/null 2>&1; then
     log "Skipping QTT $page_id (already in TODO)"
   else
     log "Creating TODO for QTT $page_id"
@@ -162,44 +174,42 @@ done_tech_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
   "and": [
     {"property": "Assignee", "people": {"contains": $uid}},
     {"or": [
-      {"property": "Status Intl", "status": {"equals": "🟣 3 - Done"}},
-      {"property": "Status Intl", "status": {"equals": "⚪ -1 - Dropped"}}
+      {"property": "Status Intl", "select": {"equals": "🟣 3 - Done"}},
+      {"property": "Status Intl", "select": {"equals": "⚪ -1 - Dropped"}}
     ]}
   ]
 }')
-done_tech_tasks=$(query_notion_db "$TECH_TASKS_DB" "$MCP_TOKEN" "$done_tech_filter")
+query_notion_db "$TECH_TASKS_DB" "$MCP_TOKEN" "$done_tech_filter" "new" "$WORK_DIR/done_tech.json"
 
 log "Fetching completed/dropped QTT tickets..."
 done_qtt_filter=$(jq -n --arg uid "$ROMAIN_USER_ID" '{
   "and": [
     {"property": "Assignee", "people": {"contains": $uid}},
     {"or": [
-      {"property": "Status", "status": {"equals": "4 - Done"}},
-      {"property": "Status", "status": {"equals": "-1 - Dropped"}}
+      {"property": "Status", "select": {"equals": "4 - Done"}},
+      {"property": "Status", "select": {"equals": "-1 - Dropped"}}
     ]}
   ]
 }')
-done_qtt=$(query_notion_db "$QTT_DB" "$MCP_TOKEN" "$done_qtt_filter")
+query_notion_db "$QTT_DB" "$MCP_TOKEN" "$done_qtt_filter" "new" "$WORK_DIR/done_qtt.json"
 
-# Build a map of done/dropped source IDs to their status
-done_source_ids=$(jq -n \
-  --argjson tech "$done_tech_tasks" \
-  --argjson qtt "$done_qtt" \
-  '[$tech[], $qtt[]] | [.[] | {
+# Build a map of done/dropped source IDs
+jq -n --slurpfile tech "$WORK_DIR/done_tech.json" --slurpfile qtt "$WORK_DIR/done_qtt.json" \
+  '[$tech[0][], $qtt[0][]] | [.[] | {
     id: .id,
     is_dropped: (
-      [.properties | to_entries[] | select(.value.type == "status") | .value.status.name] | first |
-      test("Dropped$")
+      [.properties | to_entries[] | select(.value.type == "select" and .value.select != null) | .value.select.name] |
+      any(test("Dropped$"))
     )
-  }]')
+  }]' > "$WORK_DIR/done_map.json"
 
 # Update or delete existing TODOs whose source is now done/dropped
-echo "$existing_todo_map" | jq -c '.[]' | while read -r todo_entry; do
+jq -c '.[]' "$WORK_DIR/todo_map.json" | while read -r todo_entry; do
   todo_id=$(echo "$todo_entry" | jq -r '.todo_id')
   source_id=$(echo "$todo_entry" | jq -r '.source_id')
   current_status=$(echo "$todo_entry" | jq -r '.status')
 
-  done_info=$(echo "$done_source_ids" | jq -r --arg sid "$source_id" '.[] | select(.id == $sid)')
+  done_info=$(jq -r --arg sid "$source_id" '.[] | select(.id == $sid)' "$WORK_DIR/done_map.json")
 
   if [[ -z "$done_info" ]]; then
     continue
