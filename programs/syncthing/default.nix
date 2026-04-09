@@ -19,7 +19,9 @@ let
 
   hostName = config.networking.hostName;
 
-  otherDevices = lib.filterAttrs (name: _: name != hostName) deviceIds;
+  # Only include devices that have a real ID (not placeholder)
+  configuredDevices = lib.filterAttrs (_: id: id != "REPLACE-ME") deviceIds;
+  otherDevices = lib.filterAttrs (name: _: name != hostName) configuredDevices;
 in
 {
   config = {
@@ -48,7 +50,7 @@ in
     # Ensure the sync directory exists
     system.activationScripts.createClaudePlansDir = ''
       mkdir -p ${plansDir}
-      chown ${userConfig.name}:users ${plansDir}
+      chown ${userConfig.name}:users ${homeDir}/.claude ${plansDir}
     '';
 
     # Open firewall for Syncthing discovery
