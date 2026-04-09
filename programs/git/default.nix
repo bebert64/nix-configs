@@ -48,7 +48,7 @@
           c = "commit";
           ca = "commit --amend";
           cap = "!git commit --amend && git push -u --force-with-lease";
-          clb = "!git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done;";
+          clb = "!git fetch -p && git branch -vv | grep ': gone]' | awk '{print (\$1 == \"+\" || \$1 == \"*\") ? \$2 : \$1}' | xargs -r git branch -D";
           co = "checkout";
           com = "!git checkout ${gitConfig.mainOrMaster}";
           cop = "!git commit && git push -u";
