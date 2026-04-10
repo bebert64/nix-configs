@@ -25,6 +25,21 @@ let
       else empty end
     '
   '';
+  mcpHealthCheckHook = pkgs.writeShellScript "claude-mcp-health-check" ''
+    # Verify every configured MCP server is reachable before the session starts.
+    # MCPs occasionally fail to spin up; the only known fix is exiting and
+    # running `claude --continue`. We detect that here and abort loudly so the
+    # agent never silently runs without its tools.
+    output=$(${pkgsUnstable.claude-code}/bin/claude mcp list 2>&1)
+    # Server lines look like `name: <cmd> - ✓ Connected` (or a failure suffix).
+    if echo "$output" | ${pkgs.gnugrep}/bin/grep -E '^[A-Za-z0-9_.-]+:' | ${pkgs.gnugrep}/bin/grep -vq 'Connected'; then
+      echo "[claude-mcp-health-check] One or more MCP servers failed to start." >&2
+      echo "$output" >&2
+      echo "" >&2
+      echo "Fix: exit this session (Ctrl-D) and run \`claude --continue\`." >&2
+      exit 2
+    fi
+  '';
   notifyHook = pkgs.writeShellScript "claude-notify" ''
     TITLE="Claude @ $(${pkgs.hostname}/bin/hostname)"
     BODY="Answer ready on $(${pkgs.git}/bin/git branch --show-current 2>/dev/null || echo 'no branch')"
@@ -39,6 +54,16 @@ let
       (builtins.fromJSON (builtins.readFile ./settings.json))
       // {
         hooks = {
+          SessionStart = [
+            {
+              hooks = [
+                {
+                  type = "command";
+                  command = "${mcpHealthCheckHook}";
+                }
+              ];
+            }
+          ];
           Stop = [
             {
               hooks = [
