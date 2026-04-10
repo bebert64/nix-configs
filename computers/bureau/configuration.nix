@@ -25,7 +25,6 @@ in
 
   home-manager.users.${nixosUserConfig.name} = {
     byDb = {
-      nixConfigsRelativePath = "code/nix-configs_3RMMW-wayland";
       notionTodoSync.enable = true;
       minutesBeforeLock = 10;
       minutesFromLockToSleep = 10;
