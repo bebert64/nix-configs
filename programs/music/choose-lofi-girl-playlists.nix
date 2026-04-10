@@ -146,11 +146,32 @@ in
       done < "$CACHE_FILE")
 
       if [[ -n "$PLAYLIST_ID" ]]; then
+        DBUS_SEND="${pkgs.dbus}/bin/dbus-send"
+        spotify_running() {
+          $DBUS_SEND --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus \
+            org.freedesktop.DBus.NameHasOwner string:org.mpris.MediaPlayer2.spotify 2>/dev/null \
+            | grep -q "boolean true"
+        }
+
+        if ! spotify_running; then
+          ${pkgs.spotify}/bin/spotify >/dev/null 2>&1 &
+          for _ in $(seq 1 60); do
+            if spotify_running; then
+              break
+            fi
+            sleep 0.5
+          done
+          if ! spotify_running; then
+            ${notifySend} "Lofi Girl" "Failed to start Spotify"
+            exit 1
+          fi
+        fi
+
         PLAYERCTL="${pkgs.playerctl}/bin/playerctl -p spotify"
         WAS_SHUFFLED=$($PLAYERCTL shuffle 2>/dev/null || echo "Off")
         $PLAYERCTL stop || true
         $PLAYERCTL shuffle On || true
-        ${pkgs.dbus}/bin/dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify \
+        $DBUS_SEND --print-reply --dest=org.mpris.MediaPlayer2.spotify \
           /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri \
           "string:spotify:playlist:$PLAYLIST_ID"
         if [[ "$WAS_SHUFFLED" != "On" ]]; then
