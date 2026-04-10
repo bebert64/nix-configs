@@ -1,13 +1,17 @@
-All shared Claude Code artifacts live in the **nix-configs** repo (`programs/claude-code/`):
+Rules live under `~/.claude/rules/`:
 
-- **Global rules**: `programs/claude-code/rules/global/` -> symlinked to `~/.claude/rules/global`
-- **Stockly-specific rules**: `programs/claude-code/rules/stockly/` -> symlinked to `~/.claude/rules/stockly` (monsters only)
-- **Global skills**: `programs/claude-code/skills/global/` -> individual skill dirs symlinked to `~/.claude/skills/`
-- **Stockly-specific skills**: `programs/claude-code/skills/stockly/` -> individual skill dirs symlinked to `~/.claude/skills/` (monsters only)
-- **Perso skills**: `programs/claude-code/skills/perso/` -> individual skill dirs symlinked to `~/.claude/skills/` (workstation only)
-- **Global commands**: `programs/claude-code/commands/global/` -> individual .md files symlinked to `~/.claude/commands/`
-- **Stockly-specific commands**: `programs/claude-code/commands/stockly/` -> individual .md files symlinked to `~/.claude/commands/` (monsters only)
-- **Global docs**: `programs/claude-code/docs/global/` -> contents symlinked into `~/.claude/docs/`
-- **Stockly docs**: `programs/claude-code/docs/stockly/` -> contents symlinked into `~/.claude/docs/` (monsters only)
+- `global/` — always loaded (all machines)
+- `stockly/` — Stockly-specific, loaded on monsters only
 
-Use repo-local (`.claude/` in a workspace) only for artifacts that are specific to that repo's tech stack or structure, not for general conventions.
+## Rule vs. review-skill placement
+
+**Test**: would violating this guidance while *writing* code introduce a bug, silent failure, correctness issue, or steer the implementation toward the wrong pattern?
+
+- **Yes → rule**: must be active during implementation.
+  Examples: no silent fail, make invalid states unrepresentable, batch queries instead of N+1.
+
+- **No → review skill rule** (`skills/review/rules/`): only checked during code review.
+  The bar: is this easy to fix once the implementation is done?
+  Examples: import ordering, comment style, variable inlining, visibility modifiers.
+
+When in doubt, prefer the review skill. Rules are loaded on every task.

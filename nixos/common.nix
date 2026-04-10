@@ -11,6 +11,7 @@
   imports = [
     home-manager.nixosModules.home-manager
     ../nas.nix
+    ../programs/syncthing
     ../programs/zsh/nixos.nix
   ];
 
@@ -59,8 +60,8 @@
         users.${userConfig.name} = {
           byDb = {
             user = {
-              name = userConfig.name;
-              description = userConfig.description;
+              inherit (userConfig) name;
+              inherit (userConfig) description;
             };
             git = {
               user = {

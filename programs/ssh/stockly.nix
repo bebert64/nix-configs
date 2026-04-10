@@ -14,13 +14,6 @@
   orthos = {
     host = "orthos";
     hostname = "orthos.stockly.tech";
-    remoteForwards = [
-      {
-        # PulseAudio forwarding for Claude Code voice mode
-        bind.address = "/tmp/pulse-forward";
-        host.address = "/run/user/1000/pulse/native";
-      }
-    ];
   };
   common-stockly = {
     host = "cerberus charybdis orthos";

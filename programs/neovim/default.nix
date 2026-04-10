@@ -14,11 +14,17 @@
     plugins = [
       pkgs.vimPlugins.catppuccin-nvim
       pkgs.vimPlugins.vim-nix
+      (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
+        p.markdown
+        p.markdown_inline
+      ]))
+      pkgs.vimPlugins.render-markdown-nvim
     ];
     extraLuaConfig = ''
       require('catppuccin').setup({
           transparent_background = true,
       })
+      require('render-markdown').setup({})
     '';
   };
 }

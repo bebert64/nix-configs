@@ -8,12 +8,12 @@
 {
   imports = [
     ./common.nix
+    ../programs/autossh-orthos
     ../programs/battery-notifier
     ../programs/avidemux
     ../programs/calculator
     ../programs/chromium
-    ../programs/claude-code
-    ../programs/claude-code/perso-specific.nix
+    ../programs/claude-code/workstation.nix
     ../programs/conky
     ../programs/cursor
     ../programs/datagrip
@@ -28,7 +28,7 @@
     ../programs/mako
     ../programs/music
     ../programs/plex-desktop
-    ../programs/ranger/gui.nix
+    ../programs/ranger/workstation.nix
     ../programs/rofi
     ../programs/slack
     ../programs/sqlfluff
@@ -37,6 +37,7 @@
     ../programs/waybar
     ../programs/udiskie
     ../programs/vdhcoapp
+    ../programs/notion-todo-sync
     by-db.module.x86_64-linux
   ];
 
@@ -70,7 +71,7 @@
   config =
     let
       homeManagerBydbConfig = config.byDb;
-      paths = homeManagerBydbConfig.paths;
+      inherit (homeManagerBydbConfig) paths;
       homeDir = config.home.homeDirectory;
     in
     {
@@ -137,9 +138,9 @@
         };
         shortcuts = {
           app.enable = true;
-          postgres = homeManagerBydbConfig.postgres;
-          stashApiConfig = homeManagerBydbConfig.stashApiConfig;
-          shortcutsDirs = homeManagerBydbConfig.shortcutsDirs;
+          inherit (homeManagerBydbConfig) postgres;
+          inherit (homeManagerBydbConfig) stashApiConfig;
+          inherit (homeManagerBydbConfig) shortcutsDirs;
           parallelDownloads = "4";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.shortcutsDb // {
@@ -187,14 +188,12 @@
         mimeApps = {
           enable = true;
           associations.added = {
-            "defaut-web-browser" = [ "firefox.desktop" ];
-            "text/html" = [ "firefox.desktop" ];
-            "text/xml" = [ "firefox.desktop" ];
-            "x-scheme-handler/http" = [ "firefox.desktop" ];
-            "x-scheme-handler/https" = [ "firefox.desktop" ];
+            "text/html" = [ "chromium-browser.desktop" ];
+            "text/xml" = [ "chromium-browser.desktop" ];
+            "x-scheme-handler/http" = [ "chromium-browser.desktop" ];
+            "x-scheme-handler/https" = [ "chromium-browser.desktop" ];
           };
           defaultApplications = {
-            "defaut-web-browser" = [ "chromium-browser.desktop" ];
             "text/html" = [ "chromium-browser.desktop" ];
             "text/xml" = [ "chromium-browser.desktop" ];
             "x-scheme-handler/http" = [ "chromium-browser.desktop" ];

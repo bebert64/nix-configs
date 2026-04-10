@@ -36,7 +36,11 @@ in
       "stockly/dbs/stocks" = { };
       "stockly/dbs/supply-messages" = { };
       "stockly/mcp/notion-token" = { };
+      "notion/personal-token" = { };
       "stockly/mcp/sentry-token" = { };
+      "spotify/client_id" = { };
+      "spotify/client_secret" = { };
+      "spotify/refresh_token" = { };
     };
   };
 

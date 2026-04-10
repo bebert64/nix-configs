@@ -24,7 +24,7 @@
     {
       enable = true;
       settings = {
-        user = gitConfig.user;
+        inherit (gitConfig) user;
         pull.rebase = "true";
         core = {
           commentchar = "%";
@@ -48,7 +48,7 @@
           c = "commit";
           ca = "commit --amend";
           cap = "!git commit --amend && git push -u --force-with-lease";
-          clb = "!git fetch -p && for branch in $(git branch -vv | grep ': gone]' | awk '{print $1}'); do git branch -D $branch; done;";
+          clb = "!git fetch -p && git branch -vv | grep ': gone]' | awk '{print (\$1 == \"+\" || \$1 == \"*\") ? \$2 : \$1}' | xargs -r git branch -D";
           co = "checkout";
           com = "!git checkout ${gitConfig.mainOrMaster}";
           cop = "!git commit && git push -u";
@@ -130,8 +130,14 @@
               fi
               base_ref=$(git rev-parse "origin/''$base" 2>/dev/null)
               if [ -z "''$base_ref" ]; then
-                echo "Branch origin/''$base not found."
-                return 1
+                echo "Branch origin/''$base not found (probably merged)."
+                read -p "Use ${gitConfig.mainOrMaster} as parent instead? [Y/n]: " answer
+                case "''$answer" in
+                  [nN]*) return 1 ;;
+                esac
+                base="${gitConfig.mainOrMaster}"
+                git config branch."''$current".base "''$base"
+                base_ref=$(git rev-parse "origin/''$base" 2>/dev/null)
               fi
               base_mb=$(git merge-base HEAD "origin/''$base" 2>/dev/null)
               if [ -z "''$base_mb" ]; then

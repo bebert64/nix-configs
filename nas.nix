@@ -42,32 +42,34 @@ in
 
   boot.supportedFilesystems = [ "nfs" ];
 
-  systemd.automounts = [
-    {
-      where = nasMountPoint;
-      wantedBy = [ "multi-user.target" ];
-      automountConfig.TimeoutIdleSec = "300";
-    }
-  ];
+  systemd = {
+    automounts = [
+      {
+        where = nasMountPoint;
+        wantedBy = [ "multi-user.target" ];
+        automountConfig.TimeoutIdleSec = "300";
+      }
+    ];
 
-  systemd.mounts = [
-    {
-      what = nasIpAndVolume;
-      where = nasMountPoint;
-      type = "nfs";
-      options = "noexec,noauto,soft,timeo=30,retrans=3,retry=0";
-      requires = [ "check-nas-available.service" ];
-      after = [ "check-nas-available.service" ];
-      mountConfig.TimeoutSec = "10s";
-    }
-  ];
+    mounts = [
+      {
+        what = nasIpAndVolume;
+        where = nasMountPoint;
+        type = "nfs";
+        options = "noexec,noauto,soft,timeo=30,retrans=3,retry=0";
+        requires = [ "check-nas-available.service" ];
+        after = [ "check-nas-available.service" ];
+        mountConfig.TimeoutSec = "10s";
+      }
+    ];
 
-  systemd.services.check-nas-available = {
-    description = "Check that the NAS at ${nasIp} exports ${nasVolume}";
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = checkNasAvailable;
-      TimeoutStartSec = "3s";
+    services.check-nas-available = {
+      description = "Check that the NAS at ${nasIp} exports ${nasVolume}";
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = checkNasAvailable;
+        TimeoutStartSec = "3s";
+      };
     };
   };
 

@@ -167,16 +167,14 @@ in
 
   config = {
     home = {
-      packages = (
-        with pkgs;
+      packages = with pkgs;
         [
           p7zip
           rsync
           screen
           wget
           yt-dlp
-        ]
-      );
+        ];
     };
 
     programs = {
