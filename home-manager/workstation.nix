@@ -29,7 +29,7 @@
     ../programs/picom
     ../programs/plex-desktop
     ../programs/polybar
-    ../programs/ranger/gui.nix
+    ../programs/ranger/workstation.nix
     ../programs/rofi
     ../programs/slack
     ../programs/sqlfluff

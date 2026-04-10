@@ -5,7 +5,7 @@
 {
   imports = [
     ./common.nix
-    ../programs/ranger
+    ../programs/ranger/raspberry.nix
   ];
 
   config = {

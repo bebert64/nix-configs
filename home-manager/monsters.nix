@@ -10,7 +10,7 @@
     ../programs/claude-code/monsters.nix
     ../programs/git
     ../programs/neovim
-    ../programs/ranger
+    ../programs/ranger/monsters.nix
     ../programs/secrets
   ];
 

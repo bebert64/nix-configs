@@ -10,12 +10,16 @@ let
   rangerPluginsDir = "${homeDir}/.config/ranger/plugins";
 in
 {
-  home = {
+  options.byDb.ranger.bookmarksFile = lib.mkOption {
+    type = lib.types.path;
+  };
+
+  config.home = {
     packages = [ pkgs.ranger ];
     activation = {
       createRangerBookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${homeDir}/.local/share/ranger/
-        sed "s/\$USER/"$USER"/" ${./bookmarks} > ${homeDir}/.local/share/ranger/bookmarks
+        sed "s/\$USER/"$USER"/" ${config.byDb.ranger.bookmarksFile} > ${homeDir}/.local/share/ranger/bookmarks
       '';
 
       symlinkRangerPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

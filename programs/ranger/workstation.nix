@@ -24,7 +24,9 @@ let
   ''}/bin/open-remote";
 in
 {
-  imports = [ ./default.nix ];
+  imports = [ ./common.nix ];
+
+  byDb.ranger.bookmarksFile = ./bookmarks/default;
 
   home.packages = [ pkgs.xclip ];
 
