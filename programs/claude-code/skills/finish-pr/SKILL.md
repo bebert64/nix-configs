@@ -24,11 +24,15 @@ If any check fails, **stop immediately**, report which check failed, and show th
 
 1. Run `git log --oneline <base>..HEAD` to see all commits in the PR.
 2. Review the full diff (`git diff <base>...HEAD`) for context.
-3. Check whether `.github/pull_request_template.md` exists:
-   - **If it exists**: fill in the template (especially "What it does", inferred from branch name, modified files, and context); only leave placeholders for what you truly don't know (e.g. ticket URL, commit SHA).
-   - **If it doesn't exist**: write a concise freeform description that lists the main points that changed, grouped logically if there are multiple concerns.
-   - **"Resolves" line format**: use a markdown link with the short ID as display text: `Resolves [X7TMY](https://www.notion.so/stockly/X7TMY-Ops-Issue-with-Buckets-feedback-3290c6326ae880178b83d53081bfe6cc)`.
-4. Present the description to the user for review/editing.
+3. Get the template to fill in — check these sources **in order**, use the first one found:
+   A. **Existing PR body** (`gh pr view --json body -q .body`): if a PR already exists, its body IS the template (GitHub pre-fills it on creation). Use it as-is and fill in the placeholders.
+   B. **Template file**: run `cat .github/pull_request_template.md 2>/dev/null` (NOT Glob — the path may be a symlink). If found, use it.
+   C. **No template found**: write a concise freeform description.
+4. **Evaluate the existing PR title**: the current title may have been auto-generated from the branch name, copied from a ticket describing a problem rather than the solution, or be otherwise unrelated to the actual changes. Compare it against the diff. If it looks off, suggest a better one. **Always display the current title** above your suggestion so the user can compare.
+5. **Match the template formatting exactly** — use the same bold labels, bullet style, and section order. Do NOT convert to `##` headers or add sections not in the template.
+6. **Remove every section that has no meaningful content** — do not leave empty sections, placeholder text, or "Nothing". If a section doesn't apply, delete it entirely (label + bullets).
+7. **"Resolves" line**: if the existing PR body already has a filled-in Resolves line, keep it as-is — do not modify it. Otherwise, use a markdown link with the short ID as display text: `Resolves [X7TMY](https://www.notion.so/stockly/X7TMY-Ops-Issue-with-Buckets-feedback-3290c6326ae880178b83d53081bfe6cc)`.
+8. Present the description to the user for review/editing.
 
 ## 4. Look for learnable patterns
 
