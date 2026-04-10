@@ -26,6 +26,5 @@
     ]
   },
   "model": "claude-opus-4-6",
-  "voiceEnabled": true,
   "skipDangerousModePermissionPrompt": true
 }
