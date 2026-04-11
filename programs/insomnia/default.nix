@@ -38,12 +38,4 @@ let
 in
 {
   home.packages = [ (pkgs.callPackage insomnia { }) ];
-  wayland.windowManager.sway.config = {
-    keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+i" = "workspace $ws13; exec insomnia-stockly";
-    };
-    assigns = {
-      "$ws13" = [ { class = "insomnia|Insomnia"; } ];
-    };
-  };
 }

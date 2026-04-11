@@ -91,6 +91,7 @@
             pavucontrol # pulse audio volume controle
             polkit_gnome
             vlc
+            wdisplays # GUI to configure screens positions (Wayland, replaces arandr)
           ])
           ++ lib.optionals homeManagerBydbConfig.wifi.enable (
             with pkgs;
