@@ -20,16 +20,18 @@ let
 
   swaymsg = "${pkgs.sway}/bin/swaymsg";
   jqBin = "${jq}/bin/jq";
+  conkyCmd = "${pkgs.conky}/bin/conky -c ${../conky/qclocktwo} -d";
 
-  # Transparent background + indicator so the wallpapers on workspaces 19/20
-  # show through the lock surface.
+  # Captures the current screen contents (workspaces 19/20 wallpapers after
+  # prep) as the lock background. Transparency-through doesn't render on
+  # HDMI-A-1, so we use --screenshots instead of --color 00000000.
   swaylockCmd = ''
     ${swaylock-effects}/bin/swaylock \
+      --screenshots \
       --fade-in 0.2 \
       --clock \
       --timestr "%H:%M" \
       --datestr "%e %b %Y" \
-      --color 00000000 \
       --inside-color 1a1b26bb \
       --ring-color 7aa2f7 \
       --key-hl-color c0caf5 \
@@ -54,6 +56,7 @@ let
         ${swaymsg} focus output ${primary} || true
       ''}
       systemctl --user start waybar || true
+      ${conkyCmd} &
     }
     trap restore EXIT
 
@@ -63,6 +66,7 @@ let
     ''}
 
     systemctl --user stop waybar || true
+    pkill -x conky || true
 
     ${swaymsg} focus output ${primary}
     ${swaymsg} workspace number 19
@@ -71,6 +75,10 @@ let
       ${swaymsg} workspace number 20
       ${swaymsg} focus output ${primary}
     ''}
+
+    # Give swww / the compositor a moment to render the wallpaper cleanly
+    # before swaylock takes its screenshots.
+    sleep 0.3
 
     ${swaylockCmd}
   '';
