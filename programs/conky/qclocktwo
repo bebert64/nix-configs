@@ -9,6 +9,8 @@ conky.config = {
     alignment="top_left",
     gap_x=60,
     gap_y=80,
+    use_xft=true,
+    xftalpha=0.3,
     update_interval=1,
     uppercase=true,
     double_buffer=true,
@@ -18,7 +20,9 @@ conky.config = {
     default_color="96A0DF",
     color1="333333",
     font="OpenDyslexicAlta Nerd Font:size=24",
-    border_outer_margin=0
+    border_outer_margin=0,
+
+    xinerama_head=0
 }
 
 conky.text = [[
