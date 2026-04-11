@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1775933143,
-        "narHash": "sha256-01WudvHqqzSxFKrloVHRdyhqmJIBdg5jmYqKCg2iRTU=",
+        "lastModified": 1775933178,
+        "narHash": "sha256-pnqrVLWBWNPRi5vwL/rFeVFpn6sslxnWS20jxcxWfv8=",
         "ref": "SCIFO-wayland",
-        "rev": "58f211de33177747dac50e4ce9f9f6877d981852",
-        "revCount": 207,
+        "rev": "99331d6a06eeeba2910000079cec9e52f5bc7145",
+        "revCount": 208,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
