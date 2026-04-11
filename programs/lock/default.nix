@@ -27,7 +27,6 @@ let
       --key-hl-color c0caf5 \
       --separator-color 00000000 \
       --text-color c0caf5 \
-      --text-date-color c0caf5 \
       --indicator-radius 100 \
       --indicator-thickness 7'';
 
@@ -75,12 +74,6 @@ in
       default = 7;
       description = "Minutes from the moment the computer locks itself to the moment it starts sleeping";
     };
-    # Kept for compatibility with existing machine configs; swaylock uses PAM auth so this value is not used.
-    lockPasswordHash = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-      description = "Unused (swaylock uses PAM auth). Kept so existing machine configs don't break.";
-    };
   };
 
   config = {
@@ -119,15 +112,15 @@ in
 
     wayland.windowManager.sway.config = {
       keybindings = lib.mkOptionDefault {
-        "--release ${modifier}+o" = "mode \"${lockMode}\"";
+        "${modifier}+o" = "mode \"${lockMode}\"";
       };
       modes = {
         ${homeManagerBydbConfig.sway.exitMode} = {
           "--release s" = "exec ${lockSleepScript}/bin/lock-sleep, mode default";
         };
         ${lockMode} = {
-          "--release ${modifier}+o" = "exec ${lockScript}/bin/lock, mode default";
-          "--release d" = "exec ${lockDontSleepScript}/bin/lock-dont-sleep, mode default";
+          "${modifier}+o" = "exec ${lockScript}/bin/lock, mode default";
+          "d" = "exec ${lockDontSleepScript}/bin/lock-dont-sleep, mode default";
           Escape = "mode default";
           Return = "mode default";
         };

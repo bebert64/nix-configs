@@ -13,6 +13,7 @@ in
       name = "romain";
       description = "Romain";
     };
+    weakSwaylockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
     nixCores = 2;
     nixMaxJobs = 1;
     nixHighRam = "7G";
@@ -28,7 +29,6 @@ in
       notionTodoSync.enable = true;
       minutesBeforeLock = 10;
       minutesFromLockToSleep = 10;
-      lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
       screens = {
         primary = "HDMI-A-1";
         secondary = "HDMI-A-2";

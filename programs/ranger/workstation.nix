@@ -9,7 +9,7 @@ let
   rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   sshr = "${pkgs.writeScriptBin "sshr" ''
-    kitty --title "Ranger" +kitten ssh $1 -t ranger
+    kitty --title "Ranger" kitten ssh $1 -t ranger
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
@@ -20,7 +20,8 @@ let
       grep -v "$(hostname)" | \
       ${rofi}
     )
-    ${sshr} $selection
+    [ -n "$selection" ] || exit 0
+    ${sshr} "$selection"
   ''}/bin/open-remote";
 in
 {

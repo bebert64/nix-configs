@@ -2,6 +2,13 @@
 {
   programs.kitty = {
     enable = true;
+    # Let our own zsh precmd/preexec (see programs/claude-code/terminal-title.nix)
+    # drive the window title. Without `no-title`, Kitty's shell integration
+    # rewrites the title to the running command name on every preexec, clobbering
+    # our `Claude (host: branch)` format. `no-rc` is the home-manager default and
+    # must be kept — it also sets the KITTY_SHELL_INTEGRATION env var read by the
+    # integration script in ~/.zshrc.
+    shellIntegration.mode = "no-rc no-title";
     font = {
       name = "FiraCode Nerd Font Med";
       size = 10;
@@ -14,6 +21,7 @@
       tab_bar_style = "powerline";
       tab_powerline_style = "slanted";
       cursor_blink_interval = 0;
+      confirm_os_window_close = 0;
       # TokyoNight color scheme
       background = "#1a1b26";
       foreground = "#c0caf5";

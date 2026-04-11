@@ -24,7 +24,7 @@ in
     shellAliases = {
       wke1 = "swaymsg workspace 11:󰸉";
       wke2 = "swaymsg workspace 12:󰸉";
-      ssh = "kitty +kitten ssh";
+      ssh = "kitten ssh";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
       dc = "db-cli";
       con = "cdn && claude";

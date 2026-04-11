@@ -50,7 +50,7 @@ in
         icon-theme = "Papirus";
         display-drun = "";
         drun-display-format = "{name}";
-        disable-history = false;
+        disable-history = true;
         fullscreen = false;
         hide-scrollbar = true;
         sidebar-mode = false;
@@ -190,13 +190,13 @@ in
       in
       {
         btop = hidden "btop++";
+        "org.gnome.Calculator" = hidden "Calculator";
         "chromium-browser" = {
           name = "Chromium";
           noDisplay = true;
           exec = "chromium %U";
           type = "Application";
         };
-        "org.gnome.Calculator" = hidden "Calculator";
         conky = hidden "conky";
         cursor = hidden "Cursor";
         "cursor-url-handler" = hidden "Cursor URL Handler";
@@ -204,11 +204,14 @@ in
         ferdium = hidden "Ferdium";
         firefox = hidden "Firefox";
         "org.flameshot.Flameshot" = hidden "Flameshot";
+        foot = hidden "foot";
+        "foot-server" = hidden "foot (server mode)";
+        footclient = hidden "footclient";
         "org.gtk.Settings" = hidden "GTK Settings";
-        gvim = hidden "GVim";
+        kitty = hidden "Kitty";
+        "kitty-open" = hidden "Kitty URL Launcher";
         nvim = hidden "Neovim wrapper";
         nixos-manual = hidden "NixOS Manual";
-        picom = hidden "picom";
         "plex-desktop" = hidden "Plex";
         cups = hidden "Print Settings";
         qt5ct = hidden "Qt5 Settings";
@@ -216,10 +219,6 @@ in
         slack = hidden "Slack";
         spotify = hidden "Spotify";
         "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
-        "com.gexperts.Tilix" = hidden "Tilix";
-        vim = hidden "Vim";
-        code = hidden "Visual Studio Code";
-        "code-url-handler" = hidden "Visual Studio Code - URL Handler";
         xterm = hidden "XTerm";
       };
   };

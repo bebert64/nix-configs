@@ -149,8 +149,14 @@ in
           "${modifier}+Mod1+Left" = "exec ${moveWorkspaceToOutput "left"}";
           "${modifier}+Mod1+Right" = "exec ${moveWorkspaceToOutput "right"}";
 
+          # Match i3 default: mod+h splits horizontally (sway default is focus left).
+          "${modifier}+h" = "split h";
+
           # Used to display empty workspaces, allowing to see the wallpapers
           "${modifier}+i" = "exec ${showWallpapers}";
+
+          # Notifications
+          "${modifier}+Escape" = "exec makoctl dismiss --all";
 
           # Modes
           "${modifier}+Shift+e" = "mode \"${exitMode}\"";

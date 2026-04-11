@@ -9,6 +9,7 @@
     ./common.nix
     ../programs/auto-update
     ../programs/generative-ai
+    ../programs/lock/weak-password.nix
   ];
 
   options.byDb = {
