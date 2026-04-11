@@ -27,7 +27,7 @@ let
     ]}
     IS_HEADPHONES_ON=$(${config.byDb.isHeadphonesOnCommand})
     if [[ $IS_HEADPHONES_ON ]]; then
-      echo " "
+      echo " "
     else
       echo "󰓃"
     fi
@@ -84,12 +84,12 @@ in
 
         pulseaudio = {
           format = "{icon}  {volume}%";
-          format-muted = "  muted";
+          format-muted = "  muted";
           format-icons = {
             default = [
-              ""
-              ""
-              ""
+              ""
+              ""
+              ""
             ];
           };
           on-click = "pavucontrol";
@@ -97,25 +97,25 @@ in
         };
 
         network = {
-          format-wifi = "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes}";
-          format-ethernet = "  {bandwidthDownBytes}  {bandwidthUpBytes}";
+          format-wifi = "  {signalStrength}%  {bandwidthDownBytes}  {bandwidthUpBytes}";
+          format-ethernet = "󰈀  {bandwidthDownBytes}  {bandwidthUpBytes}";
           format-disconnected = "󱚼  disconnected";
           interval = 2;
           tooltip-format = "{ifname} {ipaddr}";
         };
 
         memory = {
-          format = "  {percentage}%";
+          format = "  {percentage}%";
           interval = 2;
         };
 
         cpu = {
-          format = "  {usage}%";
+          format = "  {usage}%";
           interval = 2;
         };
 
         disk = {
-          format = "  {free}";
+          format = "  {free}";
           path = "/";
           interval = 30;
         };
