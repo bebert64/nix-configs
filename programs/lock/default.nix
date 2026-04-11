@@ -6,7 +6,6 @@
 }:
 let
   inherit (pkgs)
-    jq
     libnotify
     swaylock-effects
     writeShellScriptBin
@@ -14,20 +13,31 @@ let
   homeManagerBydbConfig = config.byDb;
   modifier = config.byDb.modifier;
   lockMode = "Lock: [l]ock, [d]on't sleep";
-  primary = homeManagerBydbConfig.screens.primary;
-  secondary = homeManagerBydbConfig.screens.secondary;
-  hasSecondary = secondary != "";
 
-  swaymsg = "${pkgs.sway}/bin/swaymsg";
-  jqBin = "${jq}/bin/jq";
-  conkyCmd = "${pkgs.conky}/bin/conky -c ${../conky/qclocktwo} -d";
+  # Picks wallpapers via `wallpapers-manager lock-wallpapers` (which prints
+  # `OUTPUT<TAB>PATH` lines, one per monitor, splitting a dual-screen wallpaper
+  # into tiles when the two monitors share a resolution) and hands the paths
+  # to swaylock via per-output `--image OUTPUT:PATH` flags. Falls back to a
+  # solid background if the picker fails for any reason (empty pool, missing
+  # binary, swaymsg error) so that locking never gets blocked.
+  lockWithWallpapers = pkgs.writeShellScript "lock-with-wallpapers" ''
+    set -u
+    # swayidle (systemd --user) runs with a minimal PATH; make sure the
+    # wallpapers-manager binary and its runtime deps (swaymsg, magick) are
+    # findable.
+    export PATH="$HOME/.nix-profile/bin:/run/current-system/sw/bin:$PATH"
 
-  # Captures the current screen contents (workspaces 19/20 wallpapers after
-  # prep) as the lock background. Transparency-through doesn't render on
-  # HDMI-A-1, so we use --screenshots instead of --color 00000000.
-  swaylockCmd = ''
-    ${swaylock-effects}/bin/swaylock \
-      --screenshots \
+    image_args=()
+    if picks=$(wallpapers-manager lock-wallpapers 2>/dev/null); then
+      while IFS=$'\t' read -r output path; do
+        if [ -n "''${output:-}" ] && [ -n "''${path:-}" ]; then
+          image_args+=(--image "$output:$path")
+        fi
+      done <<< "$picks"
+    fi
+
+    exec ${swaylock-effects}/bin/swaylock \
+      ''${image_args[@]:+"''${image_args[@]}"} \
       --fade-in 0.2 \
       --clock \
       --timestr "%H:%M" \
@@ -38,49 +48,7 @@ let
       --separator-color 00000000 \
       --text-color c0caf5 \
       --indicator-radius 100 \
-      --indicator-thickness 7'';
-
-  # Shared pre/post logic: stop waybar, switch both outputs to the wallpaper
-  # workspaces (19/20), run swaylock, then restore the previously-visible
-  # workspaces and restart waybar. Workspaces 19/20 are assumed empty (same
-  # assumption as `mod+i` / showWallpapers).
-  lockWithWallpapers = pkgs.writeShellScript "lock-with-wallpapers" ''
-    set -u
-
-    restore() {
-      ${swaymsg} focus output ${primary} || true
-      ${swaymsg} workspace "$wk_primary" || true
-      ${lib.optionalString hasSecondary ''
-        ${swaymsg} focus output ${secondary} || true
-        ${swaymsg} workspace "$wk_secondary" || true
-        ${swaymsg} focus output ${primary} || true
-      ''}
-      systemctl --user start waybar || true
-      ${conkyCmd} &
-    }
-    trap restore EXIT
-
-    wk_primary=$(${swaymsg} -t get_workspaces | ${jqBin} -r '.[] | select(.output == "${primary}" and .visible) | .name')
-    ${lib.optionalString hasSecondary ''
-      wk_secondary=$(${swaymsg} -t get_workspaces | ${jqBin} -r '.[] | select(.output == "${secondary}" and .visible) | .name')
-    ''}
-
-    systemctl --user stop waybar || true
-    pkill -x conky || true
-
-    ${swaymsg} focus output ${primary}
-    ${swaymsg} workspace number 19
-    ${lib.optionalString hasSecondary ''
-      ${swaymsg} focus output ${secondary}
-      ${swaymsg} workspace number 20
-      ${swaymsg} focus output ${primary}
-    ''}
-
-    # Give swww / the compositor a moment to render the wallpaper cleanly
-    # before swaylock takes its screenshots.
-    sleep 0.3
-
-    ${swaylockCmd}
+      --indicator-thickness 7
   '';
 
   preLockNotify = writeShellScriptBin "pre-lock-notify" ''

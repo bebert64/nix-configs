@@ -1,5 +1,9 @@
-{ ... }:
+{ lib, ... }:
 {
+  wayland.windowManager.sway.config = {
+    terminal = lib.mkForce "kitty";
+  };
+
   programs.kitty = {
     enable = true;
     # Let our own zsh precmd/preexec (see programs/claude-code/terminal-title.nix)

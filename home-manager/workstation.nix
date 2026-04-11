@@ -24,7 +24,6 @@
     ../programs/kanshi
     ../programs/kitty
     ../programs/lock
-    ../programs/terminal
     ../programs/mako
     ../programs/music
     ../programs/plex-desktop
@@ -161,7 +160,6 @@
           wallpapersDir = "${homeDir}/wallpapers";
           singleScreenDirName = "SingleScreen";
           dualScreenDirName = "DualScreen";
-          animatedDirName = "Animated";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
