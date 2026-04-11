@@ -34,6 +34,7 @@ in
   home = {
     packages = with pkgs; [
       flameshot
+      grim # Wayland screenshot tool, used for example by flameshot and conky
     ];
 
     activation = {

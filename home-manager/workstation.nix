@@ -79,7 +79,6 @@
           (with pkgs; [
             anydesk
             evince # pdf reader
-            grim # Wayland screenshot tool, used for example by flameshot and conky
             filezilla
             fusee-interfacee-tk
             gnome-keyring
@@ -91,7 +90,6 @@
             ntfs3g
             pavucontrol # pulse audio volume controle
             polkit_gnome
-            swww # wallpaper daemon for Wayland
             vlc
           ])
           ++ lib.optionals homeManagerBydbConfig.wifi.enable (
