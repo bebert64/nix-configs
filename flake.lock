@@ -219,32 +219,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1775595990,
-        "narHash": "sha256-OEf7YqhF9IjJFYZJyuhAypgU+VsRB5lD4DuiMws5Ltc=",
+        "lastModified": 1775811116,
+        "narHash": "sha256-t+HZK42pB6N+i5RGbuy7Xluez/VvWbembBdvzsc23Ss=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "4e92bbcdb030f3b4782be4751dc08e6b6cb6ccf2",
+        "rev": "54170c54449ea4d6725efd30d719c5e505f1c10e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
         "ref": "nixos-25.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-master": {
-      "locked": {
-        "lastModified": 1775857894,
-        "narHash": "sha256-lcYTGaWg6xq5pvDHHqGotPVjADTzwaAnJRmr0uWgoYI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "40ecc8937f866df04413ade1a11adc63052f2b12",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -286,7 +270,6 @@
         "by-db": "by-db",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "sops-nix": "sops-nix",
         "stockly-computers": "stockly-computers",

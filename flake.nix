@@ -10,7 +10,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable"; # pinned to 2.1.87, revert to "github:nixos/nixpkgs/nixos-unstable" once fixed
-    nixpkgs-master.url = "github:nixos/nixpkgs/master";
     by-db = {
       url = "git+ssh://git@github.com/bebert64/perso?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,7 +37,6 @@
       by-db,
       home-manager,
       nixpkgs-unstable,
-      nixpkgs-master,
       nixpkgs,
       sops-nix,
       stockly-computers,
@@ -47,10 +45,6 @@
     }:
     let
       pkgsUnstable = import nixpkgs-unstable {
-        system = "x86_64-linux";
-        config.allowUnfree = true;
-      };
-      pkgsMaster = import nixpkgs-master {
         system = "x86_64-linux";
         config.allowUnfree = true;
       };
@@ -83,7 +77,7 @@
       nixosConfigurations = {
         bureau = mkHost {
           modules = [ ./computers/bureau/configuration.nix ];
-          extraSpecialArgs = { inherit by-db pkgsUnstable pkgsMaster; };
+          extraSpecialArgs = { inherit by-db pkgsUnstable; };
         };
 
         raspi4 = mkHost {
@@ -97,7 +91,6 @@
             inherit
               by-db
               pkgsUnstable
-              pkgsMaster
               vscode-server
               ;
           };
@@ -112,7 +105,6 @@
               home-manager
               nixpkgs
               pkgsUnstable
-              pkgsMaster
               sops-nix
               stockly-computers
               ;

@@ -3,14 +3,9 @@
   lib,
   pkgs,
   pkgsUnstable,
-  pkgsMaster,
   ...
 }:
 let
-  cursor3 = pkgs.runCommand "cursor3" { } ''
-    mkdir -p $out/bin
-    ln -s ${pkgsMaster.code-cursor}/bin/cursor $out/bin/cursor3
-  '';
   inherit (config.xsession.windowManager.i3.config) modifier;
   inherit (config.byDb) paths;
   homeDir = config.home.homeDirectory;
@@ -124,7 +119,6 @@ in
   home = {
     packages = [
       pkgsUnstable.code-cursor
-      cursor3
       pkgs.fd
     ];
     file = {
