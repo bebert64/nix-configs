@@ -6,6 +6,7 @@
 }:
 let
   inherit (pkgs)
+    jq
     libnotify
     swaylock-effects
     writeShellScriptBin
@@ -13,15 +14,22 @@ let
   homeManagerBydbConfig = config.byDb;
   modifier = config.byDb.modifier;
   lockMode = "Lock: [l]ock, [d]on't sleep";
+  primary = homeManagerBydbConfig.screens.primary;
+  secondary = homeManagerBydbConfig.screens.secondary;
+  hasSecondary = secondary != "";
 
+  swaymsg = "${pkgs.sway}/bin/swaymsg";
+  jqBin = "${jq}/bin/jq";
+
+  # Transparent background + indicator so the wallpapers on workspaces 19/20
+  # show through the lock surface.
   swaylockCmd = ''
     ${swaylock-effects}/bin/swaylock \
-      --effect-blur 7x5 \
       --fade-in 0.2 \
       --clock \
       --timestr "%H:%M" \
       --datestr "%e %b %Y" \
-      --color 1a1b26 \
+      --color 00000000 \
       --inside-color 1a1b26bb \
       --ring-color 7aa2f7 \
       --key-hl-color c0caf5 \
@@ -29,6 +37,43 @@ let
       --text-color c0caf5 \
       --indicator-radius 100 \
       --indicator-thickness 7'';
+
+  # Shared pre/post logic: stop waybar, switch both outputs to the wallpaper
+  # workspaces (19/20), run swaylock, then restore the previously-visible
+  # workspaces and restart waybar. Workspaces 19/20 are assumed empty (same
+  # assumption as `mod+i` / showWallpapers).
+  lockWithWallpapers = pkgs.writeShellScript "lock-with-wallpapers" ''
+    set -u
+
+    restore() {
+      ${swaymsg} focus output ${primary} || true
+      ${swaymsg} workspace "$wk_primary" || true
+      ${lib.optionalString hasSecondary ''
+        ${swaymsg} focus output ${secondary} || true
+        ${swaymsg} workspace "$wk_secondary" || true
+        ${swaymsg} focus output ${primary} || true
+      ''}
+      systemctl --user start waybar || true
+    }
+    trap restore EXIT
+
+    wk_primary=$(${swaymsg} -t get_workspaces | ${jqBin} -r '.[] | select(.output == "${primary}" and .visible) | .name')
+    ${lib.optionalString hasSecondary ''
+      wk_secondary=$(${swaymsg} -t get_workspaces | ${jqBin} -r '.[] | select(.output == "${secondary}" and .visible) | .name')
+    ''}
+
+    systemctl --user stop waybar || true
+
+    ${swaymsg} focus output ${primary}
+    ${swaymsg} workspace number 19
+    ${lib.optionalString hasSecondary ''
+      ${swaymsg} focus output ${secondary}
+      ${swaymsg} workspace number 20
+      ${swaymsg} focus output ${primary}
+    ''}
+
+    ${swaylockCmd}
+  '';
 
   preLockNotify = writeShellScriptBin "pre-lock-notify" ''
     ${libnotify}/bin/notify-send -u normal "Locking soon" "Screen will lock in 1 minute"
@@ -49,17 +94,16 @@ let
   '';
 
   lockScript = writeShellScriptBin "lock" ''
-    exec ${swaylockCmd}
+    exec ${lockWithWallpapers}
   '';
 
   lockSleepScript = writeShellScriptBin "lock-sleep" ''
-    ${swaylockCmd} &
-    sleep 1
-    exec systemctl suspend
+    (sleep 1 && systemctl suspend) &
+    exec ${lockWithWallpapers}
   '';
 
   lockDontSleepScript = writeShellScriptBin "lock-dont-sleep" ''
-    exec ${swaylockCmd}
+    exec ${lockWithWallpapers}
   '';
 in
 {
