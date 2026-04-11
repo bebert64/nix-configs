@@ -9,8 +9,8 @@
   imports = [
     ./common.nix
     ../programs/autossh-orthos
-    ../programs/battery-notifier
     ../programs/avidemux
+    ../programs/battery-notifier
     ../programs/calculator
     ../programs/chromium
     ../programs/claude-code/workstation.nix
@@ -26,6 +26,7 @@
     ../programs/lock
     ../programs/mako
     ../programs/music
+    ../programs/notion-todo-sync
     ../programs/plex-desktop
     ../programs/ranger/workstation.nix
     ../programs/rofi
@@ -33,10 +34,9 @@
     ../programs/sqlfluff
     ../programs/sway
     ../programs/theme
-    ../programs/waybar
     ../programs/udiskie
     ../programs/vdhcoapp
-    ../programs/notion-todo-sync
+    ../programs/waybar
     by-db.module.x86_64-linux
   ];
 
