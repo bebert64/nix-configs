@@ -35,7 +35,7 @@ in
           secondary = "HDMI-1";
         };
       };
-      byDbPkgs.save-autorandr-config = {
+      byDbPkgs.save-kanshi-config = {
         enable = true;
         kanshiConfigsPath = "${homeManagerBydbConfig.paths.nixPrograms}/kanshi/default.nix";
       };
