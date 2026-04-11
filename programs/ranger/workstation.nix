@@ -32,7 +32,7 @@ in
   home.packages = [ pkgs.wl-clipboard ];
 
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${modifier}+Control+r" = "workspace $ws7; exec kitty -e ranger";
+    "${modifier}+Control+r" = ''workspace $ws7; exec kitty --title "Ranger ($(hostname))" -e ranger'';
     "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
   };
 }
