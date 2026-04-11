@@ -27,7 +27,7 @@ let
     ]}
     IS_HEADPHONES_ON=$(${config.byDb.isHeadphonesOnCommand})
     if [[ $IS_HEADPHONES_ON ]]; then
-      echo " "
+      echo " "
     else
       echo "󰓃"
     fi
