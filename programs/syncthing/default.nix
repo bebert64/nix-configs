@@ -11,8 +11,8 @@ let
   # Device IDs — fill these in after first run on each machine
   # Get the ID with: syncthing cli show system | jq -r .myID
   deviceIds = {
-    bureau = "REPLACE-ME";
-    salon = "REPLACE-ME";
+    bureau = "SOQDUC4-XCBEEGD-SYQP44N-6UR7VDM-6XYZHVK-6G5KMMA-RWYPDG3-QQXP2QO";
+    salon = "VGWG7QU-ZS7MIUV-EDW75ML-IPM2N33-RRVVNFI-DH5ZVLW-XQIDRER-ICZSVQ6";
     raspi4 = "5CQXE76-VF5NYUC-MPHH4MI-TC4FRHU-4CAMAXT-I7FGEIX-GIDSASJ-OMTT6AV";
     stockly-romainc = "NBWSZFL-ATUO5NW-DICUY5X-A7PCCMJ-Y4PCIQB-RVL6WKP-XMHGSVT-5ZXDRQV";
   };

@@ -71,10 +71,9 @@ in
       nix-switch() {
         local git_branch
         git_branch=$(git branch --show-current)
-        inhibit-and-sleep \
-          "GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# --impure && "\
-          "${pkgs.libnotify}/bin/notify-send -u critical 'nix-switch' 'Build done — sudo password needed to switch' && "\
-          "sudo GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .# --impure"
+        inhibit-and-sleep "GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild build --flake .# --impure" || return 1
+        ${pkgs.libnotify}/bin/notify-send -u critical 'nix-switch' 'Build done — sudo password needed to switch'
+        inhibit-and-sleep "sudo GIT_BRANCH=$git_branch env -u LD_LIBRARY_PATH nixos-rebuild switch --flake .# --impure"
       }
 
       _nix-repo-dir() {
