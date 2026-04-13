@@ -12,7 +12,7 @@ let
     ;
   homeManagerBydbConfig = config.byDb;
   modifier = config.byDb.modifier;
-  lockMode = "Lock: [l]ock, [d]on't sleep";
+  lockMode = "Lock: l[o]ck, [d]on't sleep";
 
   # Picks wallpapers via `wallpapers-manager lock-wallpapers` (which prints
   # `OUTPUT<TAB>PATH` lines, one per monitor, splitting a dual-screen wallpaper
@@ -125,7 +125,8 @@ in
           command = "${lockScript}/bin/lock --daemonize";
         }
         {
-          timeout = (homeManagerBydbConfig.minutesBeforeLock + homeManagerBydbConfig.minutesFromLockToSleep) * 60;
+          timeout =
+            (homeManagerBydbConfig.minutesBeforeLock + homeManagerBydbConfig.minutesFromLockToSleep) * 60;
           command = "${suspendIfNoIncomingSsh}/bin/suspend-if-no-incoming-ssh";
         }
       ];
