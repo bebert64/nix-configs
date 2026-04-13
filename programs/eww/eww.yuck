@@ -54,6 +54,10 @@
         :class "ring-month"
         (box :width 290 :height 290)))
 
+    ;; Dark circle backdrop
+    (box :valign "center" :halign "center"
+      (box :width 220 :height 220 :class "label-backdrop"))
+
     ;; Center labels
     (box :valign "center" :halign "center" :orientation "vertical" :space-evenly false :class "labels"
       (box :orientation "horizontal" :space-evenly false :halign "center" :class "label-date-row"

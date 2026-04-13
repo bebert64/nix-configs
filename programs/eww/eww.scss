@@ -35,8 +35,11 @@ window {
 }
 
 // Labels
-.labels {
-  padding-top: 4px;
+.label-backdrop {
+  min-width: 220px;
+  min-height: 220px;
+  border-radius: 110px;
+  background-color: rgba(0, 0, 0, 0.35);
 }
 
 .label-date-row {
