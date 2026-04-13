@@ -4,6 +4,23 @@
     terminal = lib.mkForce "kitty";
   };
 
+  # OSC 52 clipboard shim — copied to remotes by kitten ssh so that
+  # tools expecting xclip (ranger yank, etc.) transparently write to
+  # the local clipboard over the terminal escape sequence.
+  xdg.configFile."kitty/osc52-clipboard" = {
+    text = ''
+      #!/bin/sh
+      data=$(cat | base64 | tr -d '\n')
+      printf '\033]52;c;%s\a' "$data"
+    '';
+    executable = true;
+  };
+
+  xdg.configFile."kitty/ssh.conf".text = ''
+    copy --dest bin/xclip --chmod 0755 osc52-clipboard
+    env PATH=$KITTY_SSH_KITTEN_DATA_DIR/bin:$PATH
+  '';
+
   programs.kitty = {
     enable = true;
     # Let our own zsh precmd/preexec (see programs/claude-code/terminal-title.nix)
