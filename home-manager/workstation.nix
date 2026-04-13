@@ -19,7 +19,7 @@
     ../programs/datagrip
     ../programs/ferdium
     ../programs/firefox
-    ../programs/flameshot
+    ../programs/screenshots
     ../programs/insomnia
     ../programs/kanshi
     ../programs/kitty
