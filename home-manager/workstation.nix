@@ -19,7 +19,6 @@
     ../programs/datagrip
     ../programs/ferdium
     ../programs/firefox
-    ../programs/screenshots
     ../programs/insomnia
     ../programs/kanshi
     ../programs/kitty
@@ -30,6 +29,7 @@
     ../programs/plex-desktop
     ../programs/ranger/workstation.nix
     ../programs/rofi
+    ../programs/screenshots
     ../programs/slack
     ../programs/sqlfluff
     ../programs/sway
