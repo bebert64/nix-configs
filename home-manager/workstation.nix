@@ -14,7 +14,7 @@
     ../programs/calculator
     ../programs/chromium
     ../programs/claude-code/workstation.nix
-    ../programs/conky
+    ../programs/eww
     ../programs/cursor
     ../programs/datagrip
     ../programs/ferdium

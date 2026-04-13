@@ -194,10 +194,10 @@ in
         "chromium-browser" = {
           name = "Chromium";
           noDisplay = true;
-          exec = "chromium %U";
+          exec = "chromium-session-restore %U";
           type = "Application";
         };
-        conky = hidden "conky";
+        eww = hidden "eww";
         cursor = hidden "Cursor";
         "cursor-url-handler" = hidden "Cursor URL Handler";
         datagrip = hidden "DataGrip";

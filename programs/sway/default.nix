@@ -217,7 +217,7 @@ in
         corner_radius 8
         shadows enable
         default_dim_inactive 0.1
-        layer_effects "conky_namespace" blur enable
+        layer_effects "eww_polar_clock" blur enable
       '';
     };
   };

@@ -1,0 +1,84 @@
+(defpoll clock-data
+  :interval "1s"
+  `~/.config/eww/scripts/polar-clock.sh`)
+
+(defwidget polar-clock-widget []
+  (overlay
+    ;; Ring 6 (outermost): seconds
+    (circular-progress
+      :value {clock-data == "" ? 0 : clock-data.second_val}
+      :start-at 75
+      :thickness 12
+      :clockwise true
+      :style "color: hsl(${clock-data == '' ? 0 : clock-data.second_hue}, 70%, 55%); min-width: 280px; min-height: 280px;")
+
+    ;; Ring 5: minutes
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.minute_val}
+        :start-at 75
+        :thickness 12
+        :clockwise true
+        :style "color: hsl(${clock-data == '' ? 0 : clock-data.minute_hue}, 70%, 55%); min-width: 240px; min-height: 240px;"))
+
+    ;; Ring 4: hours
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.hour_val}
+        :start-at 75
+        :thickness 12
+        :clockwise true
+        :style "color: hsl(${clock-data == '' ? 0 : clock-data.hour_hue}, 70%, 55%); min-width: 200px; min-height: 200px;"))
+
+    ;; Ring 3: day of month
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.day_val}
+        :start-at 75
+        :thickness 12
+        :clockwise true
+        :style "color: hsl(${clock-data == '' ? 0 : clock-data.day_hue}, 70%, 55%); min-width: 160px; min-height: 160px;"))
+
+    ;; Ring 2: weekday
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.weekday_val}
+        :start-at 75
+        :thickness 12
+        :clockwise true
+        :style "color: hsl(${clock-data == '' ? 0 : clock-data.weekday_hue}, 70%, 55%); min-width: 120px; min-height: 120px;"))
+
+    ;; Ring 1 (innermost): month
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.month_val}
+        :start-at 75
+        :thickness 12
+        :clockwise true
+        :style "color: hsl(${clock-data == '' ? 0 : clock-data.month_hue}, 70%, 55%); min-width: 80px; min-height: 80px;"))
+
+    ;; Center labels
+    (box :valign "center" :halign "center" :orientation "vertical" :space-evenly false :class "labels"
+      (label
+        :text {clock-data == "" ? "" : "${clock-data.hour_label}:${clock-data.minute_label}"}
+        :class "label-time")
+      (label
+        :text {clock-data == "" ? "" : clock-data.second_label}
+        :class "label-seconds")
+      (label
+        :text {clock-data == "" ? "" : "${clock-data.weekday_label} ${clock-data.month_label} ${clock-data.day_label}"}
+        :class "label-date"))))
+
+(defwindow polar-clock
+  :monitor 0
+  :geometry (geometry
+    :x "60px"
+    :y "80px"
+    :width "300px"
+    :height "300px"
+    :anchor "top left")
+  :stacking "bottom"
+  :exclusive false
+  :focusable false
+  :namespace "eww_polar_clock"
+  (polar-clock-widget))
