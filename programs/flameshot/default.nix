@@ -37,6 +37,13 @@ in
       grim # Wayland screenshot tool, used for example by flameshot
     ];
 
+    file.".config/flameshot/flameshot.ini".text = ''
+      [General]
+      contrastOpacity=188
+      saveLastRegion=true
+      useGrimAdapter=true
+    '';
+
     activation = {
       createScreenshotsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${homeDir}/screenshots/

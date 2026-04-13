@@ -2,6 +2,7 @@
 {
   home = {
     packages = with pkgs; [
+      gnome-themes-extra # Adwaita engine, needed by many GTK themes
       gtk-engine-murrine
       kdePackages.qt6gtk2 # Used by qt6 app to load gtk theme
       libsForQt5.qt5ct # Used by caffeine to load gtk theme
