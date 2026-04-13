@@ -17,7 +17,7 @@
   };
 
   xdg.configFile."kitty/ssh.conf".text = ''
-    copy --dest bin/xclip --chmod 0755 osc52-clipboard
+    copy --dest bin/xclip osc52-clipboard
     env PATH=$KITTY_SSH_KITTEN_DATA_DIR/bin:$PATH
   '';
 
