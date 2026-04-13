@@ -14,6 +14,7 @@
 - **Do NOT prefix test functions** with `test_` -- the `#[test]` attribute and module path already convey it.
 - **Do NOT prefix getters** with `get`. **Do prefix setters** with `set`.
 - **Prefix boolean values** with `is_`, `has_`, etc.
+- **Prefix counts** with `nb_` (e.g., `nb_outputs`, `nb_tiles`), not a `_count` suffix.
 - **Variable naming**: two ways -- by _how it was computed_ or by _what it will be used for_. Default to "how it was computed" -- when the computation changes, renaming propagation forces reviewing every usage site.
 - **Function naming**: active voice for actions (`cancel_purchase`, `register_purchase_cancellation`). Computation-based for queries (`first_parcel_item_of_purchase`).
 - **Struct naming**: the fully qualified name (path + struct name) conveys what object it represents. Fields convey properties. Do not introduce new concepts unless naming the set of properties directly would be unreasonably long.
