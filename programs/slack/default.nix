@@ -5,14 +5,17 @@
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.slack ];
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
-      "$ws4" = [ { class = "Slack"; } ];
+      "\"${ws."4"}\"" = [ { class = "Slack"; } ];
     };
-    keybindings = lib.mkOptionDefault { "${modifier}+Control+l" = "workspace $ws4; exec slack"; };
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+l" = "workspace \"${ws."4"}\"; exec slack";
+    };
   };
 }

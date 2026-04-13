@@ -19,13 +19,18 @@ in
     secrets = {
       "1password-secret-keys/bebert64" = { };
       "1password-secret-keys/stockly" = { };
+      "code/mcp/asana-token" = { };
       "ffsync/bebert64" = { };
       "ffsync/shortcuts-db" = { };
-      "raspi/postgresql/rw" = { };
-      "stash/api-key" = { };
       "jellyfin/guitar/access-token" = { };
       "jellyfin/media/access-token" = { };
+      "notion/personal-token" = { };
       "radio-france/api-key" = { };
+      "raspi/postgresql/rw" = { };
+      "spotify/client_id" = { };
+      "spotify/client_secret" = { };
+      "spotify/refresh_token" = { };
+      "stash/api-key" = { };
       "stockly/dbs/backoffice" = { };
       "stockly/dbs/buckets" = { };
       "stockly/dbs/files" = { };
@@ -36,11 +41,7 @@ in
       "stockly/dbs/stocks" = { };
       "stockly/dbs/supply-messages" = { };
       "stockly/mcp/notion-token" = { };
-      "notion/personal-token" = { };
       "stockly/mcp/sentry-token" = { };
-      "spotify/client_id" = { };
-      "spotify/client_secret" = { };
-      "spotify/refresh_token" = { };
     };
   };
 

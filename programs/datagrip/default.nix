@@ -5,7 +5,8 @@
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
   homeDir = config.home.homeDirectory;
   datagripProjectsDir = "${homeDir}/datagrip-projects";
   nixDatagripDir = "${config.byDb.paths.nixPrograms}/datagrip/datasources";
@@ -26,20 +27,21 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
-      "$ws6" = [ { class = "jetbrains-datagrip"; } ];
+      "\"${ws."6"}\"" = [ { class = "jetbrains-datagrip"; } ];
     };
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+d" = "workspace $ws6; exec ${pkgs.writeScriptBin "open-datagrip-project" ''
-        project=$(
-          ls -1 ${datagripProjectsDir} | \
-          ${rofi}
-        )
-        if [[ $project ]]; then
-          datagrip ${datagripProjectsDir}/$project
-        fi
-      ''}/bin/open-datagrip-project";
+      "${modifier}+Control+d" =
+        "workspace \"${ws."6"}\"; exec ${pkgs.writeScriptBin "open-datagrip-project" ''
+          project=$(
+            ls -1 ${datagripProjectsDir} | \
+            ${rofi}
+          )
+          if [[ $project ]]; then
+            datagrip ${datagripProjectsDir}/$project
+          fi
+        ''}/bin/open-datagrip-project";
     };
   };
 }

@@ -22,8 +22,9 @@ in
       extended = common.extendedHistory;
     };
     shellAliases = {
-      wke1 = "i3-msg workspace 11:󰸉";
-      wke2 = "i3-msg workspace 12:󰸉";
+      wke1 = "swaymsg workspace 11:󰸉";
+      wke2 = "swaymsg workspace 12:󰸉";
+      ssh = "kitten ssh";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
       dc = "db-cli";
       con = "cdn && claude";
@@ -50,14 +51,18 @@ in
         systemd-inhibit bash -c "$*"
         local exit_code=$?
         ${lib.optionalString hasLock ''
-          local idle_ms=$(${pkgs.xprintidle}/bin/xprintidle)
+          local idle_since_us=$(loginctl show-session "$XDG_SESSION_ID" -p IdleSinceHint --value 2>/dev/null)
           local sleep_threshold_ms=${
             toString (
               (homeManagerBydbConfig.minutesBeforeLock + homeManagerBydbConfig.minutesFromLockToSleep) * 60 * 1000
             )
           }
-          if (( idle_ms >= sleep_threshold_ms )); then
-            systemctl suspend
+          if [[ -n "$idle_since_us" && "$idle_since_us" != "0" ]]; then
+            local now_us=$(( $(date +%s) * 1000000 ))
+            local idle_ms=$(( (now_us - idle_since_us) / 1000 ))
+            if (( idle_ms >= sleep_threshold_ms )); then
+              systemctl suspend
+            fi
           fi
         ''}
         return $exit_code

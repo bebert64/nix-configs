@@ -162,7 +162,6 @@
           wallpapersDir = "${paths.nasBase}/Wallpapers";
           singleScreenDirName = "SingleScreen";
           dualScreenDirName = "DualScreen";
-          animatedDirName = "Animated";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";

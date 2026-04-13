@@ -11,7 +11,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable"; # pinned to 2.1.87, revert to "github:nixos/nixpkgs/nixos-unstable" once fixed
     by-db = {
-      url = "git+ssh://git@github.com/bebert64/perso?ref=main";
+      url = "git+ssh://git@github.com/bebert64/perso";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {

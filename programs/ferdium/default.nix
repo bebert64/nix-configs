@@ -5,18 +5,21 @@
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.ferdium ];
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
-      "$ws5" = [
+      "\"${ws."5"}\"" = [
         { class = "ferdium"; }
         { class = "Ferdium"; }
       ];
     };
-    keybindings = lib.mkOptionDefault { "${modifier}+Control+t" = "workspace $ws5; exec ferdium"; };
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+t" = "workspace \"${ws."5"}\"; exec ferdium";
+    };
   };
 }

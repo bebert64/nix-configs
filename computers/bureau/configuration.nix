@@ -13,6 +13,7 @@ in
       name = "romain";
       description = "Romain";
     };
+    weakSwaylockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
     nixCores = 2;
     nixMaxJobs = 1;
     nixHighRam = "7G";
@@ -28,10 +29,9 @@ in
       notionTodoSync.enable = true;
       minutesBeforeLock = 10;
       minutesFromLockToSleep = 10;
-      lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
       screens = {
-        primary = "HDMI-1";
-        secondary = "HDMI-2";
+        primary = "HDMI-A-1";
+        secondary = "HDMI-A-2";
       };
       isHeadphonesOnCommand = "pactl get-default-sink | grep alsa_output.pci-0000_00_1b.0.analog-stereo";
       setHeadphonesCommand = "set-default-sink alsa_output.pci-0000_00_1b.0.analog-stereo";
@@ -44,8 +44,4 @@ in
     interfaces.enp3s0.wakeOnLan.enable = true;
   };
 
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "romain";
-  };
 }

@@ -9,8 +9,7 @@ let
   inherit (types) str;
   inherit (config.lib.formats.rasi) mkLiteral;
   openRofiInDedicatedWorkspace = "${pkgs.writeScriptBin "open-rofi-in-dedicated-workspace" ''
-    i3-msg "workspace 9:󱓞"
-    rofi -show drun -show-icons ${config.rofi.gridThemeStr}
+    ${pkgs.sway}/bin/swaymsg "workspace 9:󱓞; exec rofi -show drun -show-icons ${config.rofi.gridThemeStr}"
   ''}/bin/open-rofi-in-dedicated-workspace";
 in
 {
@@ -51,7 +50,7 @@ in
         icon-theme = "Papirus";
         display-drun = "";
         drun-display-format = "{name}";
-        disable-history = false;
+        disable-history = true;
         fullscreen = false;
         hide-scrollbar = true;
         sidebar-mode = false;
@@ -178,7 +177,7 @@ in
         };
     };
 
-    xsession.windowManager.i3.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
+    wayland.windowManager.sway.config.menu = "\"${openRofiInDedicatedWorkspace}\"";
 
     xdg.desktopEntries =
       let
@@ -191,25 +190,27 @@ in
       in
       {
         btop = hidden "btop++";
+        "org.gnome.Calculator" = hidden "Calculator";
         "chromium-browser" = {
           name = "Chromium";
           noDisplay = true;
-          exec = "chromium %U";
+          exec = "chromium-session-restore %U";
           type = "Application";
         };
-        "org.gnome.Calculator" = hidden "Calculator";
-        conky = hidden "conky";
+        eww = hidden "eww";
         cursor = hidden "Cursor";
         "cursor-url-handler" = hidden "Cursor URL Handler";
         datagrip = hidden "DataGrip";
         ferdium = hidden "Ferdium";
         firefox = hidden "Firefox";
-        "org.flameshot.Flameshot" = hidden "Flameshot";
+        foot = hidden "foot";
+        "foot-server" = hidden "foot (server mode)";
+        footclient = hidden "footclient";
         "org.gtk.Settings" = hidden "GTK Settings";
-        gvim = hidden "GVim";
+        kitty = hidden "Kitty";
+        "kitty-open" = hidden "Kitty URL Launcher";
         nvim = hidden "Neovim wrapper";
         nixos-manual = hidden "NixOS Manual";
-        picom = hidden "picom";
         "plex-desktop" = hidden "Plex";
         cups = hidden "Print Settings";
         qt5ct = hidden "Qt5 Settings";
@@ -217,10 +218,6 @@ in
         slack = hidden "Slack";
         spotify = hidden "Spotify";
         "org.strawberrymusicplayer.strawberry" = hidden "Strawberry";
-        "com.gexperts.Tilix" = hidden "Tilix";
-        vim = hidden "Vim";
-        code = hidden "Visual Studio Code";
-        "code-url-handler" = hidden "Visual Studio Code - URL Handler";
         xterm = hidden "XTerm";
       };
   };

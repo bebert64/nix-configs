@@ -1,0 +1,107 @@
+* {
+  all: unset;
+}
+
+window {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+// Ring colors — smooth warm-to-cool gradient (outer=hot, inner=cool)
+// Second (outermost) → Minute → Hour → Day → Month (innermost)
+// Red → Orange → Amber → Yellow → Green
+.ring-second {
+  color: #e05050;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-minute {
+  color: #e8834a;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-hour {
+  color: #f0b050;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-day {
+  color: #d8cc4a;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-month {
+  color: #7ec450;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+// Labels
+.label-backdrop {
+  min-width: 220px;
+  min-height: 220px;
+  border-radius: 110px;
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.label-date-row {
+  margin-bottom: 2px;
+}
+
+.label-day {
+  font-family: "DejaVu Sans";
+  font-size: 22px;
+  font-weight: bold;
+  color: #d8cc4a;
+}
+
+.label-month {
+  font-family: "DejaVu Sans";
+  font-size: 22px;
+  font-weight: bold;
+  color: #7ec450;
+}
+
+.label-year {
+  font-family: "DejaVu Sans";
+  font-size: 22px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.label-time-row {
+  margin-bottom: 2px;
+}
+
+.label-time-h {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: #f0b050;
+}
+
+.label-time-sep {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.label-time-m {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: #e8834a;
+}
+
+.label-time-s {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: #e05050;
+}
+
+.label-weekday {
+  font-family: "DejaVu Sans";
+  font-size: 21px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+}

@@ -20,6 +20,7 @@ in
       name = "romain";
       description = "Romain";
     };
+    weakSwaylockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
     nixCores = 4;
     nixMaxJobs = 2;
     nixHighRam = "22G";
@@ -34,7 +35,6 @@ in
   home-manager.users.${nixosUserConfig.name} = {
     byDb = {
       minutesFromLockToSleep = 17;
-      lockPasswordHash = "8ed81afeb2548b8488ed7874ec5ecfe692c4ee1ed38ffbbc6bee939a325a6e0b";
       screens = {
         primary = "HDMI-0";
       };

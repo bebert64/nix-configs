@@ -1,0 +1,35 @@
+month=$(date +%-m)
+day=$(date +%-d)
+hour=$(date +%-H)
+min=$(date +%-M)
+sec=$(date +%-S)
+year=$(date +%Y)
+month_name=$(date +%B)
+weekday_name=$(date +%A | sed 's/./\U&/')
+days_in_month=$(date -d "$(date +%Y-%m-01) +1 month -1 day" +%-d)
+
+jq -cn \
+  --argjson month "$month" \
+  --argjson day "$day" \
+  --argjson hour "$hour" \
+  --argjson min "$min" \
+  --argjson sec "$sec" \
+  --argjson dim "$days_in_month" \
+  --arg month_name "$month_name" \
+  --arg weekday_name "$weekday_name" \
+  --arg year "$year" \
+  '{
+    month_val:    (if $month <= 1 then 0 else ($month - 1) / 11 * 100 end),
+    day_val:      (if $dim <= 1 then 0 else ($day - 1) / ($dim - 1) * 100 end),
+    hour_val:     (($hour * 3600 + $min * 60 + $sec) / 864 | . * 100 / 100),
+    minute_val:   (($min * 60 + $sec) / 36 | . * 100 / 100),
+    second_val:   ($sec / 60 * 100),
+
+    hour_label:   (if $hour < 10 then "0\($hour)" else "\($hour)" end),
+    minute_label: (if $min < 10 then "0\($min)" else "\($min)" end),
+    second_label: (if $sec < 10 then "0\($sec)" else "\($sec)" end),
+    month_label:  $month_name,
+    weekday_label: $weekday_name,
+    day_label:    "\($day)",
+    year_label:   $year
+  }'

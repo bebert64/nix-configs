@@ -1,0 +1,89 @@
+(defpoll clock-data
+  :interval "1s"
+  `~/.config/eww/scripts/polar-clock.sh`)
+
+(defwidget polar-clock-widget []
+  (overlay
+    ;; Ring 5 (outermost): seconds
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.second_val}
+        :start-at 75
+        :thickness 22
+        :clockwise true
+        :class "ring-second"
+        (box :width 490 :height 490)))
+
+    ;; Ring 4: minutes
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.minute_val}
+        :start-at 75
+        :thickness 22
+        :clockwise true
+        :class "ring-minute"
+        (box :width 440 :height 440)))
+
+    ;; Ring 3: hours
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.hour_val}
+        :start-at 75
+        :thickness 22
+        :clockwise true
+        :class "ring-hour"
+        (box :width 390 :height 390)))
+
+    ;; Ring 2: day of month
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.day_val}
+        :start-at 75
+        :thickness 22
+        :clockwise true
+        :class "ring-day"
+        (box :width 340 :height 340)))
+
+    ;; Ring 1 (innermost): month
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.month_val}
+        :start-at 75
+        :thickness 22
+        :clockwise true
+        :class "ring-month"
+        (box :width 290 :height 290)))
+
+    ;; Dark circle backdrop
+    (box :valign "center" :halign "center"
+      (box :width 220 :height 220 :class "label-backdrop"))
+
+    ;; Center labels
+    (box :valign "center" :halign "center" :orientation "vertical" :space-evenly false :class "labels"
+      (box :orientation "horizontal" :space-evenly false :halign "center" :class "label-date-row"
+        (label :text {clock-data == "" ? "" : "${clock-data.day_label} "} :class "label-day")
+        (label :text {clock-data == "" ? "" : "${clock-data.month_label} "} :class "label-month")
+        (label :text {clock-data == "" ? "" : clock-data.year_label} :class "label-year"))
+      (box :orientation "horizontal" :space-evenly false :halign "center" :class "label-time-row"
+        (label :text {clock-data == "" ? "" : clock-data.hour_label} :class "label-time-h")
+        (label :text ":" :class "label-time-sep")
+        (label :text {clock-data == "" ? "" : clock-data.minute_label} :class "label-time-m")
+        (label :text ":" :class "label-time-sep")
+        (label :text {clock-data == "" ? "" : clock-data.second_label} :class "label-time-s"))
+      (label
+        :text {clock-data == "" ? "" : clock-data.weekday_label}
+        :class "label-weekday"))))
+
+(defwindow polar-clock
+  :monitor 0
+  :geometry (geometry
+    :x "60px"
+    :y "60px"
+    :width "520px"
+    :height "520px"
+    :anchor "top left")
+  :stacking "bottom"
+  :exclusive false
+  :focusable false
+  :namespace "eww_polar_clock"
+  (polar-clock-widget))

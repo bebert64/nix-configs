@@ -35,10 +35,9 @@ in
           secondary = "HDMI-1";
         };
       };
-      byDbPkgs.save-autorandr-config = {
+      byDbPkgs.save-kanshi-config = {
         enable = true;
-        autorandrConfigsPath = "${homeManagerBydbConfig.paths.nixPrograms}/autorandr.nix";
-        defaultBars = "eDP-1-tray-off HDMI-1-battery";
+        kanshiConfigsPath = "${homeManagerBydbConfig.paths.nixPrograms}/kanshi/default.nix";
       };
     };
   };

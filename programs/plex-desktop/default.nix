@@ -5,16 +5,17 @@
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.plex-desktop ];
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
-      "$ws8" = [ { class = "Plex"; } ];
+      "\"${ws."8"}\"" = [ { class = "Plex"; } ];
     };
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+p" = "workspace $ws8; exec plex-desktop";
+      "${modifier}+Control+p" = "workspace \"${ws."8"}\"; exec plex-desktop";
     };
   };
 }

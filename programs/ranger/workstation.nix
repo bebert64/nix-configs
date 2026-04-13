@@ -5,11 +5,12 @@
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
   rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   sshr = "${pkgs.writeScriptBin "sshr" ''
-    tilix -p Ranger -e "ssh $1 -t ranger"
+    kitty --title "Ranger ($1)" kitten ssh $1 -t ranger
   ''}/bin/sshr";
   openRemote = "${pkgs.writeScriptBin "open-remote" ''
     selection=$(
@@ -20,7 +21,8 @@ let
       grep -v "$(hostname)" | \
       ${rofi}
     )
-    ${sshr} $selection
+    [ -n "$selection" ] || exit 0
+    ${sshr} "$selection"
   ''}/bin/open-remote";
 in
 {
@@ -28,10 +30,11 @@ in
 
   byDb.ranger.bookmarksFile = ./bookmarks/default;
 
-  home.packages = [ pkgs.xclip ];
+  home.packages = [ pkgs.wl-clipboard ];
 
-  xsession.windowManager.i3.config.keybindings = lib.mkOptionDefault {
-    "${modifier}+Control+r" = "workspace $ws7; exec tilix -p Ranger -e ranger";
-    "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
+  wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
+    "${modifier}+Control+r" =
+      ''workspace "${ws."7"}"; exec kitty --title "Ranger ($(hostname))" -e ranger'';
+    "${modifier}+Shift+r" = "workspace \"${ws."7"}\"; exec ${openRemote}";
   };
 }

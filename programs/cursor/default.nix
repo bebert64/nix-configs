@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (config.xsession.windowManager.i3.config) modifier;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
   inherit (config.byDb) paths;
   homeDir = config.home.homeDirectory;
   inherit (paths) nixPrograms;
@@ -133,18 +134,18 @@ in
     };
   };
 
-  xsession.windowManager.i3.config = {
+  wayland.windowManager.sway.config = {
     assigns = {
-      "$ws3" = [ { class = "Cursor"; } ];
+      "\"${ws."3"}\"" = [ { class = "Cursor"; } ];
     };
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+v" = "workspace $ws3; exec ${openLocal}";
-      "${modifier}+Shift+v" = "workspace $ws3; exec ${openOrthos}";
-      "${modifier}+Mod1+v" = "workspace $ws3; exec ${openSalon}";
-      "${modifier}+Control+n" = "workspace $ws3; exec ${openNixLocal}";
+      "${modifier}+Control+v" = "workspace \"${ws."3"}\"; exec ${openLocal}";
+      "${modifier}+Shift+v" = "workspace \"${ws."3"}\"; exec ${openOrthos}";
+      "${modifier}+Mod1+v" = "workspace \"${ws."3"}\"; exec ${openSalon}";
+      "${modifier}+Control+n" = "workspace \"${ws."3"}\"; exec ${openNixLocal}";
       "${modifier}+Shift+n" =
-        "workspace $ws3; exec cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/nix-configs";
-      "${modifier}+Mod1+n" = "workspace $ws3; exec ${openNixSalon}";
+        "workspace \"${ws."3"}\"; exec cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/nix-configs";
+      "${modifier}+Mod1+n" = "workspace \"${ws."3"}\"; exec ${openNixSalon}";
     };
   };
 }

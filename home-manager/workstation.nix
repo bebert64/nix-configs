@@ -8,36 +8,35 @@
 {
   imports = [
     ./common.nix
-    ../programs/autorandr
     ../programs/autossh-orthos
-    ../programs/battery-notifier
     ../programs/avidemux
+    ../programs/battery-notifier
     ../programs/calculator
     ../programs/chromium
     ../programs/claude-code/workstation.nix
-    ../programs/conky
+    ../programs/eww
     ../programs/cursor
     ../programs/datagrip
-    ../programs/dunst
     ../programs/ferdium
     ../programs/firefox
-    ../programs/flameshot
-    ../programs/i3
     ../programs/insomnia
+    ../programs/kanshi
+    ../programs/kitty
     ../programs/lock
+    ../programs/mako
     ../programs/music
-    ../programs/picom
+    ../programs/notion-todo-sync
     ../programs/plex-desktop
-    ../programs/polybar
     ../programs/ranger/workstation.nix
     ../programs/rofi
+    ../programs/screenshots
     ../programs/slack
     ../programs/sqlfluff
-    ../programs/terminal
+    ../programs/sway
     ../programs/theme
     ../programs/udiskie
     ../programs/vdhcoapp
-    ../programs/notion-todo-sync
+    ../programs/waybar
     by-db.module.x86_64-linux
   ];
 
@@ -75,7 +74,6 @@
         packages =
           (with pkgs; [
             anydesk
-            arandr # GUI to configure screens positions (need to kill autorandr)
             evince # pdf reader
             filezilla
             fusee-interfacee-tk
@@ -89,6 +87,7 @@
             pavucontrol # pulse audio volume controle
             polkit_gnome
             vlc
+            wdisplays # GUI to configure screens positions (Wayland, replaces arandr)
           ])
           ++ lib.optionals homeManagerBydbConfig.wifi.enable (
             with pkgs;
@@ -156,7 +155,6 @@
           wallpapersDir = "${homeDir}/wallpapers";
           singleScreenDirName = "SingleScreen";
           dualScreenDirName = "DualScreen";
-          animatedDirName = "Animated";
           firefox = {
             ffsync = homeManagerBydbConfig.ffsync.bebert64 // {
               sessionFile = "${homeDir}/.config/by_db/wallpapers-manager-firefox-sync-client.secret";
