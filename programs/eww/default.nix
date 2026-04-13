@@ -1,7 +1,7 @@
 { pkgs, lib, ... }:
 let
   polarClockScript = pkgs.writeShellScript "polar-clock" ''
-    export PATH="${lib.makeBinPath [ pkgs.coreutils pkgs.jq ]}"
+    export PATH="${lib.makeBinPath [ pkgs.coreutils pkgs.jq pkgs.gnused ]}"
     ${builtins.readFile ./polar-clock.sh}
   '';
 in

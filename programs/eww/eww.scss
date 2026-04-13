@@ -2,34 +2,103 @@
   all: unset;
 }
 
-.polar-clock {
-  background-color: transparent;
+window {
+  background-color: rgba(0, 0, 0, 0);
 }
 
-circular-progress {
-  background-color: rgba(255, 255, 255, 0.08);
+// Ring colors — smooth warm-to-cool gradient (outer=hot, inner=cool)
+// Second (outermost) → Minute → Hour → Day → Month (innermost)
+// Red → Orange → Amber → Yellow → Green
+.ring-second {
+  color: #e05050;
+  background-color: rgba(0, 0, 0, 0);
 }
 
+.ring-minute {
+  color: #e8834a;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-hour {
+  color: #f0b050;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-day {
+  color: #d8cc4a;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.ring-month {
+  color: #7ec450;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+// Labels
 .labels {
-  padding-top: 2px;
+  padding-top: 4px;
 }
 
-.label-time {
+.label-date-row {
+  margin-bottom: 2px;
+}
+
+.label-day {
   font-family: "DejaVu Sans";
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.85);
+  color: #d8cc4a;
 }
 
-.label-seconds {
+.label-month {
   font-family: "DejaVu Sans";
-  font-size: 11px;
+  font-size: 22px;
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.5);
+  color: #7ec450;
 }
 
-.label-date {
+.label-year {
   font-family: "DejaVu Sans";
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 22px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.label-time-row {
+  margin-bottom: 2px;
+}
+
+.label-time-h {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: #f0b050;
+}
+
+.label-time-sep {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.label-time-m {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: #e8834a;
+}
+
+.label-time-s {
+  font-family: "DejaVu Sans";
+  font-size: 26px;
+  font-weight: bold;
+  color: #e05050;
+}
+
+.label-weekday {
+  font-family: "DejaVu Sans";
+  font-size: 21px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
 }

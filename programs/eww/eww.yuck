@@ -4,85 +4,79 @@
 
 (defwidget polar-clock-widget []
   (overlay
-    ;; Ring 6 (outermost): seconds
+    ;; Ring 5 (outermost): seconds
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.second_val}
         :start-at 75
-        :thickness 10
+        :thickness 22
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.second_color};"
-        (box :width 280 :height 280)))
+        :class "ring-second"
+        (box :width 490 :height 490)))
 
-    ;; Ring 5: minutes
+    ;; Ring 4: minutes
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.minute_val}
         :start-at 75
-        :thickness 10
+        :thickness 22
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.minute_color};"
-        (box :width 240 :height 240)))
+        :class "ring-minute"
+        (box :width 440 :height 440)))
 
-    ;; Ring 4: hours
+    ;; Ring 3: hours
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.hour_val}
         :start-at 75
-        :thickness 10
+        :thickness 22
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.hour_color};"
-        (box :width 200 :height 200)))
+        :class "ring-hour"
+        (box :width 390 :height 390)))
 
-    ;; Ring 3: day of month
+    ;; Ring 2: day of month
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.day_val}
         :start-at 75
-        :thickness 10
+        :thickness 22
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.day_color};"
-        (box :width 160 :height 160)))
-
-    ;; Ring 2: weekday
-    (box :valign "center" :halign "center"
-      (circular-progress
-        :value {clock-data == "" ? 0 : clock-data.weekday_val}
-        :start-at 75
-        :thickness 10
-        :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.weekday_color};"
-        (box :width 120 :height 120)))
+        :class "ring-day"
+        (box :width 340 :height 340)))
 
     ;; Ring 1 (innermost): month
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.month_val}
         :start-at 75
-        :thickness 10
+        :thickness 22
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.month_color};"
-        (box :width 80 :height 80)))
+        :class "ring-month"
+        (box :width 290 :height 290)))
 
     ;; Center labels
     (box :valign "center" :halign "center" :orientation "vertical" :space-evenly false :class "labels"
+      (box :orientation "horizontal" :space-evenly false :halign "center" :class "label-date-row"
+        (label :text {clock-data == "" ? "" : "${clock-data.day_label} "} :class "label-day")
+        (label :text {clock-data == "" ? "" : "${clock-data.month_label} "} :class "label-month")
+        (label :text {clock-data == "" ? "" : clock-data.year_label} :class "label-year"))
+      (box :orientation "horizontal" :space-evenly false :halign "center" :class "label-time-row"
+        (label :text {clock-data == "" ? "" : clock-data.hour_label} :class "label-time-h")
+        (label :text ":" :class "label-time-sep")
+        (label :text {clock-data == "" ? "" : clock-data.minute_label} :class "label-time-m")
+        (label :text ":" :class "label-time-sep")
+        (label :text {clock-data == "" ? "" : clock-data.second_label} :class "label-time-s"))
       (label
-        :text {clock-data == "" ? "" : "${clock-data.hour_label}:${clock-data.minute_label}"}
-        :class "label-time")
-      (label
-        :text {clock-data == "" ? "" : clock-data.second_label}
-        :class "label-seconds")
-      (label
-        :text {clock-data == "" ? "" : "${clock-data.weekday_label} ${clock-data.month_label} ${clock-data.day_label}"}
-        :class "label-date"))))
+        :text {clock-data == "" ? "" : clock-data.weekday_label}
+        :class "label-weekday"))))
 
 (defwindow polar-clock
   :monitor 0
   :geometry (geometry
     :x "60px"
-    :y "80px"
-    :width "300px"
-    :height "300px"
+    :y "60px"
+    :width "520px"
+    :height "520px"
     :anchor "top left")
   :stacking "bottom"
   :exclusive false
