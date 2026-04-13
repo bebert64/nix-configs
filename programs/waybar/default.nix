@@ -5,7 +5,13 @@
   by-db,
   ...
 }:
-let
+{
+  options.byDb.isHeadphonesOnCommand = lib.mkOption {
+    type = lib.types.str;
+    description = "Command that returns whether headphones are the current output";
+  };
+
+  config = let
   playerctlDisplayTitle = pkgs.writeShellScript "playerctl-display-title" ''
     PATH=${lib.makeBinPath [
       by-db.packages.x86_64-linux.music-title
@@ -156,4 +162,5 @@ in
     ];
     style = builtins.readFile ./style.css;
   };
+};
 }
