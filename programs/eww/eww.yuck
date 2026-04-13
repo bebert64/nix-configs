@@ -10,7 +10,7 @@
       :start-at 75
       :thickness 12
       :clockwise true
-      :style "color: hsl(${clock-data == '' ? 0 : clock-data.second_hue}, 70%, 55%); min-width: 280px; min-height: 280px;")
+      :style "color: ${clock-data == '' ? '#555' : clock-data.second_color}; min-width: 280px; min-height: 280px;")
 
     ;; Ring 5: minutes
     (box :valign "center" :halign "center"
@@ -19,7 +19,7 @@
         :start-at 75
         :thickness 12
         :clockwise true
-        :style "color: hsl(${clock-data == '' ? 0 : clock-data.minute_hue}, 70%, 55%); min-width: 240px; min-height: 240px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.minute_color}; min-width: 240px; min-height: 240px;"))
 
     ;; Ring 4: hours
     (box :valign "center" :halign "center"
@@ -28,7 +28,7 @@
         :start-at 75
         :thickness 12
         :clockwise true
-        :style "color: hsl(${clock-data == '' ? 0 : clock-data.hour_hue}, 70%, 55%); min-width: 200px; min-height: 200px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.hour_color}; min-width: 200px; min-height: 200px;"))
 
     ;; Ring 3: day of month
     (box :valign "center" :halign "center"
@@ -37,7 +37,7 @@
         :start-at 75
         :thickness 12
         :clockwise true
-        :style "color: hsl(${clock-data == '' ? 0 : clock-data.day_hue}, 70%, 55%); min-width: 160px; min-height: 160px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.day_color}; min-width: 160px; min-height: 160px;"))
 
     ;; Ring 2: weekday
     (box :valign "center" :halign "center"
@@ -46,7 +46,7 @@
         :start-at 75
         :thickness 12
         :clockwise true
-        :style "color: hsl(${clock-data == '' ? 0 : clock-data.weekday_hue}, 70%, 55%); min-width: 120px; min-height: 120px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.weekday_color}; min-width: 120px; min-height: 120px;"))
 
     ;; Ring 1 (innermost): month
     (box :valign "center" :halign "center"
@@ -55,7 +55,7 @@
         :start-at 75
         :thickness 12
         :clockwise true
-        :style "color: hsl(${clock-data == '' ? 0 : clock-data.month_hue}, 70%, 55%); min-width: 80px; min-height: 80px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.month_color}; min-width: 80px; min-height: 80px;"))
 
     ;; Center labels
     (box :valign "center" :halign "center" :orientation "vertical" :space-evenly false :class "labels"
