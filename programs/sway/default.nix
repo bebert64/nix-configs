@@ -92,6 +92,14 @@ in
     default = "Mod4";
   };
 
+  options.byDb.ws = lib.mkOption {
+    type = lib.types.attrsOf lib.types.str;
+    internal = true;
+    readOnly = true;
+    default = ws;
+    description = "Workspace number-to-name mapping (e.g. \"6\" → \"6:\")";
+  };
+
   config = {
     wayland.windowManager.sway = {
       enable = true;
