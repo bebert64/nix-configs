@@ -66,9 +66,9 @@ fi
 
 # --- Cleanup: remove source worktree and its branch ---
 echo "[transplant] Removing source worktree: $source_worktree"
-git worktree remove "$source_worktree"
+git -C "$target_worktree" worktree remove "$source_worktree"
 echo "[transplant] Deleting source branch: $source_branch"
-git branch -D "$source_branch"
+git -C "$target_worktree" branch -D "$source_branch"
 
 # --- Summary ---
 target_branch="$(git -C "$target_worktree" branch --show-current)"
