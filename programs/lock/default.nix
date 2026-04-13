@@ -38,6 +38,7 @@ let
 
     exec ${swaylock-effects}/bin/swaylock \
       ''${image_args[@]:+"''${image_args[@]}"} \
+      "$@" \
       --fade-in 0.2 \
       --clock \
       --timestr "%H:%M" \
@@ -70,7 +71,7 @@ let
   '';
 
   lockScript = writeShellScriptBin "lock" ''
-    exec ${lockWithWallpapers}
+    exec ${lockWithWallpapers} "$@"
   '';
 
   lockSleepScript = writeShellScriptBin "lock-sleep" ''
@@ -121,7 +122,7 @@ in
         }
         {
           timeout = homeManagerBydbConfig.minutesBeforeLock * 60;
-          command = "${lockScript}/bin/lock";
+          command = "${lockScript}/bin/lock --daemonize";
         }
         {
           timeout = (homeManagerBydbConfig.minutesBeforeLock + homeManagerBydbConfig.minutesFromLockToSleep) * 60;
