@@ -33,11 +33,19 @@ Determine which CLI tool to use based on the repo context.
 
 Detect Stockly context by checking if `dev_tools/StocklyCli` exists in the repo root.
 
+**If a Notion ticket already exists** (short_id, UUID, or URL available):
+
 ```bash
 s wk <ticket_identifier>
 ```
 
-Where `ticket_identifier` can be a Notion URL, short_id, or UUID. If a ticket/short_id already exists for the current task, use its identifier.
+**If no Notion ticket exists**, create one and start the worktree in one command:
+
+```bash
+s tk "<task title>" -w=0.5 -t=tm wk
+```
+
+The `wk` subcommand at the end creates the worktree immediately after ticket creation.
 
 ### Personal repos
 
