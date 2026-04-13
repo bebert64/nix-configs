@@ -1,4 +1,4 @@
-# Terminal
+# Screenshots: grim (capture) + slurp (region select) + swappy (annotate)
 {
   pkgs,
   lib,
@@ -8,23 +8,31 @@
 let
   modifier = config.byDb.modifier;
   rofi = config.rofi.defaultCmd;
+  grim = lib.getExe pkgs.grim;
+  slurp = lib.getExe pkgs.slurp;
+  swappy = lib.getExe pkgs.swappy;
+  wlCopy = "${pkgs.wl-clipboard}/bin/wl-copy";
+
   rofiScreenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
     selection="$(echo -en \
-    'Gui to clipboard
-    Gui to file
+    'Region to editor
+    Region to clipboard
+    Region to file
     Fullscreen to clipboard
     Fullscreen to file' \
     | ${rofi} )"
 
     case "$selection" in
-      "Gui to clipboard")
-        flameshot gui -r | xclip -selection clipboard -t image/png ;;
-      "Gui to file")
-        flameshot gui -p "${screenshotsDir}" ;;
+      "Region to editor")
+        ${grim} -g "$(${slurp})" - | ${swappy} -f - ;;
+      "Region to clipboard")
+        ${grim} -g "$(${slurp})" - | ${wlCopy} -t image/png ;;
+      "Region to file")
+        ${grim} -g "$(${slurp})" "${screenshotsDir}/$(date +%Y-%m-%d_%H-%M-%S).png" ;;
       "Fullscreen to clipboard")
-        flameshot full r | xclip -selection clipboard -t image/png ;;
+        ${grim} - | ${wlCopy} -t image/png ;;
       "Fullscreen to file")
-        flameshot full -p "${screenshotsDir}" ;;
+        ${grim} "${screenshotsDir}/$(date +%Y-%m-%d_%H-%M-%S).png" ;;
     esac
   ''}/bin/rofi-screenshots";
   homeDir = config.home.homeDirectory;
@@ -33,16 +41,11 @@ in
 {
   home = {
     packages = with pkgs; [
-      flameshot
-      grim # Wayland screenshot tool, used for example by flameshot
+      grim
+      slurp
+      swappy
+      wl-clipboard
     ];
-
-    file.".config/flameshot/flameshot.ini".text = ''
-      [General]
-      contrastOpacity=188
-      saveLastRegion=true
-      useGrimAdapter=true
-    '';
 
     activation = {
       createScreenshotsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

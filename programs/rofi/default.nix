@@ -203,7 +203,6 @@ in
         datagrip = hidden "DataGrip";
         ferdium = hidden "Ferdium";
         firefox = hidden "Firefox";
-        "org.flameshot.Flameshot" = hidden "Flameshot";
         foot = hidden "foot";
         "foot-server" = hidden "foot (server mode)";
         footclient = hidden "footclient";
