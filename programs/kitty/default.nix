@@ -1,23 +1,21 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
+let
+  # OSC 52 clipboard shim — copied to remotes by kitten ssh so that
+  # tools expecting xclip (ranger yank, etc.) transparently write to
+  # the local clipboard over the terminal escape sequence.
+  osc52Shim = pkgs.writeScript "osc52-clipboard" ''
+    #!/bin/sh
+    data=$(cat | base64 | tr -d '\n')
+    printf '\033]52;c;%s\a' "$data"
+  '';
+in
 {
   wayland.windowManager.sway.config = {
     terminal = lib.mkForce "kitty";
   };
 
-  # OSC 52 clipboard shim — copied to remotes by kitten ssh so that
-  # tools expecting xclip (ranger yank, etc.) transparently write to
-  # the local clipboard over the terminal escape sequence.
-  xdg.configFile."kitty/osc52-clipboard" = {
-    text = ''
-      #!/bin/sh
-      data=$(cat | base64 | tr -d '\n')
-      printf '\033]52;c;%s\a' "$data"
-    '';
-    executable = true;
-  };
-
   xdg.configFile."kitty/ssh.conf".text = ''
-    copy --dest bin/xclip osc52-clipboard
+    copy --dest bin/xclip ${osc52Shim}
     env PATH=$KITTY_SSH_KITTEN_DATA_DIR/bin:$PATH
   '';
 
