@@ -8,6 +8,7 @@ let
   inherit (config.byDb) setHeadphonesCommand setSpeakerCommand;
   homeDir = config.home.homeDirectory;
   modifier = config.byDb.modifier;
+  ws = config.byDb.ws;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch [g]irl r[e]set";
   openDir = "${pkgs.writeScriptBin "open-dir" ''
@@ -110,7 +111,7 @@ in
 
   wayland.windowManager.sway.config = {
     assigns = {
-      "$ws10" = [ { class = "Strawberry|Spotify"; } ];
+      "\"${ws."10"}\"" = [ { class = "Strawberry|Spotify"; } ];
     };
 
     keybindings = lib.mkOptionDefault {
@@ -141,13 +142,13 @@ in
           "space" = "exec ${playerctlPlayPause}, mode default";
           "s" = "exec ${playerctlStop}, mode default";
           "${modifier}+s" = "exec ${playerctlStopAll}, mode default";
-          "l" = "workspace $ws10, exec strawberry, mode default";
-          "o" = "workspace $ws10, exec spotify, mode default";
+          "l" = "workspace \"${ws."10"}\", exec strawberry, mode default";
+          "o" = "workspace \"${ws."10"}\", exec spotify, mode default";
           "r" = "exec choose-radios, mode default";
           "g" = "exec choose-lofi-girl-playlists, mode default";
           "d" = "exec ${openDir}, mode default";
           # Allows to restart strawberry after it has crashed
-          "e" = "workspace $ws10, exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
+          "e" = "workspace \"${ws."10"}\", exec rm /tmp/kdsingleapp-*-strawberry*, mode default";
           "${modifier}+m" = "mode default";
           "h" = "exec ${pactl_cmd setHeadphonesCommand "set-headphones-command"}, mode default";
           "p" = "exec ${pactl_cmd setSpeakerCommand "set-speaker-command"}, mode default";

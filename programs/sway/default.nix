@@ -213,8 +213,6 @@ in
       extraConfig = ''
         for_window [app_id="kitty"] border normal 2
 
-        ${lib.concatStringsSep "\n" (lib.mapAttrsToList (n: v: "set $ws${n} ${v}") ws)}
-
         workspace "${ws."10"}" gaps inner 80
         workspace "${ws."19"}" output ${homeManagerBydbConfig.screens.primary}
         ${lib.optionalString (homeManagerBydbConfig.screens.secondary != "") "workspace \"${ws."20"}\" output ${homeManagerBydbConfig.screens.secondary}"}

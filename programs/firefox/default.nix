@@ -1,6 +1,7 @@
 { config, lib, ... }:
 let
   modifier = config.byDb.modifier;
+  ws = config.byDb.ws;
 in
 {
   programs.firefox = {
@@ -20,13 +21,13 @@ in
 
   wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+f" = "workspace $ws2; exec firefox";
+      "${modifier}+Control+f" = "workspace \"${ws."2"}\"; exec firefox";
       "${modifier}+Control+s" =
-        "workspace $ws12; exec firefox -P shortcuts --class shortcuts https://google.com";
+        "workspace \"${ws."12"}\"; exec firefox -P shortcuts --class shortcuts https://google.com";
     };
     assigns = {
-      "$ws2" = [ { class = "firefox"; } ];
-      "$ws12" = [ { class = "shortcuts"; } ];
+      "\"${ws."2"}\"" = [ { class = "firefox"; } ];
+      "\"${ws."12"}\"" = [ { class = "shortcuts"; } ];
     };
   };
 }

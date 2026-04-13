@@ -6,6 +6,7 @@
 }:
 let
   modifier = config.byDb.modifier;
+  ws = config.byDb.ws;
   rofi = config.rofi.defaultCmd;
   homeDir = config.home.homeDirectory;
   sshr = "${pkgs.writeScriptBin "sshr" ''
@@ -32,7 +33,7 @@ in
   home.packages = [ pkgs.wl-clipboard ];
 
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
-    "${modifier}+Control+r" = ''workspace $ws7; exec kitty --title "Ranger ($(hostname))" -e ranger'';
-    "${modifier}+Shift+r" = "workspace $ws7; exec ${openRemote}";
+    "${modifier}+Control+r" = ''workspace "${ws."7"}"; exec kitty --title "Ranger ($(hostname))" -e ranger'';
+    "${modifier}+Shift+r" = "workspace \"${ws."7"}\"; exec ${openRemote}";
   };
 }

@@ -6,15 +6,16 @@
 }:
 let
   modifier = config.byDb.modifier;
+  ws = config.byDb.ws;
 in
 {
   home.packages = [ pkgs.plex-desktop ];
   wayland.windowManager.sway.config = {
     assigns = {
-      "$ws8" = [ { class = "Plex"; } ];
+      "\"${ws."8"}\"" = [ { class = "Plex"; } ];
     };
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+p" = "workspace $ws8; exec plex-desktop";
+      "${modifier}+Control+p" = "workspace \"${ws."8"}\"; exec plex-desktop";
     };
   };
 }
