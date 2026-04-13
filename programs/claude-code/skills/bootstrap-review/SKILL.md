@@ -69,17 +69,14 @@ Using the PR diff (file list + change sizes), suggest an order in which the revi
 
 Persist the review so it can be found later. (1) Ensure `~/.claude/plans/` exists (create the directory if it does not). (2) Write one `.md` file there with filename `{short_id}-review-{date}T{time}.md` (e.g. `EN4QK-review-2025-02-27T143052.md`; use ISO date and time without colons). File content: a header with `# {ticket title}`, `Short ID: {short_id}`, `## Category` and on the next line `review`, `Notion: {notion_url}`, `Notion page ID: {id}` (the page ID from the ticket URL), `Investigation date: {iso-date}`; then `## Resume` and a short summary of the review (ticket goal, PR intent, suggested reading order, conclusion); then `## Full investigation` and the full content from steps 2–6 (ticket summary, PR summary, reading order, alignment, conclusion). **open-plans** opens all files for this short_id when run on the branch; **tasks** lists it with other plans/investigations. (3) If `~/.claude/plans/_index.json` exists, update it to include this new file (see tasks command for index schema).
 
-## 8. One-liners to open the PR branch
+## 8. One-liner to open the PR branch
 
-Offer these two one-liners (replace `<notion_url>` with the ticket URL from step 1; replace `<branch_name>` with the PR branch name, e.g. `EN4QK-BoMessagesSentToSupplierArenTLinkedToThread`, which matches the worktree directory name after running the Orthos one-liner):
+Offer a single one-liner to run on the local machine (replace `<notion_url>` with the ticket URL from step 1; replace `<branch_name>` with the PR branch name, e.g. `EN4QK-BoMessagesSentToSupplierArenTLinkedToThread`, which matches the worktree directory name after running the `s wk` command):
 
-- **On Orthos** (cd to Main repo, pull, then create worktree and switch to PR branch):
-  ```bash
-  cdm && git pull && s wk <notion_url> -w=b
-  ```
-- **On your machine** (open the worktree on Orthos via Remote-SSH, detached from the terminal; worktrees are under `/home/romain/Stockly/` and named `Main_<branch_name>`):
-  ```bash
-  cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/Main_<branch_name> & disown
-  ```
+```bash
+ssh orthos 'zsh -ic "cdm && git pull && s wk <notion_url> -w=b"' && cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/Stockly/Main_<branch_name> & disown
+```
+
+This SSHes into Orthos to create the worktree and check out the PR branch, then opens Cursor pointed at the remote worktree.
 
 Keep the whole answer scannable (clear headings, short bullets). If something is missing (e.g. Notion inaccessible, `gh` not available), say what you used and what you could not use.
