@@ -5,8 +5,8 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.plex-desktop ];

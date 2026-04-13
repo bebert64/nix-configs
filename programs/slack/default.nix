@@ -5,8 +5,8 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.slack ];
@@ -14,6 +14,8 @@ in
     assigns = {
       "\"${ws."4"}\"" = [ { class = "Slack"; } ];
     };
-    keybindings = lib.mkOptionDefault { "${modifier}+Control+l" = "workspace \"${ws."4"}\"; exec slack"; };
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+l" = "workspace \"${ws."4"}\"; exec slack";
+    };
   };
 }

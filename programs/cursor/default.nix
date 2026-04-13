@@ -6,8 +6,8 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
   inherit (config.byDb) paths;
   homeDir = config.home.homeDirectory;
   inherit (paths) nixPrograms;

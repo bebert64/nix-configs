@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   programs.firefox = {

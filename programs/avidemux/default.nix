@@ -1,6 +1,6 @@
 { pkgs, config, ... }:
 let
-  ws = config.byDb.ws;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.avidemux ];

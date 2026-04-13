@@ -7,8 +7,8 @@
 let
   inherit (config.byDb) setHeadphonesCommand setSpeakerCommand;
   homeDir = config.home.homeDirectory;
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
   rofi = config.rofi.defaultCmd;
   music_mode = "Music: [r]adio [d]ir [l]aunch [g]irl r[e]set";
   openDir = "${pkgs.writeScriptBin "open-dir" ''

@@ -5,8 +5,8 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 in
 {
   home.packages = [ pkgs.ferdium ];
@@ -18,6 +18,8 @@ in
         { class = "Ferdium"; }
       ];
     };
-    keybindings = lib.mkOptionDefault { "${modifier}+Control+t" = "workspace \"${ws."5"}\"; exec ferdium"; };
+    keybindings = lib.mkOptionDefault {
+      "${modifier}+Control+t" = "workspace \"${ws."5"}\"; exec ferdium";
+    };
   };
 }

@@ -5,7 +5,7 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
+  inherit (config.byDb) modifier;
 in
 {
   home.packages = [ pkgs.gnome-calculator ];

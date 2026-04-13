@@ -5,8 +5,8 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
-  ws = config.byDb.ws;
+  inherit (config.byDb) modifier;
+  inherit (config.byDb) ws;
 
   # Wrapper that patches Chromium's Preferences before launch so it
   # auto-restores the previous session after a crash, instead of showing
@@ -50,7 +50,8 @@ in
 
   wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+c" = "workspace \"${ws."2"}\"; exec chromium-session-restore --profile-directory=Default";
+      "${modifier}+Control+c" =
+        "workspace \"${ws."2"}\"; exec chromium-session-restore --profile-directory=Default";
     };
     assigns = {
       "\"${ws."2"}\"" = [ { class = "chromium-browser"; } ];

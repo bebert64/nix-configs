@@ -1,11 +1,8 @@
 {
   pkgs,
-  config,
-  lib,
   ...
 }:
 let
-  modifier = config.byDb.modifier;
   insomnia =
     {
       fetchurl,

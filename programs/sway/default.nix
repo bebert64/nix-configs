@@ -6,7 +6,7 @@
 }:
 let
   homeManagerBydbConfig = config.byDb;
-  exitMode = homeManagerBydbConfig.sway.exitMode;
+  inherit (homeManagerBydbConfig.sway) exitMode;
   jq = "${pkgs.jq}/bin/jq";
   swaymsg = "${pkgs.sway}/bin/swaymsg";
   ws = {
@@ -33,8 +33,8 @@ let
   };
   showWallpapers =
     let
-      primary = homeManagerBydbConfig.screens.primary;
-      secondary = homeManagerBydbConfig.screens.secondary;
+      inherit (homeManagerBydbConfig.screens) primary;
+      inherit (homeManagerBydbConfig.screens) secondary;
     in
     "${pkgs.writeShellScript "show-wallpapers" ''
       set -euo pipefail
@@ -171,12 +171,23 @@ in
         };
 
         startup = [
-          { command = "swaymsg focus output ${homeManagerBydbConfig.screens.primary} && swaymsg rename workspace to \"${ws."1"}\"" + lib.optionalString (homeManagerBydbConfig.screens.secondary != "") " && swaymsg focus output ${homeManagerBydbConfig.screens.secondary} && swaymsg rename workspace to \"${ws."2"}\""; }
+          {
+            command =
+              "swaymsg focus output ${homeManagerBydbConfig.screens.primary} && swaymsg rename workspace to \"${ws."1"}\""
+              +
+                lib.optionalString (homeManagerBydbConfig.screens.secondary != "")
+                  " && swaymsg focus output ${homeManagerBydbConfig.screens.secondary} && swaymsg rename workspace to \"${ws."2"}\"";
+          }
           # https://wiki.archlinux.org/title/GNOME/Keyring#Launching_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...)
-          { command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets"; }
+          {
+            command = "dbus-update-activation-environment --all; gnome-keyring-daemon --start --components=secrets";
+          }
           { command = "swww-daemon"; }
           # kanshi starts before Sway is fully ready; restart it once the compositor is up
-          { command = "systemctl --user restart kanshi"; always = true; }
+          {
+            command = "systemctl --user restart kanshi";
+            always = true;
+          }
         ]
         ++ lib.optional homeManagerBydbConfig.wifi.enable { command = "nm-applet"; }
         ++ lib.optional homeManagerBydbConfig.bluetooth.enable { command = "blueman-applet"; };
@@ -215,7 +226,9 @@ in
 
         workspace "${ws."10"}" gaps inner 80
         workspace "${ws."19"}" output ${homeManagerBydbConfig.screens.primary}
-        ${lib.optionalString (homeManagerBydbConfig.screens.secondary != "") "workspace \"${ws."20"}\" output ${homeManagerBydbConfig.screens.secondary}"}
+        ${lib.optionalString (
+          homeManagerBydbConfig.screens.secondary != ""
+        ) "workspace \"${ws."20"}\" output ${homeManagerBydbConfig.screens.secondary}"}
 
         blur enable
         blur_passes 2

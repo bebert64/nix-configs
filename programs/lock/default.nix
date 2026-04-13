@@ -11,7 +11,7 @@ let
     writeShellScriptBin
     ;
   homeManagerBydbConfig = config.byDb;
-  modifier = config.byDb.modifier;
+  inherit (config.byDb) modifier;
   lockMode = "Lock: l[o]ck, [d]on't sleep";
 
   # Picks wallpapers via `wallpapers-manager lock-wallpapers` (which prints

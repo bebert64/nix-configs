@@ -6,7 +6,7 @@
   ...
 }:
 let
-  modifier = config.byDb.modifier;
+  inherit (config.byDb) modifier;
   rofi = config.rofi.defaultCmd;
   grimBin = lib.getExe pkgs.grim;
   slurpBin = lib.getExe pkgs.slurp;
