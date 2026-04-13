@@ -15,8 +15,8 @@ in
   };
 
   xdg.configFile."kitty/ssh.conf".text = ''
-    copy --dest bin/xclip ${osc52Shim}
-    env PATH=$KITTY_SSH_KITTEN_DATA_DIR/bin:$PATH
+    copy --dest .local/bin/xclip ${osc52Shim}
+    env PATH=$HOME/.local/bin:$PATH
   '';
 
   programs.kitty = {
