@@ -78,26 +78,28 @@ let
     ''}";
 in
 {
-  options.byDb.sway.exitMode = lib.mkOption {
-    type = lib.types.str;
-    internal = true;
-    readOnly = true;
-    default = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
-  };
+  options.byDb = {
+    sway.exitMode = lib.mkOption {
+      type = lib.types.str;
+      internal = true;
+      readOnly = true;
+      default = "Exit: [s]leep, [r]eboot, [p]ower off, [l]ogout";
+    };
 
-  options.byDb.modifier = lib.mkOption {
-    type = lib.types.str;
-    internal = true;
-    readOnly = true;
-    default = "Mod4";
-  };
+    modifier = lib.mkOption {
+      type = lib.types.str;
+      internal = true;
+      readOnly = true;
+      default = "Mod4";
+    };
 
-  options.byDb.ws = lib.mkOption {
-    type = lib.types.attrsOf lib.types.str;
-    internal = true;
-    readOnly = true;
-    default = ws;
-    description = "Workspace number-to-name mapping (e.g. \"6\" → \"6:\")";
+    ws = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      internal = true;
+      readOnly = true;
+      default = ws;
+      description = "Workspace number-to-name mapping (e.g. \"6\" → \"6:\")";
+    };
   };
 
   config = {

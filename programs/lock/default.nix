@@ -67,7 +67,7 @@ let
     while has_incoming_ssh; do
       sleep "$retry_interval"
     done
-    exec systemctl suspend
+    exec ${pkgs.systemd}/bin/systemctl suspend
   '';
 
   lockScript = writeShellScriptBin "lock" ''
