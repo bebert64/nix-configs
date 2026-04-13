@@ -8,9 +8,9 @@
 let
   modifier = config.byDb.modifier;
   rofi = config.rofi.defaultCmd;
-  grim = lib.getExe pkgs.grim;
-  slurp = lib.getExe pkgs.slurp;
-  swappy = lib.getExe pkgs.swappy;
+  grimBin = lib.getExe pkgs.grim;
+  slurpBin = lib.getExe pkgs.slurp;
+  swappyBin = lib.getExe pkgs.swappy;
   wlCopy = "${pkgs.wl-clipboard}/bin/wl-copy";
 
   rofiScreenshots = "${pkgs.writeScriptBin "rofi-screenshots" ''
@@ -24,15 +24,15 @@ let
 
     case "$selection" in
       "Region to editor")
-        ${grim} -g "$(${slurp})" - | ${swappy} -f - ;;
+        ${grimBin} -g "$(${slurpBin})" - | ${swappyBin} -f - ;;
       "Region to clipboard")
-        ${grim} -g "$(${slurp})" - | ${wlCopy} -t image/png ;;
+        ${grimBin} -g "$(${slurpBin})" - | ${wlCopy} -t image/png ;;
       "Region to file")
-        ${grim} -g "$(${slurp})" "${screenshotsDir}/$(date +%Y-%m-%d_%H-%M-%S).png" ;;
+        ${grimBin} -g "$(${slurpBin})" "${screenshotsDir}/$(date +%Y-%m-%d_%H-%M-%S).png" ;;
       "Fullscreen to clipboard")
-        ${grim} - | ${wlCopy} -t image/png ;;
+        ${grimBin} - | ${wlCopy} -t image/png ;;
       "Fullscreen to file")
-        ${grim} "${screenshotsDir}/$(date +%Y-%m-%d_%H-%M-%S).png" ;;
+        ${grimBin} "${screenshotsDir}/$(date +%Y-%m-%d_%H-%M-%S).png" ;;
     esac
   ''}/bin/rofi-screenshots";
   homeDir = config.home.homeDirectory;
