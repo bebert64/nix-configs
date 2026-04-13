@@ -1,5 +1,14 @@
 { config, lib, pkgs, ... }:
 
+# If kanshi ever enters an event loop when plugging/unplugging HDMI (it did on
+# X11 with autorandr), re-add per-profile tracking to detect no-op switches:
+#   profile.exec = [
+#     ...existing exec lines...
+#     ''sh -c "echo PROFILE_NAME > ${config.home.homeDirectory}/.config/kanshi/current"''
+#   ];
+# Then guard with a preswitch check that skips if $current == target profile.
+# Also update SaveKanshiConfig to emit the echo line again (removed at the same time).
+
 {
   services.kanshi = {
     enable = true;
@@ -13,7 +22,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo bureau > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -24,7 +32,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo stockly-romainc > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -36,7 +43,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo stockly-romainc-bureau > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -48,7 +54,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo stockly-bureau-1 > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -60,7 +65,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo stockly-tom > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -72,7 +76,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo zizou > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -84,7 +87,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo factory-s > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -95,7 +97,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo salon0 > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -106,7 +107,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo salon2 > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
       {
@@ -118,7 +118,6 @@
         profile.exec = [
           ''systemctl --user restart waybar''
           ''systemctl --user restart wallpapers-manager''
-          ''sh -c "echo grenoble-yohan > ${config.home.homeDirectory}/.config/kanshi/current"''
         ];
       }
     ];
