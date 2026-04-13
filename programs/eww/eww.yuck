@@ -5,57 +5,64 @@
 (defwidget polar-clock-widget []
   (overlay
     ;; Ring 6 (outermost): seconds
-    (circular-progress
-      :value {clock-data == "" ? 0 : clock-data.second_val}
-      :start-at 75
-      :thickness 12
-      :clockwise true
-      :style "color: ${clock-data == '' ? '#555' : clock-data.second_color}; min-width: 280px; min-height: 280px;")
+    (box :valign "center" :halign "center"
+      (circular-progress
+        :value {clock-data == "" ? 0 : clock-data.second_val}
+        :start-at 75
+        :thickness 10
+        :clockwise true
+        :style "color: ${clock-data == '' ? '#555' : clock-data.second_color};"
+        (box :width 280 :height 280)))
 
     ;; Ring 5: minutes
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.minute_val}
         :start-at 75
-        :thickness 12
+        :thickness 10
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.minute_color}; min-width: 240px; min-height: 240px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.minute_color};"
+        (box :width 240 :height 240)))
 
     ;; Ring 4: hours
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.hour_val}
         :start-at 75
-        :thickness 12
+        :thickness 10
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.hour_color}; min-width: 200px; min-height: 200px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.hour_color};"
+        (box :width 200 :height 200)))
 
     ;; Ring 3: day of month
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.day_val}
         :start-at 75
-        :thickness 12
+        :thickness 10
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.day_color}; min-width: 160px; min-height: 160px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.day_color};"
+        (box :width 160 :height 160)))
 
     ;; Ring 2: weekday
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.weekday_val}
         :start-at 75
-        :thickness 12
+        :thickness 10
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.weekday_color}; min-width: 120px; min-height: 120px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.weekday_color};"
+        (box :width 120 :height 120)))
 
     ;; Ring 1 (innermost): month
     (box :valign "center" :halign "center"
       (circular-progress
         :value {clock-data == "" ? 0 : clock-data.month_val}
         :start-at 75
-        :thickness 12
+        :thickness 10
         :clockwise true
-        :style "color: ${clock-data == '' ? '#555' : clock-data.month_color}; min-width: 80px; min-height: 80px;"))
+        :style "color: ${clock-data == '' ? '#555' : clock-data.month_color};"
+        (box :width 80 :height 80)))
 
     ;; Center labels
     (box :valign "center" :halign "center" :orientation "vertical" :space-evenly false :class "labels"
