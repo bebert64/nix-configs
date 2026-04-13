@@ -42,6 +42,7 @@
       stateVersion = "23.05";
       packages = [
         pkgs.fd
+        pkgs.zip
         (pkgs.writeScriptBin "update" ''
           #!/usr/bin/env bash
           cd /home/romain/nix-configs || exit 1
