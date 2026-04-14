@@ -25,6 +25,16 @@
           transparent_background = true,
       })
       require('render-markdown').setup({})
+
+      -- Open URLs with mouse click instead of tag lookup
+      vim.keymap.set('n', '<C-LeftMouse>', function()
+        -- Move cursor to click position, then open URL
+        vim.cmd('normal! <LeftMouse>')
+        local url = vim.fn.expand('<cWORD>')
+        if url:match('^https?://') then
+          vim.ui.open(url)
+        end
+      end, { desc = 'Open URL under cursor' })
     '';
   };
 }
