@@ -120,7 +120,7 @@ let
   openNixOrthos = mkOpenScript {
     scriptName = "open-nix-orthos";
     host = "orthos";
-    basePath = "/home/romain";
+    basePath = "/home/romain/code";
     worktreePrefix = "nix-configs";
     skipSubdirs = true;
   };
