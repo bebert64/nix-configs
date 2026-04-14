@@ -27,7 +27,6 @@ in
       ssh = "kitten ssh";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
       dc = "db-cli";
-      con = "cdn && claude";
 
       # Nix
       update = "run-in-nix-repo nix-switch";

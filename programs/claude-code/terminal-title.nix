@@ -91,16 +91,6 @@ in
 
       _auto_title_preexec() {
         local title="$1"
-        if [[ "$title" == claude-orthos* ]]; then
-          local args="''${title#claude-orthos}"
-          args="''${args# }"
-          if [[ -n "$args" ]]; then
-            print -Pn "\e]2;Claude (orthos: $args)\a"
-          else
-            print -Pn "\e]2;Claude (orthos: Main)\a"
-          fi
-          return
-        fi
         [[ "$title" == claude* ]] && title="Claude"
         print -Pn "\e]2;$title$(_title_suffix)\a"
       }
