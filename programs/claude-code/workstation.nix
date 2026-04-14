@@ -96,10 +96,10 @@ in
 
   wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+a" = ''mode "claude"'';
+      "${modifier}+Control+a" = ''mode "Claude: [c]ode, [n]ix"'';
     };
     modes = {
-      claude = {
+      "Claude: [c]ode, [n]ix" = {
         "Control+c" = ''workspace "${ws."1"}"; exec ${claudeLocal}, mode default'';
         "Shift+c" = ''workspace "${ws."1"}"; exec ${claudeOrthos}, mode default'';
         "Mod1+c" = ''workspace "${ws."1"}"; exec ${claudeSalon}, mode default'';

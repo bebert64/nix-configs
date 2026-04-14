@@ -158,7 +158,7 @@ in
       "${modifier}+Control+v" = ''mode "Cursor: [c]ode, [n]ix"'';
     };
     modes = {
-      cursor = {
+      "Cursor: [c]ode, [n]ix" = {
         "Control+c" = ''workspace "${ws."3"}"; exec ${openLocal}, mode default'';
         "Shift+c" = ''workspace "${ws."3"}"; exec ${openOrthos}, mode default'';
         "Mod1+c" = ''workspace "${ws."3"}"; exec ${openSalon}, mode default'';
