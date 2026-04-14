@@ -34,7 +34,7 @@ in
 
   wayland.windowManager.sway.config.keybindings = lib.mkOptionDefault {
     "${modifier}+Control+r" =
-      ''workspace "${ws."7"}"; exec kitty --title "Ranger ($(hostname))" -e ranger'';
+      ''workspace "${ws."7"}"; exec kitty --title "Ranger ($(hostname))" -e zsh -c ranger'';
     "${modifier}+Shift+r" = "workspace \"${ws."7"}\"; exec ${openRemote}";
   };
 }
