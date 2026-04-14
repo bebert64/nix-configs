@@ -70,6 +70,13 @@ git -C "$target_worktree" worktree remove "$source_worktree"
 echo "[transplant] Deleting source branch: $source_branch"
 git -C "$target_worktree" branch -D "$source_branch"
 
+# --- Cleanup: remove leftover .claude/worktrees/ in target ---
+target_claude_worktrees="$target_worktree/.claude/worktrees"
+if [[ -d "$target_claude_worktrees" ]]; then
+    echo "[transplant] Cleaning up leftover .claude/worktrees/ in target"
+    rm -rf "$target_claude_worktrees"
+fi
+
 # --- Summary ---
 target_branch="$(git -C "$target_worktree" branch --show-current)"
 echo "[transplant] Done. $commit_count commit(s) transplanted onto branch: $target_branch"
