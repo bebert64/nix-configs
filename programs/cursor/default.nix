@@ -64,7 +64,11 @@ let
           ''cursor "$path"'';
       subdirBlock = ''
         subdirs=$(${fetchSubdirs})
-        subdir=$(echo "$subdirs" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+        if [[ $(echo "$subdirs" | wc -l) -le 1 ]]; then
+          subdir="$subdirs"
+        else
+          subdir=$(echo "$subdirs" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+        fi
         if [[ -z "$subdir" ]]; then exit 0; fi
         path="${basePath}/$worktree"
         [[ "$subdir" != "Root" ]] && path="$path/$subdir"
@@ -80,7 +84,12 @@ let
           ${pkgs.libnotify}/bin/notify-send -u critical "${scriptName}" "${host} is unreachable"
           exit 1
         fi
-      ''}name=$(echo "$names" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+      ''}
+      if [[ $(echo "$names" | wc -l) -le 1 ]]; then
+        name="$names"
+      else
+        name=$(echo "$names" | ${rofi} -theme-str 'window {width: ${rofiWidth};}')
+      fi
       if [[ -n "$name" ]]; then
         [[ "$name" == "${worktreePrefix}" ]] && worktree="${worktreePrefix}" || worktree="${worktreePrefix}_$name"
         ${if skipSubdirs then directBlock else subdirBlock}
@@ -105,6 +114,13 @@ let
   openNixLocal = mkOpenScript {
     scriptName = "open-nix-local";
     basePath = paths.codeRoot;
+    worktreePrefix = "nix-configs";
+    skipSubdirs = true;
+  };
+  openNixOrthos = mkOpenScript {
+    scriptName = "open-nix-orthos";
+    host = "orthos";
+    basePath = "/home/romain/nix-configs";
     worktreePrefix = "nix-configs";
     skipSubdirs = true;
   };
@@ -139,13 +155,19 @@ in
       "\"${ws."3"}\"" = [ { class = "Cursor"; } ];
     };
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+v" = "workspace \"${ws."3"}\"; exec ${openLocal}";
-      "${modifier}+Shift+v" = "workspace \"${ws."3"}\"; exec ${openOrthos}";
-      "${modifier}+Mod1+v" = "workspace \"${ws."3"}\"; exec ${openSalon}";
-      "${modifier}+Control+n" = "workspace \"${ws."3"}\"; exec ${openNixLocal}";
-      "${modifier}+Shift+n" =
-        "workspace \"${ws."3"}\"; exec cursor --folder-uri=vscode-remote://ssh-remote+orthos/home/romain/nix-configs";
-      "${modifier}+Mod1+n" = "workspace \"${ws."3"}\"; exec ${openNixSalon}";
+      "${modifier}+Control+v" = ''mode "cursor"'';
+    };
+    modes = {
+      cursor = {
+        "Control+c" = ''workspace "${ws."3"}"; exec ${openLocal}, mode default'';
+        "Shift+c" = ''workspace "${ws."3"}"; exec ${openOrthos}, mode default'';
+        "Mod1+c" = ''workspace "${ws."3"}"; exec ${openSalon}, mode default'';
+        "Control+n" = ''workspace "${ws."3"}"; exec ${openNixLocal}, mode default'';
+        "Shift+n" = ''workspace "${ws."3"}"; exec ${openNixOrthos}, mode default'';
+        "Mod1+n" = ''workspace "${ws."3"}"; exec ${openNixSalon}, mode default'';
+        "Escape" = "mode default";
+        "Return" = "mode default";
+      };
     };
   };
 }
