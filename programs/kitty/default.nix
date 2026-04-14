@@ -33,6 +33,9 @@ in
       size = 10;
     };
     settings = {
+      # Ctrl+Click doesn't work inside Neovim because syntax highlighting
+      # breaks Kitty's URL detection. Ctrl+Shift+Click works everywhere.
+      open_url_modifiers = "ctrl+shift";
       background_opacity = "0.8";
       editor = "nvim";
       hide_window_decorations = "no";

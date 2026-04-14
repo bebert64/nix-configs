@@ -93,7 +93,7 @@ Key points:
 4. **If it uses diesel**: create `migrations/` and add diesel deps
 5. **If it's a Leptos frontend**: create `index.html`, `assets/`, `Makefile` (include appropriate `mkFiles/*.mk`)
 6. **If it's a Tauri app**: create `Front/` (Leptos) and `Tauri/` sub-crates, with `build.rs` in `Tauri/`
-7. **If it's a Nix-deployed app**: create `<app-name>.nix`
+7. **If it's a Nix-deployed app**: create `<app-name>.nix` and register it in `nix/default.nix`. See `${CLAUDE_SKILL_DIR}/nix-packaging.md` for skeletons, TOML generation rules, and the full checklist
 8. **Register in workspace** (see main skill)
 9. **Generate `.vscode/settings.json`**: `cd dev_tools/SetupRustAnalyzerOnlyCompileCrate && cargo run`
 10. **Verify** (see main skill)

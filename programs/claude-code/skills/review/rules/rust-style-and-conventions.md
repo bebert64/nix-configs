@@ -1,5 +1,6 @@
 # Code structure (Rust)
 
+- **No single-field wrapper Config**: When a `Config` struct contains a single field wrapping another struct, flatten the inner struct into `Config` directly. The extra nesting level adds nothing and forces every access through a redundant field (e.g. `CONFIG.app.foo` instead of `CONFIG.foo`).
 - **Inline single-use variables**: Do not introduce a variable used only once. Inline the expression at its usage site. Exception: keep if inlining would break the code. Applies to ALL code including tests.
 - **Inline single-use functions**: Do not extract a private function called from exactly one place. Exception: genuinely reusable logic or trait implementations.
 - **Module declaration**: No inline modules (except short tests <20 lines). Place all modules in separate files. `mod` declarations grouped together, alphabetically sorted, at the top.
