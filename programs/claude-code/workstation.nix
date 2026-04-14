@@ -81,7 +81,8 @@ let
   claudeNixOrthos = mkOpenScript {
     scriptName = "claude-nix-orthos";
     host = "orthos";
-    basePath = "/home/romain/nix-configs";
+    basePath = "/home/romain";
+    worktreePrefix = "nix-configs";
   };
   claudeNixSalon = mkOpenScript {
     scriptName = "claude-nix-salon";
