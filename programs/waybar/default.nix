@@ -45,6 +45,15 @@
       '';
     in
     {
+      byDbPkgs.music-title = {
+        enable = true;
+        currentSongsDir = "${config.home.homeDirectory}/.config/by_db/music_title";
+        radioFrance = {
+          apiKeyFile = config.byDb.secrets.radioFranceApiKey;
+          url = "https://openapi.radiofrance.fr/v1/graphql";
+        };
+      };
+
       programs.waybar = {
         enable = true;
         systemd.enable = true;
