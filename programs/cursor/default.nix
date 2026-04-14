@@ -155,7 +155,7 @@ in
       "\"${ws."3"}\"" = [ { class = "Cursor"; } ];
     };
     keybindings = lib.mkOptionDefault {
-      "${modifier}+Control+v" = ''mode "cursor"'';
+      "${modifier}+Control+v" = ''mode "Cursor: [c]ode, [n]ix"'';
     };
     modes = {
       cursor = {
