@@ -35,7 +35,7 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 1. **First request:** Call `API-query-data-source` (user-Notion) with:
    - **data_source_id:** `d6cdb24f-62ac-4581-9503-c6035d22babf`
    - **page_size:** **100**
-   - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Created At", "direction": "descending"}]`
+   - **sorts:** `[{"property": "Severity", "direction": "ascending"}, {"property": "Created At", "direction": "ascending"}]`
    - **filter:** `{"and": [{"property": "Status Intl", "select": {"equals": "🔴 0 - Pending Workforce"}}, {"property": "Assignee", "people": {"is_empty": true}}]}`
      > **Note:** The Status Intl values have emoji prefixes (🔴, 🔵, etc.). The parser also filters out assigned tickets as a safety net.
 
@@ -45,7 +45,7 @@ If the data source ID is missing, call `retrieve-a-database` with the database I
 
 3. **Merge:** Build a single JSON object: `{"results": <all collected page objects>}`. Write it to a file (e.g. the path of the first response file, or a new path under agent-tools) so the parser can read it.
 
-4. **Get top N and apply ignore list and existing investigations:** Run the parser so you get structured lines you can use (id, url, title, short_id). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 6. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.claude/investigations/` or `~/.claude/plans/` (filename starting with `<short_id>-`). Take the first **N** tickets from the remaining list.
+4. **Get top N and apply ignore list and existing investigations:** Run the parser so you get structured lines you can use (id, url, title, short_id, severity, created_at). Parser path: `python3 ${CLAUDE_SKILL_DIR}/parse_qtt.py <path_to_json_file> [N]` — N defaults to 6. It prints `candidates_count=<m>` on stderr and one line per ticket `rank|id|url|title|short_id|severity|created_at` for the top N. Then exclude any line whose `id` is in the ignore set, any ticket whose short_id already has at least one file in `~/.claude/investigations/` or `~/.claude/plans/` (filename starting with `<short_id>-`). Take the first **N** tickets from the remaining list.
 
 ## 4. Detect special cases
 
@@ -84,7 +84,7 @@ As soon as a subagent returns, display a short scannable block: ticket title + s
 
 After **all** subagents have returned (and you have already displayed each ticket's resume as it completed):
 
-- Provide a consolidated list of all investigated tickets (including frontend ones) with their super-synthetic resume and ticket URL, so the user has everything in one place. Clearly separate frontend tickets from the rest.
+- Provide a consolidated table of all investigated tickets (including frontend ones) with columns: **#**, **Short ID** (linked to Notion URL), **Title**, **Severity**, **Created**, **Outcome**, **Summary**. Clearly separate frontend tickets from the rest.
 - State how many non-frontend investigations were produced vs. the target N.
 - If fewer than N non-frontend tickets were available after the ignore list, existing investigations, or the Notion filter, say how many were found and process only those.
 - If the Notion MCP is unavailable, say so and stop.

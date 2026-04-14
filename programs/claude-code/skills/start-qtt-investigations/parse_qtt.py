@@ -110,7 +110,7 @@ for p in pages:
         "props": props,
     })
 
-# Sort: Severity (SEV1 first, SEV4 before SEV5), then Created At descending (newest first)
+# Sort: Severity (SEV1 first, SEV4 before SEV5), then Created At ascending (oldest first = higher priority)
 from datetime import datetime
 
 def sort_key(c):
@@ -118,9 +118,9 @@ def sort_key(c):
     ts = c["created"] or ""
     try:
         dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-        return (rank, -dt.timestamp())
+        return (rank, dt.timestamp())
     except Exception:
-        return (rank, 0)
+        return (rank, float('inf'))
 
 candidates.sort(key=sort_key)
 
@@ -132,4 +132,5 @@ for i, t in enumerate(top):
     # Fallback title from URL slug (e.g. RR5BW-UPS-TI-status-...)
     title = t["title"] or t["url"].split("/")[-1].replace("-", " ")[:80]
     short_id = (t["title"] or "")[:5] if len(t["title"] or "") >= 5 else (t["url"].split("/")[-1][:5] if t["url"] else "")
-    print(f"{i+1}|{t['id']}|{t['url']}|{title[:80]}|{short_id}")
+    created_short = (t['created'] or "")[:10]  # YYYY-MM-DD
+    print(f"{i+1}|{t['id']}|{t['url']}|{title[:80]}|{short_id}|{t['severity']}|{created_short}")
