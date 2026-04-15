@@ -89,11 +89,7 @@ let
       }
     )
   );
-  claudeWithVoice = pkgs.writeShellScriptBin "claude" ''
-    # PulseAudio forwarding for Claude Code voice mode on monsters
-    if [ -S /tmp/pulse-forward ]; then
-      export PULSE_SERVER=unix:/tmp/pulse-forward
-    fi
+  claudeWrapper = pkgs.writeShellScriptBin "claude" ''
     exec ${pkgsUnstable.claude-code}/bin/claude --dangerously-skip-permissions "$@"
   '';
 in
@@ -102,8 +98,7 @@ in
 
   home = {
     packages = [
-      claudeWithVoice
-      pkgs.sox
+      claudeWrapper
     ];
     activation = {
       symlinkClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" "setupSecrets" ] ''

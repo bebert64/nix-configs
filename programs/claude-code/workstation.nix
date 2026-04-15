@@ -2,10 +2,19 @@
   config,
   lib,
   pkgs,
+  pkgsUnstable,
   ...
 }:
 let
   inherit (config.byDb) modifier ws paths;
+  homeDir = config.home.homeDirectory;
+  asanaDispatchScript = pkgs.writeShellScript "asana-dispatch" ''
+    export PATH="${homeDir}/.nix-profile/bin:/run/current-system/sw/bin:$PATH"
+    cd "${homeDir}"
+    exec ${pkgsUnstable.claude-code}/bin/claude \
+      --dangerously-skip-permissions \
+      -p "Read and follow the skill at ~/.claude/skills/asana-dispatch/SKILL.md"
+  '';
   rofi = config.rofi.defaultCmd;
   # Lists worktree display names: prefix stays as-is, prefix_foo becomes "foo"
   # $1 = base path, $2 = prefix (default: Main)
@@ -93,6 +102,27 @@ let
 in
 {
   imports = [ ./common.nix ];
+
+  systemd.user.services.asana-dispatch = {
+    Unit.Description = "Run asana-dispatch skill via Claude Code";
+    Service = {
+      Type = "oneshot";
+      ExecStart = asanaDispatchScript;
+      TimeoutStartSec = "infinity";
+    };
+  };
+
+  systemd.user.timers.asana-dispatch = {
+    Unit.Description = "Trigger asana-dispatch hourly 8–20 and at midnight";
+    Install.WantedBy = [ "timers.target" ];
+    Timer = {
+      OnCalendar = [
+        "*-*-* 00:00:00"
+        "*-*-* 8..20:00:00"
+      ];
+      Persistent = true;
+    };
+  };
 
   wayland.windowManager.sway.config = {
     keybindings = lib.mkOptionDefault {
