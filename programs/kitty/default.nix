@@ -32,6 +32,12 @@ in
       name = "FiraCode Nerd Font Med";
       size = 10;
     };
+    keybindings = {
+      # When terminal text is selected, copy it (default kitty behavior).
+      # When nothing is selected (e.g. in Neovim), pass the key through
+      # so Neovim can handle Ctrl+Shift+C as yank-to-clipboard.
+      "ctrl+shift+c" = "copy_or_noop";
+    };
     settings = {
       # Ctrl+Click doesn't work inside Neovim because syntax highlighting
       # breaks Kitty's URL detection. Ctrl+Shift+Click works everywhere.
