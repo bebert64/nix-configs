@@ -12,13 +12,14 @@
 			"locked": {
 				"lastModified": 1776261150,
 				"narHash": "sha256-pI344qzKQN5OyEBrifrd1SgG0zPuoAyBZV4K5nBk5/0=",
-				"ref": "refs/heads/main",
+				"ref": "main",
 				"rev": "75347fca83958ea9c2117b0136f3999e69fb3454",
 				"revCount": 202,
 				"type": "git",
 				"url": "ssh://git@github.com/bebert64/perso"
 			},
 			"original": {
+				"ref": "main",
 				"type": "git",
 				"url": "ssh://git@github.com/bebert64/perso"
 			}
@@ -218,11 +219,11 @@
 		},
 		"nixpkgs": {
 			"locked": {
-				"lastModified": 1775811116,
-				"narHash": "sha256-t+HZK42pB6N+i5RGbuy7Xluez/VvWbembBdvzsc23Ss=",
+				"lastModified": 1776067740,
+				"narHash": "sha256-B35lpsqnSZwn1Lmz06BpwF7atPgFmUgw1l8KAV3zpVQ=",
 				"owner": "nixos",
 				"repo": "nixpkgs",
-				"rev": "54170c54449ea4d6725efd30d719c5e505f1c10e",
+				"rev": "7e495b747b51f95ae15e74377c5ce1fe69c1765f",
 				"type": "github"
 			},
 			"original": {
@@ -234,11 +235,11 @@
 		},
 		"nixpkgs-master": {
 			"locked": {
-				"lastModified": 1775910640,
-				"narHash": "sha256-/4PVKNKDUVPo1r7JQtBrzS0Zw6UB7xmA3QDNTP542Wk=",
+				"lastModified": 1776269860,
+				"narHash": "sha256-Z14YSvJjW841yXTqz71q82Munueu21DvE0dGI78OvBU=",
 				"owner": "nixos",
 				"repo": "nixpkgs",
-				"rev": "1a23fdf4009276f56fec70be096c5a25957f0507",
+				"rev": "3ded3dec5dc385357b8698093d9ab401ef621418",
 				"type": "github"
 			},
 			"original": {
@@ -252,11 +253,8 @@
 			"locked": {
 				"lastModified": 1775710090,
 				"narHash": "sha256-ar3rofg+awPB8QXDaFJhJ2jJhu+KqN/PRCXeyuXR76E=",
-				"lastModified": 1775710090,
-				"narHash": "sha256-ar3rofg+awPB8QXDaFJhJ2jJhu+KqN/PRCXeyuXR76E=",
 				"owner": "nixos",
 				"repo": "nixpkgs",
-				"rev": "4c1018dae018162ec878d42fec712642d214fdfa",
 				"rev": "4c1018dae018162ec878d42fec712642d214fdfa",
 				"type": "github"
 			},
@@ -288,6 +286,7 @@
 				"by-db": "by-db",
 				"home-manager": "home-manager",
 				"nixpkgs": "nixpkgs",
+				"nixpkgs-master": "nixpkgs-master",
 				"nixpkgs-unstable": "nixpkgs-unstable",
 				"sops-nix": "sops-nix",
 				"stockly-computers": "stockly-computers",
