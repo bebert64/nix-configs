@@ -52,92 +52,26 @@ asana tasks list nix-and-code --section "Need plan"
 asana tasks list nix-and-code --section "Ready to implement"
 ```
 
-For each task in either section, fetch full details:
+The list output includes each task's **GID and name** — that is all the main agent needs. Do NOT fetch full task details here; sub-agents handle that.
 
-```bash
-asana tasks get <task_gid>
-```
-
-This returns the task name, description, subtasks, and completed status as JSON.
-
-Collect all tasks into two lists: `plan_tasks` and `ship_tasks`.
+Collect GIDs into two lists: `plan_tasks` and `ship_tasks`.
 
 ---
 
-## Step 3 — Validate target repo
-
-For each task, parse its **description** for an explicit repo mention.
-
-Recognized values:
-- `nix-configs` or `nix_configs` → `/home/romain/code/nix-configs`
-- `Main` → `/home/romain/code/Main`
-
-**Case-insensitive match.** Look for these as standalone words or path components in the description text.
-
-If no repo is found:
-1. Move the task to "To fix" (see Step 5)
-2. Log: `"Task '<name>' has no target repo in description — moved to To fix"`
-3. Skip to next task
-
----
-
-## Step 4 — Dispatch sub-agents
+## Step 3 — Dispatch sub-agents
 
 Launch up to **4 sub-agents concurrently** (mix of plan and ship tasks).
 
-### For "Need plan" tasks
+Each sub-agent is responsible for fetching its own task details and determining the target repo. The main agent only passes the **task GID** and **task name**.
 
-Launch a sub-agent per task with this prompt:
+- **"Need plan" tasks** → use the prompt template in [`plan-agent.md`](plan-agent.md)
+- **"Ready to implement" tasks** → use the prompt template in [`ship-agent.md`](ship-agent.md)
 
-> You are a planning agent. Your job is to produce a complete, detailed, implementation-ready plan. Do NOT write any code. Do NOT create branches.
->
-> **Task from Asana:**
-> - Title: `<task_name>`
-> - Description: `<task_description>`
-> - Subtasks: `<subtask_list>` (use these as chunking hints)
->
-> **Target repo:** `<repo_path>`
->
-> **Instructions:**
-> 1. `cd <repo_path>`
-> 2. Read `AGENTS.md` at the repo root if it exists.
-> 3. Read `~/.claude/docs/README.md` and any relevant docs.
-> 4. Read ALL relevant source files — existing behavior, data structures, API surfaces, tests.
-> 5. Write a detailed implementation plan at `~/.claude/plans/<slug>.md` following the standard format:
->    - `## Branch`, `## Short ID`, `## Category` headers
->    - Numbered top-level steps (1., 2., 3.) with lettered sub-points (A, B, C)
->    - A `## Chunks` section grouping work into independently-shippable units sized for a single sub-agent (1–3 files each), with an explicit dependency graph
-> 6. Update `~/.claude/plans/_index.json`.
-> 7. Return: the plan file path and a summary of what was planned.
->
-> Make the plan as detailed as possible. Every chunk should specify exact file paths to create/modify, the logic to implement, and how to verify.
-
-### For "Ready to implement" tasks
-
-Launch a sub-agent per task with this prompt:
-
-> You have a task to implement end-to-end.
->
-> **Task from Asana:**
-> - Title: `<task_name>`
-> - Description: `<task_description>`
-> - Subtasks: `<subtask_list>`
->
-> **Target repo:** `<repo_path>`
->
-> **Instructions:**
-> 1. `cd <repo_path>`
-> 2. Invoke `/ship` with the following task description:
->
-> `<task_name>: <task_description>`
->
-> The ship workflow handles everything: planning, implementation, testing, and self-review.
->
-> 3. Return: summary of what was implemented, commit hashes, and any open points.
+If a sub-agent returns `"AMBIGUOUS_REPO"`, treat it as a repo-resolution failure (see Step 4).
 
 ---
 
-## Step 5 — Move tasks on completion
+## Step 4 — Move tasks on completion
 
 Moving a task = **create** in target section + **delete** original.
 
@@ -151,16 +85,18 @@ asana tasks delete <original_task_gid>
 
 **Mapping:**
 
-| Source section | On success | On missing repo |
-|---|---|---|
-| Need plan | → Review plan | → To fix |
-| Ready to implement | → Review code | → To fix |
+| Source section | On success | On ambiguous repo | On failure |
+|---|---|---|---|
+| Need plan | → Review plan | → To fix | Stay in place |
+| Ready to implement | → Review code | → To fix | Stay in place |
+
+**On `AMBIGUOUS_REPO` result:** Move the task to "To fix". Append the sub-agent's ambiguity explanation to the task description (do not overwrite). Log: `"Task '<name>' — ambiguous target repo, moved to To fix"`.
 
 **On sub-agent failure:** do NOT move the task. Leave it in its current section so it can be retried.
 
 ---
 
-## Step 6 — Report
+## Step 5 — Report
 
 As each sub-agent completes, immediately report:
 - Task name
