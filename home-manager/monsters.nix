@@ -26,7 +26,7 @@
 
   config = {
     byDb = {
-      paths.nixConfigs = "/home/romain/nix-configs";
+      paths.nixConfigs = "/home/romain/code/nix-configs";
       git = {
         user = {
           name = "RomainC";
@@ -45,7 +45,7 @@
         pkgs.zip
         (pkgs.writeScriptBin "update" ''
           #!/usr/bin/env bash
-          cd /home/romain/nix-configs || exit 1
+          cd /home/romain/code/nix-configs || exit 1
           git pull || exit 1
           home-manager switch --flake '.#monsters' --show-trace --option accept-flake-config true
         '')
@@ -53,10 +53,9 @@
       activation.symlinkCursor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p /home/romain/.cursor
         mkdir -p /home/romain/Stockly/.cursor
-        ln -sfT /home/romain/nix-configs/programs/cursor/rules/global /home/romain/.cursor/rules
-        ln -sfT /home/romain/nix-configs/programs/cursor/rules/stockly /home/romain/Stockly/.cursor/rules
-        ln -sfT /home/romain/nix-configs/programs/cursor/skills /home/romain/.cursor/skills
-        ln -sf /home/romain/nix-configs/programs/cursor/scripts/parse_qtt.py /home/romain/Stockly/.cursor/parse_qtt.py
+        ln -sfT /home/romain/code/nix-configs/programs/cursor/rules/global /home/romain/.cursor/rules
+        ln -sfT /home/romain/code/nix-configs/programs/cursor/rules/stockly /home/romain/Stockly/.cursor/rules
+        ln -sfT /home/romain/code/nix-configs/programs/cursor/skills /home/romain/.cursor/skills
       '';
     };
 
