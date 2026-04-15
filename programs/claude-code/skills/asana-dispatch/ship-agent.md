@@ -39,6 +39,16 @@ This file contains the prompt template for "Ready to implement" sub-agents dispa
 >
 > The ship workflow handles everything: planning, implementation, testing, and self-review.
 >
+> **If you cannot proceed** — contradictions in the plan, ambiguities, design decisions that require human input, or insufficient information — do NOT attempt a partial implementation. Instead:
+>
+> 1. Write (or update) a plan at `~/.claude/plans/<slug>.md` documenting:
+>    - Everything that is known and validated (repo structure, affected files, clear requirements)
+>    - All open questions, contradictions, and decisions that need human input — clearly separated
+> 2. Update `~/.claude/plans/_index.json`.
+> 3. Upload the plan to the task: `asana-cli attachments upload <task_gid> ~/.claude/plans/<slug>.md`
+> 4. Append to the task description why implementation was blocked and list the main decisions to be taken.
+> 5. **Return `"NEEDS_INPUT"` as your result** with a summary of the blockers. Do not proceed further.
+>
 > ---
 >
 > ### Step 3 — Update the Asana ticket

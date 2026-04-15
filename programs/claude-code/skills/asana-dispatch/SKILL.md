@@ -12,10 +12,10 @@ Fetch tasks from Asana board sections and dispatch sub-agents to either produce 
 
 ## Section mapping
 
-| Input section | Workflow | Output section (success) |
-|---|---|---|
-| Need plan | Planning sub-agent | Review plan |
-| Ready to implement | `/ship` sub-agent | Review code |
+| Input section      | Workflow           | Output section (success) |
+| ------------------ | ------------------ | ------------------------ |
+| Ready to plan      | Planning sub-agent | Review plan              |
+| Ready to implement | `/ship` sub-agent  | Review code              |
 
 Tasks missing a target repo → moved to **To fix**.
 
@@ -30,7 +30,8 @@ asana-cli sections list nix-and-code
 ```
 
 Parse the JSON output to build a **name → GID** map. Required sections:
-- **Input:** `Need plan`, `Ready to implement`
+
+- **Input:** `Ready to plan`, `Ready to implement`
 - **Output:** `Review plan`, `Review code`, `To fix`
 
 **Auto-create missing output sections:**
@@ -48,7 +49,7 @@ If an input section is missing, warn and skip it (no tasks to process).
 ## Step 2 — Fetch tasks from input sections
 
 ```bash
-asana-cli tasks list nix-and-code --section "Need plan"
+asana-cli tasks list nix-and-code --section "Ready to plan"
 asana-cli tasks list nix-and-code --section "Ready to implement"
 ```
 
@@ -64,10 +65,11 @@ Launch up to **4 sub-agents concurrently** (mix of plan and ship tasks).
 
 Each sub-agent is responsible for fetching its own task details and determining the target repo. The main agent only passes the **task GID** and **task name**.
 
-- **"Need plan" tasks** → use the prompt template in [`plan-agent.md`](plan-agent.md)
+- **"Ready to plan" tasks** → use the prompt template in [`plan-agent.md`](plan-agent.md)
 - **"Ready to implement" tasks** → use the prompt template in [`ship-agent.md`](ship-agent.md)
 
 If a sub-agent returns `"AMBIGUOUS_REPO"`, treat it as a repo-resolution failure (see Step 4).
+If a sub-agent returns `"NEEDS_INPUT"`, treat it as a blocked-on-human case (see Step 4).
 
 ---
 
@@ -85,12 +87,14 @@ asana-cli tasks delete <original_task_gid>
 
 **Mapping:**
 
-| Source section | On success | On ambiguous repo | On failure |
-|---|---|---|---|
-| Need plan | → Review plan | → To fix | Stay in place |
-| Ready to implement | → Review code | → To fix | Stay in place |
+| Source section     | On success    | On ambiguous repo | On needs input | On failure    |
+| ------------------ | ------------- | ----------------- | -------------- | ------------- |
+| Ready to plan      | → Review plan | → To fix          | —              | Stay in place |
+| Ready to implement | → Review code | → To fix          | → Review plan  | Stay in place |
 
 **On `AMBIGUOUS_REPO` result:** Move the task to "To fix". Append the sub-agent's ambiguity explanation to the task description (do not overwrite). Log: `"Task '<name>' — ambiguous target repo, moved to To fix"`.
+
+**On `NEEDS_INPUT` result:** Move the task to "Review plan". The sub-agent has already uploaded the plan and updated the description with the blockers. Log: `"Task '<name>' — blocked on human input, moved to Review plan"`.
 
 **On sub-agent failure:** do NOT move the task. Leave it in its current section so it can be retried.
 
@@ -99,14 +103,15 @@ asana-cli tasks delete <original_task_gid>
 ## Step 5 — Report
 
 As each sub-agent completes, immediately report:
+
 - Task name
 - Outcome: success or failure (with error summary if failed)
 - Section moved to (or "not moved" if failed)
 
 After all sub-agents finish, display a summary table:
 
-| # | Task | Source | Outcome | Moved to |
-|---|------|--------|---------|----------|
+| #   | Task | Source | Outcome | Moved to |
+| --- | ---- | ------ | ------- | -------- |
 
 ---
 
@@ -118,13 +123,3 @@ After all sub-agents finish, display a summary table:
 - **Asana API error:** Report the error from the CLI stderr and skip the affected task.
 
 ---
-
-## Cron setup
-
-To run this skill automatically on weekday mornings:
-
-```
-CronCreate with cron: "17 9 * * 1-5", prompt: "/asana-dispatch", recurring: true
-```
-
-Note: cron jobs are session-scoped and auto-expire after 7 days. Re-create on new sessions as needed.

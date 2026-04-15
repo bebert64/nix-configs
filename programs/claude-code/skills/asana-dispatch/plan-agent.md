@@ -1,6 +1,6 @@
 # Plan sub-agent prompt
 
-This file contains the prompt template for "Need plan" sub-agents dispatched by the main orchestrator.
+This file contains the prompt template for "Ready to plan" sub-agents dispatched by the main orchestrator.
 
 ---
 
