@@ -25,6 +25,10 @@
           transparent_background = true,
       })
       require('render-markdown').setup({})
+
+      -- Ctrl+Shift+C in visual mode copies selected text to system clipboard,
+      -- matching the default kitty terminal shortcut.
+      vim.keymap.set('v', '<C-S-c>', '"+y', { noremap = true, silent = true })
     '';
   };
 }
