@@ -15,7 +15,7 @@ This file contains the prompt template for "Ready to implement" sub-agents dispa
 >
 > ### Step 1 — Fetch task details and determine the target repo
 >
-> 1. Run `asana tasks get <task_gid>` to fetch the full task details (description, subtasks).
+> 1. Run `asana-cli tasks get <task_gid>` to fetch the full task details (description, subtasks).
 > 2. Parse the description for an explicit repo mention (case-insensitive):
 >    - `nix-configs` or `nix_configs` → `/home/romain/code/nix-configs`
 >    - `Main` → `/home/romain/code/Main`
@@ -43,10 +43,16 @@ This file contains the prompt template for "Ready to implement" sub-agents dispa
 >
 > ### Step 3 — Update the Asana ticket
 >
-> Append a summary of what was done to the task description (do not overwrite existing content):
+> 1. Add the branch short ID to the task name:
 >
 > ```bash
-> asana tasks update <task_gid> --description "<existing_description>\n\n---\n## Implementation summary\n<summary of what was implemented, commit hashes, branch name, and any open points>"
+> asana-cli tasks update <task_gid> --name "<short_id>-<task_name>"
+> ```
+>
+> 2. Append a summary of what was done to the task description (do not overwrite existing content):
+>
+> ```bash
+> asana-cli tasks update <task_gid> --description "<existing_description>\n\n---\n## Implementation summary\n<summary of what was implemented, commit hashes, branch name, and any open points>"
 > ```
 >
 > 4. Return: the target repo, summary of what was implemented, commit hashes, and any open points.

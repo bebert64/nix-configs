@@ -10,11 +10,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1776241766,
-        "narHash": "sha256-OfrYY9cmLYaUzXRkPtVTJj+ZLQ7vUiKweHrEBE0XX4U=",
+        "lastModified": 1776261150,
+        "narHash": "sha256-pI344qzKQN5OyEBrifrd1SgG0zPuoAyBZV4K5nBk5/0=",
         "ref": "refs/heads/main",
-        "rev": "461671388e9db8247907c0c9d0eab53f71a0304e",
-        "revCount": 199,
+        "rev": "75347fca83958ea9c2117b0136f3999e69fb3454",
+        "revCount": 202,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -283,11 +283,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772420823,
-        "narHash": "sha256-q3oVwz1Rx41D1D+F6vg41kpOkk3Zi3KwnkHEZp7DCGs=",
+        "lastModified": 1776222810,
+        "narHash": "sha256-5TD8MYqLMcJi9yV/9jq2dVUPtnu/lKZPD61esQCgvqs=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "458eea8d905c609e9d889423e6b8a1c7bc2f792c",
+        "rev": "4d6fee71fea68418a48992409b47f1183d0dd111",
         "type": "github"
       },
       "original": {

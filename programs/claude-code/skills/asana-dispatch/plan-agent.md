@@ -15,7 +15,7 @@ This file contains the prompt template for "Need plan" sub-agents dispatched by 
 >
 > ### Step 1 — Fetch task details and determine the target repo
 >
-> 1. Run `asana tasks get <task_gid>` to fetch the full task details (description, subtasks).
+> 1. Run `asana-cli tasks get <task_gid>` to fetch the full task details (description, subtasks).
 > 2. Parse the description for an explicit repo mention (case-insensitive):
 >    - `nix-configs` or `nix_configs` → `/home/romain/code/nix-configs`
 >    - `Main` → `/home/romain/code/Main`
@@ -46,7 +46,7 @@ This file contains the prompt template for "Need plan" sub-agents dispatched by 
 > Upload the plan file as an attachment to the task:
 >
 > ```bash
-> asana attachments upload <task_gid> ~/.claude/plans/<slug>.md
+> asana-cli attachments upload <task_gid> ~/.claude/plans/<slug>.md
 > ```
 >
 > 7. Return: the target repo, the plan file path, and a summary of what was planned.

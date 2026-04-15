@@ -26,7 +26,7 @@ Tasks missing a target repo → moved to **To fix**.
 List all sections for the project:
 
 ```bash
-asana sections list nix-and-code
+asana-cli sections list nix-and-code
 ```
 
 Parse the JSON output to build a **name → GID** map. Required sections:
@@ -36,9 +36,9 @@ Parse the JSON output to build a **name → GID** map. Required sections:
 **Auto-create missing output sections:**
 
 ```bash
-asana sections create nix-and-code "Review plan"
-asana sections create nix-and-code "Review code"
-asana sections create nix-and-code "To fix"
+asana-cli sections create nix-and-code "Review plan"
+asana-cli sections create nix-and-code "Review code"
+asana-cli sections create nix-and-code "To fix"
 ```
 
 If an input section is missing, warn and skip it (no tasks to process).
@@ -48,8 +48,8 @@ If an input section is missing, warn and skip it (no tasks to process).
 ## Step 2 — Fetch tasks from input sections
 
 ```bash
-asana tasks list nix-and-code --section "Need plan"
-asana tasks list nix-and-code --section "Ready to implement"
+asana-cli tasks list nix-and-code --section "Need plan"
+asana-cli tasks list nix-and-code --section "Ready to implement"
 ```
 
 The list output includes each task's **GID and name** — that is all the main agent needs. Do NOT fetch full task details here; sub-agents handle that.
@@ -77,10 +77,10 @@ Moving a task = **create** in target section + **delete** original.
 
 ```bash
 # Create in target section (preserving name and description)
-asana tasks create nix-and-code "<task_name>" --section "<target_section>" --description "<original_description>"
+asana-cli tasks create nix-and-code "<task_name>" --section "<target_section>" --description "<original_description>"
 
 # Delete original
-asana tasks delete <original_task_gid>
+asana-cli tasks delete <original_task_gid>
 ```
 
 **Mapping:**
@@ -112,7 +112,7 @@ After all sub-agents finish, display a summary table:
 
 ## Error handling
 
-- **`asana` CLI not found:** Fail immediately with `"asana CLI not installed — install it and retry"`.
+- **`asana-cli` not found:** Fail immediately with `"asana-cli not installed — install it and retry"`.
 - **Sub-agent failure:** Do not move the task. Report the error. Continue with remaining tasks.
 - **Empty input sections:** Report "No tasks in <section>" and finish cleanly.
 - **Asana API error:** Report the error from the CLI stderr and skip the affected task.
