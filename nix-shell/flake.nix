@@ -25,7 +25,6 @@
             nixfmt-rfc-style
             statix
             deadnix
-            gh
           ];
         };
       }

@@ -169,6 +169,7 @@ in
     home = {
       packages = with pkgs;
         [
+          gh
           p7zip
           rsync
           screen

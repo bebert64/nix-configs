@@ -113,18 +113,37 @@ in
         orig_dir="$(pwd)"
         cdm
         git pull || return 1
-        cdm nix/dev
+
+        # Create worktree and branch via db-cli
+        wk_output=$(db-cli wk "Update flake inputs" 2>&1) || { echo "$wk_output"; cd "$orig_dir"; return 1; }
+        wk_path=$(echo "$wk_output" | grep -oP '(?<=cd )\S+')
+        cd "$wk_path" || { echo "Failed to cd to worktree: $wk_path"; cd "$orig_dir"; return 1; }
+        direnv allow
+
+        # Update nixpkgs to latest stable branch
+        latest=$(gh api repos/NixOS/nixpkgs/branches --paginate -q '.[].name' \
+          | grep -E '^nixos-[0-9]{2}\.[0-9]{2}$' | sort -V | tail -1)
+        sed -i "s|nixpkgs/nixos-[0-9]*\.[0-9]*|nixpkgs/$latest|" flake.nix
+
+        cd nix/dev
         nix flake update
-        cdm
+        cdr
         nix flake update
-        if cargo check; then
-          git add .
-          git commit -m "Update flake inputs"
-          git push
-        else
-          git reset --hard
+
+        git add .
+        git commit -m "Update flake inputs"
+        git push
+
+        if cargo check && cargo clippy; then
+          gh pr merge --squash
+          local branch=$(git branch --show-current)
           cd "$orig_dir"
-          return 1
+          git -C "${paths.mainWorktree}" worktree remove "$wk_path"
+          git -C "${paths.mainWorktree}" branch -D "$branch"
+          git -C "${paths.mainWorktree}" pull
+          return
+        else
+          echo "Checks failed. Fix issues in: $wk_path"
         fi
         cd "$orig_dir"
       }
