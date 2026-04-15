@@ -108,6 +108,16 @@
       };
 
       byDbPkgs = {
+        asana-cli = {
+          enable = true;
+          tokenFile = config.sops.secrets."code/mcp/asana-token".path;
+          projects = [
+            {
+              name = "nix-and-code";
+              gid = "1208698992717829";
+            }
+          ];
+        };
         db-cli = {
           enable = true;
         };
