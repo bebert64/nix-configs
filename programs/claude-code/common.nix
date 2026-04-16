@@ -96,10 +96,11 @@ in
 {
   imports = [ ./terminal-title.nix ];
 
+  programs.zsh.shellAliases = {
+    claude-latest = "nix-shell -p nodejs_22 --run 'npx -y @anthropic-ai/claude-code@latest --dangerously-skip-permissions'";
+  };
+
   home = {
-    shellAliases = {
-      claude-latest = "nix-shell -p nodejs_22 --run 'npx -y @anthropic-ai/claude-code@latest --dangerously-skip-permissions'";
-    };
     packages = [
       claudeWrapper
     ];
