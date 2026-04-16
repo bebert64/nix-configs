@@ -27,6 +27,7 @@ in
       ssh = "kitten ssh";
       cargo2nix = "cdr && cargo2nix -ol && cd -";
       dc = "db-cli";
+      claude-latest = "nix-shell -p nodejs_22 --run 'npx -y @anthropic-ai/claude-code@latest'";
 
       # Nix
       update = "run-in-nix-repo nix-switch";
