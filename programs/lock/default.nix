@@ -7,6 +7,7 @@
 let
   inherit (pkgs)
     libnotify
+    sway
     swaylock-effects
     writeShellScriptBin
     ;
@@ -114,6 +115,10 @@ in
           event = "before-sleep";
           command = "${lockScript}/bin/lock";
         }
+        {
+          event = "after-resume";
+          command = "${sway}/bin/swaymsg output '*' dpms on";
+        }
       ];
       timeouts = [
         {
@@ -123,6 +128,12 @@ in
         {
           timeout = homeManagerBydbConfig.minutesBeforeLock * 60;
           command = "${lockScript}/bin/lock --daemonize";
+        }
+        {
+          timeout =
+            (homeManagerBydbConfig.minutesBeforeLock + homeManagerBydbConfig.minutesFromLockToSleep - 1) * 60;
+          command = "${sway}/bin/swaymsg output '*' dpms off";
+          resumeCommand = "${sway}/bin/swaymsg output '*' dpms on";
         }
         {
           timeout =
