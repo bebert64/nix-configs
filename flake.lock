@@ -14,11 +14,11 @@
         "vscode-server": "vscode-server"
       },
       "locked": {
-        "lastModified": 1776448993,
-        "narHash": "sha256-2N/MSH2u/8FDROMezXeXvZPEKLj7vm8AjhOikBrGoFg=",
+        "lastModified": 1776600068,
+        "narHash": "sha256-nGdzhHPOCwx6yz5UlLUAUQNpiisevCcMHvVoP0DRopg=",
         "ref": "refs/heads/main",
-        "rev": "b70c13c95a2c770a5065d4faf21e370d05cb50af",
-        "revCount": 1377,
+        "rev": "9c8290aea170af044bb471099d1e75484405a85e",
+        "revCount": 1381,
         "type": "git",
         "url": "ssh://git@github.com/bebert64/perso"
       },
@@ -321,11 +321,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1776221942,
-        "narHash": "sha256-FbQAeVNi7G4v3QCSThrSAAvzQTmrmyDLiHNPvTF2qFM=",
+        "lastModified": 1776434932,
+        "narHash": "sha256-gyqXNMgk3sh+ogY5svd2eNLJ6oEwzbAeaoBrrxD0lKk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1766437c5509f444c1b15331e82b8b6a9b967000",
+        "rev": "c7f47036d3df2add644c46d712d14262b7d86c0c",
         "type": "github"
       },
       "original": {
