@@ -45,6 +45,11 @@ let
         ${swaymsg} workspace "${ws."20"}"
       ''}
     ''}";
+  wakeScreens = "${pkgs.writeShellScript "wake-screens" ''
+    ${swaymsg} 'output * dpms off'
+    sleep 2
+    ${swaymsg} 'output * dpms on'
+  ''}";
   moveWorkspaceToOutput =
     direction:
     assert direction == "left" || direction == "right";
@@ -164,6 +169,9 @@ in
 
           # Used to display empty workspaces, allowing to see the wallpapers
           "${modifier}+i" = "exec ${showWallpapers}";
+
+          # Wake screens (DPMS off/on toggle)
+          "${modifier}+Ctrl+d" = "exec ${wakeScreens}";
 
           # Notifications
           "${modifier}+Escape" = "exec makoctl dismiss --all";
